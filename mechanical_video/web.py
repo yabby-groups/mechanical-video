@@ -12,7 +12,7 @@ from .config import vision_model
 
 PAGE='''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>机械视频工作台</title>
 <style>body{background:#101927;color:#dce9f6;font:16px system-ui;max-width:1120px;margin:36px auto;padding:0 20px}h1{font-size:32px}p{color:#afc3d8}section,article{background:#182638;padding:20px;border-radius:12px;margin:18px 0}label{display:inline-block;margin:8px}button,select,input{background:#24384e;color:#fff;border:1px solid #49647e;border-radius:6px;padding:10px}button{cursor:pointer;background:#12668a}button:disabled{opacity:.5}#videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}video{width:100%;max-height:340px}article{margin:0}h3{margin-top:0}#result{white-space:pre-wrap}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px;border-bottom:1px solid #30465e}.pill{color:#8ee2bc}a{color:#8ad6ff}</style>
-<h1>机械视频工作台</h1><p>复用独立 CAD 零件，批量生成拆解、传动和装配视频。当前模型家族：行星减速器；内部结构及估计尺寸均为推测。</p>
+<h1>机械视频工作台</h1><p>复用独立 CAD 零件，批量生成拆解、传动和装配视频。当前模型家族：行星减速器、电钻概念装配；内部结构及估计尺寸均为推测。</p>
 <section><h2>生成视频</h2><p id="vision">正在检查图片识别服务…</p>
 <label>主题 <select id="template"><option value="all">全部十种主题</option><option value="explode">完整爆炸图</option><option value="shell">外壳拆解</option><option value="overview">360°展示</option><option value="internals">内部零件</option><option value="gears">齿轮传动</option><option value="closeup">零件特写</option><option value="transparent">透明外壳</option><option value="assembly">反向组装</option><option value="working">工作过程</option><option value="explanation">完整讲解</option></select></label>
 <label>画幅 <select id="portrait"><option value="false">横屏 16:9</option><option value="true">竖屏 9:16</option></select></label>

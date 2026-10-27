@@ -15,7 +15,13 @@ TEXT={
 def create(folder,template,seconds):
     def stamp(t):
         ms=round(t*1000); return f'{ms//3600000:02}:{ms//60000%60:02}:{ms//1000%60:02},{ms%1000:03}'
-    rows=TEXT[template]; path=folder/'narration.srt'
+    import json
+    from pathlib import Path
+    manifest=json.loads(Path(json.loads((folder/'job.json').read_text())['manifest']).read_text()) if (folder/'job.json').exists() else {}
+    rows=TEXT[template]
+    if manifest.get('product')=='cordless_drill':
+        rows=['Photo-guided cordless drill exterior; all dimensions are estimated.', 'Separate the housing, chuck, motor, gears and battery into independent parts.', 'Hidden internals and battery configuration are hypothetical, not a verified teardown.']
+    path=folder/'narration.srt'
     path.write_text('\n\n'.join(f'{i+1}\n{stamp(seconds*i/len(rows))} --> {stamp(seconds*(i+1)/len(rows))}\n{text}' for i,text in enumerate(rows))+'\n')
     return path
 

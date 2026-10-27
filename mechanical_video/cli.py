@@ -22,20 +22,27 @@ def connect(root):
     db.execute('CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, spec TEXT, state TEXT, attempts INTEGER DEFAULT 0, error TEXT, updated REAL)')
     return db
 
-def enqueue(root,manifest,templates,portrait=False,production=False,seconds=5,engine="eevee"):
+def enqueue(root,manifest,templates,portrait=False,production=False,seconds=5,engine="eevee",storyboard=None):
     import math
     from .runtime import source_fingerprints,snapshot_sources
     if not math.isfinite(seconds) or not 1/30 <= seconds <= 120: raise ValueError('seconds must be finite and between 1/30 and 120')
     seconds=round(seconds*30)/30
     if seconds.is_integer(): seconds=int(seconds)
-    db=connect(root)
     if not templates or any(t not in TEMPLATES for t in templates):
-        db.close(); raise ValueError('Select at least one supported template')
+        raise ValueError('Select at least one supported template')
+    product=json.loads(manifest.read_text()).get('product','planetary_reducer')
+    if product=='cordless_drill' and any(t in ('gears','working','closeup') for t in templates):
+        raise ValueError('Drill supports static/disassembly themes; reducer-specific gear simulation and sun closeup are unavailable')
+    db=connect(root)
     results=[]
     for template in templates:
         spec=dict(manifest=str(manifest.resolve()),template=template,seconds=seconds,
                   width=(1080 if production else 720) if portrait else (1920 if production else 1280),
                   height=(1920 if production else 1280) if portrait else (1080 if production else 720))
+        if storyboard is not None:
+            if product!='cordless_drill' or template!='explanation':
+                raise ValueError('Storyboard requires cordless_drill explanation')
+            spec['storyboard']=storyboard
         if engine!='eevee': spec['engine']=engine
         spec['renderer_files']=source_fingerprints()
         spec['model_hash']=hashlib.sha256(manifest.read_bytes()).hexdigest()
@@ -128,21 +135,24 @@ def analyze(image, root):
         raise RuntimeError('Image saved. Configure VISION_ENDPOINT (chat/completions URL) and optional VISION_API_KEY; no image recognition result has been fabricated.')
     import mimetypes
     uri='data:'+ (mimetypes.guess_type(image.name)[0] or 'image/png')+';base64,'+base64.b64encode(image.read_bytes()).decode()
-    prompt='Analyze this mechanical product. Return JSON only: product_type, supported_family (planetary_reducer or unsupported), confidence (0..1), visible_features list, inferred_parts list, uncertain_details list, parameters {module: number}. Never claim hidden geometry is observed. Module is an explicitly inferred estimate in mm.'
+    prompt='Analyze this mechanical product. Return JSON only: product_type, supported_family (planetary_reducer, cordless_drill or unsupported), confidence (0..1), visible_features list, inferred_parts list, uncertain_details list, parameters {module: number}. Never claim hidden geometry is observed. Module is an explicitly inferred estimate in mm.'
     response=requests.post(endpoint,headers={'Authorization':f'Bearer {key}'} if key else {},json={'model':model,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':uri}}]}]},timeout=120)
     response.raise_for_status(); content=response.json()['choices'][0]['message']['content'].strip()
     if content.startswith('```'): content=content.split('\n',1)[1].rsplit('```',1)[0]
     result=json.loads(content)
-    if result.get('supported_family') not in ['planetary_reducer','unsupported']: raise ValueError('Invalid model family')
+    if result.get('supported_family') not in ['planetary_reducer','cordless_drill','unsupported']: raise ValueError('Invalid model family')
     result['source_sha256']=digest; result['internal_geometry_status']='inferred'
     (folder/'analysis.json').write_text(json.dumps(result,indent=2,ensure_ascii=False))
+    if result['supported_family']=='cordless_drill':
+        from .drill import build as build_drill
+        return build_drill(root)
     if result['supported_family']!='planetary_reducer': raise ValueError('Recognized product is outside implemented CAD families; analysis saved, no substitute model created')
     return build(root,result.get('parameters',{}))
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('--root',type=Path,default=ROOT/'artifacts')
     sub=p.add_subparsers(dest='command',required=True)
-    s=sub.add_parser('model'); s.add_argument('--module',type=float,default=2); sub.add_parser('status'); sub.add_parser('retry')
+    s=sub.add_parser('model'); s.add_argument('--family',choices=['planetary_reducer','cordless_drill'],default='planetary_reducer'); s.add_argument('--module',type=float,default=2); sub.add_parser('status'); sub.add_parser('retry')
     for name in ['batch','demo','image']:
         s=sub.add_parser(name); s.add_argument('--portrait',action='store_true'); s.add_argument('--production',action='store_true'); s.add_argument('--seconds',type=float,default=5); s.add_argument('--engine',choices=['eevee','cycles'],default='eevee'); s.add_argument('--templates',nargs='+',choices=TEMPLATES,default=TEMPLATES if name=='batch' else ['shell','explode'])
         if name=='image': s.add_argument('path',type=Path)
@@ -150,7 +160,11 @@ def main():
     s=sub.add_parser('worker'); s.add_argument('--watch',action='store_true')
     s=sub.add_parser('verify'); s.add_argument('path',type=Path)
     a=p.parse_args(); a.root=a.root.resolve(); a.root.mkdir(parents=True,exist_ok=True)
-    if a.command=='model': print(build(a.root,{'module':a.module} if a.module!=2 else {}))
+    if a.command=='model':
+        if a.family=='cordless_drill':
+            from .drill import build as build_drill
+            print(build_drill(a.root))
+        else: print(build(a.root,{'module':a.module} if a.module!=2 else {}))
     elif a.command in ['batch','demo','image']:
         manifest=analyze(a.path,a.root) if a.command=='image' else build(a.root,{'module':a.module} if a.module!=2 else {})
         enqueue(a.root,manifest,a.templates,a.portrait,a.production,a.seconds,a.engine)

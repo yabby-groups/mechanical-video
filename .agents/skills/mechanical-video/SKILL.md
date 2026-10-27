@@ -11,7 +11,7 @@ Run from the mechanical-video project root with `.venv/bin/python -m mechanical_
 - `demo` renders shell and full explosion videos at 1280×720, 30fps, five seconds.
 - `batch` queues ten themes; `worker` processes pending/failed jobs sequentially; `worker --watch` continuously polls. `status` reports failures, `retry` explicitly resets exhausted retry counts.
 - Add `--portrait` for 720×1280 or `--production` for 1080p; model files are shared across all render variants.
-- `image PATH` defaults to `gpt-6-luna`; requires `VISION_ENDPOINT` and optional `VISION_API_KEY`. `VISION_MODEL` can override the project default. Only planetary reducers currently have a parametric CAD family; unsupported images must stop after saving analysis.
+- `image PATH` defaults to `gpt-6-luna`; requires `VISION_ENDPOINT` and optional `VISION_API_KEY`. `VISION_MODEL` can override the project default. Parametric families: planetary reducers and a photo-guided cordless-drill concept. Drill dimensions, hidden internals and battery configuration are hypothetical. Use `model --family cordless_drill` for its cache; supported drill themes are overview, shell, internals, explode, transparent, assembly and explanation. gears, working and closeup remain reducer-specific. Unsupported families must stop after saving analysis.
 - `.venv/bin/python -m mechanical_video.web` serves the loopback image uploader.
 
 All Skills stay in this project's `.agents/skills/`. Never write global Skills. Use the installed cad Skill when extending STEP/build123d models. Preserve independently validated positive-volume part solids and part-local placements; never substitute a single whole-object mesh for an assembly.

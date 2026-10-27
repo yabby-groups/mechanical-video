@@ -12,7 +12,7 @@ s=bpy.context.scene; cam=s.camera
 parts=[o for o in s.objects if 'part_group' in o]; failures=[]
 expected=len(json.loads(Path(spec['manifest']).read_text())['parts'])
 if len(parts)!=expected: failures.append(f'Expected {expected} independent objects, found {len(parts)}')
-if spec['template']=='explode':
+if spec['template']=='explode' or spec.get('storyboard'):
     s.frame_set(1); initial={o.name:o.location.copy() for o in parts}
     s.frame_set(s.frame_end); deltas={o.name:o.location-initial[o.name] for o in parts}
     if sum(d.length>.01 for d in deltas.values())<10: failures.append('Too few independently moving parts')
@@ -23,7 +23,12 @@ if spec.get('engine','eevee')=='cycles':
 elif s.render.engine not in ('BLENDER_EEVEE','BLENDER_EEVEE_NEXT'):
     failures.append('Eevee configuration mismatch')
 if (s.render.resolution_x,s.render.resolution_y)!=(spec['width'],spec['height']): failures.append('Resolution mismatch')
-for frame in [1, max(1,s.frame_end//4),max(1,s.frame_end//2),max(1,int(s.frame_end*.8)),s.frame_end]:
+frames=[1, max(1,s.frame_end//4),max(1,s.frame_end//2),max(1,int(s.frame_end*.8)),s.frame_end]
+if spec.get('storyboard'):
+    for chapter in spec['storyboard']['chapters']:
+        first=max(1,round(chapter['start']*30)+1); last=min(s.frame_end,round(chapter['end']*30))
+        frames.extend([first,(first+last)//2,last])
+for frame in sorted(set(frames)):
     s.frame_set(frame); bpy.context.view_layer.update()
     for o in parts+[ob for ob in s.objects if ob.type=='FONT']:
         if o.hide_render: continue

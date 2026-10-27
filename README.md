@@ -93,7 +93,7 @@ export VISION_ENDPOINT='你的兼容 chat/completions 的完整 URL'
 
 图片识别默认模型为 `gpt-6-luna`，CLI 与工作台共用项目配置；`VISION_MODEL` 可覆盖默认值。模型名称已配置，不代表服务商已验证支持该名称及图片输入。
 
-上传会把图片发送到你配置的视觉服务。当前支持从视觉分析结果路由到**行星减速器**参数化家族（可调模数/整体尺寸，齿数与拓扑固定）；其他产品会保存分析并明确拒绝建模，不能把通用示例冒充识别结果。没有提供视觉服务配置或真实产品图片，因此本次未验证外部视觉推理。全部内部结构和图片估计尺寸标记为 `inferred`，不能从单张外观图断言真实内部结构。模型按几何参数缓存，图像与分析按内容哈希归档。
+上传会把图片发送到你配置的视觉服务。当前支持从视觉分析结果路由到**行星减速器**参数化家族（可调模数/整体尺寸，齿数与拓扑固定）或 **cordless_drill 电钻概念模板**。电钻模板按本项目参考照片估算外形，并不自动还原任意电钻；隐藏结构采用常见原理推测。其他产品会保存分析并明确拒绝建模，不能把通用示例冒充识别结果。没有提供视觉服务配置或真实产品图片，因此本次未验证外部视觉推理。全部内部结构和图片估计尺寸标记为 `inferred`，不能从单张外观图断言真实内部结构。模型按几何参数缓存，图像与分析按内容哈希归档。
 
 TripoSR 保持可选且禁用，ARM64 实际推理未验证，详见 docs/triposr-compatibility.md。基础建模和视频生成完全独立。
 
@@ -132,4 +132,38 @@ TripoSR 保持可选且禁用，ARM64 实际推理未验证，详见 docs/tripos
 
 ## 本机最新验收
 
-14条真实MP4已通过场景与全片解码验收，包括1080p五秒爆炸视频、M3十核GPU的Cycles Metal一秒特写，以及从工作台实际提交的一秒Eevee任务。浏览器已实际播放1080p与工作台生成的视频；持续监听可同时支持空闲验收。详见 docs/validation.md。图片分析仍需配置视觉服务，当前CAD家族仍为行星减速器；TripoSR禁用。
+14条真实MP4已通过场景与全片解码验收，包括1080p五秒爆炸视频、M3十核GPU的Cycles Metal一秒特写，以及从工作台实际提交的一秒Eevee任务。浏览器已实际播放1080p与工作台生成的视频；持续监听可同时支持空闲验收。详见 docs/validation.md。图片分析仍需配置视觉服务，当前CAD家族为行星减速器和电钻概念装配；TripoSR禁用。
+
+
+## 照片引导的电钻装配
+
+```sh
+.venv/bin/python -m mechanical_video.cli model --family cordless_drill
+```
+
+`mechanical_video/drill.py` 为可复用的 build123d 源，`gen_step()` 返回命名装配。模型缓存含每件独立 STEP/STL、assembly.step、assembly.py 和 assembly.json；所有尺寸及内部结构显式标为推测。支持 overview、shell、internals、explode、transparent、assembly、explanation；不支持减速器专用 gears/working 运动仿真及 closeup。CLI 图片入口可路由电钻，但在线视觉服务尚未验证，当前照片由助手直接观察。详细假设见 docs/briefs/cordless-drill.md。
+
+将 `model` 打印的清单路径交给现有 `enqueue`，再运行同一 artifacts 根目录的 worker，即可复用缓存。渲染脚本按现有指纹规则归档；不要修改归档或混用不同任务帧。
+
+### 电钻长片：实测旁白驱动分镜
+
+`drill_film` 将九段中文旁白逐段合成并测量，依次编排整机、电池拆出、分壳、夹头、减速器、电机、控制件、电池内部及完整爆炸图。每段末尾的停顿均来自目标时长与实测语音长度之差，不按字数猜测时间。若语音超过目标时长，在渲染前明确停止。
+
+```sh
+.venv/bin/python -m mechanical_video.drill_film \
+  --manifest artifacts/models/drill-4c0dddd1fb5480aa/assembly.json \
+  --script artifacts/films/cordless-drill-90s/narration.zh.txt \
+  --output artifacts/films/cordless-drill-90s/drill-90s-zh.mp4 --seconds 94
+.venv/bin/python -m mechanical_video.cli worker
+```
+
+按 `render-task.json` 查到对应静音视频后，用 `film_audio` 合成 AAC 中文旁白、烧录字幕和中文章节（新的输出文件名）：
+
+```sh
+.venv/bin/python -m mechanical_video.film_audio \
+  --storyboard artifacts/films/cordless-drill-90s/storyboard.json \
+  --video artifacts/videos/TASK_ID/video.mp4 \
+  --output artifacts/films/cordless-drill-90s/cordless-drill-94s-zh.mp4
+```
+
+配音默认 `qwen3-tts-flash / Roy`，使用项目 audiogen runner；凭据仅从环境变量读取。已有有效音频直接复用；不明状态的请求保留 submitted 标记，避免重复提交。分镜和独立零件运动完整写入队列规格，参与任务指纹；保存逐帧缓存、scene.blend 和渲染脚本快照。`film_audio` 额外保存音频、SRT/ASS、章节、制作脚本及校验报告。字体采用 macOS Arial Unicode MS，工具仅支持本项目已有的 macOS 生产环境。
