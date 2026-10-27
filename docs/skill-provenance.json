@@ -1,0 +1,7 @@
+{
+  "repository": "earthtojake/cad-skill",
+  "upstream_commit_at_check": "fb945aa2d71063a42a8c4ecbfe1f64f3091b6af0",
+  "installed_skill_sha256": "da533e7b5ac1b8e8d5e2616f5e8e52e2b95b7099984adf0831c2f1f7e46d9d6b",
+  "installation_target": ".agents/skills/cad",
+  "global_skills_modified": false
+}

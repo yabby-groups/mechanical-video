@@ -1,0 +1,18 @@
+[project]
+name = "mechanical-video"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "build123d==0.13.0",
+    "openai>=1",
+    "Pillow>=11",
+    "requests>=2.32",
+]
+[project.scripts]
+mechanical-video = "mechanical_video.cli:main"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pyyaml>=6"]
