@@ -22,6 +22,7 @@ class VoiceoverTests(unittest.TestCase):
             with patch.dict('os.environ',{'OPENAI_API_KEY':'test-only'}),patch('mechanical_video.voiceover.subprocess.run',side_effect=speech_or_run):
                 compose(video,script,output)
                 self.assertEqual(len(submissions),2)
+                self.assertTrue(all(call[call.index('--voice')+1]=='Ethan' for call in submissions))
                 with self.assertRaisesRegex(ValueError,'new output'): compose(video,script,output)
                 output.unlink(); compose(video,script,output)
                 self.assertEqual(len(submissions),2)

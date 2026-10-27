@@ -21,7 +21,7 @@ def stamp(t):
     ms=round(t*1000)
     return f'{ms//3600000:02}:{ms//60000%60:02}:{ms//1000%60:02},{ms%1000:03}'
 
-def prepare(script,output,model='qwen3-tts-flash',voice='Roy'):
+def prepare(script,output,model='qwen3-tts-flash',voice='Ethan'):
     output=output.resolve()
     lines=[line for line in script.read_text(encoding='utf-8').splitlines() if line.strip()]
     if not lines: raise ValueError('Narration script is empty')
@@ -42,7 +42,7 @@ def prepare(script,output,model='qwen3-tts-flash',voice='Roy'):
         clips.append((clip,duration(clip)))
     return lines,folder,cache,clips
 
-def compose(video,script,output,model='qwen3-tts-flash',voice='Roy'):
+def compose(video,script,output,model='qwen3-tts-flash',voice='Ethan'):
     video=video.resolve(); output=output.resolve()
     if output.exists() or video==output: raise ValueError('Choose a new output filename')
     probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_format','-of','json',str(video)]))
@@ -76,7 +76,7 @@ def compose(video,script,output,model='qwen3-tts-flash',voice='Roy'):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('video',type=Path); p.add_argument('--script',type=Path,required=True)
-    p.add_argument('--out',type=Path,required=True); p.add_argument('--model',default='qwen3-tts-flash'); p.add_argument('--voice',default='Roy')
+    p.add_argument('--out',type=Path,required=True); p.add_argument('--model',default='qwen3-tts-flash'); p.add_argument('--voice',default='Ethan')
     a=p.parse_args(); print(compose(a.video,a.script,a.out,a.model,a.voice))
 
 if __name__=='__main__': main()
