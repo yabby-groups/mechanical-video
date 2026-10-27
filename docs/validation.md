@@ -1,5 +1,14 @@
 # 实际验收记录 — 2026-10-27
 
+## 指定 output/demo.mp4 实际生成
+
+- CAD v8：`artifacts/models/c5c7cdfe005db2bb/assembly.json`，19个独立零件；新增输入/输出青铜滑动轴承。19件STEP实际回读，均有效、正体积且各含一个实体，证据为模型目录的 `solid-validation.json`。
+- 新拆解镜头先打开壳体和紧固件，再逐个分离太阳轮与三颗行星轮，最后展开轴、轴承、销和行星架；150帧全部实际Eevee渲染。关键帧1/42/85/120已人工视觉检查，保存为 `output/demo.keyframes.jpg`。
+- 成片 `output/demo.mp4`：503334字节，1280×720，30/1 fps，5.000秒，150帧，H.264；ffprobe检查与FFmpeg全帧解码通过。`output/demo.validation.json`记录场景与模型路径及队列done状态。
+- Blender工程 `artifacts/videos/d2de4840dc9d7b5fd144/scene.blend`，独立场景审核19对象、取景边界及相对位移通过，排除了静态画面和整体平移。原始帧、脚本快照、STEP/STL和装配STEP全部保留。
+- 本轮13项unittest通过，日志 `output/tests.log`。沙箱内Blender曾SIGSEGV；通过本机GPU访问重新渲染成功，未修改沙箱配置或安装环境。
+- CAD Skill拓扑inspect因缺少GLB侧车未通过；实体有效性依据实际build123d STEP回读，不宣称Explorer验收。模型为教学推定结构，不代表制造认证或动力学仿真。
+
 ## Ethan音色版本
 
 - 按用户要求实际调用 audiogen / qwen3-tts-flash / Ethan 重新生成11段中文语音，保留Roy成片，复用90秒镜头底片。

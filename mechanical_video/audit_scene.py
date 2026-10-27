@@ -10,7 +10,13 @@ folder=Path(sys.argv[sys.argv.index('--')+1]); spec=json.loads((folder/'job.json
 bpy.ops.wm.open_mainfile(filepath=str(folder/'scene.blend'))
 s=bpy.context.scene; cam=s.camera
 parts=[o for o in s.objects if 'part_group' in o]; failures=[]
-if len(parts)!=17: failures.append(f'Expected 17 independent objects, found {len(parts)}')
+expected=len(json.loads(Path(spec['manifest']).read_text())['parts'])
+if len(parts)!=expected: failures.append(f'Expected {expected} independent objects, found {len(parts)}')
+if spec['template']=='explode':
+    s.frame_set(1); initial={o.name:o.location.copy() for o in parts}
+    s.frame_set(s.frame_end); deltas={o.name:o.location-initial[o.name] for o in parts}
+    if sum(d.length>.01 for d in deltas.values())<10: failures.append('Too few independently moving parts')
+    if max((d-deltas[parts[0].name]).length for d in deltas.values())<.1: failures.append('Only whole-model translation detected')
 if s.render.fps!=30: failures.append('fps is not 30')
 if spec.get('engine','eevee')=='cycles':
     if s.render.engine!='CYCLES' or s.cycles.device!='GPU': failures.append('Cycles GPU configuration mismatch')

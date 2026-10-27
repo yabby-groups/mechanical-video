@@ -51,7 +51,14 @@ for part in data['parts']:
         bs.inputs['Transmission Weight'].default_value=.9; bs.inputs['Alpha'].default_value=.15
         mat.surface_render_method='DITHERED'
     if enabled:
-        for frame,amount in [(1,1 if template=='assembly' else 0),(int(end*.8),0 if template=='assembly' else 1),(end,0 if template=='assembly' else 1)]:
+        poses=[(1,1 if template=='assembly' else 0),(int(end*.8),0 if template=='assembly' else 1),(end,0 if template=='assembly' else 1)]
+        if template=='explode':
+            start,finish=1,int(end*.28)
+            if part['group'] not in ('shell','fastener'):
+                order={'sun_gear':0,'planet_1':1,'planet_2':2,'planet_3':3}.get(part['name'],4)
+                start=int(end*(.28+order*.085)); finish=min(int(end*.86),start+int(end*.20))
+            poses=[(1,0),(max(2,start),0),(finish,1),(end,1)]
+        for frame,amount in poses:
             ob.location=base+delta*amount; ob.keyframe_insert(data_path='location',frame=frame)
     if template in ('gears','working') and part['group']=='gear':
         # Fixed ring: carrier=sun/(1+Nr/Ns), planet spin from external mesh.

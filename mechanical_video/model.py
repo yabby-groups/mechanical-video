@@ -3,7 +3,7 @@ import json
 import math
 from pathlib import Path
 
-VERSION = 7
+VERSION = 8
 
 def _build(root: Path, params=None):
     from build123d import Cylinder, Polygon, extrude, export_stl, export_step, Compound, Pos, Rot
@@ -70,6 +70,9 @@ def _build(root: Path, params=None):
     add('output_shaft',cyl(6,27),[0,0,26*scale],'shaft',[0,0,125*scale],steel)
     add('input_shaft',cyl(3.8,26),[0,0,-10*scale],'shaft',[0,0,-90*scale],steel)
     add('front_cover',ring(53,7,5),[0,0,17*scale],'shell',[0,0,150*scale],blue)
+    # Independent bronze sleeve bearings seated in the two cover bores.
+    add('input_bearing',ring(5.95,3.9,5),[0,0,-15*scale],'bearing',[0,0,-75*scale],gold)
+    add('output_bearing',ring(6.95,6.1,5),[0,0,17*scale],'bearing',[0,0,115*scale],gold)
     for i in range(4):
         a=math.pi/4+i*math.pi/2
         add(f'cover_bolt_{i+1}',cyl(2,7)+Pos(0,0,4*scale)*cyl(3.5,2),
