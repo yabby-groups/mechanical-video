@@ -7,9 +7,12 @@ dependencies = [
     "openai>=1",
     "Pillow>=11",
     "requests>=2.32",
+    "pypdf>=6",
+    "trimesh>=4.12",
 ]
 [project.scripts]
 mechanical-video = "mechanical_video.cli:main"
+series = "mechanical_video.series:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

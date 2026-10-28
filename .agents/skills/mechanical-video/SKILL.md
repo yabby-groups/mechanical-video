@@ -7,6 +7,8 @@ description: Build reusable build123d mechanical assemblies and render disassemb
 
 Run from the mechanical-video project root with `.venv/bin/python -m mechanical_video.cli`.
 
+- `series init --name 3d-printer`, `series plan --season 1`, `series render --episode 1`, `series render --episodes 1-3`, `series continue --count 3`, and `series status` manage the pinned official Voron 2.4r2 documentary series. See `docs/series-production.md`. Only authored episodes may render; never fabricate remaining editorial content or completion. Keep source CAD, license, per-occurrence transforms and material uncertainty. Share the master hash between episodes. Narration uses audiogen with explicit Ethan, measured short clips and single-line subtitles of at most 20 characters. Production format is 1080×1920, 30fps, H.264/AAC, at least 90 seconds. A completed output is immutable. Archived renderer fingerprints prohibit frame mixing. Preview before production, preserve frames, and serialize Blender with the existing render lock.
+
 - `model` exports reusable independent STEP/STL solids and assembly manifest.
 - `demo` renders shell and full explosion videos at 1280×720, 30fps, five seconds.
 - `batch` queues ten themes; `worker` processes pending/failed jobs sequentially; `worker --watch` continuously polls. `status` reports failures, `retry` explicitly resets exhausted retry counts.

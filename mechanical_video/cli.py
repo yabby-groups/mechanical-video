@@ -150,6 +150,9 @@ def analyze(image, root):
     return build(root,result.get('parameters',{}))
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='series':
+        from .series import main as series_main
+        return series_main(sys.argv[2:])
     p=argparse.ArgumentParser(); p.add_argument('--root',type=Path,default=ROOT/'artifacts')
     sub=p.add_subparsers(dest='command',required=True)
     s=sub.add_parser('model'); s.add_argument('--family',choices=['planetary_reducer','cordless_drill'],default='planetary_reducer'); s.add_argument('--module',type=float,default=2); sub.add_parser('status'); sub.add_parser('retry')

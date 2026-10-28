@@ -1,4 +1,54 @@
+## 3D 打印机系列最终交付（2026-10-27）
+
+本轮实际完成 EP01、EP02、EP03，统一使用锁定官方 Voron 2.4r2 源 CAD（commit `7b32e405f0719881cca782500c822e01e3b16bf2`）、Ethan 中文普通话、单行中文字幕、原创低音量氛围音乐及独立零件机械关键帧。
+
+| 成片 | 时长 | 字幕数 / 最大字数 | 实际移动零件 | FFprobe / 全片解码 |
+|---|---:|---:|---:|---|
+| `series/3d-printer/output/EP01.mp4` | 128.533333 秒 | 47 / 16 | 842 | 通过 |
+| `series/3d-printer/output/EP02.mp4` | 133.266667 秒 | 47 / 16 | 532 | 通过 |
+| `series/3d-printer/output/EP03.mp4` | 131.500000 秒 | 48 / 17 | 829 | 通过 |
+
+三集均为 1080×1920、30fps、H.264 + AAC。每集 final.mp4 与 output/EPxx.mp4 的实际 SHA256 相同。字幕文件逐条匹配实测音频时间轴，单行、不重叠、最多 20 字。第三集音轨响度约 −16.65 LUFS，峰值 −1.42 dBTP。已抽查成片 EP01 30秒、EP02 52秒、EP03 84秒；这不是全片人工听审或制造仿真认证。
+
+共同显示装配 SHA256：`a2800a3520163bccc145ab1517bc553475a11357334ee9bda68ea2f65397343e`；共同几何清单 SHA256：`b6568ef619914fae6237062d1549acb86a30957c9871af66452ea382c8d37d0b`。三集原生 Blender 场景均独立回开审核 1,428 个源实例、初始源坐标、非零运动、终点复位及全部采样 CAD 边界入画。真实 Eevee 帧和逐任务脚本快照保留；相同静止场景姿态通过硬链接复用，机械运动帧实际渲染。
+
+**CAD 补充验收已通过**：原 STEP 兼容导出中三个零件的回读缺陷没有被隐去；生成了两个原边界平面修复 BRep 和一个源封闭网格派生的 Molex 分面 BRep。`cad_assembly.json` 保持源 ID/坐标/层级，映射独立原生几何。`cad-roundtrip-validation.json` 记录 1,414 个文件、1,428 个实例全部独立磁盘回读有效、正体积、实体数匹配。87 个文件的质量积分漂移仍有警告记录。三件原 STEP 和失败报告均保留，原显示模型没有更换。
+
+显示限制：右 X 小车旧 STL 不是水密网格，不能用于制造；有效的原生 BRep 不会自动修正已渲染显示网格。源 CAD 近似与示意轨迹在画面持续标注。若今后修正显示网格，必须建立新的模型/渲染版本，保留当前验收成片。
+
+实际运行 `series model` 验证原生 CAD 清单和所有几何文件哈希；`series status` 报告 EP01–03 complete、EP04–12 planned、下一集4。`series render` 对完成成片按 SHA256 跳过并保护；`continue --count 3` 可继续4–6，但本轮没有启动它。12集已有脚本和后续动画入口，EP04–12 尚无配音/成片验收。
+
+最新 unittest discovery：**33 项通过，8.408 秒**，日志 `series/3d-printer/tests.log`；新增原生 CAD 侧车篡改检测。一次测试缩进错误已修正，失败日志保留。`git diff --check` 通过。汇总证据：`series/3d-printer/delivery-validation.json`，每集完整文件及独立 validation.json 保留。未修改全局 Skill，未提交 Git。
+
+以下为此前阶段的恢复与历史记录，不代表最终状态。
+
+## 3D 打印机系列恢复记录（2026-10-27，中间状态存档）
+
+此前记录的 CW2 Main_Body 源曲面网格阻塞已解决：在原解析曲面和原 UV 范围重建两张锥面，保持法向与面积，缝合后清除旧三角缓存。修复证据保留于装配清单；没有替换为减速器示例模型。原始源文件与旧失败记录均保留。
+
+EP01 已实际交付 128.533333 秒，EP02 已交付 133.266667 秒；两者 1080×1920、30fps、H.264/AAC、全片 FFmpeg 解码通过，47 条单行字幕，最大 16 字。两者原生 Blender 场景独立回开审核：1,428 个零件初始坐标匹配源装配、终点复位、采样边界均在画面内；移动零件分别 842/532。EP03 仍在渲染，不能据此宣称第三集完成。
+
+共同显示装配 SHA256：`a2800a3520163bccc145ab1517bc553475a11357334ee9bda68ea2f65397343e`；几何资产清单 SHA256：`b6568ef619914fae6237062d1549acb86a30957c9871af66452ea382c8d37d0b`。Ethan 配音按原速短句实测编排，保留音频、源脚本、镜头、场景与帧序列。EP02 52 秒成片截图已人工检查，字幕与独立拆件画面清晰。
+
+额外的完整 STEP 磁盘回读审计发现：1,414 个独立文件均有正体积，但 m00078、m00079、m00784 有回读拓扑缺陷，且部分有效螺纹件的质量积分存在约 0.281% 的数值差异。`roundtrip-validation.json` 的失败结果原样保留。显示模型不等于制造可用 CAD；`canonical_parts/` 中的修复试验没有通过，不能用于宣称修正版成功。原显示资产和已交付视频没有改写。
+
+本次运行 `.venv/bin/python -m unittest discover -s tests`：32 项通过，9.486 秒，日志 `series/3d-printer/tests.log`。EP04–12 已有脚本与动画代码，但未运行配音、成片渲染和验收。
+
+以下是先前各阶段的历史记录，状态以本节及最新 episode/validation.json 为准。
+
 # 实际验收记录 — 2026-10-27
+
+## 3D 打印机系列：已执行，CAD 阻塞，未生成成片
+
+- 实际入口：`.venv/bin/python -m mechanical_video.cli series`，包含 init、plan、render（单集、范围）、continue、status，以及 assets/model/audio。已执行 init/plan/assets/audio 和 `series render --episode 1`；失败阶段已落盘，完成列表为空。EP04–12 仅有主题、知识点和镜头规划，尚无正式解说及专用动画；请求这些集数会明确报错，不输出占位影片。
+- 官方 VoronDesign/Voron-2 提交 `7b32e405f0719881cca782500c822e01e3b16bf2`；保留 41,533,391 字节 STEP ZIP、241,522,213 字节原始 STEP、74,568,690 字节/263 页装配手册、GPL-3.0 LICENSE、上游树和提交元数据。ZIP 与 PDF 实际校验上游 Git blob SHA1，通过；asset_manifest.json 记录 SHA256。另下载官网 BOM 和 configurator JS，并解析 base/upgrade BOM 表，注明这是 2026-10-27 官网快照，不能冒充锁定 STEP 的精确采购清单。
+- 实际使用项目 audiogen runner、`qwen3-tts-flash / Ethan`，生成 142 条独立配音：EP01 47 条/128.533333 秒，EP02 47 条/133.266667 秒，EP03 48 条/131.500000 秒。按实际音频时长编排，无语音减速；三个 narration.wav 均完整解码通过。全部字幕单行、无重叠，最大字符数分别为 16/16/17。各集 audio-validation.json 记录结果；这不是成片验收或人工听觉验收。
+- EP02 第 26 句明确收到 HTTP 503，失败标记归档为 `.rejected-http503` 后仅重试该句，成功，其他成功片段复用；没有重发不明状态请求。
+- 官方 STEP 存在无效源面。已实际测试常规 ShapeFix、基于原三维边界重建平面、源 CAD 网格的封闭性与分面实体转换；某些零件能得到有效正体积实体，修复或近似参数保留。完整装配仍未通过校验，不能宣称 master assembly 完成。
+- 明确阻塞件：`/_Unsaved_/Gantry/X_Axis/X_Carriage/CW2_Assembly/CW2_Printed/Main_Body`。其部分面缺少可用三角网格，`tessellate` 抛出 `AttributeError: 'NoneType' object has no attribute 'NbNodes'`。OpenCascade 8.0.1.1 与隔离的 7.8.1.1 都复现；未覆盖项目现有环境。master_assembly/invalid-source.step、invalid-source.json、validation.json 和两种内核日志保留；原始 STEP 未改写，没有换用示例模型。
+- Blender 安装版本为 5.2.3 LTS；最小测试发现 Eevee 枚举为 `BLENDER_EEVEE`，已加入兼容回退。沙箱内最小启动崩溃，独立 GPU 执行测试可启动；这不代表正式场景或影片已渲染。系列场景、机械关键帧、预览、1080p 帧序列、最终视频 FFprobe 和全片解码均未验收。
+- 实际运行 `.venv/bin/python -m unittest discover -s tests`：29 项通过，8.211 秒。新增测试覆盖计划幂等、保留已完成输出、配音源变更拒绝、字幕限制、未编写集数拒绝、CAD 失败状态与不伪造完成，以及分面实体有效性。`git diff --check` 通过。
+- **没有** `series/3d-printer/output/EP01.mp4`；EP02/03 没有成片。EP01 为 failed/model，EP02/03 为 waiting_for_ep01；不得把已成功配音或单零件修复当成用户要求的三集视频交付。
 
 ## 指定 output/demo.mp4 实际生成
 
@@ -143,3 +193,68 @@ macOS arm64 / Python 3.11.14（项目 .venv）/ build123d 0.13.0 / Blender 5.2.3
 - 最终 FFprobe：H.264、1280×720、30/1 fps、4372 帧、145.733333 秒；AAC、48 kHz、145.728 秒。成片音视频全部完整解码通过。独立验收核对全部 60 条 SRT，最长 15 字符、全部单行、无重叠；每条字幕时间来自对应 MP3 实测时长，并与对应主题镜头时间窗一致。源快照 SHA256 校验通过。证据位于同目录 acceptance.json、ffprobe.json、delivery.json、storyboard-preview.png 与 review-00..08.png。未执行人工全片听觉或 ASR 转写验收。
 - `.venv/bin/python -m unittest discover -s tests`：21 项通过（15.196 秒），包括实际 CAD 独立导出/STEP 重导入正体积验证、实测音频合成、默认 Ethan 调用参数、20 字符边界及换行拒绝、原理讲解顺序和逐句长度检查。独立媒体验收命令：`.venv/bin/python scripts/verify_drill_remake.py artifacts/films/cordless-drill-principles-ethan-dba10f9fd66a281d`，通过。
 - FFmpeg 扫描未使用系统字体 NISC18030.ttf 时的元数据警告仍存在；实际字幕使用 Arial Unicode MS，抽帧中文可见。本轮 `git diff --check`、`git diff --cached --check` 通过；未暂存或提交现有改动。
+
+## EP04 opening editorial experiment (2026-10-28)
+
+`series/3d-printer/experiments/EP04-hook-v1/EP04-hook-v1.mp4` is a 21.9-second
+opening sample, exempt from the full-episode 90-second minimum. It reuses the
+unchanged EP04 official Voron CAD frames and adds explicitly labelled 2D layer
+shift and commanded/actual-position diagrams. It is an editorial recut, not a
+new CAD render or a verified fault simulation. Narration uses qwen3-tts-flash /
+Ethan. All eight subtitle utterances are single-line and at most 20 characters.
+The 1080x1920, 30fps H.264/AAC output passed ffprobe and full FFmpeg decode;
+evidence is in the experiment's validation.json. A diagram frame was visually
+inspected; complete subjective audio/video review remains for the viewer.
+The sample renderer and fingerprint are retained under renderer/. Existing
+accepted episodes and the EP05-08 production queue were not replaced.
+
+## Silent CW2 visual study (2026-10-28)
+
+`series/3d-printer/experiments/visual-CW2-05d8d4ab426fa822/visual-test.mp4`
+is a 10-second silent visual test: closed CW2 assembly, separation of source
+housing pieces, illustrative gear rotation, and reassembly. It uses 56 source
+CAD occurrences from the unchanged shared master hash
+`a2800a3520163bccc145ab1517bc553475a11357334ee9bda68ea2f65397343e`.
+Display colors, separation distances and rotation are illustrative; gear axes
+and pivots are estimated from source placement and bounds, not independently
+accepted meshing kinematics. It makes no filament-feed or motor-internal claim.
+No new CAD solids were generated. Original STEP and display meshes are preserved.
+
+Five 35-percent preview frames and a contact sheet were inspected. First task
+`bd2a328f1abf0adf` was rejected for overexposure and framing; it is preserved.
+The corrected task has new archived renderer fingerprints and separate frames.
+All 300 production frames rendered with Eevee under the shared render lock.
+FFprobe checked 1080x1920, 30fps, H.264 and 10 seconds; full FFmpeg decode passed.
+No narration or audio track is present. Current unittest discovery passed 33
+tests (`/tmp/mechanical-visual-tests.log`). Independent production CAD generation
+was not repeated because no geometry changed. The EP05 worker was interrupted
+with existing frames preserved, then EP05-08 automatically resumed (PID 33308).
+See per-task job.json, scene.blend, blender.log, production-audit.json and
+validation.json for evidence. This short test is exempt from the 90-second
+full-episode minimum; audience engagement remains a subjective review.
+
+## Visual-first CW2 narrated extension (2026-10-28)
+
+`series/3d-printer/experiments/story-CW2-36b995412224ebaa/story-test.mp4`
+extends the approved silent direction into a 31.7-second short study, not a
+completed 90-second episode. The same pinned master display hash is retained.
+59 original CAD occurrences cover CW2 and the Revo hotend; no source geometry
+was edited or regenerated. New filament and moving bands are explicitly
+schematic: assumed 1.75mm diameter, estimated Z-directed centerline between the
+source gear bounds, illustrative 6mm/s feed, and an exaggerated loose-idler
+separation. Gear rotation is illustrative, not accepted meshing/contact physics.
+The bands stop during the loose-idler section while gear rotation continues.
+
+Six Ethan/qwen3-tts-flash utterances were measured before scheduling. All
+single-line subtitles have <=20 characters and non-overlapping speech intervals.
+Five preview poses and two full-resolution macro frames were visually inspected
+before/while production; review evidence, archived narration/renderer hashes,
+source matrices and sampled poses remain under the experiment directory.
+951 new 1080x1920 frames rendered under the existing GPU render lock. FFprobe
+checked 30fps H.264/AAC and duration; full FFmpeg decode passed. The final has
+no music. A remuxed silent comparison retains the same image/subtitle track
+and also passed full decode. Subjective full audio/video viewing is not claimed.
+33 unittest checks passed in the current run (experiment tests.log).
+EP05-08 was resumed after the serialized test, PID 34311. Existing frames and
+accepted episodes remain preserved. This short study is exempt from the
+90-second production-episode minimum.

@@ -1,8 +1,24 @@
 # Mechanical Video
 
+## 《拆解一台 3D 打印机》系列
+
+使用固定版本官方 Voron 2.4r2 CAD，共享装配模型、Ethan 普通话配音和工业视觉模板。实际可运行入口：
+
+```sh
+.venv/bin/python -m mechanical_video.cli series init --name 3d-printer
+.venv/bin/python -m mechanical_video.cli series plan --season 1
+.venv/bin/python -m mechanical_video.cli series render --episode 1
+.venv/bin/python -m mechanical_video.cli series render --episodes 1-3
+.venv/bin/python -m mechanical_video.cli series continue --count 3
+.venv/bin/python -m mechanical_video.cli series status
+```
+
+输出在 `series/3d-printer/output/`，每集包含独立脚本、分镜、音频、字幕、时间轴、缩略图和验收报告。已完成文件按哈希保护，重跑跳过；保留预览、场景、帧序列和版本化脚本供恢复。12 集已有脚本，EP04–12 尚未完成实际成片验收。CAD 来源、BRep 修复侧车、近似与已知显示限制见 [系列说明](docs/series-production.md)，实际结果见 [验证记录](docs/validation.md)。
+
+
 ## 90秒中文配音
 
-项目已本地安装 audiogen 原始脚本及 openai 依赖，默认 `qwen3-tts-flash` / `Roy`。先生成90秒基础视频：
+项目已本地安装 audiogen 原始脚本及 openai 依赖，默认 `qwen3-tts-flash` / `Ethan`。先生成90秒基础视频：
 
 ```sh
 .venv/bin/python -m mechanical_video.cli batch --templates explanation --seconds 90
