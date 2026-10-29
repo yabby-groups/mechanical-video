@@ -1,6 +1,10 @@
 # Mechanical Video
 
-## 《拆解一台 3D 打印机》系列
+当前 EP01 因吸引力和配音被用户否定，正在按“机械爽感：近景、切面、传动、声音节奏”重新优化；EP03～EP12 批量队列已暂停，现有文件保留。最新15秒机械节奏测试及 Moon 连续讲述试听位于 `series/3d-printer-v2/experiments/`。正式集数仍至少90秒，短测试不算正式交付。
+新版独立保存在 `series/3d-printer-v2`，旧版成片和素材保留。使用
+`.venv/bin/python -m mechanical_video.cli remake status` 查看新版队列；制作命令与验收边界见 [重制版说明](docs/series-remake.md)。
+
+## 《拆解一台 3D 打印机》原版系列（已被重制队列替代）
 
 使用固定版本官方 Voron 2.4r2 CAD，共享装配模型、Ethan 普通话配音和工业视觉模板。实际可运行入口：
 

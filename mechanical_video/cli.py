@@ -150,6 +150,9 @@ def analyze(image, root):
     return build(root,result.get('parameters',{}))
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='remake':
+        from .remake import main as remake_main
+        return remake_main(sys.argv[2:])
     if len(sys.argv)>1 and sys.argv[1]=='series':
         from .series import main as series_main
         return series_main(sys.argv[2:])

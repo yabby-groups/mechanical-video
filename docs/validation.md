@@ -258,3 +258,288 @@ and also passed full decode. Subjective full audio/video viewing is not claimed.
 EP05-08 was resumed after the serialized test, PID 34311. Existing frames and
 accepted episodes remain preserved. This short study is exempt from the
 90-second production-episode minimum.
+
+## Full-series visual-first remake start (2026-10-28)
+
+User requested EP01-EP12 remade from the start and explicitly requested a new
+male voice using the supplied Qwen voice catalog. The active edition now uses
+qwen3-tts-flash / Andre; the prior Ethan default remains historical for earlier
+outputs. `series/3d-printer-v2/voice-selection.json` records read-only catalog
+provenance and the selected male entry. A real 11.904-second Andre opening
+audition passed ffprobe and full FFmpeg audio decode.
+
+All twelve second-edition scripts and eight-shot plans were authored and queued
+in an independent SQLite queue. Each visual plan allocates >=96 seconds;
+measured speech may extend shots. No earlier completed output was replaced.
+The old EP05-08 worker was stopped; its frames and incomplete encoding remain.
+
+New EP01 measured timeline is 96.000 seconds, with 58.224 seconds of Andre
+speech in 23 short utterances. Caption limits and ordered timing are enforced.
+The shared manifest hash is unchanged at
+`a2800a3520163bccc145ab1517bc553475a11357334ee9bda68ea2f65397343e`;
+all existing source STEP/STL bytes were rehashed and matched the retained
+geometry inventory hash. Cached native CAD acceptance was reused; no new CAD
+was generated. Source STEP and display-approximation limitations remain intact.
+The renderer chooses one Octopus controller option, preserving other variants
+on disk. Schematic filament/feed/layer paths do not establish real print physics.
+
+Final EP01 task `96e124f78024655bfe71` produced sixteen native preview frames
+(two per shot), an archived renderer, preview.blend, preview-audit.json and a
+contact sheet inspected in this run. Electronics and bed views were adjusted
+to oblique top views; superseded preview tasks remain separate and preserved.
+38 unittest checks passed (series/3d-printer-v2/tests.log); Python compilation
+and git diff --check passed. The detached sequential worker started as PID
+37555, uses the shared render lock, and EP01 entered production. EP02-EP12
+remain queued. No new full episode has passed final media acceptance yet;
+this entry does not claim completed EP01-EP12 video output. Per-episode final
+acceptance will require source/shot checks, expected media properties and full
+decode. See docs/series-remake.md and the production log for current state.
+
+## EP01 editorial rejection and mechanical hook test (2026-10-28)
+
+The user rejected EP01 attraction and narration, then chose mechanical macro,
+cutaway, transmission and sound rhythm. The full-series worker PID 37555 and
+its active EP03 Blender child were stopped. EP01/EP02 remain technically
+validated but are not claimed as editorially accepted; EP03 frames and later
+plans are retained. An editorial hold now blocks accidental old-worker restart.
+
+Actual EP01 samples confirmed an opaque enclosure through the early opening
+while the voice referred to invisible bed/nozzle actions, and the first feed
+macro arriving only around 35-40 seconds. 23 separately synthesized utterances
+occupied 58.224 of 96 seconds. Structural timing was inspected; subjective
+full audio listening is not claimed. Audit stills/findings are retained under
+`series/3d-printer-v2/episodes/EP01/editorial-audit/`.
+
+New experiment `mechanical-hook-ec95c9755b771260` contains eight macro/cutaway/
+explosion/feed/reassembly framings in 15 seconds. It starts with source gears,
+not an enclosure. 59 original source occurrences and the unchanged master hash
+are reused. Only original housing is clipped by a display Boolean; no invented
+motor internals were added. Assumed filament and rotation remain schematic.
+The first failed task, using an obsolete Blender FAST enum, is preserved;
+current Blender FLOAT compatibility uses a new archived task identity.
+
+Eight preview images and a full-resolution cutaway frame were inspected.
+450 new 1080x1920 frames rendered under the shared lock. The final H.264/AAC,
+30fps, 15-second video passed ffprobe and full decode. Original procedural
+foley aligns transients to the seven edit times; this is not recorded machine
+sound. There is no spoken narration in this video. A separate 9.816-second
+Moon/qwen3-tts-flash continuous paragraph audition passed audio probe/decode;
+Moon remains a candidate, not an accepted whole-series replacement.
+
+38 discovery tests passed before the added hold regression; the subsequent
+six-test remake suite, including that regression, also passed. Evidence is
+retained in experiment tests.log and hold-tests.log. No fresh manufacturing
+CAD generation was needed because the source cache was unchanged. The sample
+is exempt from the 90-second full-episode minimum. Neither this short test nor
+technical decoding establishes audience engagement or full-episode acceptance.
+
+## Continuous opening revision after jump-cut feedback (2026-10-28)
+
+The user found the eight-cut mechanical hook jumpy. New task
+`series/3d-printer-v2/experiments/mechanical-hook-6e21ea58c8729117`
+uses one continuous 15-second shot: the same CW2 housing opens, the camera
+pushes toward its gears, follows the same schematic filament downward to the
+Revo hotend, then pulls back as the housing closes. Camera orientation is
+constant. All 59 source CAD occurrences remain present throughout; no source
+part visibility cuts or Boolean clipping occur. Quintic motion envelopes give
+continuous camera position, scale and housing motion. Earlier task archives
+and frames were preserved; all 450 frames of this revision were newly rendered.
+
+Eight preview stills were inspected. Native production checked all 449 adjacent
+frame pairs: source visibility IDs remained identical, camera translation per
+frame <0.003m, and orthographic scale change per frame <0.005m. Exact maxima
+are retained in production-audit.json and validation.json. These are continuity
+checks, not physical simulation or subjective audience approval. Synthetic
+foley is continuous, with soft housing slides and no edit-impact transients.
+There is no narration in this visual-continuity test.
+
+1080x1920, 30fps H.264/AAC, 15 seconds and full FFmpeg decode passed. Python
+compilation passed. No CAD regeneration or provider call was necessary; the
+shared source geometry and earlier Moon audition remain unchanged. The rejected
+full-series queue remains on editorial hold. The short test is exempt from the
+90-second formal-episode minimum and is not a completed optimized full EP01.
+
+## EP01 continuous revision, 2026-10-28
+
+Correction on later review: task `70063523807a5525b2ac` retained an enabled
+Boolean modifier on CW2 housing parts. Its earlier audit text claiming the
+cutaway was disabled was incorrect; visibility and transform continuity checks
+did not test rendered geometry clipping. The user rejected that episode, and
+the later `13ba4d94cd26498d5a97` revision removes the added Boolean modifiers.
+Do not interpret the earlier audit as evidence of intact housing geometry.
+
+Task `70063523807a5525b2ac` is an independent EP01 revision under
+`series/3d-printer-v2/revisions/EP01/70063523807a5525b2ac/`. Its complete
+100-second preview and 1080x1920, 30fps H.264/AAC production both passed full
+FFmpeg decoding; the production stream contains 3000 frames. The production
+video SHA-256 is
+`61d4c0c8f49a46be197998550cb547f1d5d25935518c86065e2a9a29e6589866`.
+
+The 750 preview samples were inspected in sequence on contact sheets. The
+source scene and motion fingerprints match the production frame cache; the
+audio timing revision was encoded separately. All 2999 production adjacent
+frame pairs passed camera position, scale, source-part translation and source
+visibility checks. Maximum camera and part translation steps are 0.00453m and
+0.00625m respectively. Rotation continuity was reviewed from the archived
+director's constant-speed gear formula, rather than measured from per-frame
+rotation matrices; the feed markers wrap outside the central gear close-up.
+These checks do not establish physical meshing or user acceptance.
+
+The explicit `qwen3-tts-flash / Moon` configuration produced eight speech
+clips totalling 26.04 seconds. Eight single-line captions have a maximum of
+16 characters; the longest caption was checked on the encoded portrait video.
+Audio and captions use measured clip durations without speech retiming. Foley
+is synthesized and ducked during speech; there is no music. Full-size output
+and the preview are preserved with their audio, subtitles, archived scripts,
+fingerprints, frame provenance, and verification reports. Schematic motion,
+filament and deposition are labeled on screen.
+
+The original model manifest hash remained
+`a2800a3520163bccc145ab1517bc553475a11357334ee9bda68ea2f65397343e`.
+All 1428 source occurrences retain positive-volume valid records and their
+display meshes; this revision reused previous CAD validation and did not
+regenerate CAD. The prior outputs, approved reference and entire queue matched
+their pre-render baseline. The test discovery run completed 39 tests. Visual
+acceptance of this full episode is still pending and the season was not resumed.
+
+## EP01 Engagement Revision, 2026-10-28
+
+Correction: `a7fccaff52b0f5e17187` has incorrect feed kinematics. Its two
+pinch-gear contact surfaces move upward while the filament marker moves down;
+the large coaxial gear also turns opposite the drive gear. The checks below
+established continuity and media properties, not correct gear direction.
+The first direction fix `5b846984fff7e103f047` was stopped after a sampling
+review showed its 50-tooth pattern could alias even at 30fps. The replacement
+`b82decd2da0c6a1cb585` passed the checks recorded below.
+
+Task `a7fccaff52b0f5e17187` reframes EP01 around why filament must stay
+rigid above the hotend while softening below. A labeled hypothetical shows the
+filament bending and recovering continuously; the heat cue and deposition path
+are illustrative. Earlier EP01 outputs and the approved 15-second reference
+remain preserved, and the season queue matched its pre-render baseline.
+
+Production `EP01.mp4` is 100 seconds, 1080x1920, 30fps, H.264/AAC, and
+contains 3000 rendered frames. Full FFmpeg audio/video decoding passed. SHA-256:
+`bce97ce87372c677585e18972ef3b5eba966423a95f0301f6323b93eb0e3fcf8`.
+The source task `f3fbfba91881025d5de8` rendered the images; the final narration
+revision reused them only after scene, motion, source-scene and master-model
+fingerprints matched. Archived scripts and frame-cache provenance are retained.
+
+All 750 preview frames were inspected in sequence. The encoded preview and
+production frames were checked for the hypothetical label and its matching
+caption; the longest subtitle was checked on the encoded preview. Numerical
+checks covered all 2999 adjacent production frames for camera movement, zoom,
+source-part translation and visibility. A separate Blender inspection of the
+saved production scene found 1428 source parts, none hidden and no active
+Boolean modifiers. Per-frame rotations and deformation were not independently
+measured; the bending demonstration was visually reviewed in the preview.
+
+The explicit `qwen3-tts-flash / Moon` voice produced eight measured clips
+totalling 37.824 seconds, above the original approximate 25-35 second target.
+Captions are single-line and at most 20 characters, each timed to a whole clip.
+Foley is synthesized and ducked during speech; no music or voice retiming was
+added. The provider interface used here exposes no separate emotion control.
+Subjective listening, user acceptance and actual viewer retention remain
+unverified. The original CAD was reused without regeneration; source records
+and meshes were checked, and the prior CAD validation remains the evidence
+for the independent positive-volume solids. Unittest discovery passed 39 tests.
+
+## EP01 Feed-Gear Direction Correction, 2026-10-29
+
+Task `b82decd2da0c6a1cb585` corrects the feed direction and regenerates EP01.
+The two pinch-gear contact velocities and the filament marker now point down at
+approximately 0.0025 m/s. The large and small drive gears have the same world
+angular velocity. Contact assumes a 1.75 mm filament and no slip; it is an
+illustrative kinematic model, not a physical contact simulation.
+
+The 50-tooth pattern frequency is approximately 5.865 Hz, below 80 percent of
+the 15fps preview sample rate's Nyquist limit. FFmpeg image-sequence tests
+verified that each 15fps preview image is encoded twice at 30fps and each
+30fps production frame is encoded once. Image correlation on decoded preview
+and production close-ups at 8-9.34 seconds measured counterclockwise screen
+motion, approximately 3 degrees per 15fps sample, matching the expected 2.815
+degrees. This is a localized visual check, not a full perceptual review.
+
+All 3000 production poses were checked in an independent, non-rendering
+preflight. The 2999 pairs of actually rendered frames were also checked for
+gear contact velocity, marker speed and shared-shaft angular velocity. Maximum
+errors were 0.000000786 m/s, 0.000000616 m/s and 0.000121 rad/s respectively.
+The saved production scene contains 1428 source parts, none hidden, with no
+active Boolean clipping. Prior CAD validation was reused without regeneration.
+
+The regenerated `EP01.mp4` is 100 seconds, 1080x1920, 30fps, H.264/AAC and
+3000 frames; FFmpeg decoded the full audio and video. SHA-256:
+`bc1f8bf39a8e82e6f22bf4bb8327c23e9273213e4ef005dcd32aa9f083e19f91`.
+Moon narration, mixed audio and subtitles match the prior episode by SHA-256.
+Forty-five unittest cases passed. Prior outputs and the queue matched their
+preservation baseline. Subjective visual and auditory acceptance remains pending.
+# EP01 新旁白预览检查（2026-10-29）
+
+- 独立任务 `ec83b8833597d8424197` 使用 `qwen3-tts-flash / Moon` 生成八段完整句子，语音实测共 60.984 秒；字幕按句分段，每条不超过 20 字。场景和齿轮动作复用已验证修正版，CAD 未重新生成，整季暂停标记保留。
+- `preview.mp4` 为 100 秒、1080×1920、30fps、H.264/AAC，完整解码通过，SHA-256 为 `b3f4885d976c4a73a82c85ea279bb372cf6a8cc8728be345ecdd44fd94d2ef97`。底层预览帧是 15fps、25% 分辨率后放大，不能视为正式画质。
+- 画面与文案的预览检查未通过：旁白在 43 秒讲挤出、54 秒讲床面路径，但现有场景的沉积路径直到 73 秒才开始生成；76 秒的逐层旁白也早于第一层路径完成。仍需重新编排沉积、工具头运动和龙门升高，重新渲染完整预览并检查音画对应，才能进入正式版。该任务没有 `preview-reviewed.json`，未生成正式成片；观感认可待用户审阅。
+
+# EP01 打印示意优化预览（2026-10-29）
+
+- 任务 `d5ce7c04cb16858e806f` 保留齿轮修正，第一层采用闭合轮廓和连续往复填充，第二层在龙门升高后采用交错填充；两层的喷头沿相同沉积轨迹运动，打印材料改为与线材同色的非金属材质。路径和运动均为示意，当前仅显示两层薄片，并非完整立体物件的打印过程。
+- `preview.mp4` 为 100 秒、1080×1920、30fps、H.264/AAC，底层帧以 25% 分辨率、15fps 渲染；完整解码通过，SHA-256 为 `a9ce3d2abfcfa620a307cea17cdbfabb5cd8fd86218fe4e3267bc2c1c8d3818b`。Moon 配音 60.984 秒，24 条单行字幕最长 14 字。47 项单元测试通过。
+- 场景审计包括 1499 对相邻帧，1428 个源零件保持可见，无硬切或可见性突变；齿轮接触速度最大误差 0.000000382 m/s、线材标记速度最大误差 0.000000266 m/s，同轴角速度最大误差 0.0000615 rad/s。按每秒抽取的 100 帧检查显示床面路径、层间抬升和退镜持续存在；这不是完整播放的动态或听感验收。
+- 正式成片 `EP01.mp4` 已生成，100 秒、1080×1920、30fps、H.264/AAC、3000 帧，全片解码通过；SHA-256 为 `bdcc93f3522d66eb2ff267d15de88c2cfac1689f2d2360843fe94f2d2737555c`。`production-independent-verification.json` 记录 2999 对帧的连续性和方向检查、字幕、源哈希及帧文件完整性。接触速度最大误差 0.000000786 m/s，线材标记速度最大误差 0.000000616 m/s，同轴角速度最大误差 0.000121 rad/s。
+- `preview-reviewed.json` 的通过范围仅限全片解码、帧对运动审计、逐秒抽帧和时间轴核对；字幕片段按整句实测时长和字数比例分配，未经逐词听辨。完整动态播放、声音听感和用户观感验收仍待完成，正式帧抽查可见床面阴影有颗粒。画面仅展示两层薄片，不是完整立体成品的打印过程。主模型未重新生成，EP02 至 EP12 保持暂停。
+
+# 物件诞生短样片（2026-10-29）
+
+- 独立实验 `print-birth-89e9680a886f175d103c`：16 秒连续镜头，从线材、喷嘴和螺旋杯底过渡到逐渐长出的杯壁。画面使用加速示意，线材、几何和送料均非物理仿真；机械声音为合成拟音。继续使用既有官方 CAD 和齿轮方向修正，原成片与整季暂停标记保留。
+- 无旁白 `print-birth.mp4` 的 SHA-256 是 `901961678e466e50de1244e537fad387c85ed6034436ec8f3041753c40b0058c`；Moon 试听版 `print-birth-moon.mp4` 为 `5de8825f76351317fe832d6d7385b5d70e913be4a73889a26ba6b96334a54307`。两者均为 16 秒、720×1280、30fps、H.264/AAC，完整解码通过。无旁白版本的 479 对相邻帧通过场景及齿轮运动审计。47 项单元测试通过。
+- 试听使用 `qwen3-tts-flash / Moon`，整句实测 5.496 秒；字幕两条、单行且每条不超过 20 字，按预计句段时间分配，尚未经逐词听辨。画面和声线的情绪、自然度及音画关系仍待连续播放和用户观感确认，不能由技术检查推断；杯底是疏间螺旋示意，并非完整实体打印过程。
+
+# 机械拆解与送料讲解短样片（2026-10-29）
+
+- 用户纠正创作方向：主体是机器拆解及原理讲解；上一个以小杯成型为主体的短样片不符合要求，保留作为未认可的实验，不作为后续方向。
+- `disassembly-feed-b8123c42979603dc3bb4` 从已验证的 EP01 齿轮修正版连续帧截取前 18 秒，重新合成单句 Moon 原理讲解和原合成拟音；这是新剪辑，不是重新制作的拆解动画。画面先展示机构展开及齿轮运动，再解释旋转如何产生向下推力。
+- 视频 SHA-256 `b0ef24fdf574b19f8959a686a622e4ec98990f1c8c17ee06a8bff85bc5a2152d`；18 秒、720×1280、30fps、H.264/AAC，完整音视频解码通过。`qwen3-tts-flash / Moon` 配音实测 5.424 秒；字幕单行且不超过 20 字，片段时间按字数比例估算，尚未经逐词听辨。原视频及 540 个源帧的哈希记录于任务归档，47 项单元测试通过。
+- 齿轮接触是示意性无滑移近似，拟音非实录。连续播放听感和用户观感尚待确认；EP01 正式重制与 EP02 至 EP12 均未重新启动。
+
+# 齿轮讲解 Ryan 音色试听（2026-10-29）
+
+- 用户反馈 Moon 音色不合适，单独生成 `qwen3-tts-flash / Ryan` 试听任务 `disassembly-feed-7d5a7c519db44f454c70`；原 Moon 样片保留。两版复用相同的齿轮修正版画面、旁白文案和合成拟音，语音的实际时长及相应字幕时间不同。
+- Ryan 配音实测 6.048 秒；成片 18 秒、720×1280、30fps、H.264/AAC，完整解码通过，SHA-256 `41cbdebfda17cea95bcda5ac65973af44b1290f6dfac561454b3f52375b5d688`。字幕单行、不超过 20 字，段内时间按字数比例估算，未逐词听辨。声音的自然度、情绪和用户认可尚待试听，不视为正式集音色批准。
+
+# 齿轮讲解 Kai 音色试听（2026-10-29）
+
+- 用户认为 Ryan 听起来不合适，生成 `qwen3-tts-flash / Kai` 试听任务 `disassembly-feed-772a1055858f7f87296f`。复用同一拆解画面、旁白文案和合成拟音，保留 Moon 和 Ryan 版本。
+- Kai 配音实测 6.864 秒；成片为 18 秒、720×1280、30fps、H.264/AAC，完整解码通过，SHA-256 `8c0828bddd00370b4824b141e1cf9df9ab318dfd4dfcc2453122939e9bb34009`。字幕单行且不超过 20 字，片段时间按字数比例估算，未经逐词听辨；声音观感待用户试听。
+
+# EP01 Kai 重制预览（2026-10-29）
+
+- 独立任务 `dd5c18eec572c11be76e` 使用指定八段文案及 `qwen3-tts-flash / Kai`，语音实测共 73.104 秒，各段无重叠。脚本、语音、场景、1500 张预览帧和审计保存在任务目录；原模型和旧成片未覆盖，整季暂停。
+- `preview.mp4` 为 100 秒、1080×1920、30fps、H.264/AAC，底层画面为 25% 尺寸、15fps，完整解码通过；SHA-256 为 `73c9b09b6935c6516217de9324aebc5c9ff9bc2f4c8e66cda097c8f0dc43189d`。1499 对相邻帧通过场景和齿轮运动断言，记录无硬切或源零件可见性变化。齿轮接触和打印运动为示意，拟音为合成声音。
+- 抽查显示齿轮、热端及两层路径，但约 34 秒讲述喷嘴挤出时，画面未清晰展示挤出过程。字幕按整句时长和字数比例估算，未进行逐词听辨；完整连续播放、听感和用户观感均未验收。预览未通过内容检查，未生成正式版。需修正挤出动作并完成动态和音画同步检查后才可正式渲染。
+- 沙箱内 Blender 在 Metal 初始化时 SIGSEGV；获得本机 GPU 访问后预览渲染成功。当前运行 unittest discovery，47 项通过。
+
+# EP01 循环预览（2026-10-29）
+
+- 在 Kai 预览基础上制作独立循环试版 `series/3d-printer-v2/experiments/ep01-kai-loop-preview/preview-loop.mp4`，末尾 96 秒起用约四秒叠化回首帧，原预览保留。播放时需在播放器启用循环；MP4 文件本身不控制播放器重复播放。
+- 试版 100 秒、1080×1920、30fps、H.264/AAC，音视频全片解码通过；首末帧 PSNR 48.69 dB，SHA-256 `5b2e76e9f6dc0589e2ae8c1384f3ba828eb56cb3395364f6932f85c8dc5bc171`。接点为叠化而非连续三维动作，尚未进行连续播放及听感验收；原预览的挤出画面和字幕同步问题仍待解决，正式版未渲染。
+
+- 用户反馈切换不自然后，修订任务 `6a19b7e7b0d0ecea1898` 将结尾重新编排为真实回镜：整机退回喷头近景、外壳复位并与首帧保持同一装配状态，取消叠化。修订预览已完成，100 秒、1080×1920、30fps、H.264/AAC，完整解码通过；交付副本为 `series/3d-printer-v2/experiments/ep01-kai-loop-preview/preview-loop-v2.mp4`，SHA-256 `af844a2432e4d20cd7974cdd6d8635520b13d1bab2ffb14fc1b463bc9638c51d`。正式版仍未渲染，连续播放和听感验收待进行。
+
+- 用户指出打印阶段引导管与打印线分离。修订任务 `d72ba9556ab6492c9e32` 增加连续挤出桥曲线，明确连接导料线末端、喷嘴和当前沉积点；非打印阶段隐藏该桥。预览已完成并通过 FFmpeg 全片解码，抽查打印阶段确认导料线与喷嘴、打印 bead 位于同一连续路径。该修订仍是示意性挤出，不代表真实流体仿真或制造精度。
+
+- 更正：上述检查没有解决截图中的灰色引导管与青色线分离，之前的结论有误。任务 `be3c9d196fc32ebef8f5` 误认了喷头内管件，画面仍有断开。新任务 `286fbb6553fde95a5e0d` 将源模型的 `4x3mm_PTFE_Guide_Tube` 纳入工具头位移；打印阶段两处抽帧显示灰色管下端接到青色线。完整预览解码通过。引导管整体平移是示意运动，上端并非固定支架下的真实柔性变形；连续播放及用户观感尚未验收。
+
+### EP01 Kai 正式版（2026-10-29）
+
+- 用户提供的正式制作计划确认预览任务 `286fbb6553fde95a5e0d` 审核通过，实测预览 SHA-256 为 `68e5b594e84893a4a0f023c407db6e02501366b3c1b3ce9f74f8539c580b3689`；绑定记录见该任务的 `preview-reviewed.json`。此批准不包含正式成片观感、发布或其他集数。
+- 正式版 `EP01.mp4` SHA-256：`ee0664aae24fbc8e771b3883104b49f093cd33f4921de3129e05f75dff324dc3`。ffprobe：H.264 1080×1920、30fps、3000 帧、100 秒；AAC 音轨 100 秒。脚本完成 FFmpeg 全片音视频解码。保留 3000 张正式帧、`scene.blend`、日志、音频与归档脚本；未重建 CAD 或恢复整季队列。沙箱内 Blender 初始化 SIGSEGV，本机 GPU 访问后渲染完成。
+- `production-audit.json` 记录 1428 个源零件、2999 对连续帧、0 个硬切和可见集合变化；齿轮接触速度最大误差 0.000000786 m/s，线材标记速度最大误差 0.000000575 m/s，轴角速度最大误差 0.000121 rad/s。编码画面 8–9.34 秒齿轮方向相关性检查通过（`production-visual-direction.json`）。这些为场景和局部画面检查，不构成物理仿真。
+- 配音配置为 `qwen3-tts-flash / Kai`，实测配音总长 73.104 秒；29 条字幕均为单行，最长 16 字。字幕分句时间按字数比例估算，未逐句听辨确认。正式帧约 56.6 秒和 66.6 秒抽查到引导管与线材相接；首末原始帧构图一致。引导管整体跟随是示意运动，不是柔性管物理仿真。
+- 实际连续播放、打印阶段全程连接、循环接点的动态观感、旁白画面对应及逐句听感和字幕同步尚未完成验收；不能从解码、数值审计或抽帧推断通过。正式版观感待用户审看。单元测试发现 47 项通过。
+
+- 后续用户确认 EP01 正式版效果满足要求。按用户要求清理生产数据时，逐文件比较确认旧任务 `a7fccaff52b0f5e17187/frames` 与 `f3fbfba91881025d5de8/frames` 相同，`70063523807a5525b2ac/frames` 与 `bfc576bd5152b51686f3/frames` 相同，删除前者两份复制帧。源帧、复制来源记录和旧成片保留；如需对被清理的旧任务重新执行要求完整帧目录的验证，可按各自 `production-frame-cache-provenance.json` 从对应源目录恢复。已认可任务 `286fbb6553fde95a5e0d` 的正式帧未删除。
+
+- 用户随后要求只保留最后认可的 EP01 版本，已删除其他 EP01 修订目录、原系列与重制系列的旧 EP01 输出、循环预览，以及最终任务的预览 MP4。上文关于旧版本和旧源帧保留、可恢复的描述仅是清理前的历史记录，不再适用；预览审核记录及哈希仍在。最终正式版、正式帧、音频和场景保留。独立的已确认风格参考和其他集数保留。
+
+- 用户进一步要求移除其他未认可集数：原系列 EP02–EP05 和重制系列 EP02–EP03 的旧渲染目录或帧，以及原系列 EP02–EP04、重制系列 EP02 的输出 MP4 已删除。历史验证和队列记录仍是当时状态，不表示这些输出仍存在；系列暂停标记保留。EP04 的 `04fdabd9902948771c7e/scene.blend` 是 EP01 和渲染脚本的共享源场景，仍保留。
+
+- 后续深度清理移除了原系列 `episodes` 中遗漏的 EP01–EP04 成片副本、原系列实验、重制系列未采用的实验、旧 EP01 指针和 `artifacts/review_rejected`。系列目录仅保留获认可的 EP01 正式视频与已确认的 15 秒风格参考；原系列集数脚本和计划保留。上文历史记录中指向已删除实验或成片的链接不再可用。

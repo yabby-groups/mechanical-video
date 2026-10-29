@@ -7,6 +7,18 @@ description: Build reusable build123d mechanical assemblies and render disassemb
 
 Run from the mechanical-video project root with `.venv/bin/python -m mechanical_video.cli`.
 
+- The user-authorized visual-first full-series remake uses `remake plan`,
+  `remake render --episode 1 --preview-only`, `remake worker`, and `remake status`.
+  Its independent queue/output live under `series/3d-printer-v2`; preserve the
+  original series. The user selected a new male voice workflow; the remake is
+  pinned to `qwen3-tts-flash / Andre`, overriding the project Ethan default for
+  this edition. The supplied voice catalog provenance is in voice-selection.json.
+  All twelve episodes are authored in remake_content.py. Use the same master
+  CAD hash, eight distinct action shots, measured speech, >=90 seconds, 1080x1920,
+  30fps and full decode. Review EP01 previews before launching the sequential
+  worker. A definite HTTP 429/503 rejection may retry with archived markers;
+  uncertain speech requests must block. See docs/series-remake.md.
+
 - `series init --name 3d-printer`, `series plan --season 1`, `series render --episode 1`, `series render --episodes 1-3`, `series continue --count 3`, and `series status` manage the pinned official Voron 2.4r2 documentary series. See `docs/series-production.md`. Only authored episodes may render; never fabricate remaining editorial content or completion. Keep source CAD, license, per-occurrence transforms and material uncertainty. Share the master hash between episodes. Narration uses audiogen with explicit Ethan, measured short clips and single-line subtitles of at most 20 characters. Production format is 1080×1920, 30fps, H.264/AAC, at least 90 seconds. A completed output is immutable. Archived renderer fingerprints prohibit frame mixing. Preview before production, preserve frames, and serialize Blender with the existing render lock.
 
 - `model` exports reusable independent STEP/STL solids and assembly manifest.
