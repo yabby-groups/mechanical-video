@@ -433,6 +433,8 @@ def render(number,preview_only=False):
             storyboard['chapters']=[dict({k:v for k,v in c.items() if k!='motion'},scene=next(s['title'] for s in job['scenes'] if s['start']<=c['start']<s['end'])) for c in timeline['chapters']]
             write(folder/'storyboard.json',storyboard)
             blender=os.getenv('BLENDER_BIN') or '/Applications/Blender.app/Contents/MacOS/Blender'
+            from .runtime import require_metal_device
+            require_metal_device()
             with exclusive_lock(ROOT/'artifacts/render.lock',blocking=True):
                 for mode in (['preview'] if preview_only else ['preview','production']):
                     episode['state']=mode; write(folder/'episode.json',episode)

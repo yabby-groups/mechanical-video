@@ -62,6 +62,8 @@ uv run mechanical-video demo
 
 Blender 自动检测 `/Applications/Blender.app/Contents/MacOS/Blender`，或通过 `BLENDER_BIN` 指定。FFmpeg/ffprobe 必须在 PATH。macOS 的 Codex 沙箱可能在 Metal 探测阶段触发 Blender 崩溃，需按审批机制批准渲染进程的 GPU 访问，无需修改沙箱配置。所有 Skill 位于 `.agents/skills/`，没有安装全局 Skill。
 
+macOS 流水线启动 Blender 前检查 Metal 设备：不可见时保留待处理任务及尝试次数。子进程因信号退出时任务标为 `blocked`，重启 worker 不会自动重试；检查日志和系统崩溃报告后，可用 `retry` 显式恢复。流水线自身不能授予沙箱外权限，需由执行器授权或在具有 GPU 访问的终端启动。
+
 ## 批量与持续生产
 
 ```sh

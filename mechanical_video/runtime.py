@@ -4,6 +4,24 @@ import fcntl
 import hashlib
 from pathlib import Path
 import runpy
+import ctypes
+import sys
+
+class GPUUnavailable(RuntimeError):
+    pass
+
+def require_metal_device():
+    """Fail before Blender startup when this process cannot access Metal."""
+    if sys.platform != 'darwin':
+        return
+    try:
+        metal=ctypes.CDLL('/System/Library/Frameworks/Metal.framework/Metal')
+        metal.MTLCreateSystemDefaultDevice.restype=ctypes.c_void_p
+        device=metal.MTLCreateSystemDefaultDevice()
+    except (OSError, AttributeError) as exc:
+        raise GPUUnavailable('Metal device probe failed; run the pipeline with GPU access') from exc
+    if not device:
+        raise GPUUnavailable('No Metal device visible; run the pipeline with GPU access')
 
 RENDER_FILES=('blender_scene.py','audit_scene.py','narration.py')
 SOURCE=Path(__file__).resolve().parent

@@ -77,7 +77,7 @@ def worker(root,watch=False,retries=3):
 
 
 def _consume(root,watch,retries):
-    from .runtime import exclusive_lock, render_sources, caption_video
+    from .runtime import exclusive_lock, render_sources, caption_video, require_metal_device
     db=connect(root)
     with exclusive_lock(root/'render.lock',blocking=True):
         db.execute("UPDATE jobs SET state='pending' WHERE state='running'"); db.commit()
@@ -88,6 +88,7 @@ def _consume(root,watch,retries):
             if row is None:
                 if watch: time.sleep(5); continue
                 break
+            require_metal_device()
             with exclusive_lock(root/'render.lock',blocking=True):
                 spec=json.loads(row['spec']); folder=Path(spec['directory']); folder.mkdir(parents=True,exist_ok=True)
                 job=folder/'job.json'; job.write_text(json.dumps(spec,indent=2))
@@ -114,10 +115,14 @@ def _consume(root,watch,retries):
                     db.execute("UPDATE jobs SET state='done',error=NULL,updated=? WHERE id=?",(time.time(),row['id']))
                     print('DONE',video,flush=True)
                 except Exception as exc:
-                    db.execute("UPDATE jobs SET state='failed',error=?,updated=? WHERE id=?",(str(exc),time.time(),row['id']))
+                    crashed=isinstance(exc, subprocess.CalledProcessError) and exc.returncode < 0
+                    db.execute("UPDATE jobs SET state=?,error=?,updated=? WHERE id=?",('blocked' if crashed else 'failed',str(exc),time.time(),row['id']))
                     print('FAILED',row['id'],str(exc),flush=True)
+                    if crashed:
+                        db.commit()
+                        raise RuntimeError('Blender or a subprocess terminated by signal; inspect logs before retrying') from exc
                 db.commit()
-        failures=db.execute("SELECT count(*) FROM jobs WHERE state='failed'").fetchone()[0]
+        failures=db.execute("SELECT count(*) FROM jobs WHERE state IN ('failed','blocked')").fetchone()[0]
         if failures: raise RuntimeError(f'{failures} failed tasks; inspect status and blender.log')
     finally:
         db.close()
@@ -178,7 +183,7 @@ def main():
     elif a.command=='worker': worker(a.root,a.watch)
     elif a.command=='verify': print(json.dumps(verify(a.path),indent=2))
     elif a.command=='retry':
-        db=connect(a.root); db.execute("UPDATE jobs SET attempts=0,state='pending' WHERE state='failed'"); db.commit(); db.close()
+        db=connect(a.root); db.execute("UPDATE jobs SET attempts=0,state='pending' WHERE state IN ('failed','blocked')"); db.commit(); db.close()
     elif a.command=='status':
         db=connect(a.root)
         for row in db.execute('SELECT id,state,attempts,error FROM jobs'): print(dict(row))

@@ -199,6 +199,8 @@ def render(n,preview_only=False):
     write(task/'job.json',job); write(episode/'job.json',dict(job,task=str(task)))
     shutil.copy2(episode/'narration.wav',task/'narration.wav')
     blender=os.getenv('BLENDER_BIN') or '/Applications/Blender.app/Contents/MacOS/Blender'
+    from .runtime import require_metal_device
+    require_metal_device()
     with exclusive_lock(ROOT/'artifacts/render.lock',blocking=True):
         for mode in (['preview'] if preview_only else ['preview','production']):
             state(n,mode,str(task))

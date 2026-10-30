@@ -9,7 +9,7 @@ import subprocess
 import time
 from .cli import ROOT,connect,verify
 from .catalog import generate
-from .runtime import caption_video, render_sources
+from .runtime import caption_video, render_sources, require_metal_device
 
 def accept(root,wait=False):
     root.mkdir(parents=True,exist_ok=True)
@@ -21,6 +21,7 @@ def accept(root,wait=False):
             if not wait or time.time()>deadline: raise RuntimeError('Renderer active; run acceptance --wait or wait for the queue')
             time.sleep(5)
     con=connect(root); rows=con.execute("SELECT * FROM jobs WHERE state='done' OR (state='failed' AND error LIKE 'Acceptance: %') ORDER BY updated").fetchall()
+    if rows: require_metal_device()
     blender=os.environ.get('BLENDER_BIN') or shutil.which('blender') or '/Applications/Blender.app/Contents/MacOS/Blender'
     reports=[]; failures=[]
     for row in rows:

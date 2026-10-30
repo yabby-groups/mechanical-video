@@ -17,7 +17,7 @@ class AcceptanceRecoveryTests(unittest.TestCase):
             con=connect(root)
             con.execute("UPDATE jobs SET state='failed',error='Acceptance: GPU unavailable'")
             con.commit(); con.close()
-            with patch('mechanical_video.acceptance.subprocess.run') as run, patch('mechanical_video.acceptance.caption_video'), patch('mechanical_video.acceptance.verify',return_value={'decode':'passed'}), patch('mechanical_video.acceptance.generate'):
+            with patch('mechanical_video.acceptance.require_metal_device'), patch('mechanical_video.acceptance.subprocess.run') as run, patch('mechanical_video.acceptance.caption_video'), patch('mechanical_video.acceptance.verify',return_value={'decode':'passed'}), patch('mechanical_video.acceptance.generate'):
                 report=accept(root)
             self.assertEqual(report['accepted'],1)
             self.assertIn(str((folder/'renderer'/'audit_scene.py').resolve()),run.call_args.args[0])
@@ -83,6 +83,35 @@ class ImageContractTests(unittest.TestCase):
             self.assertFalse((root/'models').exists())
 
 class RuntimeTests(unittest.TestCase):
+    def test_signal_crash_stays_blocked_until_explicit_retry(self):
+        import subprocess
+        from unittest.mock import patch
+        from mechanical_video.cli import worker
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); manifest=root/'assembly.json'; manifest.write_text('{}')
+            key=enqueue(root,manifest,['explode'])[0]['id']
+            crash=subprocess.CalledProcessError(-11,['blender'])
+            with patch('mechanical_video.runtime.require_metal_device'), patch('mechanical_video.cli.subprocess.run',side_effect=crash) as run:
+                with self.assertRaisesRegex(RuntimeError,'terminated by signal'): worker(root)
+                with self.assertRaisesRegex(RuntimeError,'failed tasks'): worker(root)
+                self.assertEqual(run.call_count,1)
+            con=connect(root)
+            row=con.execute('SELECT state,attempts FROM jobs WHERE id=?',(key,)).fetchone()
+            self.assertEqual(tuple(row),('blocked',1)); con.close()
+
+    def test_missing_gpu_preserves_pending_job(self):
+        from unittest.mock import patch
+        from mechanical_video.cli import worker
+        from mechanical_video.runtime import GPUUnavailable
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); manifest=root/'assembly.json'; manifest.write_text('{}')
+            key=enqueue(root,manifest,['explode'])[0]['id']
+            with patch('mechanical_video.runtime.require_metal_device',side_effect=GPUUnavailable('No Metal device')):
+                with self.assertRaises(GPUUnavailable): worker(root)
+            con=connect(root)
+            row=con.execute('SELECT state,attempts FROM jobs WHERE id=?',(key,)).fetchone()
+            self.assertEqual(tuple(row),('pending',0)); con.close()
+
     def test_idle_consumer_does_not_block_acceptance(self):
         from mechanical_video.runtime import exclusive_lock
         from mechanical_video.cli import worker
