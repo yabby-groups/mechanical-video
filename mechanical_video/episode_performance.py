@@ -7,10 +7,11 @@ import sqlite3
 import statistics
 
 
-METRICS = {'plays', 'retention_3s', 'retention_30s', 'average_watch_seconds',
-           'completion_rate', 'likes', 'comments', 'saves', 'shares'}
-RATES = {'retention_3s', 'retention_30s', 'completion_rate'}
-COUNTS = {'plays', 'likes', 'comments', 'saves', 'shares'}
+RATES = {'retention_3s', 'retention_5s', 'retention_9s', 'retention_18s',
+         'retention_27s', 'retention_30s', 'completion_rate', 'skip_2s_rate',
+         'like_rate', 'comment_rate', 'share_rate', 'save_rate', 'follow_rate'}
+COUNTS = {'plays', 'likes', 'comments', 'saves', 'shares', 'attributed_followers'}
+METRICS = RATES | COUNTS | {'average_watch_seconds'}
 
 
 def connect(path):
@@ -44,6 +45,8 @@ def validate(record):
         for key in ('source', 'observed_at', 'measurement_window'):
             if not isinstance(actual.get(key), str) or not actual[key].strip():
                 raise ValueError(f'actual.{key} must be a nonempty string')
+        if 'media_type' in actual and actual['media_type'] not in ('video', 'image_post'):
+            raise ValueError('actual.media_type must be video or image_post when supplied')
         metrics = actual.get('metrics')
         if not isinstance(metrics, dict) or not metrics or set(metrics) - METRICS:
             raise ValueError('actual.metrics must contain supported metric names')
@@ -93,7 +96,9 @@ def compare(db, snapshot_id, metric):
             continue
         seen.add(key)
         observation = json.loads(row['actual_json'])
-        if observation['measurement_window'] == window and metric in observation['metrics']:
+        # Missing legacy media metadata is unknown, not evidence of a video match.
+        if (observation.get('media_type') == actual.get('media_type')
+                and observation['measurement_window'] == window and metric in observation['metrics']):
             peers[key] = observation['metrics'][metric]
     values = list(peers.values())
     if not values:
@@ -103,7 +108,11 @@ def compare(db, snapshot_id, metric):
     value = actual['metrics'][metric]
     return {'status': 'COMPARISON', 'metric': metric, 'target': value, 'peer_count': len(values),
             'peer_median': median, 'difference_from_median': value - median,
-            'scope': 'same platform, same measurement window, duration within 10%; descriptive only'}
+            'scope': 'same platform, same measurement window, matching media type metadata, '
+                     'duration within 10%; descriptive only',
+            'media_type': actual.get('media_type'),
+            'limitations': ([] if actual.get('media_type') else
+                            ['Media type is unknown in legacy records; media comparability is unverified'])}
 
 
 def main():

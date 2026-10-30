@@ -22,3 +22,32 @@ Required record fields are `episode_id`, `video_version`, `platform`,
 `audience_score` and `basis`; real observations require `source`, `observed_at`,
 `measurement_window`, and a `metrics` object. Retention and completion rates
 are fractions from 0 to 1. Do not import guesses as actual data.
+
+For retention-driven production, use [the audience-growth worksheet](audience-growth.md).
+Review the actual local A/B outputs with matching time ranges. Report separately:
+new visible information after the hook, time to the first understandable causal
+payoff, retellable knowledge, share/save value, a natural answerable discussion
+point, and the reason to follow the series. Cite actual times and coverage;
+mark ending or global pacing unavailable when only a local excerpt exists.
+A moving camera alone is not new information. Do not assign a growth score or
+infer engagement effects from static images, platform labels or one post.
+Preserve the distinction between a production improvement visible in the
+reviewed asset and an untested platform-performance hypothesis.
+
+Actual observations also support `retention_5s`, `retention_9s`,
+`retention_18s`, `retention_27s`, `skip_2s_rate`, `like_rate`, `comment_rate`,
+`share_rate`, `save_rate`, `follow_rate`, and integer `attributed_followers`.
+Rates are fractions (51.72% is `0.5172`), not percentage-point numbers.
+Preserve the platform-reported value and denominator uncertainty instead of
+reconstructing rounded rates. Do not merge values from different observation
+times or scopes into one snapshot.
+
+Supply `actual.media_type` as `video` or `image_post` when known. Comparisons
+require matching media metadata; a known video cannot use an image post or a
+legacy record with unknown media type as a peer. Legacy records remain valid;
+comparisons between two unknown types explicitly report that media
+comparability is unverified. The existing window/platform/duration filters
+remain descriptive; they do not establish matching topics, random assignment,
+independent viewers or growth causality. For image posts, do not invent a video
+duration to force them into this duration-based comparison tool; retain their
+native image-count metrics in the source evidence instead.

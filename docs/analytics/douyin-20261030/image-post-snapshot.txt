@@ -1,0 +1,172 @@
+2026-10-30T14:10:52.553Z
+https://creator.douyin.com/creator-micro/work-management/work-detail/7702081187065397627?enter_from=operation
+[p1 "抖音创作者中心" | space "douyin-performance-optimization"(2): 1 managed, 0 untracked — p1* "抖音创作者中心"]
+root
+  svg_root
+  container
+    container
+      container
+        button [ref=53]
+          container
+            image
+              svg_root
+            container
+              text "作品发布"
+              image
+                svg_root
+          canvas
+        menu
+          menuitem [ref=54]
+            image
+              svg_root
+            text "首页"
+          menuitem [ref=55]
+            image
+              svg_root
+            text "内容管理"
+          menuitem [ref=56]
+            image
+              svg_root
+            text "数据中心"
+          menuitem [ref=57]
+            image
+              svg_root
+            text "收入变现"
+          list_item [ref=58]
+            menuitem [ref=59]
+              image
+                svg_root
+              text "创作服务"
+              image "chevron_down"
+                svg_root
+      container
+        container
+          image
+          container "智能创作"
+            button [ref=60]
+              svg_root
+              text "首页"
+            button [ref=61]
+              text "AI分身"
+            button [ref=62]
+              text "随变"
+            button [ref=63]
+              text "世界书"
+            button [ref=64]
+              text "造世界"
+            button [ref=65]
+              text "AI工坊"
+          container
+            button "星光余额 0，打开星光浮层" [ref=66, loc=css:button[aria-label="星光余额 0，打开星光浮层"]]
+              image
+              text "0"
+            container [ref=67]
+        container
+          text "数据指标说明"
+          container
+            container
+              image
+                svg_root
+              text "内容管理"
+            container
+              container
+                container
+                  image
+                  image
+                text "23张"
+              container
+                text "3D打印机线材是怎么送入喷嘴的？🎈拆开3D打印机工具头就能看清完整工作流程。 1️⃣两颗齿轮从两侧夹住线材，齿轮转动时接触处同步向下，将线材�..."
+                text "2026年10月29日 21:28"
+                container
+                  image
+                    svg_root
+                  text "作品状态正常"
+            container
+              tab
+                text "总览"
+              tab
+                text "流量分析"
+              tab
+                text "观众分析"
+              tab
+                text "评论热词"
+              tab
+                text "评论管理"
+            container
+              container
+                container
+                  container
+                    text "流量"
+                    container [ref=86]
+                      image
+                        svg_root
+                  button [ref=87]
+                    image
+                      svg_root
+                    text "导出"
+                container
+                  container
+                    text "播放量"
+                    text "360"
+                  container
+                    text "点赞量"
+                    text "1"
+                  container
+                    text "评论量"
+                    text "0"
+                  container
+                    text "分享量"
+                    text "0"
+                  container
+                    text "收藏量"
+                    text "1"
+                  container
+                    text "划走率"
+                    container
+                      text "43.81"
+                      text "%"
+                  container
+                    text "文案展开率"
+                    container
+                      text "0.51"
+                      text "%"
+                  container
+                    text "平均浏览图片数"
+                    text "4.39"
+                container
+                  container
+                    text "新增"
+                    text "累计"
+                  container
+                    text "每小时"
+                    text "每天"
+                canvas
+              container
+                container
+                  text "粉丝"
+                  button [ref=88]
+                    image
+                      svg_root
+                    text "导出"
+                container
+                  container
+                    text "涨粉量"
+                    text "0"
+                  container
+                    text "脱粉量"
+                    text "0"
+                  container
+                    text "粉丝播放占比"
+                    container
+                      text "3.3"
+                      text "%"
+                container
+                  container
+                    text "新增"
+                    text "累计"
+                  container
+                    text "每小时"
+                    text "每天"
+                canvas
+    image
+      svg_root

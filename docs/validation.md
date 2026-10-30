@@ -681,3 +681,78 @@ Independent Visual QA actually inspected all3210 source frames, all52 encoded ca
 Independent Audience QA inspected318 source samples,52 actual caption midpoints and265 encoded opening/ending samples, records stronger continuous opening discovery and closure-to-frame ending payoff, with no new definite audienceP0/P1. This is sampled frame evidence, not real-time viewing or platform metrics. Report `qa/full-audience-review/audience-review.json`. Independent final Audio QA full decode107s/5,136,000samples, I-23.82LUFS/TP-0.56dBTP/LRA4.2; zero-delay whole-film source correlation0.997645 supports association only. Original Kai retained, only previously approved panel-slide synthetic foley changed; no new provider requests. Audio technical and distinct appeal reports are `audio-qa/full-optimized/` and `audio-qa/full-optimized-appeal/`. Actual listening and real-time audience experience remain unavailable, all comprehensive/audio/audience scores null; status OPTIMIZED_FULL_GENERATED_NEEDS_REVIEW, no unsupported90/85quality pass.
 
 Full playback page links actual hash-verified film; page syntax/link/format checks pass, real browser playback not independently exercised. Prior66-test suite result remains applicable to unchanged application code; this production-only turn did not add implementation tests. `git diff --check` passed.
+
+## 2026-10-30 — `.codex` agents 协作规范静态验证
+
+本次仅更新13个角色的 developer_instructions 并新增 [统一交接规范](../.codex/agent-workflow.md)。未修改角色名称、description、并发配置或模型继承方式，未修改影片、归档脚本、批准记录、队列或其他项目。未启动真实派工、渲染、配音、ASR 或发布，也未调用生产供应商。官方 [Subagents 文档](https://learn.chatgpt.com/docs/agent-configuration/subagents) 已实际读取，用于核对独立 TOML 的 name/description/developer_instructions 必填字段及继承约定；未迁移现有 max_threads 配置。
+
+使用 `.venv/bin/python` / tomllib 实际解析 `.codex` 下全部14个 TOML：通过；13个角色必填字符串非空、名称唯一且与文件名一致：通过。与 Git HEAD 比较，除 developer_instructions 外各角色字段完全相同，config.toml 仍为 agents.max_threads=4，无新增 model/effort 覆盖：通过。全部角色的四个公共入口路径与统一规范的7个相对文档链接存在：通过。下表为人工静态流程推演，并非实际生产复现或独立 QA 评分。
+
+| 情况 | 责任人及交接物 | 静态推进与停止条件 | 结果 |
+| --- | --- | --- | --- |
+| 源 CAD 错配 | Director → Research 的源 STEP、occurrence 映射/变换和独立导出哈希对照 → Visual 局部 A/B → Video QA | 先排查源再评镜头；证据不足停止相关几何结论的下游采用，不能换镜头遮掩。修复后保留旧缓存和失败证据 | 责任、证据和停止边界明确 |
+| 保留基线的小改 | Director 给批准基线哈希、允许范围及独占目录；Creative Director/Script/Visual 给基线内局部 A/B，Audio 保留批准旁白 | 不启动新集三开场重做或重配；A/B 未满足范围或存在关键不确定性时不能扩大到完整片/正式验收；受修复次数上限约束 | 责任、基线和停止边界明确 |
+| 尾段提前后的拟音同步 | Visual 给动作差异及时间线 → Editor 联查拟音、字幕、标签、邻段和预备运动 → 独立 Audio QA/Audio Appeal QA 对实际最终混音复核 | 统一冻结渲染器整合，不混帧；解码/相关性不证明听感。缺听审或严重音画失配不能正式验收，保留旁白及原版本 | 联动交接物和验收停止条件明确 |
+| 局部批准后续做全片 | Director 读取批准原话/哈希/范围 → Visual 同版整合 → Editor → 两类最终混音 QA → Video QA → Audience QA → Director | 已授权本集继续完成，无需重复确认；保留其他集和发布 hold。分别记录生成、批准和 QA；新全片缺门槛仍为 NEEDS_REVIEW | 续做责任和授权边界明确 |
+| 缺听审能力 | Audio QA、Audio Appeal QA 报实际文件哈希、已完成解码/测量与未验证维度 → Director 人工复核项 | 相关分数 null，不用 TTS/ASR/PCM 代替听感，不因能力缺失重复生成；明确文件、shot ID、时间码和待回答问题，未知则写 unavailable；停止正式验收 | 能力限制、下一责任人和停止条件明确 |
+
+另对照当前 AGENTS.md、approved-video-style、production-lessons、video-qa、audio-qa、audience-qa：正式验收90/85门槛、音频一次贡献、独立吸引力、单行≤20字符字幕、正式旁白片≥90秒及短片例外一致；问题最多三轮、同策略两轮无改善停止且不以改名重置一致；Metal 预检/blocked/显式 retry、不可变归档和 render.lock 边界一致。`git diff --check` 通过；新增规范另检尾空白和末尾换行通过。静态检查仅证明配置与流程一致性，不证明运行时加载、真实派工、感官能力或任何影片制作验收已通过；本次无应用代码变动，未新增测试或运行 unittest/CAD/FFmpeg/渲染。
+
+### 同日补充 — 13角色权责边界
+
+补齐统一规范的13角色权责表，每项包含唯一主责、交付物、决策权、不可越权项和下一责任人；同样写入各角色 TOML。明确 Research 查证而 Visual 实施生产 CAD/映射修复；Script 负责文字和语义计划，Editor 负责最终时间线及拟音制作/改时/混音；Audio 仅负责旁白合成。Director 指定唯一修复主责、协调争议和汇总状态，不能覆盖独立 QA 结论或用户批准边界；独立 QA 仅在新证据/版本上更新自身结论。修复 Director 公共指令中“向 Director 报告”的自指措辞。
+
+实际静态检查：项目 Python 成功解析14个 TOML；13个唯一角色均有且仅有一行权责表，角色指令均含主责、决策权、越权限制和交接；与 HEAD 比较名称/description/其他字段未变，并发仍为4，无新增模型覆盖；规范相对链接及尾空白检查通过，`git diff --check` 通过。静态交接推演：几何异常为 Research → Visual → Video QA；改词为 Editor → Script → Editor；动作改时为 Visual → Editor → 两类音频 QA；QA 冲突由 Director 留存原结论、补证后交原 QA 复核；能力缺失由 Director 接收并保留未验证门槛。各路径有明确所有者，未启动实际派工、生产或平台操作。
+
+### 同日再分析 — 依赖、版本有效性与问题闭环
+
+本轮发现并修正规则缺口：首轮脚本/实测音频可能循环等待；QA 未明确随版本失效；原评审者离线无接替路径；代码故障归属不清；修复自报完成缺独立关闭条件；失败与未验证状态混淆；综合评分报告责任不明。已在统一规范和全部13个角色中补齐适用要求，未新增角色、评分权重、工具或生产执行。
+
+| 静态情况 | 责任与预期推进 | 停止/复核条件 |
+| --- | --- | --- |
+| 首次配音无实测时长 | Script 先交可合成文案/估计计划，Audio Director → Audio 实测 → Script/Editor 定时 | 估计不可冒充实测；旁白 QA 不等待尚未存在的最终混音；同步维度仍待实际画面复核 |
+| 只改拟音/混音 | Editor 新版本 → 两类最终混音 QA，并联动受影响 Video/Audience 体验复核 | 旧报告不能改哈希冒充新片通过，不因此重配批准旁白 |
+| 仅重新编码 | Editor 新文件 ffprobe/全片解码 → 对应 QA 验证画面/音频/时序关联 | 仍需绑定当前哈希；技术关联不能单独证明感官体验 |
+| 原 QA agent 离线 | Director 指定同角色且未参与相关生产的替代者，新建评审报告 | 保留原报告/身份/原因；没有独立评审能力则未验证，不让生产者自审 |
+| 生产 CAD 导出器故障 | Research 查证复现 → Visual 明确源文件修复/测试 → 新指纹任务与独立复核 | 不修改归档，不让 Research/Visual 同时写同一生产文件 |
+| QA 工具自身故障 | Director 派独立工具修复任务，另一个真实独立人员验收依赖该修复的资产 | 工具修复者自测不算独立验收，无人可复核则保留未验证 |
+| 修复者说已解决 | 生产者交新版本/证据、标待复核 → 原角色或独立替代 QA 复核 → Director 关闭 | 问题 ID/计数保持，QA 不直接向生产者派冲突任务，失败和 P2 不静默删除 |
+| 写入者中断或所有名额等待 | Director 只派输入就绪工作；确认旧写入者停止、锁归属和输出后移交 | 不删活动锁、不并发续写、不重复未知提交；遵守实际环境并发限制 |
+| 缺综合评分或已有解码失败 | Video QA 按既有口径形成综合/技术报告，Director 核对专项与同版证据 | 缺维度分数 null；已知失败保留 REWORK/FAIL，不淡化为只有 NEEDS_REVIEW |
+
+实际项目 Python/tomllib 检查通过：14个 TOML 可解析，13角色必填字段/唯一名称及权责表一致；角色非指令字段、并发配置及模型继承相对 HEAD 未变；统一规范全部相对链接、尾空白检查通过。`git diff --check` 通过。以上为人工静态推演和配置检查，尚不证明真实调度死锁已被运行测试排除、工具修复有效或视频感官验收通过；本轮未启动真实派工、渲染、配音、ASR、发布或应用测试。
+
+## 2026-10-30 — 抖音数据驱动的吸引力与互动评估
+
+使用 ego-browser 一个任务空间只读访问用户指定运营页、主机械视频总览/流量分析、7个实际留存悬浮节点及另一机械图文详情；浏览器任务已正常 finish。没有上传、存平台草稿、发布、发送评论或修改平台内容。观察时间保留在每份原始快照首行及留存 JSON；原始证据和 SHA-256 清单见 [抖音复盘目录](analytics/douyin-20261030/review.md) 与 [证据清单](analytics/douyin-20261030/evidence-manifest.json)。截图已实际查看。
+
+主视频页面读数2448播放、15赞、1分享、0评论、8收藏、4涨粉；平均13秒、完播3.31%、5秒完播51.72%。实际悬浮节点显示2/5秒留存高于平台同类，9秒32.16%、18秒15.86%、27秒10.35%低于同类，支持优先检查5–27秒信息推进，但本轮没有播放/听审发布版或取得本地哈希关联，不能判定具体镜头缺陷。账户10月23—29日区间读数与作品当前读数分别记录；第二条实际是23张图文，不能当视频对照实验。平台同类群组、部分分母/截止延迟不明均保留限制。
+
+新增 [吸引力与互动评估](audience-growth.md)，明确留存、点赞、分享/收藏、评论和关注的发布前证据与发布后验证闭环；更新统一交接规范及 Director、Creative Director、Script、Audience QA、Audio Appeal QA、Growth Analyst 六个相关角色。沿用现有角色、权重和门槛，不新增增长评分或无依据的爆款阈值。后台建议均标观察/候选解释/最小修改/验证指标，未改动影片、旁白、批准记录或归档脚本，未启动生产或定时观察任务。
+
+实际检查：项目 Python/tomllib 解析14个 TOML，通过13角色必填/唯一性及相对 HEAD 非指令字段一致性检查，并发与模型继承未改；新规范/复盘文档相对链接及尾空白检查通过；7个实际 tooltip 可解析、证据文件哈希已记录；`git diff --check` 通过。人工静态推演确认：低5秒留存与5秒后流失分别诊断；单次分享不作因果结论；0评论不推断动机；图文不混视频；新窗口数据不覆盖旧快照；增长预测不替代感官 QA 或发布授权。未运行应用 unittest、渲染、FFmpeg、配音或ASR，本次不声称视频制作验收或互动增长已通过。
+
+## 2026-10-30 — 数据驱动流程、评估与局部制作落地
+
+用户进一步授权根据数据优化流程、评估和视频制作。真实角色派工与唯一输出责任记录在 [Director记录](../series/3d-printer-v2/revisions/EP01/data-driven-20261030/director-record.json)，实现跟进见 [production-followup](analytics/douyin-20261030/production-followup.md)。本次只做EP01局部36秒对比，不恢复其他集队列、不发布、不覆盖原批准资产。
+
+流程：AGENTS.md接入数据驱动制作；audience-growth增加逐段信息兑现表和实际A/B检查条件，audience-qa要求分别检查继续观看、点赞、分享/收藏、讨论和关注理由。数据源/预测、技术/感官/平台效果分开，未知保持未知。
+
+评估实现：episode_performance支持实际5/9/18/27秒留存、2秒跳出、互动率及作品归因涨粉；率仍为0–1、计数仍须非负整数。比较要求媒体类型metadata相匹配，已知视频不能混入图文或类型未知的旧记录；旧格式保持兼容，并在未知类型比较结果中显式披露限制。新增回归覆盖真实读数保存、百分数字误作小数率、非整数/负涨粉和媒体混比。`.venv/bin/python -m unittest tests.test_episode_performance` 4项通过；`.venv/bin/python -m unittest discover -s tests` 全68项通过，11.812秒，模拟Blender SIGSEGV是既有失败路径测试而非本轮渲染崩溃。原始后台记录按观察来源/时间分别导入任务measurement/performance.sqlite，实际比较为NO_COMPARABLE_PEERS，未合成优化后数据。
+
+制作：基线实际SHA ee0664aae24fbc8e771b3883104b49f093cd33f4921de3129e05f75dff324dc3、100秒H.264/AAC；Creative实际编码抽样检查并比较三策略后选B，Visual先关键帧，独立Audience关键帧仅支持标记清晰度实验，保留AUD-CAND-04硬段关系问题，不扩整片。新独立源scripts/ep01_data_driven及冻结任务visual/3deac0274714eadc860a保留，原脚本/归档未改。Metal沙箱预检无设备时在Blender前停止；既有GPU许可路径关键帧和渲染成功。0–36秒1080张新帧原生540×960@30，渲染exit0约9分17秒，逐张JPEG解码/尺寸/连续编号通过；1079邻接相机/部件/齿轮接触方向数值审计通过。两版冻结源姿态重算显示0–5秒相机位置/旋转/scale差为0，5/27/34秒邻接连续；不等于实际像素相同或感官通过。三份齿轮STEP独立重读共4个实体均valid/正体积（50T为双实体复合）；复用修正源缓存，没有新几何生成，不宣称物理接触仿真。
+
+Editor最终输出均36.000秒/1080帧/H.2641080×1920@30/AAC，全片音视频解码通过。A SHA1e085d7c694298f22398997a03ff2989cd13772ba07d60c125d90631d4e6e188；B SHAfdcfd3229bca396fa43626e131db18e8dd16083a041783a5c33f7a5fbefce309。A原生1080，B原生540上采样且使用修正源，非严格单变量平台实验。12字幕单行/max16/无重叠；末字幕36.360裁至36.000，36秒是34–42.064语句中截点，不评价自然结尾/完整热端段。原Kai音轨时点保留、无TTS/ASR/provider请求。
+
+[实际A/B页面](../series/3d-printer-v2/revisions/EP01/data-driven-20261030/comparison/index.html)已在ego-browser打开，双片元数据36秒/1080×1920、实际播放时钟推进、暂停和12秒定位通过，无media error；截图已查看。首次暂停引用过期后重新snapshot并用语义按钮恢复成功。浏览器任务正常finish；仅证明播放控件与媒体运行，静音且不构成实时感官观看或听审，证据browser-check.json。
+
+独立Audio QA最终报告绑定B准确SHA，A/B实际PCM均1,728,000样本、完全相同；与锁定mix起点0相关性0.9999554858，mean−25.2dBFS/peak−1.2，无≥1秒低于−50dB静音。来源关联不证明听感/音画语义同步。Audio Appeal独立绑定B并实际查看7张编码字幕帧，重复预告仍在。两类音频分数null、NEEDS_REVIEW，缺实际听审/音频理解与词级强制对齐。最终Video/Audience评审另记于后续交接条目，不能以该阶段技术完成自动视为通过。
+
+当前校验：4个新制作Python源AST解析/尾空白、14个TOML解析、相关文档链接及git diff --check通过；独立重算原片/旁白/混音/字幕/时间线哈希未变，editorial hold保留。媒体与帧、场景、失败/准备版本、归档和证据均保留。
+
+最终交接补充：两类音频复核后，独立Video QA完成（B全解码；1080张缩略源帧逐序静态与56张实际编码B样本分开记录），随后独立Audience QA检查10个A/18个B编码样本及12–21秒逐秒静态序列。准确最终报告分别在video-qa/final和audience-qa/final，Director独立重算四类报告及A/B哈希，并写delivery-manifest.json。可确认环标记静态可辨性提升；AUD-CAND-04新信息不足、重复预告及B预览噪点等P2保留，未扩全片。所有综合/技术/观众/音频分数null、NEEDS_REVIEW；人审明确12–21、23–27、7.410–11.408和27–36秒问题，shot ID unavailable。完整局部制作交付不冒充全片正式验收或增长成功。最终文档链接/TOML/新源解析、原片及锁定音频字幕哈希和git diff --check再次通过；无新增生产源修改后的额外测试必要，沿用本轮68项实际测试结果。
+
+
+## EP02 临时数据清理（2026-10-30）
+
+用户授权清理后，在 worker/render 双锁下删除 87 个旧实验场景快照、12 个自动备份、72 个字节码缓存，合计 6,749,532,678 字节（6.29 GiB）。保留的 29,256 个文件逐一 SHA256 核对一致；全部音视频、渲染帧、批准及 QA 记录、源归档和 EP01 依赖保留，Git index 哈希未变。最新 107 秒 H.264/AAC 成片 ffprobe 和 FFmpeg 全片解码通过。历史场景路径可能已清理，重做需从归档重建；本次不改变 NEEDS_REVIEW 或历史验收结论。详见 [清理范围、哈希与恢复边界](ep02-cleanup-20261030.md)。文档链接与 git diff --check 通过；未运行渲染或配音。

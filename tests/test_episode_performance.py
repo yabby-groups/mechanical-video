@@ -46,6 +46,43 @@ class PerformanceTest(unittest.TestCase):
         record_snapshot(self.db, record('b', duration=105, actual=latest))
         self.assertEqual(compare(self.db, target, 'plays')['status'], 'NO_COMPARABLE_PEERS')
 
+    def test_observed_retention_engagement_and_attribution_are_preserved(self):
+        actual = observation(2448)
+        actual['media_type'] = 'video'
+        actual['metrics'] = {'retention_5s': .5172, 'retention_9s': .3216,
+                             'retention_18s': .1586, 'retention_27s': .1035,
+                             'skip_2s_rate': .224, 'like_rate': .0061,
+                             'share_rate': .0004, 'comment_rate': 0,
+                             'save_rate': .0033, 'attributed_followers': 4}
+        ident = record_snapshot(self.db, record('measured', actual=actual))
+        self.assertEqual(compare(self.db, ident, 'retention_9s')['target'], .3216)
+        for metric, value in [('share_rate', 4), ('retention_5s', 51.72),
+                              ('attributed_followers', 4.5), ('attributed_followers', -1)]:
+            with self.subTest(metric=metric, value=value):
+                invalid = observation()
+                invalid['metrics'] = {metric: value}
+                with self.assertRaises(ValueError):
+                    record_snapshot(self.db, record('invalid', actual=invalid))
+
+    def test_media_type_must_match_and_unknown_is_not_assumed_video(self):
+        actual = observation(2448)
+        actual['media_type'] = 'video'
+        target = record_snapshot(self.db, record('target', actual=actual))
+        image = observation(360)
+        image['media_type'] = 'image_post'
+        record_snapshot(self.db, record('image', actual=image))
+        record_snapshot(self.db, record('legacy', actual=observation(900)))
+        self.assertEqual(compare(self.db, target, 'plays')['status'], 'NO_COMPARABLE_PEERS')
+        peer = observation(2000)
+        peer['media_type'] = 'video'
+        record_snapshot(self.db, record('video', actual=peer))
+        result = compare(self.db, target, 'plays')
+        self.assertEqual(result['peer_count'], 1)
+        self.assertEqual(result['peer_median'], 2000)
+        self.assertEqual(result['media_type'], 'video')
+        with self.assertRaises(ValueError):
+            record_snapshot(self.db, record('invalid', actual={**actual, 'media_type': 'unknown'}))
+
 
 if __name__ == '__main__':
     unittest.main()
