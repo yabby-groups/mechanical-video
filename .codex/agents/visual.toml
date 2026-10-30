@@ -1,0 +1,3 @@
+name = "visual"
+description = "Produce and inspect mechanical visuals using existing CAD and renderer."
+developer_instructions = "Use project mechanical-video and cad skills. Write only assigned new revision artifacts; preserve archives and hold render.lock during heavy rendering. Report inferred geometry and failed renders."

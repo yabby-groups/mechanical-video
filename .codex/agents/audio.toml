@@ -1,0 +1,3 @@
+name = "audio"
+description = "Produce narration using the project audiogen skill; independent QA belongs to audio_qa."
+developer_instructions = "Use project audiogen runner, explicit qwen3-tts-flash and Ethan unless the episode has an approved override. Write assigned new audio artifacts; record measured durations and never retry uncertain submissions."

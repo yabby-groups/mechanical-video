@@ -8,6 +8,30 @@ All Skills belong in this project's `.agents/skills/`. Never install/update user
 
 Hidden geometry and dimensions from images must remain explicitly inferred. The implemented CAD family is planetary reducers; reject unsupported products rather than substituting the demo. Vision defaults to gpt-6-luna (VISION_MODEL can override it) and requires a configured provider endpoint. TripoSR is optional and must not become a baseline dependency. Do not claim simulation, manufacturing accuracy, live provider acceptance, or video verification without evidence.
 
+## Multi-Agent Dispatch
+
+For a video production request, the main agent acts as Director automatically; the user does not need to name agents. First inspect the episode state, accepted assets, holds, dependencies, available skills, and actual sub-agent capability. Use real Codex sub-agents when available; never represent sequential role prompts as spawned agents. Record the delegated task, child identity, result, and evidence in the production record. If sub-agents are unavailable, report that limitation and use the existing resumable pipeline without claiming multi-agent execution.
+
+Delegate only the roles the task needs: Research for cited parts and uncertainty; Script for narration and shot plans; Visual for CAD, animation and renders; Audio for the existing audiogen workflow; Editor for assembly and timing; QA for independent inspection of actual video, audio and reference evidence. Assign each child explicit inputs, outputs, acceptance criteria and exclusive file ownership. No two agents may write the same file concurrently; Director integrates their results. Parallelize independent research and preparation, and visual/audio work once their inputs are fixed. Editor waits for required assets; QA waits for the actual assembled output. Keep heavy rendering serialized under the existing render lock and preserve all current assets, skills, providers and keys.
+
+For narrated production, use distinct Audio Production and Audio QA agents. Audio Production uses the existing audiogen skill and the episode's approved voice and model; Audio QA independently examines the actual speech and records ASR, timing and sound evidence rather than TTS logs. The intended order is Audio Production, Audio QA, Editor, final mixed-audio QA, Video QA, Director. Do not submit an uncertain TTS or ASR request again automatically. Missing forced alignment, audio understanding, or shot correspondence must remain unverified; critical omissions, misreadings and severe audio/video mismatch block delivery. Treat ASR mismatches as candidates requiring corroboration, not proof of mispronunciation.
+
+Audio Director prepares per-segment narration direction before Audio Production, using the approved script and scene timing: natural documentary delivery, emotional intent, key terms, emphasis and synchronization points. Use only voice and controls actually supported by the selected TTS; never pass imagined emotion parameters. Independent Audio QA and Audio Appeal QA inspect the actual speech, then repeat both reviews on the Editor's final mix. Audio appeal has its own 100-point gate of at least 85; audio technical quality requires at least 90. Missing audio understanding, listening evidence or alignment cannot receive a default score. Keep appeal separate from the existing video weighting. Director must require both verified results before delivery and preserve the prior preview approval and editorial holds.
+
+For verified fixable speech issues, regenerate only affected sentences in a new version, retain original audio, remeasure and update subtitles and affected shots, reassemble and recheck narration and final mix. Track each issue's evidence and attempts, never more than three. If the current tooling cannot perform or verify a step, stop with NEEDS_REVIEW and identify the missing capability. Audio QA's score contributes once to the existing video audio dimension; never count it twice or use an unverified score as a pass.
+
+Director routes evidenced QA issues to the appropriate owner: mechanical/visual to Visual, content to Script, narration to Audio, editing/subtitles/sync to Editor, and missing references to Research. Rebuild affected shots and necessary downstream assembly, then rerun QA on the actual new version and any impacted neighbors or global timeline. Preserve prior versions, evidence, scores and rollback path. Attempt at most three automatic repair rounds per issue; stop a strategy after two rounds without measurable improvement and mark unresolved cases for review. Do not imply automatic repair exists where the current pipeline cannot perform it.
+
+Deliver only when evidence supports a total score of at least 90, every established quality gate passes, and no unresolved P0/P1 or critical mechanical uncertainty remains. Never fill missing scores or relax thresholds to obtain a pass. For human review identify the shot ID, timecode, evidence and exact unresolved question; state explicitly when a shot or timecode cannot be determined. Respect existing preview approval and editorial holds. Small tasks need only the agents relevant to their scope.
+
+## Creative And Audience Review
+
+For a new episode, Director invokes Creative Director before Script and Visual. Compare at least three openings against truthful mechanical evidence, visual appeal and feasibility; record the selected opening and each sequence's narrative purpose. Use the approved continuous-action style, legible mechanics and natural pacing. Growth Analyst prepares platform-appropriate packaging without unsupported claims; actual platform metrics must be distinguished from subjective predictions.
+
+After Script and Visual/Audio production and Editor assembly, run technical and audio QA followed by independent Audience QA on the actual video, audio, captions and timeline. Assess opening, pacing, memorable visuals, knowledge, discussion value and ending separately, with per-dimension evidence and timecoded shot findings. Missing evidence is unverified. Maintain separate technical and audience scores; final delivery requires technical >=90, audience >=85, all existing gates, and no critical mechanical or audiovisual issues. Do not change standards to create a pass.
+
+Fix technical failures first. Once technical evidence passes, route weak creative moments to Creative Director and the relevant Script, Visual or Editor agent; update only affected shots and downstream assets. Recheck those shots and neighboring continuity and rerun both applicable QA gates. Preserve versions, scores and rollback evidence. Limit each issue to three automatic rounds and stop after two rounds without measurable improvement. If automated repair or objective verification is unavailable, mark NEEDS_REVIEW rather than claiming the loop ran.
+
 ## CodeGraph
 
 Prefer configured `codegraph_*` tools for structural queries: context then explore; search for symbols, callers/callees for edges, impact for change scope, files for inventory. Trust AST results rather than repeating grep. Use native searches for literal text. If the server reports not initialized, ask before `codegraph init -i`. No CodeGraph tools were exposed during initial implementation; native reads are the fallback.
@@ -23,6 +47,8 @@ New tasks archive the renderer, audit and narration scripts under their video di
 Run unittest discovery, actual CAD generation, render, ffprobe and full FFmpeg decode. Record current results in docs/validation.md. CAD must contain independently exported positive-volume valid solids. Video completion requires H.264, expected dimensions, duration and full decode. Keep secrets in environment variables and out of logs.
 
 ## 配音与字幕规范
+
+- 项目内视频 QA 可用 `python -m mechanical_video.video_qa`；遵守 `docs/video-qa.md` 中的证据限制，未验证维度不可视为通过。
 
 - 音色：本项目默认使用 `qwen3-tts-flash / Ethan`；调用时显式指定 Ethan，覆盖技能中的 Roy 默认值。
 - 字幕：旁白字幕始终单行，每条最多 20 个字符，中文、英文、数字及标点均计数；超长内容拆成连续短句，不换行显示，同一时刻只显示一条。
