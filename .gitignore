@@ -8,3 +8,4 @@ artifacts/
 !.env.example
 output
 *.mp4
+series
