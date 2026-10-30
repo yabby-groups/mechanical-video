@@ -107,6 +107,25 @@ class SeriesTests(unittest.TestCase):
         (folder/'part.stl').write_bytes(b'changed')
         with self.assertRaisesRegex(ValueError,'geometry assets changed'): series.geometry_inventory(manifest)
 
+    def test_same_label_hash_collision_cannot_substitute_source_solids(self):
+        from build123d import Box, Solid, Compound, import_step
+        first=Solid(Box(2,3,4).wrapped); first.label='SOLID'
+        second=Solid(Box(20,20,33).wrapped); second.label='SOLID'
+        assembly=Compound(children=[first,second]); assembly.label='assembly'
+        source_dir=self.base/'master_assembly/source'; source_dir.mkdir(parents=True)
+        (source_dir/'source.step').write_text('source import replaced by fixture')
+        # Reproduce the old integer-key collision while exporting real solids.
+        with patch('build123d.import_step',return_value=assembly), patch.object(series,'hash',return_value=1,create=True):
+            manifest=series._build_model()
+        parts=series.read(manifest)['parts']
+        self.assertEqual(len(parts),2)
+        self.assertNotEqual(parts[0]['step'],parts[1]['step'])
+        self.assertNotEqual(parts[0]['mesh'],parts[1]['mesh'])
+        for part,volume in zip(parts,[24,13200]):
+            exported=import_step(manifest.parent/part['step'])
+            self.assertTrue(exported.is_valid)
+            self.assertAlmostEqual(exported.volume,volume,places=4)
+
 
     def test_native_cad_readback_evidence_rejects_modified_sidecar(self):
         folder=self.base/'master_assembly'; folder.mkdir(parents=True)

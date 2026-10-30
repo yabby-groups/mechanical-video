@@ -243,7 +243,10 @@ def _build_model():
         # entire 2,000-part parent graph for every leaf.
         local=type(shape)(shape.wrapped.Located(Location().wrapped))
         local.label=shape.label
-        key=(shape.label,hash(local.wrapped.TShape()))
+        # Export each occurrence independently. A temporary TShape wrapper's
+        # integer hash is not a geometry identity: collisions/reused wrappers
+        # must never replace a beam (or panel) with another leaf's geometry.
+        key=node['id']
         if key not in cache:
             mesh_id=f'm{len(cache):05}'
             solids=local.solids()
@@ -317,7 +320,8 @@ def _build_model():
         if len(parts)%100==0: print('Exported',len(parts),'occurrences',flush=True)
     visit(assembly,Location(),'')
     import OCP
-    data=dict(version='voron-2.4r2-'+COMMIT[:12]+'-display2',geometry_version=2,commit=COMMIT,source_sha256=digest(source),cad_kernel=OCP.__version__,
+    data=dict(version='voron-2.4r2-'+COMMIT[:12]+'-display3',geometry_version=3,commit=COMMIT,source_sha256=digest(source),cad_kernel=OCP.__version__,
+        geometry_identity_policy='Independent export per source occurrence; no temporary TShape hash deduplication',
         units='mm',parts=parts,hierarchy=nodes,independent_solids=True,
         coordinate_policy='Part-local geometry with full world occurrence matrix; native STEP axes retained',
         material_policy='Unknown; inferred display groups only',
