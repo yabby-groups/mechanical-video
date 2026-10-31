@@ -753,6 +753,122 @@ Editor最终输出均36.000秒/1080帧/H.2641080×1920@30/AAC，全片音视频�
 最终交接补充：两类音频复核后，独立Video QA完成（B全解码；1080张缩略源帧逐序静态与56张实际编码B样本分开记录），随后独立Audience QA检查10个A/18个B编码样本及12–21秒逐秒静态序列。准确最终报告分别在video-qa/final和audience-qa/final，Director独立重算四类报告及A/B哈希，并写delivery-manifest.json。可确认环标记静态可辨性提升；AUD-CAND-04新信息不足、重复预告及B预览噪点等P2保留，未扩全片。所有综合/技术/观众/音频分数null、NEEDS_REVIEW；人审明确12–21、23–27、7.410–11.408和27–36秒问题，shot ID unavailable。完整局部制作交付不冒充全片正式验收或增长成功。最终文档链接/TOML/新源解析、原片及锁定音频字幕哈希和git diff --check再次通过；无新增生产源修改后的额外测试必要，沿用本轮68项实际测试结果。
 
 
+## 2026-10-30 — 打印机六集规划与入口纠偏
+
+用户选择保留 EP01/EP02、按机构收敛集数，并授权实施规划。[当前六集规划](printer-series-plan.md)新增实际批准 EP01 内容依据、EP02 待验收边界、旧十二集到六集的迁移表、后续单集新增信息、EP03 源走线/运动验证及三个开场候选。打印机系列明确使用 qwen3-tts-flash / Kai，不改动已有批准音频；通用 Ethan 默认与历史 Andre 记录不作为新打印机任务的声音依据。
+
+README、系列说明、AGENTS.md 和项目内 mechanical-video 技能接入当前规划；旧实现章节保留并标明历史范围。旧 CLI 仍执行原有内容，本次没有实现六集运行时、迁移队列或修改历史计划。旧 editorial hold、影片、批准/QA、归档脚本及帧保持原样；没有启动 worker、子角色生产、渲染、配音、ASR 或平台操作。
+
+实际静态检查：六份入口/规划文档共20个本地 Markdown 链接目标存在；六集及历史 EP01—EP12 迁移覆盖、Kai 配置、NEEDS_REVIEW 边界检查通过；改动路径仅为文档及项目指令，git diff --check 通过。新增规划文件另行检查尾空白。未运行 unittest、CAD 生成、ffprobe、FFmpeg 或感官 QA，文档修改不需要新媒体生成；不沿用旧测试结果冒称本轮媒体验收。下一制作门槛为 EP03 皮带路线、固定点、源实例及输入/位移对应验证，尚未执行；EP02 原有听审与实时观感门槛未关闭。
+
 ## EP02 临时数据清理（2026-10-30）
 
 用户授权清理后，在 worker/render 双锁下删除 87 个旧实验场景快照、12 个自动备份、72 个字节码缓存，合计 6,749,532,678 字节（6.29 GiB）。保留的 29,256 个文件逐一 SHA256 核对一致；全部音视频、渲染帧、批准及 QA 记录、源归档和 EP01 依赖保留，Git index 哈希未变。最新 107 秒 H.264/AAC 成片 ffprobe 和 FFmpeg 全片解码通过。历史场景路径可能已清理，重做需从归档重建；本次不改变 NEEDS_REVIEW 或历史验收结论。详见 [清理范围、哈希与恢复边界](ep02-cleanup-20261030.md)。文档链接与 git diff --check 通过；未运行渲染或配音。
+
+## 2026-10-30 — 新六集 EP03 制作启动与机械门槛
+
+用户授权开始 EP03。真实 Research、Creative Director、Visual、Script 分别独占新目录，详见 [Director记录](../series/3d-printer-v2/episodes-current/EP03/director-record.json)。旧十二集 EP03、EP01/EP02批准资产、归档和editorial hold未改；没有启动历史worker或平台操作。
+
+已完成三开场比较（选直线结果连续揭示两路输入）、六段Kai文案草案和56条单行字幕文本（最长19字符，时码未测量，不是SRT）。Research实际查看官方路线/夹持页，独立读取原STEP两带并核对实例、有效正体积及10mm层距；Visual重读33项XY STEP/STL、解析两条开口带边界及端帽。五组1mm小位移等长检查仅为几何候选，不证明电机输入、接触、切向或真实传动。
+
+发现P1：左右滑架原STEP本身无效，Research与Visual独立证据一致。两轮planar修复虽在内存有效，STEP导出重读仍无效，策略停止并保留失败文件；没有覆盖源缓存。端帽与夹槽接触、输入/带轮/滑架映射尚未通过。默认Metal预检失败，未启动Blender、未请求GPU升级审核，未消耗渲染任务。配音合成、局部影片及整片渲染均未启动，状态NEEDS_REVIEW；缺失评分保持null。
+
+本轮实际检查包括源CAD独立读取、几何边界与等长数值检查、JSON/Python AST及字幕字符检查、文档链接与git diff --check。当前实际运行 unittest discover -s tests：68项通过，10.059秒；输出中的模拟Blender SIGSEGV为既有失败路径测试，非本轮生产崩溃。未运行ffprobe、FFmpeg或感官QA；无新媒体可供解码。后续只读OCP诊断已定位两滑架各一处SelfIntersectingWire，基于该新证据的第三/最后一轮显式ShapeFix自交/共享拓扑修复后，两件STEP重读仍无效，体积漂移≤1.09e-8。已达到项目每问题最多三轮自动修复上限，停止自动修复、配音和渲染。下一门槛为针对共享edge及相邻面一致性的专业/人工CAD修复，并独立验证STEP往返；接触和输入映射仍未通过，尚未进入真实关键帧/局部A-B。
+
+
+## 2026-10-31 — EP03 热门样本校准与原创 CoreXY 原理片（制作中）
+
+用户追加授权“找爆款的视频进行分析，学习经验然后制作”。[实际对照报告](../series/3d-printer-v2/episodes-current/EP03/benchmark/analysis.md)记录三个百万播放B站样本、抖音高互动机械密封及同题CoreXY专业参照的作品页数值、观察时间、截图覆盖与限制。未把点赞当播放；未取得可比曝光、留存或涨粉归因，不宣称已验证爆款因果。独立Creative检查了本地影片编码帧/字幕，比较三种开场，采用“先预测单输入、12秒内兑现斜行，再解释夹持/双输入直行”的N1。
+
+原Voron滑架P1及三轮失败修复保持，未重试或隐藏。另建明确标注的原创简化CoreXY教学装置，不是原源已修好，也不是整机实测拆解。Research提供有限半径、双层开口夹持皮带及固定材料坐标的解析模型；45件独立STEP重读有效正体积单实体、STL闭合，连接链独立核查。该证据不等于动态仿真、制造精度或全工作空间碰撞验证。
+
+原生1080×1920/30fps、30秒900帧的真实A/B已生成及全解码，Editor加入同一Kai音轨/字幕。A SHA256 `1ae932f572e94cbac10beea08156bdebfd27a418350239c4a420b64c89dbf988`，B `0a78e220af1a679706059d0cb31355b2284327e893e4cc7989f48cd2f807c604`。两版都是新N1，只比较12–22秒机位，不是旧/新叙事或平台效果实验。独立音频两QA、VideoQA及AudienceQA检查准确版本，B夹持端更清楚；轨迹误认实体杆、输入环偏小、10–16秒静音节奏待实际观看为P2。缺实时观看/听审及可靠评分，仍NEEDS_REVIEW。页面播放、暂停、定位和切片同时间保持已在ego-browser验证，不代表听审。
+
+正式120秒任务冻结为 `3a3d214fac69b27a0516`；新renderer仅在12<=t<22隐藏投影轨迹/初始见证点，保留45物理件与连续动作。12张实际smoke及75–82秒210帧证据片完成；独立preflight完整解码、核验全部210原帧哈希，并查看28张编码顺序样本，支持上灰A03转向轮运动、下B输入停止，无新增已证P0/P1。679个数值帧支持73–95.608秒A输入变化/B保持；静态样本不冒充实时观看。Director已放行同指纹3600帧续渲，不混旧A/B帧。最终全片尚未在本条记录时生成或验收。
+
+5段开头与4段尾部Kai原语音锁定，实测90.672秒自然语音排入120秒，48条单行字幕最长17字符。尾字幕按字符比例估时，并非强制对齐。完整混音23311fbd0534131a52c7已准备；Editor报告静态增益平衡、峰−2.964dBFS无削波，不做压限或变速。两音频QA仅完成锁忙期间的静态哈希/来源/时间线预检，未冒称独立波形测量。增益历史元数据由版本外附注明确；待锁释放后的实际完整混音和最终AAC复审。
+
+详细身份、任务、独占目录与放行证据见[当前Director记录](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/director-record.json)。旧集、批准范围、队列与editorial hold未变；没有上传、保存平台草稿或发布。最终影片、全片解码、实际字幕遮挡/语义同步和音频/视频/观众QA需后续记录，缺失维度保持null。
+
+正式素材补充：同一冻结任务已实际完成3600/3600帧、scene.blend及120秒静音H.264素材，原生与编码均1080×1920/30fps。视频SHA256 `78dae85ed16f637bafe2376edf2227ced1caeda7ffa969f11567f425c0c300cc`，Director独立重算一致；ffprobe与全片解码通过。3600原帧哈希清单保留，75–82秒210原帧与preflight清单完全一致。Visual本轮实际 unittest discover：68项通过，9.861秒；模拟SIGSEGV是fixture，非此次生产崩溃。Director另检查8份冻结Python AST、3份当前JSON、本条文档链接与git diff --check通过。Editor三张smoke+ASS合成预检18/80/106秒已查看（不是最终MP4抽帧）：无已证P1，80秒下B标签浅字压青底对比偏低P2保留。静音素材及排版预检不替代最终混音/字幕成片独立QA。
+
+最终成片补充：Editor生成120.000秒/3600帧H.264/AAC成片，原生=编码1080×1920/30fps，完整AV解码通过。准确SHA256 `4f1668a3778efc26aa1b4ee8365a58869a3671d31e753f2192a222704610b25b`，Director独立重算一致。两类独立最终音频QA均绑定该哈希：音频技术短持锁解码5,760,000个实际AAC样本，mix相关性0.99997429/lag0，峰−2.9948dBFS，无满幅；9源自然速/实际增益/placement重建speech逐样本一致，mix加和误差≤1LSB。音频吸引力另查22张实际编码帧；未进行实际听觉理解或实时观看，不能据此通过语音自然度/精确词界/F04F05语义同步，分数全null。报告见当前任务audio-qa/final-full-233与audio-appeal-qa/final-full-233。VideoQA及随后AudienceQA尚在进行，80–84秒下B标签对比P2与输入标记辨认/节奏风险继续保留。
+
+最终独立VideoQA完成：实际全片AV解码/3600帧规格及来源清单通过，查看114张编码样本（覆盖48字幕中点），无新增已证P0/P1。随后AudienceQA独立查看36张实际编码样本，建议保留成片做针对性人审；32–69秒全景/小喷头运动分量辨认、78–85秒下B标签对比、101.5–119秒当前转角与细旧轨迹区分仍为P2，不凭笼统吸引力推测再次重渲。Director实际查看四张最终编码联系表，范围是静态抽样，不声称实时观看。
+
+Director重新核对最终MP4、10项Editor资产、四类最终报告全部准确哈希，写入[交付清单](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/delivery-manifest.json)，[最小人审问题](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/human-review.md)按时间/段ID列明；shot ID未独立分配，不冒充已有镜头编号。正式生产交付完成，状态PRODUCTION_DELIVERED_NEEDS_REVIEW；所有所需综合/技术/观众/音频技术/音频吸引力评分保持null，未通过正式验收。完整120秒实时观看、实际听审、F04/F05语义对应和可靠感知评分仍是明确门槛；没有上传、平台草稿、发布或增长效果结论。旧资产、失败版本和所有源/模型/场景/帧/音频/指纹归档保留。最终文档链接/当前JSON及hash检查、git diff --check通过；无新增代码变动需要重复已通过68项测试。
+
+
+## 2026-10-31 — EP03 三处局部优化（用户授权，制作中）
+
+用户在明确三处建议后指令“优化”。锁定此前120秒233成片（SHA256 `4f1668a3778efc26aa1b4ee8365a58869a3671d31e753f2192a222704610b25b`）、9段Kai/原混音、48字幕与全部时间、45CAD及机械动作/机位朝向。范围仅32–69秒分量辨认、78–85秒B标签对比、101.5–119秒旧轨迹与当前转角区分；不改旧片、不恢复原源修复/旧队列、不发布。
+
+Creative在局部策略中按原字幕估时确定横梁→相对横梁的滑架→合成，以及前后抵消/左右抵消顺序；时码仍非强制对齐。Visual冻结新任务7ea93cfe64e7bd2cfd3d，F05移除此前六段累计图解及初始注释球，保留当前两腿轨迹；不是移除物理零件。机械motion-audit与原片逐字节一致、camera/pose代码块一致，1111条中段投影区分beam世界方向与carriage相对beam方向。7张smoke、3段2秒proof及7精确时点原帧已生成，保存185个本任务原帧供同指纹续渲。
+
+Editor局部版本0cfa9bd6e186d4f2c03c在真实投影上加分段框/箭头和短callout，80秒两标签28→36px移空白区加深色背板。三组实际A/B（36–38、54–56、104–106秒）1080×1920/30fps各60帧，全部AV解码、同窗音轨PCM逐字节相同。独立QA查看raw7smoke/24proof样本、composed48样本、7精确图和80native，9局部MP4独立完整解码，无新增已证P1，三项有可观察改善；[局部报告](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/qa/optimization-v1/local/report.md)保留薄暗轮廓手机辨认P2及实时/听审缺口。Director实看新旧116秒图、35.5/55/80合成图，并放行同指纹3600帧续渲；没有以2秒片段冒称完整语义/邻段通过。中段细暗轮廓另安排一次overlay-only白主线/暗边对比（该问题第2次），不影响冻结原生渲染，不改标签/几何/音频，不得静默采用未验看版本。
+
+记录见[本轮Director范围与尝试计数](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/optimization-v1/director-record.json)。正式优化全片尚未生成，需新MP4/实际混音/VideoQA/AudienceQA，所有缺失感知评分保持null。原233交付与旧报告仍保留，优化授权不等于正式验收或平台授权。
+
+优化续渲实际完成：任务7ea93cfe64e7bd2cfd3d全部3600帧、120秒原生=编码1080×1920/30fps/H.264静音素材。SHA256 `36fdfba3124e067155537c71702cfcf201e2e9e6ddfbc5fd56754945a9436edf`，Director独立重算一致；ffprobe/全解码/全部帧哈希与185张保留原帧及归档源哈希复核通过。机械动作/相机/正实体CAD不变，本轮实际验证为冻结AST、3600数值、真实渲染、解码与哈希；未为纯图解改动重复unittest，上一轮68项/9.861秒明确仅为历史结果。
+
+中段描边第2attempt c889e6f78423262de3ec已实际合成35.5/55秒图及两段2秒片，独立QA查看native/16编码样本：白色滑架边界和灰底箭头可辨性改善，无新已证P1，选择c889。839条原drawing保持精确path/time仅黑5px外沿+白2.5px主线双层化，其余ASS（含80标签）、mix/SRT/timeline保持字节一致；两片60帧独立全AV解码与相对0cfa PCM一致。Director也查看两张native图，按该限定放行完整新MP4组装；第2次有可测改善，不发起第3次同策略修复。新片仍需两类finalmix和Video/Audience独立新哈希复核。
+
+优化新成片已生成：[EP03-optimized.mp4](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/editor/optimization-v1/final-versions/9c78127c97f17d28868e/EP03-optimized.mp4)，SHA256 `960fd013adf62e93747f036018165ab3230e0175310464d0b68d28bd73a64ca3`，Director独立重算一致。冻结runner c71985465e41a8431650+c889 overlay+7ea93 raw组装，120秒/3600帧、原生=编码1080×1920/30fps/H.264AAC，全片AV解码/ffprobe通过，48条单行字幕最长17字符且无重叠。完整AAC直接复制233，没有重新合成/变速/混音/有损重编码；独立AudioQA对新旧fresh解码5,760,000样本PCM字节一致、ADTS相同、5626包payload和PTS/DTS/duration/size/flags全同。AudioAppeal另看16张实际编码帧，确认指代参照更具体，但缺听觉理解/实时体验，不以静态清晰或音频相同通过语义同步。两类评分均null/NEEDS_REVIEW；报告绑定当前新hash。Director当前15份Python AST、2份root JSON、优化条目链接及git diff --check通过；最终Video/Audience结论待后续补充。
+
+本轮最终交接：独立VideoQA完成3600帧全AV解码、source/ASS哈希/48字幕及170张实际编码样本（含强调起止±0.3秒与邻段），无新增已证P1；三处具体外观子问题在当前新hash采样范围内可核验修复，不再保留“细暗轮廓/下B压青底/结尾旧迹堆叠”为未经处理的同一外观结论。独立AudienceQA另查35张实际编码样本、三联系表与native35.2/81.5/119秒，建议保留优化版并停止本轮自动修改。仍未验证动态分量理解、长全景节奏、实时轮子身份、完整听审和F04/F05语义同步；91–96秒原图解是否误认实体杆也未由本轮局部清理关闭。全体感知与综合分null，正式验收未通过。Director查看三张最终编码联系表，方法仅静态抽样，未冒称实时观看。
+
+Director再次重算新MP4、6项最终资产和四类新hash报告一致，更新[本轮交付清单](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/optimization-v1/delivery-manifest.json)及[剩余人审窗口](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/optimization-v1/human-review.md)，latest-delivery.json指向优化版，旧233影片/原清单/报告全部保留。生产状态OPTIMIZATION_COMPLETE_NEEDS_REVIEW，三个优化均已实做；未以局部或外观改善宣称涨粉效果，也没有上传、平台草稿或发布。最终JSON/哈希/本地链接与git diff --check通过；没有编辑旧归档、其他项目、全局技能或ambient Git工作。
+
+
+## 2026-10-31 — EP03 配音优化空间分析（未改媒体）
+
+用户要求分析配音。Director、AudioQA与AudioDirector分别独占audio-analysis-v1根/technical/direction，核对当前优化片960fd013…64ca3。实际AAC新测−27.98LUFS、−2.99dBTP、LRA8.2LU；speechsolo−27.95LUFS，混音短长段RMS差仅0.186dB。逐段字数/源时长、源头尾/内部低电平与峰分布已测，前后均值4.66/3.89字秒不当作音节或听感，去头尾及≥.35秒内部低电平后proxy差降至7.9%。−50dBFS实际低电平9.367–16.142秒约6.775秒为检查候选，不自动视作无用静音。稀疏短峰限制整体增益，保留−1dBTP时仅约1.99dB余量，不指定统一平台响度或盲增10dB。结论及F04正序身份/F05直接结论等文字候选见[配音分析](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/audio-analysis-v1/analysis.md)。
+
+没有实际听觉理解工具，未声称听到机械腔、错读或情绪问题；评分null。未TTS/ASR/provider请求、未变音频/混音/字幕/成片或平台操作。实际短持render.lock测量后已释放；报告/JSON/新测脚本AST及hash/空白检查通过，git diff --check通过；分析不需要新CAD/渲染或重跑生产测试。
+
+
+## 2026-10-31 — EP03 字幕位置记录、修复与局部配音优化
+
+用户授权记录字幕位置、修复EP03并优化配音。以用户指定正常的EP02 b0d7成片为实测基准：1080×1920白字底边约Y1530–1531、底距388–389px；原EP03约Y1681–1682，低约151px。已新增[字幕位置规范](subtitle-placement.md)，并在approved-video-style链接。EP03采用Subtitle an8 pos(540,1484)，运动轨迹Note由Y1500移至1410；四组实际局部A/B及11张新句字幕样本由独立QA检查，未见采样裁切/重叠。该基准不等于平台UI遮挡测试通过。
+
+AudioDirector给最小四稿，Director作为Script审定后用现有audiogen生成qwen3-tts-flash/Kai，只替AD03/F04整源；4句实测1.896/2.928/2.136/17.664秒，分别放12/16/73/78秒，均完整保留自然速，其余7源保留。12秒仅追橙带、16秒才说两端连接；F04先A路转向轮正身份再排除B驱动轮。F03/F05及120秒机械动画保持。开头间隔是重新分配，不声称净消除静音或听感已改善。新句静态RMS匹配后统一+1.8dB，无动态压缩；独立重建11源/拟音误差≤1LSB。
+
+新版[EP03-subtitle-audio-v2.mp4](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/subtitle-audio-fix-v2/editor/final-versions/87aa9856d786b05aa426/EP03-subtitle-audio-v2.mp4)，SHA256 `42814ded876b3f762910e885481fdfa001dbf3fc1b30d71fec31c6325cd07d37`，从冻结无字幕7ea93源新合成，120秒3600帧，原生=编码1080×1920/30fps H.264/AAC，全片AV解码通过。46条单行字幕最长17字符，无时间重叠；新句分句时间按源时长估计，不冒充强制词对齐。最终AAC独立实测−26.16LUFS/−1.17dBTP/LRA8.6，满足本轮≤−1dBTP门槛，PCM与mix相关0.999979798/lag0支持来源关联，不能替代听感。AD03b末20ms低幅能量P2仍待听审，未据此裁尾/自动重生成。
+
+本轮18份Python AST/56份JSON读取检查及新增文档链接、git diff --check通过；实际四句合成/局部AB/全片编码与解码已执行。未改变CAD或机械渲染器，不重复CAD生成或历史unittest。两类音频、Video与Audience最终报告绑定新hash；实际听审、完整实时观看、精确词对齐及平台UI覆盖缺失项仍需复核，感知评分null，正式状态NEEDS_REVIEW。保留全部旧片、源、报告和editorial hold，无平台上传/草稿/发布。
+
+最终独立VideoQA对新hash完成3600帧计数/完整AV解码与82张实际样本（全46字幕中点及邻居）复核，AudienceQA另看45张实际样本，未见新增已证P0/P1；20秒字幕持留候选经原生第600帧核实撤回，不记修复。Director实看最终18/80秒原生与最终联系表，四类最终报告hash已绑定[本轮清单](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/subtitle-audio-fix-v2/delivery-manifest.json)，latest-delivery已指向新版；状态SUBTITLE_AUDIO_OPTIMIZATION_COMPLETE_NEEDS_REVIEW。完整听审/实时与平台覆盖门槛仍保留，详见human-review.md。
+
+
+## 2026-10-31 — EP03 持续运动修复（制作完成，待实时复核）
+
+用户反馈新版播放时机构停住、要求机器持续运动。以42814ded…07d37影片为基线，独立QA核源发现42.5秒机构静止：0–3、10–22、28–32、48–51、56–57、68–72、96–101.5、110–120；实际encoded六窗口420帧无相邻精确重复帧，不能将有压缩差异或相机动视为机械持续运动。
+
+本轮单程八模式覆盖120秒（A0–22、X22–30、B30–50、X50–57、Y57–72、A72–99且B保持、X99–104.5、Y104.5–120），无重复往返或循环凑时长。第1候选23c53长smoothstep保留但停用：低速候选最长5.27秒；第2候选ac84e47c5d1c43cb446a采用0.4秒余弦速度ramp和中段恒速。独立QA核3600状态/3599邻帧工具位移均非零、位置与速度连续、解析速度误差4.66e−9mm/s，B72–99含端点811样本恒定。低于1mm/s最长13帧0.433秒仅数值口径，不等于实时观感通过。45实体及缓存无几何变化，带长/端点/切线约束全运动审计通过，不重复实体生成。
+
+当前unittest discovery：test_video_qa.py 3项、test_film_audio.py 2项、test_ep02_continuity.py 2项全通过。Visual新任务归档/投影重算，Editor锁11旁白、46字幕及其时点/位置/增益，按新速度更新合成拟音；原片/原音/旧任务/holds保留。实际局部AB、完整新片与最终独立四类QA尚待本轮完成，未更新latest交付指针或宣称P1关闭。
+
+持续运动版全片已生成：[EP03-continuous-motion-v3.mp4](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/editor/final-versions/c6d43dae194d76eaaf7f/EP03-continuous-motion-v3.mp4)，SHA256 `ae39a625b13c1f7e0b682709c065a4e928b89a39f77c25c35cef1165a943871f`，Director独立重算一致。冻结ac84原生3600帧1080×1920/30fps，续渲约37分14.5秒；3600JPEG哈希/尺寸、480同任务proof逐hash保持和120真实renderpose对应审计通过。raw SHA256 `1bef286ec9f22317a2fd0c7ed4e1cdad7ae61185ec12ec4448147f91d443e044`。新c23d runner+f2b overlay/mix锁定来源组装120秒H264/AAC，ffprobe/3600计数/完整AV解码通过，原片未覆盖。
+
+当前11旁白speech-mix、46单行字幕（max17）/文字/时点/位置均与v2字节一致，新拟音按真实du/dt重建误差<1LSB，源零速度时拟音为零、首末样本和末20ms为零，不能代替无click听审。完整新AAC独立测−26.19LUFS/−1.20dBTP/LRA8.6，满足本轮≤−1dBTP上限，5,760,000样本120秒解码与mix相关0.999980750/lag0，11段相关各>0.99，仅证明来源关联。44Python AST/49JSON预检及7项当前unittest已通过，最终四类QA继续收尾；完整实时视觉/听审分仍null，不能以数字非零位移宣称体验或涨粉通过。
+
+本轮最终交付：四类独立报告绑定ae39新hash。VideoQA核119张实际样本、完整decode/3600计数、所有字幕/源/模型哈希及轮组/转角邻段；AudienceQA独立核同片并复看119图及3native，建议保留版、停止自动修改。Director实看最终80/119秒原生及尾段联系表；数值长plateau0秒和采样实际位移支持机械停留源修复，不能关闭实时体验整体问题。所有感知评分null，EP03-V3-MOTION-HOLD-01体验项仍待完整120秒实际实时观看/听审，未虚构通过。记录见[本轮交付清单](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/delivery-manifest.json)及human-review.md，latest-delivery已指向新片；旧版/归档/holds保留，无平台操作。最终资产及四报告hash、JSON、本地路径、git diff --check再核。
+
+
+## 2026-10-31 — EP03 机械声增强及1.12倍速（制作完成，待试听）
+
+用户确认现有连续运动版视频可以，指出机械声不见、速度偏慢；经明确选择授权整片节奏及旁白稍加快。锁定ae39视觉构图/机械路径/字幕位置与原Kai11源，独立按1.12统一调速、旁白atempo保音高、不新TTS、不改CAD或重渲染。字幕46条文字/坐标不改，派生SRT/ASS/timeline时刻÷1.12，参考fad150→134ms，实际已烧字幕随画面统一调速而不二次烧录。
+
+独立AudioQA诊断原机械声−55.15LUFS，比speech−26.11低29.04LU，RMS低26.25dB；相对v2机械声降6.71LU，约96%功率集中80–250Hz，新du/18使绝大多数运动帧幅度包络小于1/3。不能用轨道存在反驳听不到。Editor制作+10/+16以及+16加温和3/4/5谐波候选（系数.35/.22/.13），12个实际局部片及3份完整WAV保留。独立重建derivedspeech/foley逐样本相同，presence原速公式误差<1LSB；speech无新增gain/压缩，861样本仅补零无裁词。presence相对原foley改善16.512dB RMS，250–500/500–1000Hz相对纯+16增加6.47/15.19dB，Director条件选择presence为生产候选，非听审优选或手机可闻证明。
+
+第一完整快版82a生成107.166667秒3215帧H264AAC并全AV解码；AAC独立−26.36LUFS/−1.20dBTP/LRA9、107.142854秒，尾差23.8125ms<1帧，正确派生mix相关0.999958374/lag0。最终画面映射复核发现P2 V4-CFR-MAP-01：默认-r30使五点约固定落后44–64ms，并非seek误标；未把仅规格通过当字幕同步通过。保留82a，显式fpsfilter+passthrough诊断五精确帧匹配源帧，误差约4–15.5ms均<1帧，关键字幕切换正确；独立QA支持新编码，原AAC直接复制且待新媒体payload/PCM验证。
+
+本轮test_film_audio2项/test_video_qa3项unittest discovery全通过，12PythonAST/25JSON预检通过。新fpsfix完整片及四类最终报告仍待绑定；无实际听审，手机可闻性、提速自然度、AD03b尾字及语义同步等感知分null，未声明正式验收或平台操作。
+
+唯一最终fpsfix新版：[EP03-speed-sound-v4-fpsfix.mp4](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/speed-sound-v4/editor/final-versions/ecd6aa99088958c6a5a9/EP03-speed-sound-v4-fpsfix.mp4)，SHA256 `1fa11d7a5240611bd1f4adde237154a10bfab5f7dac41fb1e34eae3d0057351b`，Director独立重算一致。显式fps/passthrough后3214帧107.133333秒视频，音频107.142854秒、两start0、音频尾多9.521ms小于一帧，格式约107.143秒且大于90秒，H264/AAC1080×1920/30fps全AV解码通过。新音轨与82a的ADTS/PCM及packetpayload/PTS/DTS/duration/size/flags独立逐项同，核原报告hash后复用−26.36LUFS/−1.20dBTP/LRA9实测，不额外重测未变音轨。
+
+最终VideoQA对新媒体无seek精确五点及首末、46metadata/源hash/完整解码检查通过；五点映射误差15.48/7.14/−4.76/3.57/13.10ms均小于一帧，第2143帧下句正确，V4-CFR-MAP-01仅在这一技术覆盖范围修复，不当全片词级同步通过。AudienceQA另核唯一新hash及5原生图，建议保留版、停止自动增益/调速。四类最终新hash报告已绑定[交付清单](../series/3d-printer-v2/episodes-current/EP03/benchmark-production/speed-sound-v4/delivery-manifest.json)，Director实看最终2143图；latest-delivery指向fpsfix，保留所有旧版。手机机械声可闻/掩蔽/自然度、1.12Kai语速及AD03b尾字等需完整107秒实际实时AV试听，分null，NEEDS_REVIEW，无发布操作。最终JSON/路径/hash及git diff --check再核。
+
+### 2026-10-31 EP03 制作经验归档（仅文档）
+
+新增 docs/ep03-production-lessons.md，并从 docs/production-lessons.md 建立入口；记录字幕实际位置、连续机械运动、机械拟音、Kai 配音与整体调速的经验和验证边界。两份文档共25个本地链接检查通过，git diff --check 通过。按用户要求另存长期记忆补充。未修改媒体或调用生成服务；本次不运行测试、CAD生成或渲染。

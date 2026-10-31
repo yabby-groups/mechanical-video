@@ -7,19 +7,31 @@ description: Build reusable build123d mechanical assemblies and render disassemb
 
 Run from the mechanical-video project root with `.venv/bin/python -m mechanical_video.cli`.
 
-- The user-authorized visual-first full-series remake uses `remake plan`,
-  `remake render --episode 1 --preview-only`, `remake worker`, and `remake status`.
-  Its independent queue/output live under `series/3d-printer-v2`; preserve the
-  original series. The user selected a new male voice workflow; the remake is
-  pinned to `qwen3-tts-flash / Andre`, overriding the project Ethan default for
-  this edition. The supplied voice catalog provenance is in voice-selection.json.
-  All twelve episodes are authored in remake_content.py. Use the same master
-  CAD hash, eight distinct action shots, measured speech, >=90 seconds, 1080x1920,
-  30fps and full decode. Review EP01 previews before launching the sequential
-  worker. A definite HTTP 429/503 rejection may retry with archived markers;
-  uncertain speech requests must block. See docs/series-remake.md.
+- For the printer series, read [the current six-episode plan](../../../docs/printer-series-plan.md),
+  approved style and current approval/QA records before production. Preserve
+  EP01 and EP02 assets; EP02's generated optimized film remains NEEDS_REVIEW.
+  Printer narration is explicitly `qwen3-tts-flash / Kai`, overriding both
+  historical Andre and the generic Ethan default. Never regenerate locked audio
+  merely because plans changed. New episodes cover XY, four-corner Z lift,
+  hotend/two cooling paths, and bed support/first-layer gap. Use one causal
+  mechanism per episode, continuous spatial relationships, measured speech,
+  >=90 seconds, 1080x1920 encoding, 30fps and full decode; do not impose eight shots.
+  Recheck selected source hashes and corrected occurrence exports rather than
+  blindly reusing the historical master hash. Next is EP03 belt-route and
+  input/motion verification, then three opening proposals and local preview.
+  Generic carriage travel is not proof of correct CoreXY transmission.
 
-- `series init --name 3d-printer`, `series plan --season 1`, `series render --episode 1`, `series render --episodes 1-3`, `series continue --count 3`, and `series status` manage the pinned official Voron 2.4r2 documentary series. See `docs/series-production.md`. Only authored episodes may render; never fabricate remaining editorial content or completion. Keep source CAD, license, per-occurrence transforms and material uncertainty. Share the master hash between episodes. Narration uses audiogen with explicit Ethan, measured short clips and single-line subtitles of at most 20 characters. Production format is 1080×1920, 30fps, H.264/AAC, at least 90 seconds. A completed output is immutable. Archived renderer fingerprints prohibit frame mixing. Preview before production, preserve frames, and serialize Blender with the existing render lock.
+- `remake status` inspects the historical queue under `series/3d-printer-v2`.
+  `remake plan/render/worker` still use the old twelve-episode implementation
+  in remake_content.py; they do not consume the current six-episode plan.
+  Keep editorial hold, historical plans and original assets. Do not launch the
+  old worker or regenerate old plans to implement the new direction. New and
+  historical episode numbers are not interchangeable resumable tasks. See
+  docs/series-remake.md for historical implementation, not current voice or
+  editorial authority. A definite HTTP 429/503 rejection may retry with archived
+  markers; uncertain speech requests must block.
+
+- Historical `series init/plan/render/continue/status` commands manage the original official Voron 2.4r2 series described in `docs/series-production.md`; they are not the current six-episode production entry. Historical Ethan audio is preserved, not a voice choice for new printer films. Only authored, in-scope episodes may render. Keep source CAD, license, per-occurrence transforms and material uncertainty. Use verified source versions, measured speech and single-line subtitles of at most 20 characters. Production format is 1080×1920, 30fps, H.264/AAC, at least 90 seconds. Completed outputs are immutable. Archived renderer fingerprints prohibit frame mixing. Preview before production, preserve frames, and serialize Blender with the existing render lock.
 
 - `model` exports reusable independent STEP/STL solids and assembly manifest.
 - `demo` renders shell and full explosion videos at 1280×720, 30fps, five seconds.

@@ -10,6 +10,8 @@ Hidden geometry and dimensions from images must remain explicitly inferred. The 
 
 ## Production direction and approval
 
+For the printer series, the current editorial entry is [the six-episode plan](docs/printer-series-plan.md): preserve EP01/EP02, then XY transmission, four-corner Z lift, hotend/two cooling paths, and bed support/first-layer gap. Printer narration is `qwen3-tts-flash / Kai`, overriding generic voice defaults and historical Andre plans. Do not use the old twelve-episode/eight-shot template for new work. Old `remake plan/render/worker` still execute historical content; preserve their editorial hold and do not resume same-numbered old jobs as new episodes. Planning does not establish production, QA or publication acceptance.
+
 Before production, read [approved visual style](docs/approved-video-style.md) and [production lessons](docs/production-lessons.md), then inspect the episode state, accepted assets, approval scope, editorial holds and dependencies.
 
 - Aim for audience understanding and interest: reveal a recognizable action and question early, develop mechanical causes through the middle, and end with one insight viewers can retell. Advance through continuous action, not frequent cuts, text overload or impact sounds. For a new episode, Creative Director compares at least three truthful, visually appealing, feasible openings before Script and Visual; record the selected opening and each sequence's purpose.
@@ -61,7 +63,7 @@ For code/CAD/video production changes, run applicable unittest discovery, actual
 
 - 项目内视频 QA 可用 `python -m mechanical_video.video_qa`；遵守 `docs/video-qa.md` 中的证据限制，未验证维度不可视为通过。
 
-- 音色：优先使用本集用户批准的音色与模型（EP02 为 Kai）；无本集批准配置时，项目默认 `qwen3-tts-flash / Ethan`，显式指定 Ethan，覆盖技能中的 Roy 默认值。
+- 音色：优先使用本集用户批准的音色与模型；当前打印机系列为 `qwen3-tts-flash / Kai`，包含后续新集，保留 EP01/EP02 批准音频。仅其他无批准配置的任务使用项目通用 `qwen3-tts-flash / Ethan`，显式指定 Ethan，覆盖技能中的 Roy 默认值。
 - 字幕：旁白字幕始终单行，每条最多 20 个字符，中文、英文、数字及标点均计数；超长内容拆成连续短句，不换行显示，同一时刻只显示一条。
 - 时长：正式配音拆解视频实际时长不得少于 90 秒。用户明确要求的短片、测试或预览除外。
 - 文案：默认面向普通观众讲清机械原理，以问题和因果关系串联拆解；避免流水账式报零件名、空泛宣传及反复免责声明。推测结构集中说明，画面持续保留提示。

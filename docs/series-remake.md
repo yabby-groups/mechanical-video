@@ -1,5 +1,21 @@
 # Visual-first full series remake
 
+## Current entry — 2026-10-30
+
+Use the [current six-episode plan](printer-series-plan.md). Preserve the
+user-approved EP01 Kai film and existing EP02 assets; the optimized EP02 full
+film remains NEEDS_REVIEW. New episodes cover XY, four-corner Z lift,
+hotend/two cooling paths, and bed support/first-layer gap. The printer series
+uses `qwen3-tts-flash / Kai`; the Andre/twelve-episode/eight-shot template below
+is historical, not current editorial guidance.
+
+Existing `remake plan/render/worker` still execute that historical content.
+This documentation update does not migrate the queue or implement a renderer.
+Keep editorial hold and immutable archives; do not launch the old batch.
+Next is EP03 belt/source-motion verification and local preview preparation.
+
+## Historical implementation
+
 Current editorial state: EP01 was rejected by the user despite technical media
 acceptance. EP01/EP02 outputs are preserved; EP03 interrupted frames and
 EP04-EP12 plans remain on editorial hold. `editorial-hold.json` prevents the

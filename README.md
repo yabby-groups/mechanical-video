@@ -1,8 +1,10 @@
 # Mechanical Video
 
-当前 EP01 因吸引力和配音被用户否定，正在按“机械爽感：近景、切面、传动、声音节奏”重新优化；EP03～EP12 批量队列已暂停，现有文件保留。最新15秒机械节奏测试及 Moon 连续讲述试听位于 `series/3d-printer-v2/experiments/`。正式集数仍至少90秒，短测试不算正式交付。
+当前方向：**拆开真实机构，讲清可见的机械因果**。以[六集当前规划](docs/printer-series-plan.md)为准：保留已获用户认可的 EP01/Kai 与现有 EP02，后续依次讲 XY 传动、四角升降、热端与两路冷却、热床支撑及第一层间距。打印机系列音色为 `qwen3-tts-flash / Kai`；旧十二集和固定八镜头模板不再作为新制作依据。
+
+EP02 优化全片已生成，实时观看、听审及相关 QA 仍待完成，保持 NEEDS_REVIEW；规划不替代验收。旧批量队列继续暂停，历史素材及批准记录保留。正式集数至少90秒，短测试不算正式交付。
 新版独立保存在 `series/3d-printer-v2`，旧版成片和素材保留。使用
-`.venv/bin/python -m mechanical_video.cli remake status` 查看新版队列；制作命令与验收边界见 [重制版说明](docs/series-remake.md)。
+`.venv/bin/python -m mechanical_video.cli remake status` 查看历史重制队列；[重制版说明](docs/series-remake.md)保留旧实现背景。现有 `remake plan/render/worker` 尚不读取六集新规划，不要用它重新生成旧计划或恢复批量生产。
 
 ## 《拆解一台 3D 打印机》原版系列（已被重制队列替代）
 
@@ -20,9 +22,9 @@
 输出在 `series/3d-printer/output/`，每集包含独立脚本、分镜、音频、字幕、时间轴、缩略图和验收报告。已完成文件按哈希保护，重跑跳过；保留预览、场景、帧序列和版本化脚本供恢复。12 集已有脚本，EP04–12 尚未完成实际成片验收。CAD 来源、BRep 修复侧车、近似与已知显示限制见 [系列说明](docs/series-production.md)，实际结果见 [验证记录](docs/validation.md)。
 
 
-## 90秒中文配音
+## 通用演示：90秒中文配音
 
-项目已本地安装 audiogen 原始脚本及 openai 依赖，默认 `qwen3-tts-flash` / `Ethan`。先生成90秒基础视频：
+以下为通用演示流程，不是当前打印机系列制作入口；打印机系列使用 Kai，并按六集规划逐集准备。项目已本地安装 audiogen 原始脚本及 openai 依赖，通用默认 `qwen3-tts-flash` / `Ethan`。先生成90秒基础视频：
 
 ```sh
 .venv/bin/python -m mechanical_video.cli batch --templates explanation --seconds 90

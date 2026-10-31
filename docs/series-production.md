@@ -1,5 +1,9 @@
 # 《拆解一台 3D 打印机》
 
+> 当前制作入口为[六集打印机规划](printer-series-plan.md)，音色为 Kai。
+> 以下为原版十二集流水线的历史说明与命令，不是当前选题或批量生产指令。
+> 原版及重制版历史队列不因新规划恢复；新旧同编号任务不能互相续跑。
+
 Run from this repository, using the project interpreter:
 
 ```sh
