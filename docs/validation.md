@@ -872,3 +872,17 @@ AudioDirector给最小四稿，Director作为Script审定后用现有audiogen生
 ### 2026-10-31 EP03 制作经验归档（仅文档）
 
 新增 docs/ep03-production-lessons.md，并从 docs/production-lessons.md 建立入口；记录字幕实际位置、连续机械运动、机械拟音、Kai 配音与整体调速的经验和验证边界。两份文档共25个本地链接检查通过，git diff --check 通过。按用户要求另存长期记忆补充。未修改媒体或调用生成服务；本次不运行测试、CAD生成或渲染。
+
+
+## 2026-10-31 — Context efficiency and read-only usage audit
+
+Implemented the authorized instruction simplification and usage audit; no production scheduler, model, concurrency, sandbox, provider, media asset or publication state was changed. Core rules remain in AGENTS.md; detailed ownership, safety, dependencies, repair limits and version-specific independent QA remain in .codex/agent-workflow.md. All 13 role configurations retain their identities and role-specific procedures, now using task-scoped reading and concise handoffs. Printer-series Kai precedence is explicit in both audio production/directing roles.
+
+- Instruction size (AGENTS + workflow + 13 roles): 65,145 → 51,925 UTF-8 bytes, 20.3% reduction. This is file-size evidence, not a measured token or billing saving.
+- `.venv/bin/python -m unittest discover -s tests`: **85 passed**, including **17 audit tests** covering cumulative snapshot deduplication, cache gaps/invalid counts, resets, malformed records, both tool formats, session copy conflicts, linked/missing/orphan/cyclic children, stage attribution, read-only output and errors. Final run log: `/private/tmp/mechanical-video-token-tests.log` (temporary diagnostic, not a durable artifact).
+- All 13 TOML roles parse with unique matching names; required fields and unchanged role descriptions checked against HEAD. Project concurrency remains `max_threads = 4`; no model or capability overrides were added. Local Markdown links resolve; `git diff --check` passes.
+- Independent replay of the two frozen root session files matches latest token counters, source SHA-256 and both tool-output formats. Counts: noncached input 438,885 / 235,120; outputs 93,579 / 72,784; output characters 2,215,640 / 1,881,221. No resets observed. See [frozen baseline](token-usage-baseline.json). Child trees are not supplied, so team coverage is incomplete; all usage is stage-unattributed. No account/billing totals inferred.
+- [Static walkthrough](token-usage-audit.md#workflow-walkthrough-static-not-production-acceptance) covers new episode, visual-only local revision, approved continuation, render recovery and missing listening capability. Preserves independent QA, exact-hash evidence, approved assets, three-round issue limit/two-round strategy stop and explicit publication authorization. This does not prove live dispatch or production acceptance.
+- Custom-agent fields checked against [official OpenAI documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agent-file-schema) using OpenAI Docs. Only supported existing `name`, `description`, `developer_instructions` fields are used.
+
+No render, CAD generation, TTS/ASR, media re-acceptance or live agent production was performed: only documentation/configuration and the independent read-only audit tool changed. Actual savings remain unmeasured until the next already-authorized comparable production task; no new production is authorized by this record. Changes are uncommitted and unstaged.

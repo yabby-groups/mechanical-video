@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "sessions": [
+    {
+      "session_id": "01a18b7f-9b1c-70f1-af2a-c83fc25f8182",
+      "parent_session_id": null,
+      "sha256": "e835414bc0a3f938dcb1f41522c6796e4bdfb386532a654d633f436f31cd8022",
+      "usage_latest": {
+        "input_tokens": 71022053,
+        "cached_input_tokens": 70583168,
+        "output_tokens": 93579,
+        "reasoning_output_tokens": 19689,
+        "noncached_input_tokens": 438885,
+        "total_tokens": 71115632
+      },
+      "usage_snapshots": 655,
+      "counter_resets": 0,
+      "phases": {
+        "unattributed": {
+          "input_tokens": 71022053,
+          "cached_input_tokens": 70583168,
+          "output_tokens": 93579,
+          "reasoning_output_tokens": 19689,
+          "noncached_input_tokens": 438885,
+          "total_tokens": 71115632
+        }
+      },
+      "tool_calls": {
+        "exec": 212,
+        "followup_task": 33,
+        "request_user_input": 1,
+        "send_message": 81,
+        "sleep": 199,
+        "spawn_agent": 12,
+        "wait_agent": 26
+      },
+      "phase_deltas_complete": true,
+      "coordination": {
+        "spawn_agent": 12,
+        "send_message": 81,
+        "followup_task": 33,
+        "wait_agent": 26,
+        "sleep": 199
+      },
+      "tool_output_chars": 2215640,
+      "tool_output_events": 564,
+      "spawned_session_ids": [],
+      "warnings": {}
+    },
+    {
+      "session_id": "01a18d14-1e66-7b93-8ce0-8cf6d4bf4a5e",
+      "parent_session_id": null,
+      "sha256": "a0896c9b41f5bf8b3c43d8405ac954496eca9326829c748a78109b72cf72a5dc",
+      "usage_latest": {
+        "input_tokens": 18172400,
+        "cached_input_tokens": 17937280,
+        "output_tokens": 72784,
+        "reasoning_output_tokens": 12868,
+        "noncached_input_tokens": 235120,
+        "total_tokens": 18245184
+      },
+      "usage_snapshots": 156,
+      "counter_resets": 0,
+      "phases": {
+        "unattributed": {
+          "input_tokens": 18172400,
+          "cached_input_tokens": 17937280,
+          "output_tokens": 72784,
+          "reasoning_output_tokens": 12868,
+          "noncached_input_tokens": 235120,
+          "total_tokens": 18245184
+        }
+      },
+      "tool_calls": {
+        "exec": 94,
+        "followup_task": 5,
+        "list_agents": 1,
+        "send_message": 13,
+        "spawn_agent": 7,
+        "wait_agent": 8
+      },
+      "phase_deltas_complete": true,
+      "coordination": {
+        "spawn_agent": 7,
+        "send_message": 13,
+        "followup_task": 5,
+        "wait_agent": 8,
+        "sleep": 0
+      },
+      "tool_output_chars": 1881221,
+      "tool_output_events": 128,
+      "spawned_session_ids": [],
+      "warnings": {}
+    }
+  ],
+  "teams": [
+    {
+      "root_session_id": "01a18b7f-9b1c-70f1-af2a-c83fc25f8182",
+      "members": [
+        "01a18b7f-9b1c-70f1-af2a-c83fc25f8182"
+      ],
+      "coverage": "incomplete",
+      "missing_or_unverified_children": [],
+      "unresolved_spawn_calls": 12,
+      "reported_session_sum": null
+    },
+    {
+      "root_session_id": "01a18d14-1e66-7b93-8ce0-8cf6d4bf4a5e",
+      "members": [
+        "01a18d14-1e66-7b93-8ce0-8cf6d4bf4a5e"
+      ],
+      "coverage": "incomplete",
+      "missing_or_unverified_children": [],
+      "unresolved_spawn_calls": 7,
+      "reported_session_sum": null
+    }
+  ],
+  "unassigned_session_ids": [],
+  "duplicate_session_copies": 0,
+  "conflicting_session_copies": 0,
+  "notes": [
+    "Cumulative snapshots are not added; latest epoch only after a reset.",
+    "Reasoning is reported separately and is not added to output.",
+    "Team sums include only metadata-linked supplied sessions; fork history may overlap.",
+    "Cyclic parent links remain unassigned and are never aggregated.",
+    "Complete means supplied linked-log coverage, not complete billing coverage.",
+    "Tool output lengths count both tool formats; tool-call bodies are not interpreted.",
+    "No prices, message bodies, arguments, or tool output bodies are exported."
+  ]
+}
