@@ -1093,3 +1093,85 @@ EP04 RC010 follow-up correction: Editor actual11frames18.244–21.304 plus froze
 - PASS: all 14 TOMLs parse, 13 unique required role definitions, three Sol roles explicitly low, Research Luna/medium, five Luna/five Terra defaults, unchanged max_threads=4 and no root-model setting, local document paths, git diff --check. A real read-only Luna Research child successfully checked simple/complex research routing and unchanged listening-capability behavior against the workflow; no contradiction found.
 - Static walkthrough: new narration requires key-action feasibility before synthesis; visual-only changes retain approved audio; full production waits for relevant local defects/usable timing; missing perceptual capability permits only the applicable review delivery; known P1/explicit holds still block dependent production; an exhausted repair count remains exhausted after model/phase changes. This is rule validation, not media or end-to-end production acceptance.
 - No rendering, TTS, ASR, platform requests, QA score changes, staging or commit. Prior validation and ambient edits preserved.
+
+
+### EP05 authorized recovery continuation — 2026-11-01
+
+- Continued existing `recovery_authorization_v1`, preserving exhausted original attempts=3, both open P1 issues, historical assets and the full-film render hold. Director inspected actual native frame347 of frozen `task-6c7f49a1df29de5dfa80` and wrote a local-only proof gate; Visual owns serialized rendering. This is implementation authorization, not user media acceptance.
+- Reused both completed Kai replacement MP3/WAV pairs (6.216s and 4.776s); actual hashes and four full decodes verified, no TTS/ASR request repeated. Independent Audio QA and Audio Appeal QA wrote exact-input reports under EP05 `audio-qa/recovery-v1/` and `audio-appeal/recovery-v1/`: actual listening unavailable, NEEDS_REVIEW/null, not a verified speech or final-mix verdict.
+- Script provided explicitly provisional PCM-gap caption candidates, not forced alignment. Editor assembled `editor/recovery-v1/assembled-review-only.wav`, SHA256 `04a6af2ff36da833ffea866680a9141019d4aa0ed3edc0c0311538d7c5e3296b`, measured 92.636s. Three retained original PCM segments and two replacements are byte-identical to inputs; WAV full decode PASS. All 48 caption candidates are single-line, max16 characters and nonoverlapping. This verifies data/timing contracts, not listening or audiovisual correspondence.
+- Director/timing JSON parse and `git diff --check` passed. No new CAD geometry, platform actions, staging or commit. Local visual/mixed delivery and independent same-version visual/audience review remain in progress; the full-film branch stays held for P1 review.
+
+- Local recovery delivery completed: `editor/recovery-v1/local-narration-caption-review-only-v1.mp4`, SHA256 `642eea28f0a6bcaeb2dc24d81127ac7c8fbd8a4ab604b80a5cc11d138eb5d4c8`, native/encoded1080x1920@30,566frames,18.866667s,H264/AAC; full decode PASS. Actual subtitle inkY1486-1531;566 frame glyph-mask and57 boundary-neighbor checks PASS. No foley. Same-local-hash independent Video/Audience and two final-local-mix audio reports remain NEEDS_REVIEW/null. Director closes only original physical cropping/overlap for this local hash; unsupported explicit opening phrase removed, but attribution interpretation remains OPEN pending realtime playback/listening. No full-render release.
+- Full-source preparation is separately frozen as `visual/recovery-full-v1/task-d543ae23d47d4f384d08`:15 native keyproof frames (not a movie), planned2780frames/92.666667s, same CAD caches and fixed split layout, retimed softening and later separate deposited-material principle target. Director inspected native proof1666; sparse visual evidence does not replace motion/thermal/semantic acceptance. No full render, new CAD, TTS/ASR or platform action.
+- Final verification PASS: film-audio unittest discovery2tests, splice synthetic sample-exact/guard fixture, real PCM/caption verifier and git diff --check. Delivery and precise unresolved question recorded in EP05 delivery-current.json; source assets, archives, original attempts and ambient edits preserved.
+
+
+### EP05 series realignment from EP01–EP04 — 2026-11-01
+
+- User rejected the detached-chart direction and requested comparison with EP01–EP04 before continuing. Director and Creative inspected actual encoded frame samples from the selected four films and current EP05:60 retained samples, source paths/hashes/probes in `EP05/series-realignment-v1/references.json`. Four film hashes match their current selected records. This is sampled static evidence, not realtime viewing/listening. EP04 current hash43854b0… is user-accepted despite its historical review-only filename; formal specialist scores remain separate.
+- Research downloaded/actually inspected official Stealthburner assembly pages39/41/53/55/56/66/67 and freshly imported9 existing valid positive-volume source STEP exports. Corrected the previous overstrong sibling-branch exclusion:Revo front/rear are the nested cartridge and Stealthburner_Body is the external fan cowl. Official CAD was reference-only and never replaced production geometry. Source facts/matrices/hashes are under `research/series-realignment-v1/`; original reports preserved. A measured n00124 solid4 surface point replaces the incorrect wire-inclusive bounding-box leader target; no production solid was split/exported.
+- Visual actually opened EP01/EP04 scenes and EP03 stage, then recorded selected baseline hashes and minimal reuse in `visual/series-realignment-v1/minimal-reuse-plan.md`. Existing EP04 context/stage/light/material/camera and EP01 reveal method are reused;914 source occurrences retained and15 meshes refreshed from corrected cache. No whole-machine reconstruction.
+- Geometry proof rounds1/2 corrected cowl/front projection overlap and source-referent labels; one separate timing correction reveals the lower body by8.4s before the original8.48s speech candidate and postpones front return until19.4s. Stable7-key proof `task-5ca0ca1e9b2da31c867b` independently checked by Video/Audience QA with no known sampled P1 blocker; Director viewed contact/native253 and released only a new24s/720frame local render. Static evidence does not certify intermediate collision/continuity, word alignment or listening. Original schematic attempts3 and prior recoveryround1 are unchanged.
+- Editor retained original Kai decoded PCM prefix19.32s byte-identically (candidate low-level cut, not listening/forced alignment) and14 original candidate captions(max13,nooverlap). No TTS/provider retry. New local syntheticfoley is tied to actual source-module movement events; audibility is reviewed separately from synchronization and technical peaks.
+- Reference extraction script py_compile, film identity/sample-record checks and git diff --check PASS. Local render/mix/encoded glyph/full decode and same-version QA are still in progress; no full-film render or platform action.
+
+- Local B24 completed as `editor/series-realignment-v1/EP05-series-realignment-local-v1-review-only.mp4`,SHA256 `56c75e2f22dbe47202f86115bce59ec292c56a4180f74fa783fe95e2446193e5`:720newnative1080x1920@30frames,24s,H264/AAC,fullAVdecodePASS. Render733.287s,total751.077s,lockreleased. Newrunner mechanicalcode-equivalence/diff links stableproof5ca and newlocal6f6;no mixedframes.
+- Director viewed actualencoded0/3/8.4/12.8/18.5/23.9s samples;independentAudience exacthash12samples support returntosame-machine style/no newdefiniteblocker in coverage. Formal realtime/listening/phone/wordalignment and complete two-target90s payoff remain unverified;no score/useracceptance claimed. Both newhash finalmix independentaudio reports remain NEEDS_REVIEW/null.
+- Editor actualAAC -26.92LUFS/-4.51dBTP;14 singlelinecaptions,max13,nooverlap. All720decodedglyphcrops+69boundaryneighborframes0maskmismatch,inkX217-833/Y1486-1531. V2isolatedfoley activeRMS-39.68dBFS comparedsamewindow EP03-37.68 and V1-56.63;voice unchanged and staticfoley0. Phonepresence/notmasking still needs actual listening.
+- FinalPASS:Visualpipeline12unittests(expected simulatedSIGSEGV failurepath,notrenderfailure),film_audio2unittests,py_compile,realPCMandcaption/event/sourcehashchecks,JSONparse and gitdiffcheck. Editor agent503 CPUoverload was orchestration-only;continued existing output checks with no reencode/TTSretry. Olddelivery/source/attemptcounts preserved;newdelivery-current points onlyto24slocal,notafullfilm. No newCADconstruction,providerrequests,platformaction,stagingorcommit.
+
+- Same-file independent Video QA finalized: `qa/series-realignment-v1/video/local-video-review-v1.md`, SHA256 `e412ab452b201df7842c01b02808f5e99b8cbd9876b94d0adada27a3f9112b69`, linked to mixed MP4 `56c75e2f…6193e5`;18 encoded event/neighbor samples plus caption/source associations, full decode PASS. Audience and both final-mix reports link the same MP4. All perceptual scores remain null. The formal90s gate does not fail this explicit24s local preview. Director selects this mechanism-led local over the rejected chart based on sampled evidence, without claiming user acceptance, complete two-target payoff or full-motion/listening certification. Full EP05 has not been rendered.
+
+
+## 2026-11-01 EP05 approved-series full continuation — render release
+
+- User accepted mechanism-led 24s preview SHA256 `56c75e2f22dbe47202f86115bce59ec292c56a4180f74fa783fe95e2446193e5` and instructed completion; original Kai90.144s retained without synthesis.
+- Minimal full adaptation reuses original scene/cache, extends two-target explanation, moves teaching return to66.16–69.04s, and explicitly labels bed-material cue; source static tip-bed gap27.009293mm is not presented as active printing.
+- Canonical issue `EP05-AUDIENCE-PROOF-001` / Visual alias `EP05-FULL-MATERIAL-LABEL-001` retains rounds1–3. Round3 actual four ASS overlay proofs independently reviewed by Video/Audience: source marker touches visible material upper edge, dark-bed label is legible and clear of subtitle band1480–1540. Scoped proof resolution is not full realtime/listening acceptance.
+- Full task `task-6557f72a447828630492`: manifest `214b7f5ed9b7183a4dd29a01b6cb61882d616ac9ce51708f958b167b42342138`; proof report `af06df3bbff225606ab660f3c5bb275bd214ab2f09d28c8c5b3037ecc624fb3d`. Director matching release saved; serialized2705frame render started; full movie not yet asserted complete.
+- Applicable unittest discovery: `test_pipeline.py` 12 tests PASS (mock SIGSEGV failure-path output is expected); `test_film_audio.py` 2 tests PASS. `git diff --check` PASS before this append.
+- Fixed full mix SHA256 `db0b6444f7807d68de3d5b1d1ccd038e7169d2f571ef68c90e6f7cfd9efa32c5`; full WAV decode passes, approved19.32s mixed/foley PCM preserved, original voice reconstruction error0. Independent Audio QA/Audio Appeal lack actual listening capability, remain NEEDS_REVIEW/null; no new provider request or fabricated score.
+- First full Video QA agent failed HTTP413 due media payload; independent replacement used small static images. This service failure is not a film defect or acceptance evidence. No platform action.
+
+
+## 2026-11-01 EP05 complete series-aligned review film
+
+- Final: `series/3d-printer-v2/episodes-current/EP05/editor/series-full-v1/EP05-series-full-v1-review-only.mp4`, SHA256 `e71cd9ce92cd841ef892542aefab43d336e8b8a08f61bf76240e485fdceab254`. Native and encoded1080×1920@30,2705frames/90.166667s,H264/AAC; original Kai90.144s retained, no newTTS. Final full FFmpeg AV decode PASS, independently repeated by VideoQA.
+- All2705 encoded subtitle-band ink checks and269 boundary-frame checks PASS,0failures;48singleline captions,max19characters. Actual AAC−27.25LUFS/−2.96dBTP. Independent AudioQA decodedAAC correlation0.9999663 to frozenmix,8movementevents/staticfoley0 verified; no claim this proves listening or semantic alignment.
+- Storage failure: disk filled during2200 write;2199valid PNGs preserved byte-exact in gzip after SHA/RGBA verification, truncated2200 retained as failed evidence. Only same fingerprint task recovered506frames2200–2705 using new archived recovery wrapper executing unchanged frozen scene. All2705 exact PNG byte sequences retained in `frames-lossless-gzip/`, full pose audit regenerated; no frame mixing, source change, historical asset deletion or other-project cleanup. Migration saved7,745,513,084bytes. Applicable recovery py_compile and12pipeline tests PASS (mockSIGSEGV test is expected).
+- All580native opening frames compared to approved local:209RGBA identical,371 differ in at most40pixels/frame;global channel difference≤6/255,none>8. PNG bytes all differ. Side-by-side worst-difference contact shows no observable structural change; this is not claimed pixel identity or a proven cause of differences. Approved19.32s mixed/foley PCM prefix is byte-identical.
+- Same-finalhash AudioQA,AudioAppeal,VideoQA and independentAudience reports associated in `delivery-current.json`; bounded static checks found no new known P0/P1. Material-label issue round3 closed only in checkedproof/finalsample scope. Seven P2 freeze candidates remain unconfirmed pending realtime contextual review. Actual full realtime viewing/listening,phone experience,word alignment and audiovisual semantic correspondence remain unverified; scores null/statusNEEDS_REVIEW. Technical completion and local user approval do not imply formal acceptance of this new full hash.
+- Director inspected actual final12-frame encoded contact and native final-label crop. Prior delivery archived, current delivery points to fullfilm. No platform action, staging or commit. Final scoped JSON/file/hash/diff validation recorded by current session.
+
+## 2026-11-01 无效临时数据清理
+
+- 用户授权分析数据并清理无效临时数据。清理前目录分配大小约81 GiB，主要集中于series（73 GiB）和artifacts（7.1 GiB）；按逻辑大小PNG约58.64 GB、JPG约7.68 GB。大部分为生产帧及证据，保留。
+- 非阻塞取得现有worker/render/production锁后，仅删除Git未跟踪、有对应源文件的Python字节码及.DS_Store，共514个文件、4,556,891字节（4.35 MiB）。不修改.venv、Git索引、场景、帧、音视频、CAD、来源、归档、任务或回滚证据。21个.blend1均与主文件不同，全部保留。
+- 删除路径、大小和SHA256见[清理清单](cleanup-20261101-manifest.json)。其余89,976个文件的大小和mtime_ns前后一致（不是逐文件内容哈希证明）；Git索引SHA256前后一致。ps受沙箱限制不可用，未绕过沙箱；使用项目锁协调。
+- 清单JSON解析及git diff --check通过；此次无代码或媒体修改，不运行单元测试、渲染、配音或新的媒体验收。保留本次前已有的validation.md修改，不暂存或提交。
+
+## 2026-11-01 EP01–EP05 临时媒体清理完成
+
+- 用户依次明确授权清理EP03/04/05大量临时数据、生成临时图片、临时视频与音频，再扩展至EP01/EP02。按旧任务版本删除生成媒体，保留最新交付、仍用复用基线/已批准局部、原始配音/付费缓存、CAD/场景/脚本、审批及QA文字记录。
+- 删除36,636个文件，逻辑大小29,567,879,288字节；另3,758个PNG/PCM无损gzip归档节省13,520,670,574字节。合计减少43,088,549,862字节（40.13 GiB）；目录du约81 GiB→41 GiB，df可用约14 GiB→54 GiB。APFS快照/克隆可能使实际空间变化与逻辑统计不同。
+- 按集删除及归档总节省：EP01约0.07 GiB、EP02约1.58 GiB、EP03约2.85 GiB、EP04约29.36 GiB、EP05约6.27 GiB。明细及精确数字见[汇总](episode-cleanup-20261101-summary.json)、[说明与恢复边界](ep03-ep05-storage-cleanup-20261101.md)及其链接的逐项清单。
+- 验证PASS：36,636个删除路径均不存在；3,758个归档逐个核对压缩文件SHA256（迁移时已逐个解压核对原始SHA256）；五集当前视频、批准EP02片段及当前交付指针共10个文件SHA256不变。执行期持有现有项目锁；Git索引哈希不变。git diff --check通过。
+- 清理旧媒体后，旧清单及冻结脚本中的部分历史路径不再存在。EP04旧baseline视频已删除，当前混音/拟音保留；归档脚本的旧baseline PCM对比不能原样重跑。重做旧实验需先由保留源文件重建，不承诺历史命令直接运行。当前帧gzip恢复方法及完整边界已记录，不改写历史报告。
+- 此次无生产代码或成片内容修改，未运行单元测试、渲染、TTS或新的感知验收；未暂存、提交或发布。原有validation.md改动保留。
+
+## 2026-11-01 artifacts 旧生成媒体清理
+
+- 用户明确授权清理artifacts旧生成媒体。删除6,865个文件，逻辑大小7,268,149,697字节（6.77 GiB）：6,807张旧演示生成图片、56条旧演示/电钻/中文讲解视频、2条可由保留分段重建的拼接音频。
+- 全部inputs/models/qa、场景及备份、renderer归档、原始配音/付费缓存、SQLite/日志/JSON/HTML/字幕、锁文件保留。1,394个保留文件前后逐项SHA256一致；打印机系列当前交付及批准片段哈希保持不变。Git索引哈希不变，持有项目现有worker/render/model锁，不改队列。
+- 机器清单及恢复边界：[删除与保留文件哈希](artifacts-cleanup-20261101.json)、[说明](artifacts-cleanup-20261101.md)。旧HTML与脚本引用的已删除演示视频不再存在，若重做须重建媒体；不承诺历史演示直接恢复。
+- 清单解析、删除路径不存在验证及git diff --check通过。本轮无代码/当前成片修改，未运行单元测试、渲染、TTS或新的感知验收；未暂存、提交或发布，保留此前工作。
+
+## 2026-11-01 完成作品的中间数据最终清理
+
+- 用户先要求继续深度清理，随后明确：“视频都已经完成了，中间的数据没有必要留着。”据此调整保留策略，不再保留已完成制作的渲染帧、压缩帧、旧局部预览和派生缓存。此指令不自动改写历史QA/批准状态。
+- 前置深度阶段删除1,872个旧A1/A2生成图、局部导管测试帧及旧proof场景，共3,479,114,276字节；旧guide.npy归档当时节省690,340,739字节。用户进一步明确后，该归档亦作为中间数据删除。
+- 最终阶段删除24,911个文件，共25,931,115,599字节：包括五集剩余渲染帧/帧包、旧/局部/静音视频、派生数组、PCM分析、混音/拟音及冗余场景快照。两阶段净逻辑减少30,100,570,614字节（28.03 GiB）。项目du约34 GiB→5.8 GiB，df可用约61 GiB→90 GiB（APFS实际回收可能不同于逻辑大小）。
+- 六个交付/风格MP4与七个最小场景前后SHA256一致；全部保留文件逐项SHA256一致，删除路径不存在核验PASS。执行期间持有既有项目锁，执行器前后Git索引SHA256一致。外部已暂存的先前清理记录保持原样，本轮不暂存/撤销/提交。
+- 记录：[本轮汇总](completed-episodes-cleanup-summary-20261101.json)、[最终阶段逐项删除与保留哈希](completed-episodes-intermediate-cleanup-20261101.json)、[前置深度清单](deep-cleanup-20261101.json)、[保留范围与不可恢复边界](completed-episodes-intermediate-cleanup-20261101.md)。早期清单是阶段快照；旧帧归档恢复指南不再适用于已删除的包。
+- 清单解析、当前成片/场景哈希、删除路径及git diff --check通过。本轮无生产代码或最终MP4内容修改，未运行单元测试、渲染、TTS或新感知验收，未发布。重新制作须重建中间数据，不承诺历史脚本直接重跑。

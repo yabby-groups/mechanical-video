@@ -1,0 +1,2583 @@
+{
+  "date": "2026-11-01T21:13:48.626135+08:00",
+  "removed_count": 514,
+  "removed_bytes": 4556891,
+  "scope": "Untracked Python bytecode with existing source and .DS_Store only; excludes .venv and .git",
+  "retained_files_metadata_verified": 89976,
+  "retained_verification": "size and mtime_ns, not full content hash",
+  "index_sha256_unchanged": "7543e38e8ea175ba09c37963179d754ddf80e0c52e74ff56f9055fedaac38b3e",
+  "removed": [
+    {
+      "path": ".DS_Store",
+      "bytes": 8196,
+      "sha256": "e8b13527cc333d2f7221c75f6ed72b4c81315936b9f6a0defbed3cfe5f2c3cc0"
+    },
+    {
+      "path": "series/3d-printer/renders/EP04/04fdabd9902948771c7e/renderer/__pycache__/series_diagrams.cpython-313.pyc",
+      "bytes": 10064,
+      "sha256": "ee3b8a0e15ffef4fc824e2c8d451feb716660abd8025d17650ea86b83213c779"
+    },
+    {
+      "path": "series/3d-printer-v2/.DS_Store",
+      "bytes": 8196,
+      "sha256": "299eadf92ffd9128ca6d8b7a9c60111c3cc7ddb2aa2a76527869fa95ba8f2d5e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark/production-research/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13956,
+      "sha256": "76790de2a0120a961beb0da098eba324bbe33f61533e4eaa683fad23923b9c7c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/bea38d71cac96315b5cd/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "a35d28e4694115793d51cdcb9c709a79ab2f7b97528ce923a9dd761fe85fb346"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/bea38d71cac96315b5cd/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "8a08846a3a3db5fb2e4033dd7206f3be344593d6bd5de78098856b821ceb13d5"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/bea38d71cac96315b5cd/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "ac9f02a16c18ff4e26eb43828b2790b4f3b9ebcee973f794cd32509db8fae6b8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/145496f903aaf0d5e473/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "c1bbcffd5e79e6a0c3c1f8cee4cd85b7eb631bc8c9f407557bdce9f317fec8a3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/145496f903aaf0d5e473/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "9dc66e801093484cf99df37a01250bf4ac5bdaf7ec272fdadd7e9868f6b6798a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/145496f903aaf0d5e473/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "d2febf18787a927ff51e6ed8ff4d1e496e526d13b80ebc21c6285c1fd70df155"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/0738ca04ed9816a01b07/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "8f4be2a3be0541b660f29bc946ecc366764e591bb32b42ebaed420e9fa318628"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/0738ca04ed9816a01b07/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "4821b418a68d23983276fc5ee2b920102f92d44d645592613dccc47f9561cafd"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/735550373152edb82eff/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "bac0ff17cc3d06eb53d76883c4724499434b8d45e0f1ad0226a02ec74f63f721"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/735550373152edb82eff/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "b489baef6bee4460ae09e124d6c13f749b7dd9f774e16d41061a65b0e883ca66"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/735550373152edb82eff/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "0954132ecd01fc5783784c0153d846bb73ca9203e420b30c45d993c53470ab78"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/b72a8b636916f0802bdb/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "ff61bcc9e738efba15089c4d22d2ba412b3f48bd9818955c0d76eee1df0f092b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/b72a8b636916f0802bdb/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "4810df1d6cc8de0c4901872121770334ba520b6666d3769718848ffce5adb63e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/b72a8b636916f0802bdb/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "0b42d678044141f51d5d16d681b508f939783feaf6615c9829f599d2d1247c86"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/6e1527d45c3af37dd01c/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "3ed565a68e5547e53725eb5e17733985ac50b731ccd88f42a248c60897a304c3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/6e1527d45c3af37dd01c/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "d8977cc08ed693af1bd8b0191bf834094db86d99b77b6acd95ea720e31dc5952"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/6e1527d45c3af37dd01c/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "58985442daa1befa6148f4a7b71ac2a9988cc5b249b31e5d2d8247b81e20e5fa"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/0524f7da40af17fddb11/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "7f4e875d48046a8c4d06996a066ee6ebf204606bcf1e840926367d236544b66c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/0524f7da40af17fddb11/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "d5bd2b4a57fdfee194a4bb7ba0b4e3c4ff8230b7fcb55b1b11651c4f14f12fd8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/0524f7da40af17fddb11/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "53cf0a0224e065af90c4c1b590dafcb9547ab0c87a79ff86a666f04386229225"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/c390c44fc46efae0fe50/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "36a89e0863e79957d14c3bab8b54f85936acb968d83498ae2f5616ba0d5d8d0e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/c390c44fc46efae0fe50/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "21356924e2d15162c7913c20660ed7b3fd38b9167e2e818a5117f2792b8f9cd5"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/c390c44fc46efae0fe50/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "fd8a57f844425f22db6fb4173784c34aca3939b33d09c4e5bf9309f46aaaa40a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/ac5d3a2f7b4ef8672182/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "29a4f1559919c192f5aefa71fc70a05a87108b852015505536be49067fcd418d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/ac5d3a2f7b4ef8672182/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "e3a38b1b6b5d7ca7d603372ffb2097b821cf6521115b2cb1762d3f484663441a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/ac5d3a2f7b4ef8672182/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "b27a8bb1d05ea8e852604cfbd3567711c9a15e6582f8bff0c3e9adff7d8443dc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/096d18d192c77d3adbfa/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13990,
+      "sha256": "e3278c44101b11734cc926c62da8b2f827e02c6aabbf3eda55351948ff25929a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/096d18d192c77d3adbfa/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11367,
+      "sha256": "65e7c9e9250bf4de67c8063cada40b6f8bbaab7fc6328728c8da5e4c399f173b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/tasks/096d18d192c77d3adbfa/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 4398,
+      "sha256": "18a457fe78a868ad61d0d35fb0b19012e73032455015223072ce9cc6b01c43c2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/2f7ab92090da0440f9be/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 14006,
+      "sha256": "95f7119de4562ed14a961163f3e27bacd5a5b299aface2193890f32119ef968d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/2f7ab92090da0440f9be/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1059,
+      "sha256": "6fba6a3f2300b0e1f34ea623bffb112fa74461897d762b4b84b5d16469c2729c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/2f7ab92090da0440f9be/renderer/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 10515,
+      "sha256": "1114a5b4ed74388b86b9bcd4d2e1dbdf81a37cdac7d0deeb1077e80dea96e127"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/7ea93cfe64e7bd2cfd3d/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 14006,
+      "sha256": "f1a6087630cfd45a0bcd83e9893c75dbc67e686d20f2cf1b385b16e0d1155202"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/7ea93cfe64e7bd2cfd3d/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11383,
+      "sha256": "e10ac78e2512fa82b60d93be9bf00ade5fd11330a52ab4010564b524ecfae1fc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/7ea93cfe64e7bd2cfd3d/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1059,
+      "sha256": "f7123841a4e08864529665e35d5f9b036fe8ff346b0249c62e7c2eb5d715ec47"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/7ea93cfe64e7bd2cfd3d/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 8500,
+      "sha256": "14df6899f4070629c555b94445b61ea96f54ea0c5cf657355ec0f01618328c72"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/tasks/7ea93cfe64e7bd2cfd3d/renderer/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 10515,
+      "sha256": "e4370a4f910f7eeca363f44bb2444d4fcd8a0ac8f74dc6447da9fe90138cf60f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/optimization-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 10486,
+      "sha256": "271f940e6a66ffe6af8a0937f5502fc0fce0457e24168aa51b6f93012c451981"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/formal/tasks/3a3d214fac69b27a0516/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13997,
+      "sha256": "d9ba1f1edeba0c298c810147a982550f00033b8f10f3f136569a3e565cf3fe30"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/formal/tasks/3a3d214fac69b27a0516/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11374,
+      "sha256": "2b5cbd64ffb698c1c8235731313f336a5b10062e0fb3b79455f50d79bb6fc016"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/formal/tasks/3a3d214fac69b27a0516/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1050,
+      "sha256": "edf1b3497fcfb7ed4892dd5e3f6bd6974c972e053a87ae478845a348d4ee1d8a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/formal/tasks/3a3d214fac69b27a0516/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 8491,
+      "sha256": "ff200bd702c997c1a55ecb226accbc6859071580de125788166c969ccaa2b48a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/formal/tasks/3a3d214fac69b27a0516/renderer/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 10506,
+      "sha256": "1bfec2af8c91c86cfa50029c309f2b82e24fc18c1d7a16a5715bcd2e7eff43fa"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/visual/source/full/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 10475,
+      "sha256": "d75ebebd1571b95db186123ffef98355006f2837aa3d150f6c16c6a33b31c7b0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/ac84e47c5d1c43cb446a/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 14011,
+      "sha256": "092060feaedbe8607cea3dc9ab3fb34a31b85d354edf1b22825714b5e3a036b9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/ac84e47c5d1c43cb446a/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11388,
+      "sha256": "573322763054038fe66a699385669b40cdd998350c032c1a7286e28b5d4ad938"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/ac84e47c5d1c43cb446a/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1064,
+      "sha256": "1846e80a76455781faef526efa6bd7a3951367920bfef0409d1cd5d774412eaa"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/ac84e47c5d1c43cb446a/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9320,
+      "sha256": "ad903b2ee8d492557d6f48cac55d5ca2f1937c9b0b5a371624e5750538903a13"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/ac84e47c5d1c43cb446a/renderer/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11322,
+      "sha256": "fb299ca871ebd7e58255a5d622dfe13cac2c3864244d1244d23a227b7b77ff49"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/23c53e5e71465b97ebb6/renderer/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 14011,
+      "sha256": "95dadd9b08aa738bf69442fc2725457f9ea275619811581a8bed40dfff9b8eba"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/23c53e5e71465b97ebb6/renderer/__pycache__/analytic_model.cpython-313.pyc",
+      "bytes": 11388,
+      "sha256": "2491a1945d15d8ce5b172a7884aa91c01297106d941332ba9621cd6011d97cab"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/23c53e5e71465b97ebb6/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1064,
+      "sha256": "13685aa176e2b80dd0d1c9403d41feb1c436cad5a13a79e90db8594a9c86f150"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/23c53e5e71465b97ebb6/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 8315,
+      "sha256": "4ecbdf4033bd5bd150b2226174f88beb98d60eb7724a4a30c6960719ceaeebba"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/tasks/23c53e5e71465b97ebb6/renderer/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 10325,
+      "sha256": "ffbb218616bca9e2ddfacad013a438d871da3575be524fb9ce12d4aeffcff9a6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/source/__pycache__/analytic_model.cpython-311.pyc",
+      "bytes": 13982,
+      "sha256": "2cb9e082a060b52e663cb7614f130ccf0309a878c0e9123298c0141bddf7fbae"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/continuous-motion-v3/visual/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 10296,
+      "sha256": "7164353bf9e27d856f3336ead1546748fdf5864f7254417dfaee20ff2f718db4"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP03/benchmark-production/editor/versions/4edd671d755b0c6148ae/source/__pycache__/assemble_preview.cpython-311.pyc",
+      "bytes": 27711,
+      "sha256": "7a1ec9e06fc46d9b8f085ebcfda538017885a13f113af61b7b44c1a1576818cd"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/real-motion-strategy-v1/__pycache__/drive-phase.cpython-311.pyc",
+      "bytes": 7844,
+      "sha256": "fc371a78b4e04ba6d08bda04f4b10309d66eaf14d63bbe85d5b6e5dc93939e9c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/real-motion-strategy-v1/__pycache__/96range-review.cpython-311.pyc",
+      "bytes": 23423,
+      "sha256": "4af88e1ae639e8a7b7f50f6602323a73f3ad654a9021b25d0650017b953aaab2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/real-motion-strategy-v1/__pycache__/measure_bands.cpython-311.pyc",
+      "bytes": 13687,
+      "sha256": "e9f90dca7414a61dfd7a7e452c00999d2b4a2e4beb23f2b500cf501b759fe0a5"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/connection-review-v1/__pycache__/summarize.cpython-311.pyc",
+      "bytes": 6373,
+      "sha256": "8f38a7a5e2a3913ab20e303b4bdf6f49715491f8e048634939c58d3dec769429"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/connection-review-v1/__pycache__/n00736-review.cpython-311.pyc",
+      "bytes": 6559,
+      "sha256": "f84b1bfa2c2c7f31c92cb5c4b67e2cd47b97240225b553fc084c5b7da8202932"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/connection-review-v1/__pycache__/measure.cpython-311.pyc",
+      "bytes": 5238,
+      "sha256": "e8e89662abdca6818b691927daff8c463c7f530ab6b1e6ffdfb3b9eb078d8754"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/xy-wheel-phase.cpython-311.pyc",
+      "bytes": 6763,
+      "sha256": "167ad118209977a8364e2dd750ae060a57cbff3faee60a0b959a3ddd7ae53d9c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/full-cache-independent-review.cpython-311.pyc",
+      "bytes": 25408,
+      "sha256": "5e7ee07218f5c2785a3ab7b0e9597ca82dad9e0e2aecbeba67dfbb088c55312b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/chain-baseline-display-contract.cpython-311.pyc",
+      "bytes": 9353,
+      "sha256": "de9b9e93ad36813fd010b59251579b545e82766b1bd698da9719f67ee81dd94a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/guide-chain-independent-review.chain.cpython-311.pyc",
+      "bytes": 15224,
+      "sha256": "f85f1520587ae5d797cde0867368698ae36e85d534d51107e92af0ad3edfbcee"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/guide-chain-independent-review.cpython-311.pyc",
+      "bytes": 14813,
+      "sha256": "6ec14e00bb231ff8107a6ea9d8998709407886d5b3aaefcc44063a3b2b77522b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/ab-finite-independent-review.cpython-311.pyc",
+      "bytes": 25722,
+      "sha256": "879c89efb7e6373787378de2630bc2c7c74cb8e0a66f2bf1f939baa61bf27780"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/measure.cpython-311.pyc",
+      "bytes": 10365,
+      "sha256": "b19c60036c389369efd6177c70df17bb9faf8a48add7e68a8e1c7edbcc45b109"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/xy-wheel-phase-production-review.cpython-311.pyc",
+      "bytes": 8857,
+      "sha256": "d1bd1c2dd9d37ab5cc87b4f6821392ec5230dbc3fd1fd49857b61ffd1f65ebb0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/xy-wheel-phase.contract.cpython-311.pyc",
+      "bytes": 10316,
+      "sha256": "af254c21a63b941a698ccd9cbaa3bd42a928e36b9a78584e905e7112a63f37dc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/xy-wheel-phase-production-review.mapping.cpython-311.pyc",
+      "bytes": 16435,
+      "sha256": "161ce8b0e218cd5bb289ca53113e79d7221322dc8d73ba693433251835d34dfd"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/research/motion-appeal-xy-v1/__pycache__/guide-runtime-continuity.cpython-311.pyc",
+      "bytes": 14253,
+      "sha256": "3d41e308462c4aa2e2fd0c124e58f7ffb29312e1c9b9b5b2561876ba53c33966"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-revision-v1/tasks/35b19adcff471b73cb67/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1179,
+      "sha256": "cb81172c0870df3ef6c33eb7a06125d1d2cd73c0256a04d5ff627afd1ee65463"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-revision-v1/tasks/35b19adcff471b73cb67/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9304,
+      "sha256": "dce0f0af512152a296ba40dc784d2daeb9c29f71c4cc04157675ab73390e0933"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-revision-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 29496,
+      "sha256": "6d9a8573c2f368a48b5383918ce6b73979273c662a5a230d2b3e87d38605b35b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-revision-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1257,
+      "sha256": "9e25f904ffd11fafd41d9a46e34854bce9e3d60b1abf69cd0fbae81c179fef0f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-revision-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 305,
+      "sha256": "87a55edcc10326f72a8902f25eda2f8e41b12f0600530060f95d74e36cd54903"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-revision-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5133,
+      "sha256": "e276011bbb1478712598f3c05f694323f83913000399fa1a0f36eefe65f87dce"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-revision-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11236,
+      "sha256": "c19ace809325cb2c214b3a9603591f0c49599d5a3e2d8ca9192e180d33cd7493"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/stopped-reveal-v5/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1007,
+      "sha256": "52e32925ae662f31de7e471d470c2f236aab404dc8f3d0963537072e8c50d552"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/stopped-reveal-v5/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 12715,
+      "sha256": "a7e02b8309599dfd9adb6410cf1758123062c6bb524eecf25cd0128b3f234c4f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/stopped-reveal-v5/__pycache__/narration.cpython-311.pyc",
+      "bytes": 280,
+      "sha256": "300e2456971a689bb9fe6b983b5b85c2323c608acbc8971841b16d514be304a3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/stopped-reveal-v5/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10502,
+      "sha256": "7aa0faa339fa303cfe116272635091c4293c29041dc9e61533c26a4b9cecdf1b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/stopped-reveal-v5/__pycache__/run.cpython-311.pyc",
+      "bytes": 3821,
+      "sha256": "48c70dff9ea8472f93abdae520be9f6a284361a3d43b8a7e14d61e7c1b4dfdff"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/stopped-reveal-v5/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 18055,
+      "sha256": "b16d9e18285ed8672e99c2c45bc2d3824cd856545ff30bd5a88874f2ec868952"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/neutral-path-v2/__pycache__/static_scene.cpython-311.pyc",
+      "bytes": 7412,
+      "sha256": "b7f798b13b5841a7a5d530ad09ed25b780d3563c6c69d7eed28b715563f44910"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/neutral-path-v2/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 11350,
+      "sha256": "a5c1cf92ee6d1b51cc20d37ec679100cd1381c64c0cf09b937041b9c9a89881e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/neutral-path-v2/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 9414,
+      "sha256": "b768b395fa6b26f215a4986c8b82d7001c33470251bf3792811551b43908a020"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/neutral-path-v2/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 16076,
+      "sha256": "c2976a55ebd5b514947b66fe7e8bbda84912669589e70b538b977dc1308272fe"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/neutral-path-v2/__pycache__/static_run.cpython-311.pyc",
+      "bytes": 2500,
+      "sha256": "b3de3d93e2e9762f87ffd7b65bb3fffaca70387aa22e135d154ad0649d2bab7f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v4/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 722,
+      "sha256": "b6c451fe8249f0cc57ba907af60a36b765ddd0b4f87536b75026b70f74c0769f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v4/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 12710,
+      "sha256": "77ca879d08f21e5f38a143e91dee185cce8344d76e8f8d7bb94a3231d399c546"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v4/__pycache__/narration.cpython-311.pyc",
+      "bytes": 275,
+      "sha256": "2509eed24dc69e88832ee1f135c9be9487bf4843dffcb26f85298dfb51393709"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v4/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10497,
+      "sha256": "ebe8c527f162aa810725e0c792f136cd305e8bb0ecbf1f98397459bf7a62bafb"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v4/__pycache__/run.cpython-311.pyc",
+      "bytes": 3816,
+      "sha256": "c392693773c6278384520c15d11eed21b68058c28c70ffbae5fac0b84f9260ab"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v4/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 17022,
+      "sha256": "8081a228945bfe9ae790891fa4f56f5c2b3734b405039b449777c498eb6deaa0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v3/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 12751,
+      "sha256": "c042438b623cbbce290575df444735c7dbba6699351de7e5f040fc27e364d8f1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/schematic-v3/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10497,
+      "sha256": "53757f3cc61ff5ac888df13c5a4fa5fabca00c713bea0bd972839b05a6daadbb"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-final-sightline-v4/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10509,
+      "sha256": "ac69cda4199281b8a448ce0edddd6351ab75282338d13c2a4176f960c5d66093"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v1/tasks/3b50d38505604b45183f/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 852,
+      "sha256": "5af0d4de686f7c0160630fc83f71284686b4cca2af00dd248c8925249da86ebc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v1/tasks/3b50d38505604b45183f/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9301,
+      "sha256": "ae3cf01a8547220e7afa5835b008590445029c6484524f87fbd9913d800b8018"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 16968,
+      "sha256": "9b0cb91537dbc8e9b202ff6dc16c3e1f735b4aaebf1edf87fd9353e7a56c217c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 886,
+      "sha256": "8d4237b505c076d4859421163aefa394197547deee7f839ca8377a6158698079"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 302,
+      "sha256": "a1339a35c370695435f72faa4265cccb1741d5c559e776445237458d63e8899d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5078,
+      "sha256": "bcb3bff36d850ede8350668ba58130fc32facfc9337e7265dfa8c9209660ea08"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11233,
+      "sha256": "e6094a61bbf632886d7a910747294c8e37c79a56e5deb532d9a37285b8f58b74"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/tasks/7a94fb9572da7ca06bf9/renderer/__pycache__/source_belt.cpython-311.pyc",
+      "bytes": 18847,
+      "sha256": "9b8fd6372df8bd5b4a4a76830d8bb81ccfd33ef371f70a90bb9ef7339905eacf"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/tasks/7a94fb9572da7ca06bf9/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 854,
+      "sha256": "e6b6de6f97cef073b1a9cc7191d24d80c122ba1a45a69ba56fdc386a9819eda2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/tasks/7a94fb9572da7ca06bf9/renderer/__pycache__/audit.cpython-311.pyc",
+      "bytes": 958,
+      "sha256": "39c0cc2cb7d9789061f9fde950e7e68c39f8e3eb865a1c4e91276e879b24d637"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/tasks/7a94fb9572da7ca06bf9/renderer/__pycache__/prepare_geometry.cpython-311.pyc",
+      "bytes": 3975,
+      "sha256": "a9f45b67bad26a8ccaeed72ffdf54ce16775c0c3b524fe04e9b7a82313032f3f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/tasks/7a94fb9572da7ca06bf9/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9303,
+      "sha256": "e4462d8a44a8c04bd9422792b70df62479a01828b99b5b91aa1e8f3dae25f11b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/tasks/7a94fb9572da7ca06bf9/renderer/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11305,
+      "sha256": "d9e76427881102a3c4d377310c944f153fe845bad04aa9cc8af81e982501d759"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 8141,
+      "sha256": "87447faa1992f6532c3c47cbfd7715852af2591386a1446a150472f6f5169620"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/source/__pycache__/source_belt.cpython-311.pyc",
+      "bytes": 18372,
+      "sha256": "aa7c61aa7bcb452c2c3430451fa7763d6ea56e2388ae0ba58f39a0cf09f2211a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 888,
+      "sha256": "064d09f3b37f78e4c3deaeb2d0424adcd79a5015a901f7dd7216df74f5de1737"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 304,
+      "sha256": "ef0d25c5b2b7084eb97ea0e334f35ad132abaff0421cc86801e1ddcf81f99f75"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5334,
+      "sha256": "f858c39ec420c617773c1eed4800ff3c52c9e5d94128f31ab5a5901f51ac862a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/source/__pycache__/prepare_geometry.cpython-311.pyc",
+      "bytes": 3905,
+      "sha256": "33a27dbec9737c5f4ec0d954bcdb78f0714cedefaccbf23d5eecc2cc1f19648f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-motion-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11235,
+      "sha256": "ac9d90e110c4ad99d267b17c261482dceaa0e0bf36dbaad869d4622688793ff3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-source-chain-v1/tasks/38153f6f9eb155c4e415/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1286,
+      "sha256": "05d5377bd213ce53f5735cb05f97c0021e0e9c6f2aac9112445a50cedce6fa20"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-source-chain-v1/tasks/38153f6f9eb155c4e415/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9305,
+      "sha256": "445043b0051a227b9fb0c2a888c9dea830571a358f4c6d2193e69618b7fb2996"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-source-chain-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 7455,
+      "sha256": "16514b01b42ee73a866cfc401598153de5194a3700894393f3bebf80dff00b8d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-source-chain-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1397,
+      "sha256": "1bdfe7d633e34da5ee829fb3d1a109cb003526cc90f2c662de59244144460e90"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-source-chain-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5026,
+      "sha256": "592ac90439241b6ef30228bf9cfbb03adf167163c79ca9e7c6ba6d5eadeb0b35"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-motion-v1/tasks/c701c854cc549ece207c/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 2103,
+      "sha256": "8ae52988428d4be8104407297fd50968277981724c3fd244503b40587dd42090"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-motion-v1/tasks/c701c854cc549ece207c/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9299,
+      "sha256": "3f75cab36be6d30ae7f25ea8fd0f1bd83fb7495f9e3158e3e41e12b73b412234"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-motion-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 8998,
+      "sha256": "c76ff09fce02028262be2c1b357f23fecc840d7f41d1c1386d2c2d0d0eaee51c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-motion-range-compare-v1/tasks/f07e14cc64136210bee9/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 858,
+      "sha256": "0dae92ed3c8fc93635f2b908fd4bacaf621b9ecd0c2eb87c8f30f296713964b8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-motion-range-compare-v1/tasks/f07e14cc64136210bee9/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9307,
+      "sha256": "6a0d8eb9792fc2cb5101771fd5edf73a6edbfc880f6b78c5b67fa9da31e1c6cc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/tasks/ffe4f0c0c53df6fe621f/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1168,
+      "sha256": "4f4d0b727167684e02659dd5984a8e0727f258cebf1f78069e5cf8b96586183f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/tasks/ffe4f0c0c53df6fe621f/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 755,
+      "sha256": "bfaff4dddf9d4abb2793f0cf437edbb173b33b6acc0bdbcdb6040d1d82162dd2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/tasks/ffe4f0c0c53df6fe621f/renderer/__pycache__/sweep.cpython-313.pyc",
+      "bytes": 2033,
+      "sha256": "d31038e5414668115f982aa5775ce2729126e5e611b3cacd68703a36d1f90be2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/tasks/ffe4f0c0c53df6fe621f/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10041,
+      "sha256": "f7d89bb899df7581136c8576e6718efad139bb0b9a0c4ee69a33481066185d79"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/tasks/ffe4f0c0c53df6fe621f/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9293,
+      "sha256": "a45ca94b0dc3bb011879da1a2d314d0c20136dfc736a974c84735029c99651ca"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/tasks/794113af87e863cb45e7/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1183,
+      "sha256": "6001e8b73eb72d38c4f999471b7a3e22a966d76899900454eabe51dbaf9b83c3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/tasks/794113af87e863cb45e7/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 770,
+      "sha256": "271cde4c32378cb8d9fc26489dc7d8e4c7fc7d94213b9a4f08fc5622868ccbd0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/tasks/794113af87e863cb45e7/renderer/__pycache__/sweep.cpython-313.pyc",
+      "bytes": 3120,
+      "sha256": "ef0c1b5e6fe184a1551fc9734568fe04f1d7db292801e3de29cdf95a2726b437"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/tasks/794113af87e863cb45e7/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10056,
+      "sha256": "38c4f3fb61ce7ad9512c7b97ce445c7775d96c2269af441f149a30b0fdff1301"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/tasks/794113af87e863cb45e7/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9308,
+      "sha256": "e72b60628483dd84d1b2b07cfcdfb85bfc262bf6f99957449a0c72b8d5229528"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 33837,
+      "sha256": "95ea7da74847865fd1d3089f99076347a97e7412da31dfa0dec9bf8fb00a11fa"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1261,
+      "sha256": "78794a0a58a67cc9bb9069c07c5cc14701d00811b8eeea7abbf65feb75f29c85"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/verify.cpython-311.pyc",
+      "bytes": 7786,
+      "sha256": "f2a15cc516578b06d2cd808a109f19fc369c562936068584a5eb369fc60a9321"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/prepare_tube.cpython-311.pyc",
+      "bytes": 10940,
+      "sha256": "33ba4283085298d37a7d109f66a242fbe1b0b126e4ac617a5cfb087809e876c3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 299,
+      "sha256": "a0ff9e5d2a853e8bff8d94ecc60422600611da68157f2895aec83238c9b98721"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/timing.cpython-311.pyc",
+      "bytes": 830,
+      "sha256": "4fd405e3b95e46d55d5f02ff1d2c0ddd86ea1f0d63bcf5084798a9ea9a1c82a4"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5499,
+      "sha256": "d1b069c8f9a088406c6b4a908e7e784997a9a8ae3e4c3996a5ab5b3fbfae8131"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/phase_binding.cpython-311.pyc",
+      "bytes": 11989,
+      "sha256": "b5d2bf5c6e57d1eb41b97993f2c60f8cd84a0b6c3f72498b86efe183a4aa050f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/sweep.cpython-311.pyc",
+      "bytes": 3675,
+      "sha256": "8f9ef036446ef1779e8ab2d38903129fffd13a51b32afbbfa9ea820342a2c1c2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/length_fit.cpython-311.pyc",
+      "bytes": 6387,
+      "sha256": "b0b0fca0b8021274fcffc1b2dfda2cdfeb17861794d2f4493669abdab1f4964b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/build_task.cpython-311.pyc",
+      "bytes": 4208,
+      "sha256": "4ee789077971ac12daf98f44b6225ea52cf5cb18d3375cdc0a7b0b6ad0ff2ffa"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/local-final-v4/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11240,
+      "sha256": "56e2c4393d4c50f298a887a5c592a2fe8c6fa1456c616c1d533357d5ec3eb41f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/tasks/aad925a3ebe8fb8b96e9/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1181,
+      "sha256": "54f6e4e7929f643047e97b64b3028a32062a28254566cd8871244cf55c626a4e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/tasks/aad925a3ebe8fb8b96e9/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 768,
+      "sha256": "1a01af86a8408e0986539f0a351879a05d6c691bea7aecd0809ca9ebe63df2ee"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/tasks/aad925a3ebe8fb8b96e9/renderer/__pycache__/sweep.cpython-313.pyc",
+      "bytes": 3118,
+      "sha256": "4eb2d45af975994ae7d51b35410bbf0b0b48e7c8583772b30f1636b17225d173"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/tasks/aad925a3ebe8fb8b96e9/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10054,
+      "sha256": "896d6eda41a984aedf41816c30c86bf32d9bec50ccda618f41c3fbf9598bb1ae"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/tasks/aad925a3ebe8fb8b96e9/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9306,
+      "sha256": "0c178607390e4fba34082dd78a96e584f1a974cd84756f32ef9abc691e7dea61"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 33835,
+      "sha256": "90fd236e7a6c842c82bda9019bb26c17a1277917723da86220874b1a1042d86d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1259,
+      "sha256": "ca74e950b8d39564cc8508004950c9a52868f89883624d808d9523be07410b2c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/verify.cpython-311.pyc",
+      "bytes": 7784,
+      "sha256": "9bd5d37b6de628ea12ac4b109224f9419db8c361963f499a06b9ace8e07759f7"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/prepare_tube.cpython-311.pyc",
+      "bytes": 10938,
+      "sha256": "1155cf5ed50adec95bcafd0a272753de3428f32bce585da19734f15cde31f6d2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 297,
+      "sha256": "765b6f16f16b5096547372614f339b05dd75c6b5273d04a886ca6749e4d5f5d8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/timing.cpython-311.pyc",
+      "bytes": 828,
+      "sha256": "f25d8b1c380c64bd21cbc71c3e142913d5a55c64b1846467e9fa3242ca4ee430"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5497,
+      "sha256": "4aa76a09ed776e0f4a575fdebdaba39a90b78ae48176fc60b83514138f555ec6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/phase_binding.cpython-311.pyc",
+      "bytes": 11987,
+      "sha256": "3d683753a4300c86a41c769774606a4dbe431173e83fa2b6a8c1ade4148a0b18"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/sweep.cpython-311.pyc",
+      "bytes": 3673,
+      "sha256": "7a325d0efcd5fa754d639bfa4b64186e42e853e441791f4858f1bb5b9b4ddb2d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/length_fit.cpython-311.pyc",
+      "bytes": 6385,
+      "sha256": "631e67831bb0b5c7b6321d472498e82fcf27c6b49daeadecfea833b0fe2456d4"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/build_task.cpython-311.pyc",
+      "bytes": 4206,
+      "sha256": "ce010dd192290e31884de9a237b65e44fdbdb1941c1240bda09c58395727fcf0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lossless0-v5/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11238,
+      "sha256": "20c91167d747a024cede67deaaf8f1f8aab5e95ebc6a0a14866d3ee9fa1403d9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/source/__pycache__/sweep.cpython-311.pyc",
+      "bytes": 2442,
+      "sha256": "4748acf5616afaa7affba6655a22f1bbc23c1a04a26ca7a3f691c34bb56a39f2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/tasks/6e0ed271ab4ee3ca8b12/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1186,
+      "sha256": "009b3acdb1d5bc0531738ae52edc93a35d834caa9532d66ee9581872a0e21d1e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/tasks/6e0ed271ab4ee3ca8b12/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 773,
+      "sha256": "d3d145805f90c836570879c53a4efd1dc780ee552e172182719ac0945bde1163"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/tasks/6e0ed271ab4ee3ca8b12/renderer/__pycache__/sweep.cpython-313.pyc",
+      "bytes": 3123,
+      "sha256": "cb5aa97ae4a7cf85db92872281d7623465e5c4255e115f52a6f321b279725aca"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/tasks/6e0ed271ab4ee3ca8b12/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10059,
+      "sha256": "4a25144230da40527a4603d4d417e87528050c54ddba65f6571f51dfecded367"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/tasks/6e0ed271ab4ee3ca8b12/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9311,
+      "sha256": "2078264e43f658a6af22b8aaae4d003a65ffd3dc5d0a86e592392d0e383b816f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 34442,
+      "sha256": "285ab3c354c2c3aa556fb9de3f96ce19988a40c1c580815bd16b9751d8a0d062"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1264,
+      "sha256": "cc8335b2885f53a6f5835606f4eb365d724be24060d805a7f0f20491504fafd6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/verify.cpython-311.pyc",
+      "bytes": 7789,
+      "sha256": "67694ca865fb37bf738f7366d3ca1a4c26e641b74c2a5724ae142315ed94d469"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/prepare_tube.cpython-311.pyc",
+      "bytes": 10943,
+      "sha256": "5ca8cfa9cd8224da712c6517a1afea413b2f1b08004be077296bef17d4853f02"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 302,
+      "sha256": "5d4164a900eab4f8bd916c9bcf233c279ddd92286b204f1e73604ea1259ab0c1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/timing.cpython-311.pyc",
+      "bytes": 833,
+      "sha256": "24c52f821dbea4429ee8207e809af8258b260b631735bf273a660248969220cf"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5488,
+      "sha256": "8fe37c6bfa4205c7eccdd954ea4c33a37b6196ccddae12724b2bc5ef4ec220ba"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/phase_binding.cpython-311.pyc",
+      "bytes": 11992,
+      "sha256": "b22512e3e06d8dfc7bf61c1b2b20a1340e5725289f307d5982fc37f66cafdec0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/sweep.cpython-311.pyc",
+      "bytes": 3678,
+      "sha256": "b13e1168b03a46ec47ce1c8a9d3398e133b000b5098e410c101d83701b24b2f8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/length_fit.cpython-311.pyc",
+      "bytes": 6390,
+      "sha256": "58cf29a055ff63ff5c398d9318b66bb1e4625567cb0a16bf0e8184f4f0c5991a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/build_task.cpython-311.pyc",
+      "bytes": 4211,
+      "sha256": "36ea23e7dab2a6d2dff3ed9f90e985cca7f59387f6849726b5b1d50764cfc25c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/encoding-probe-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11243,
+      "sha256": "e5399a330b1a1df9490d18715ab4f0557d4dc660627372c2885865106c31f2cf"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lengthfit-v2/tasks/08630a3520873cedcce5/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1181,
+      "sha256": "28957c2d93a74f1003ab8194a5a6257845d69f5a8ba16e26adf3067093d694ec"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lengthfit-v2/tasks/08630a3520873cedcce5/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 768,
+      "sha256": "81eb9022191bf0fe347d8c1f4d318da42db61c1a06ec5847c8a91ba7f35e2e8e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lengthfit-v2/tasks/08630a3520873cedcce5/renderer/__pycache__/sweep.cpython-313.pyc",
+      "bytes": 2046,
+      "sha256": "99316340a0e904c06a18bed1002f417917bc6a10a2d49bec463806a88fec6f2d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lengthfit-v2/tasks/08630a3520873cedcce5/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10054,
+      "sha256": "ecb0bdc5a13c7fa655e5168760fc5bcb9469bbec35738df827e6cd4b8802c7c1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/lengthfit-v2/tasks/08630a3520873cedcce5/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9306,
+      "sha256": "6ec81a22171ed88fc45866ee892339c8baab7f561184837f798817f16fb7bd71"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/54c2e4dfacb53a08e77e/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1181,
+      "sha256": "8ca371e0d60799ac0bfb7c406afe4b53f42e1ad9e9478c7418051d8785c6c7af"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/54c2e4dfacb53a08e77e/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 768,
+      "sha256": "446cbe9c95a71be75fd3f6b290a9ebf161e7217610b8604dbb02ba7e087d7054"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/54c2e4dfacb53a08e77e/renderer/__pycache__/sweep.cpython-313.pyc",
+      "bytes": 3118,
+      "sha256": "bae54ea0494d61643f6ed7a6a155e2116b4bd98177bf70de18288140e8824310"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/54c2e4dfacb53a08e77e/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10054,
+      "sha256": "3ee0259024416f258871678a8631ee375e23da17e86badb336597a90f56d946d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/54c2e4dfacb53a08e77e/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9306,
+      "sha256": "8b69970480a11a0ffb0592c7c1e673a1ef0c66dce8b7ccd602b2c9142d6ae815"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/180e211e5c02d17d4a9c/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1181,
+      "sha256": "3b3a7843d356fd7cf8c8dcaad8ab84eafa837a03e305b5619fabddd14f3e1970"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/180e211e5c02d17d4a9c/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 768,
+      "sha256": "8895c4f457c053ce8982a71a8d581d4ad66a173ce727456dd3143d2f7b5895b7"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/180e211e5c02d17d4a9c/renderer/__pycache__/sweep.cpython-313.pyc",
+      "bytes": 3118,
+      "sha256": "530c57d28d150a85bb3fe5dfb708f8633b4a5fb064794dae85b9e9d7bffa4ffc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/180e211e5c02d17d4a9c/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10054,
+      "sha256": "008ea8854a207d0325fa572ff0e77db7ffc6923eddc37fbb69b1c165320b0b7b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/tasks/180e211e5c02d17d4a9c/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9306,
+      "sha256": "a0e04967fa6a6f65c8042715d24a313f6859e7d557e5b7b1f6e1bbba6b6e0c11"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 33352,
+      "sha256": "3ede38a44de0c7d2e83c3f4e34709e538a2fce9cc8e5b372de415a285bc25738"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1259,
+      "sha256": "7117eb572ebf92e609f0f82f5546ee434e4577dad2b0155c3e1db79ce1a5e1ee"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/verify.cpython-311.pyc",
+      "bytes": 7784,
+      "sha256": "6efc25abb44b8c6c5b1719ab9c74c4db673e99c072139519551a2edc762021b1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/prepare_tube.cpython-311.pyc",
+      "bytes": 10938,
+      "sha256": "2ac00c55d55abdd74220752111fa71ea8b6b6bdef67a1991c0c5ad879d163efe"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 297,
+      "sha256": "d2b088e2543dede7ddecc4e33b0d6a64750ccf080a8c120444cda2be8040a4d4"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/timing.cpython-311.pyc",
+      "bytes": 828,
+      "sha256": "168b7dd565af041041990b70aac9f52585e1dec84ac3f5c982e81f455251c0d3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5462,
+      "sha256": "40c3fcd80e3b50bf071ac1c9faeda6c398403437287712d5ded6942d02cecaae"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/phase_binding.cpython-311.pyc",
+      "bytes": 11987,
+      "sha256": "769d6b46cc3085fc9fa76a4bdf6c4edd0f8823bd2e7e147ad5d101bbbd096005"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/sweep.cpython-311.pyc",
+      "bytes": 3673,
+      "sha256": "148f85f3d3e7009de64c3fe0b5ab33b05e07ec3dfcda49432646efbefbf10d0e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/length_fit.cpython-311.pyc",
+      "bytes": 6385,
+      "sha256": "2397a14a4c5ebe5f5ca097668f2496dbee8b367cde96cef9b75ddc807a4204d2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/build_task.cpython-311.pyc",
+      "bytes": 4206,
+      "sha256": "ec14992a5f8295d2ae953596c0b6d040a1ed6c0cde37dcbca59bbc5b26563441"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/tube-repair-v1/transport-v3/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11238,
+      "sha256": "287e95e77050fb63ada9563c047febf804e19881c4abf624be4c2227ed4e8739"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-v2/source/__pycache__/adapter.cpython-311.pyc",
+      "bytes": 15072,
+      "sha256": "1225e58071f00644fd61996c2a1f84be8f78b73e1b73a03e7434f1f0e05909bf"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-v2/source/__pycache__/render.cpython-311.pyc",
+      "bytes": 4460,
+      "sha256": "243c73c12dbfb06788cf8cdcf8144d7dacc4860e87b37881ef0d412bb9cd9df5"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/production-prep-v1/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 862,
+      "sha256": "0d19d2db9145fd4d11e3407fc6893b98573da6b1db63e7e15dfdde78fca14918"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/production-prep-v1/__pycache__/static_scene.cpython-311.pyc",
+      "bytes": 7415,
+      "sha256": "91115b7029fe2b3163055170dafd68f408d720e6c592b82775d4aa50c3520597"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/production-prep-v1/__pycache__/narration.cpython-311.pyc",
+      "bytes": 533,
+      "sha256": "687da6779c76a3dc75af06160abe2cdec4c4ae03667f5c1b6706f02a2556e015"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/production-prep-v1/__pycache__/prepare.cpython-311.pyc",
+      "bytes": 8760,
+      "sha256": "42adea816dff6978c6c0887ceb27eef495a1496dcb2811eaff0b2fc8ef4730ed"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/production-prep-v1/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 2987,
+      "sha256": "f4ce8e89b33c2add964cc7e2a968a18e1d809d178b8d2c13347111be11f4bbff"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/production-prep-v1/__pycache__/resume.cpython-311.pyc",
+      "bytes": 2203,
+      "sha256": "1f30ddc800df011292c232a2c6385366426be9bfe83dc1abcd1a3312da68b2c6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/production-prep-v1/__pycache__/static_run.cpython-311.pyc",
+      "bytes": 2503,
+      "sha256": "a4f4f261da6e26314a077c2424d9eb9c04749694a487ffe960ed8ee254d31b7a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1005,
+      "sha256": "44bf9250c1ae7d30891cfaeaa882dd3c7600f505d4f707bb8790955c65d9f200"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 12713,
+      "sha256": "37bbaa58e39c4d8b031e6be90394039545d767c5be48057eef2984b961d14d3f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6/__pycache__/narration.cpython-311.pyc",
+      "bytes": 278,
+      "sha256": "35cc791db22694a257f39f3d9666ff85e45e0980d21e67bd4613a97c67f6bb5d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6/__pycache__/run.cpython-311.pyc",
+      "bytes": 3813,
+      "sha256": "864752bcebd2b0659511e23a2fc618fc0d8a248cbfd2b1421b6ca9d494aece3b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 25210,
+      "sha256": "ad68c38bcaaef714b9ef345bccaa710faf9858f5a6261c484634fea5ca269d9b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-sightline-map-v2/__pycache__/map_source.cpython-311.pyc",
+      "bytes": 18728,
+      "sha256": "dea8ab1b671c56c31e8872e9ec019eb0b44654f8f51df62a86d1758f4eaa2f33"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-sightline-map-v2/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 12720,
+      "sha256": "18d50c8b7229cfd8e5369897f0b83a079af26460288a3c296c20ea538cc15a40"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-sightline-map-v2/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10507,
+      "sha256": "4332d1e355c53398413d8c0960416bf26bea4c39537c7b16c8d23112f0bccb52"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-sightline-map-v2/__pycache__/map_run.cpython-311.pyc",
+      "bytes": 2069,
+      "sha256": "69c2a68ffba6c5411a5fa8d5a29a60f24f5706bfac2cdba90576a98f693f0cd9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep02-frame-reuse-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 16688,
+      "sha256": "1398a49afb5f48d57c19edc02f89b25c3dbc5cdc62875041e0318a7e83e7ba7a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep02-frame-reuse-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 4902,
+      "sha256": "c18638c5ab6043e64fc2ed34f539d36f5975efa7939683ce2eb8c6f1dd84bf2f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-sightline-map-v3/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10507,
+      "sha256": "ab0ff31301402aa73fed15486da46dab4d5bbc093e87eda2285daff705ea46b9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/tasks/5884332bf553aebb02c7/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 843,
+      "sha256": "064180d63221b977939b25286569f2f501b119582733cf3b642a3b76cbbb0a13"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/tasks/5b0526da470e9d0feed5/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1181,
+      "sha256": "a7434772a00a1d2c91930df7cf111b92218835e18f46f9fc939403ed2f5b5e5e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/tasks/5b0526da470e9d0feed5/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9306,
+      "sha256": "1de50857859f3330fb6832417232061035228d2d77c9676094cf2eb763b4620b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/source/__pycache__/guide_path.cpython-311.pyc",
+      "bytes": 2960,
+      "sha256": "45d8a3ebb8a55c1557a94db19ce4df2c3c96f72c93be519f82e42b429000d108"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/source/__pycache__/chain_binding.cpython-311.pyc",
+      "bytes": 21022,
+      "sha256": "435aa43f5b03f05b78f3c8a44b82d519e39dea9b4e1e139869c3046cbae44258"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1300,
+      "sha256": "b8c1d196a7683af63e35b3820ecba4d5910bb5cb244a0eb3e93e1ac8442e62c9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/source/__pycache__/guide_transport.cpython-311.pyc",
+      "bytes": 8107,
+      "sha256": "769d63ea010db386ef2aef1231102dc2f7a6dd09cd6d39f453e26f3ff9fa5850"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/source/__pycache__/guide_mesh_path_xyz.cpython-311.pyc",
+      "bytes": 4722,
+      "sha256": "dc4ddc2d01a64bc235a1dfb16e6aac08d0ffe382c2347261d1ceb43e5af049dc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/clip-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11279,
+      "sha256": "9a23a358b158dc9952b844e2f38a54bd948c4947cd939d8f189a3d0b1e6e62ea"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/finite-preflight-v1/source/__pycache__/guide_path.cpython-311.pyc",
+      "bytes": 2972,
+      "sha256": "fcc61fc305ca12fe30b3aa6e5a1a45eda892016649466cad6e8faf5e7f699457"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/finite-preflight-v1/source/__pycache__/source_ab.cpython-311.pyc",
+      "bytes": 14109,
+      "sha256": "52ae79adb88d5ff675a2e10328d5a0b0e3d0b9aad6d24b339a7bb8ef809c44b1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/finite-preflight-v1/source/__pycache__/guide_mesh_path_xyz.cpython-311.pyc",
+      "bytes": 4734,
+      "sha256": "b250a06c95f9d0b5531a03fa01f66ef083e825cd92a05c5ce824590fa8205db0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/tasks/6ffaef12495c39467bac/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1181,
+      "sha256": "83c1b36bb09194b495b0fd8b79aea539460ee2707de32e9c9980501dd4cc5bca"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/tasks/6ffaef12495c39467bac/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 768,
+      "sha256": "277fd8f667d51eeda5fa5654201b00a8fc4e36fb18477f6c683f57ec174cb442"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/tasks/6ffaef12495c39467bac/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9306,
+      "sha256": "34956f1555e241587741e503d7596c87186e9adeb7deddf2b0304cb9b93cf9b3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/tasks/d0237a97c22e59c075a2/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1199,
+      "sha256": "73564db5e30dfc6bc38a202f8abb3221b06dc960fbcd98569e230d87d0fe188e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/tasks/d0237a97c22e59c075a2/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 786,
+      "sha256": "eea1a548954b8de9606cf22a3be211ac4e775462bb98c3b09d59a7e55b50e75d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/tasks/d0237a97c22e59c075a2/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10072,
+      "sha256": "51eda189900d3e0052de274d0c869d08e502399e8824b02c599214a3162c2a92"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/tasks/d0237a97c22e59c075a2/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9324,
+      "sha256": "c43a5d40ae028c406f84e65f0165416168d47989712fb247620a87ad4e579938"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 29875,
+      "sha256": "519bbaf8d00130ff17b21fd25924512f723b5d8eac0771ddfc9bc74986ca7159"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/phase_preflight.cpython-311.pyc",
+      "bytes": 14968,
+      "sha256": "8b3399d426f9d74fa4812d4a380c0e1c4750f31c610058469e50f082e39dc0c0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1170,
+      "sha256": "6ea967ea527dcfe6bcd7d8e967b06b6569e21da15a80d9ff4d62f82c759e7327"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/prepare_solid_meshes.cpython-311.pyc",
+      "bytes": 3813,
+      "sha256": "d7647ee425a03f7f24df63574660af832295ba8dd3ff7ebe1e1be4e844ca3e51"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1277,
+      "sha256": "a807c0e8a10812205fd0e77bf2b42ad8b0765a8607d752c7559590adeb106816"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/run_phase_preflight.cpython-311.pyc",
+      "bytes": 2010,
+      "sha256": "17090141a34201188b004cbf983086eb63047d55c3ba4af629efb25aa41e3d5c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/prepare_phase.cpython-311.pyc",
+      "bytes": 4542,
+      "sha256": "a462d9003aad692ad820c3674f2da7efc4707ff575ec2bdf9121285a76509b4e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 315,
+      "sha256": "a7e14776c4a6f5d45be0176b838cf764b33cac20778949b3e1cf5be6af5d4d85"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/timing.cpython-311.pyc",
+      "bytes": 846,
+      "sha256": "058b0986f66ff46a655b985e2bb09f8ea881490c20f2f74377cb07c803eb977f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 7662,
+      "sha256": "3515bf541892ea518d0653c71427265c0f2b5ea0ecab5808bbc597b050d713be"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/timing.cpython-313.pyc",
+      "bytes": 757,
+      "sha256": "513ac74cb4cff8f4e48ccd8cf4ec2e6ca1446eab559dc5c6fe4336a21bc01f0f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/prepare_support_faces.cpython-311.pyc",
+      "bytes": 4563,
+      "sha256": "1e61f81913f9671ec79d32fb2ed49dcf2da507dc8a3fb15910cf1780c270a6b0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10043,
+      "sha256": "bcc3aed6578349c1c7a6baa268f965ab98c65324be79142cbe19fba67b01a21d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/phase_binding.cpython-311.pyc",
+      "bytes": 12005,
+      "sha256": "4a81f046bd2c373dd72be01a731cd177ea595f914e05dbc31d116bbef8a7af17"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9295,
+      "sha256": "4f957dc2dbfb52692a4583a89fbfad667de70a7266cfea87f34dcee89dbe8eba"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase-v2/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11256,
+      "sha256": "a9d5841a266782957305a56d7a5074b1d62cff908496cf13954817c8d93e6075"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 24686,
+      "sha256": "6d02c5bea62f7a33420a5a5b3b97bc0e1671b72a3be85939df71f788f8ec6547"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/guide_path.cpython-311.pyc",
+      "bytes": 2960,
+      "sha256": "5b630051070fa389add0e0742146e9e48519fdb5f6025ac3ea1774eb57f29f40"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/chain_binding.cpython-311.pyc",
+      "bytes": 21022,
+      "sha256": "9dbd22bfddd55a7f49e9f8b2218c771bdf19c3d2c773717d2e6413c4c369fd68"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1152,
+      "sha256": "d5de697aedb2ca52f3315a82df652f35bc2ae4644f88755014522fb4ff26d004"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1300,
+      "sha256": "280bd4bcda079ac835c038689c06a12a35d0d314a79a9d31bc228f4ef6fb50ad"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 297,
+      "sha256": "b2f9f2665a9ab35a3021c39116a3294eb83ad3de6012ca7e963747252a68b720"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/prepare.cpython-311.pyc",
+      "bytes": 13273,
+      "sha256": "641845e32c6e22e33ac4cf195e0679ff0cc72bea7003a4b203f8e4b88d152a40"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/timing.cpython-311.pyc",
+      "bytes": 869,
+      "sha256": "fe23381bdaa8097784bfae9f538d7198c6c1364dc670fcc281d3175f8d45fb7d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5994,
+      "sha256": "c997862bcc845e2e89381ea8bd2b5ac91c821d7882c0e7f460c01ec4cdd70161"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/timing.cpython-313.pyc",
+      "bytes": 739,
+      "sha256": "9d03ae633958aab6ca314f087258e5c6c85412deb6f777743ae7cc4815e1eb84"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/guide_transport.cpython-311.pyc",
+      "bytes": 8455,
+      "sha256": "babffa3b4f4c37d1d65a2997f46d792149398f85681e229064adbc9feee083c1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/guide_mesh_path_xyz.cpython-311.pyc",
+      "bytes": 4722,
+      "sha256": "0e9e9361e782f8dbdbe07b552ae5564b42d907a1e4a66e16c1807af24cb74118"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9277,
+      "sha256": "a8f8be9d19356403736778e47c42a3beb3d590fdac6037198a12c69033b0724c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11279,
+      "sha256": "774fa2eda9bc83976f14143447b07161e142ff1dfe11beb51d542ecd678873b6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/tasks/55613f78f635713a051e/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1201,
+      "sha256": "294ca3dd30e58eedbea0d6a61db218294315ab3b21d98c9e9da0e5d9b16d1dcf"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/tasks/55613f78f635713a051e/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 788,
+      "sha256": "6a695abddef08072d2a04a054937b7c19b30a25670c0eaaf22bb623e21f1ef16"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/tasks/55613f78f635713a051e/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10074,
+      "sha256": "2058a00c52dddcb16a1ab823230b93be08cfea832e8b83ee96921750920d7353"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/tasks/55613f78f635713a051e/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9326,
+      "sha256": "06b792fc4f60f9033f1fde02f906476edcdf485bfc83f188057d5a76770a6c52"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 29897,
+      "sha256": "2e40360b415a4acc308554454e83b5b47b960c1460c2d95940764dd4c4e89613"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1279,
+      "sha256": "4d76b0a0e605cb4d4755fcc582229f4172c4951721f81a16fd04bd1dd37258d0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 317,
+      "sha256": "ab9a400b658527effaca710cf5ac26837e3f0a69f8f352b06c36513eddc29bc9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/source/__pycache__/timing.cpython-311.pyc",
+      "bytes": 848,
+      "sha256": "8ae60f6a4ffb3b65f0c70be84f7cf0d8024211ebba2db473d872ed2814178140"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 7763,
+      "sha256": "44fd9416907315de588b18c9e7f712d8c8c312f8a6093a8d0470176fda6062f9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/source/__pycache__/phase_binding.cpython-311.pyc",
+      "bytes": 12007,
+      "sha256": "887a166c4227f222381d6c405aa8388b01cd2993489b575646f9b64ab8ab7d36"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-phase75-v3/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11258,
+      "sha256": "c892a18c7385dcd006e0f168ae830b0513749722b22da0508979c45e5836d169"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-middle-probe-v1/tasks/7d713a6841203ae0a4ba/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1206,
+      "sha256": "cb7d82c797d6261288eec30cbd8ba1610c7e0c249cb3cc728d5f959f11a63938"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-middle-probe-v1/tasks/7d713a6841203ae0a4ba/renderer/__pycache__/timing.cpython-313.pyc",
+      "bytes": 793,
+      "sha256": "5050318d9ecce3b384c6798e618a700d91197c5e19c519027ce3413e8852bced"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-middle-probe-v1/tasks/7d713a6841203ae0a4ba/renderer/__pycache__/phase_binding.cpython-313.pyc",
+      "bytes": 10079,
+      "sha256": "afd12adf1e73a2d0be35eedaa1871598a2a30e072b0c384703ba6f230a8f0b45"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/motion-appeal-xy-v1/full-v1/lossless-middle-probe-v1/tasks/7d713a6841203ae0a4ba/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9331,
+      "sha256": "8a248e303e3b6c68b9d844258be412b72de1f7161888a3c67d240ded9658a082"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/tasks/ade65e527b6cd582fd72/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 1180,
+      "sha256": "22b1d06506f8876053a7fb1c53b439263dd40796f1c79f56839cac77ea1f7f3f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/tasks/ade65e527b6cd582fd72/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9305,
+      "sha256": "0aced67707624d83239debc37d2af990217aeedc53969cf5ac45e00d94a60f95"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 23679,
+      "sha256": "e17b10e7b875fe06d05714e06d652b4a66afefa86d3b03554f151c7f556f4e23"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/prepare_affine.cpython-311.pyc",
+      "bytes": 7995,
+      "sha256": "91f9c0a79750abee52c12cb8d1a27573ebf18dc3fef29858e238f9da974eceef"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/source_belt.cpython-311.pyc",
+      "bytes": 18779,
+      "sha256": "bde77ce4894cd7b7932e8691d14f08f06f89a1de5b1b022c2227b26e4d65996d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/preflight96.cpython-311.pyc",
+      "bytes": 5869,
+      "sha256": "db843474d1b175e31ec6f0aba85427baf32f19b8f3d560c5a81136f2117f19da"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1258,
+      "sha256": "a48b8b506c3ab1842029fdc7ad93147a8fc7ca1b948e5117e341e0ae87d67237"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 306,
+      "sha256": "1d08fa7cd831263ba0053d73ec34dd6e9a3122a07d278c58a73f473d395d2063"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5811,
+      "sha256": "0f49221a56d9e2216775f11c85e9bf4c728058f73e4eb7d321e0195185f58972"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-b96-v1/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11237,
+      "sha256": "8f7e7fe7d9063e7cf633105e41df15fba023dad591124130bccf8201499b5e3d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-object-map-v1/__pycache__/map_source.cpython-311.pyc",
+      "bytes": 18266,
+      "sha256": "d1db746d6f18f9eb3889c53e1a0bd4a913b2e35b65fe4b55247a8a2142722c0b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-object-map-v1/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 12717,
+      "sha256": "39571e9ae745dd37b81ebe113f0bf0b8d4039614e3331a017ce102241b78a377"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-object-map-v1/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10504,
+      "sha256": "54c72233a24cea29cd2667e4f9b80e878fb667d9bdb7c6f59aa00b8404f6cb0c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/qa002-object-map-v1/__pycache__/map_run.cpython-311.pyc",
+      "bytes": 2066,
+      "sha256": "b428956fd3516a7effd9bcdd06d504cd17aaedc898590071e6296d9cba54b351"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v2/tasks/6a82004104f0a7bc0d14/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 852,
+      "sha256": "3f36ab031298acb0d5e09d785277208e26873adb352b62e6846061c63e6f4aa9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v2/tasks/6a82004104f0a7bc0d14/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9301,
+      "sha256": "886c6a6e5e5c2820ce3ae19427d72b9bb8b5273d461e4d85d9cc4660b3de4785"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v2/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 16968,
+      "sha256": "9b0cb91537dbc8e9b202ff6dc16c3e1f735b4aaebf1edf87fd9353e7a56c217c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v2/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 886,
+      "sha256": "8d4237b505c076d4859421163aefa394197547deee7f839ca8377a6158698079"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v2/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 302,
+      "sha256": "a1339a35c370695435f72faa4265cccb1741d5c559e776445237458d63e8899d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v2/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5078,
+      "sha256": "bcb3bff36d850ede8350668ba58130fc32facfc9337e7265dfa8c9209660ea08"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v2/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11233,
+      "sha256": "e6094a61bbf632886d7a910747294c8e37c79a56e5deb532d9a37285b8f58b74"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-motion-range-compare-v2/tasks/229933f5b4bc07f9aeb4/renderer/__pycache__/audit.cpython-313.pyc",
+      "bytes": 858,
+      "sha256": "43aa0050675a18657439027a964df589d962bff03bba46797449afc12e6ff2e8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-motion-range-compare-v2/tasks/229933f5b4bc07f9aeb4/renderer/__pycache__/full_motion.cpython-313.pyc",
+      "bytes": 9307,
+      "sha256": "fe94512d50592ce02955d16373b939d70e3faaeb0b8b1395251074e3a850cc59"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/renderer.cpython-311.pyc",
+      "bytes": 21860,
+      "sha256": "76f95e47a6f556a4adedca79f842b840a2cd3a011d8de49135bf7a1e9858dd7d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/prepare_affine.cpython-311.pyc",
+      "bytes": 7991,
+      "sha256": "d1f0ad0d111d30e895cc3ebbf2e8dfaeb6ff694ac32c8b95e7d8c6df088242b1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/source_belt.cpython-311.pyc",
+      "bytes": 18775,
+      "sha256": "f127a610fa42f2c64f7001f7ea531ea7a8925f8ea7c71e9419b055242cd94052"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/preflight96.cpython-311.pyc",
+      "bytes": 5865,
+      "sha256": "ba4d26f801ea689074623ccbd61673c5dfacb63238de6c50265d509fb11abd9e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/audit.cpython-311.pyc",
+      "bytes": 1322,
+      "sha256": "35cedf82e35137054e506c54d9a0b771968fde193830e344033a51813430e3cd"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 302,
+      "sha256": "b4e2600c36dd487db0d42ec12df0feb53a15359973c9ae4d31e88e7c9f146e04"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/run.cpython-311.pyc",
+      "bytes": 5575,
+      "sha256": "ede3ea13d934143fd7df87d50c340839f9d0e94c30a8c16625e452ca923bb5f3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/real-structure-full-v3/source/__pycache__/full_motion.cpython-311.pyc",
+      "bytes": 11233,
+      "sha256": "5962c7b336a62c8dd69a45671e7509a83008762710c63529557b416c8af65203"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-v1/source/__pycache__/run_inventory.cpython-311.pyc",
+      "bytes": 2378,
+      "sha256": "7bae3be6b76f891f927e7e5dbbc5ec52e21193d7818fd56d11b33ec10878f149"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-v1/source/__pycache__/adapter.cpython-311.pyc",
+      "bytes": 13411,
+      "sha256": "1c6a04d4c5bcb9a507735227d456ceae77369ba34307824bcff7335fa9ffc5f8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-v1/source/__pycache__/inventory.cpython-311.pyc",
+      "bytes": 2834,
+      "sha256": "99e0121abe213eeadf132c98baeaed0e0f6bcd8e89e18f77e741844f9ff808a3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/ep03-reuse-v1/source/__pycache__/render.cpython-311.pyc",
+      "bytes": 4460,
+      "sha256": "fca9270535265169dd02d69f33d04983bd799acd9bb3d17a407653724554f51d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6b/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1005,
+      "sha256": "44bf9250c1ae7d30891cfaeaa882dd3c7600f505d4f707bb8790955c65d9f200"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6b/__pycache__/geometry_path.cpython-311.pyc",
+      "bytes": 12713,
+      "sha256": "37bbaa58e39c4d8b031e6be90394039545d767c5be48057eef2984b961d14d3f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6b/__pycache__/narration.cpython-311.pyc",
+      "bytes": 278,
+      "sha256": "35cc791db22694a257f39f3d9666ff85e45e0980d21e67bd4613a97c67f6bb5d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6b/__pycache__/geometry_path.cpython-313.pyc",
+      "bytes": 10501,
+      "sha256": "15c4a9a7a180be0b40f85a8476d3ed58e571273a5a35a53e3105dcc0094d16cb"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6b/__pycache__/run.cpython-311.pyc",
+      "bytes": 3813,
+      "sha256": "864752bcebd2b0659511e23a2fc618fc0d8a248cbfd2b1421b6ca9d494aece3b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/visual/final-reveal-v6b/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 25210,
+      "sha256": "ad68c38bcaaef714b9ef345bccaa710faf9858f5a6261c484634fea5ca269d9b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/local-v1/__pycache__/encode.cpython-311.pyc",
+      "bytes": 6879,
+      "sha256": "658232743c6cd09034b2ba876ad91381b56f07b2bbd5c997d38f7c81288f9d3c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/motion-appeal-revision-v1/__pycache__/assemble_local.cpython-311.pyc",
+      "bytes": 16107,
+      "sha256": "2d6ea3db4ec1d97dbffd33574040a1fbe4d4b7b5d83ccd6841f461dd735be30e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/real-structure-local-v1/__pycache__/assemble_review.cpython-311.pyc",
+      "bytes": 10782,
+      "sha256": "f77a6be73562734ea87e3edd649eb929bf997bc88fef4bfa79de59548461d1f6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/real-structure-full-v1/revision-v2/__pycache__/assemble_review.cpython-311.pyc",
+      "bytes": 25857,
+      "sha256": "5ef26386405ed38eba7175af0524650558f8ce6257bb6e8a89d9aa4496af9fe6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/real-structure-full-v1/__pycache__/assemble_review.cpython-311.pyc",
+      "bytes": 25195,
+      "sha256": "c2443cd24bb1d8704e113e148d1c8c1ae18e016f05c22762fbc26cbaecea0238"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/tube-repair-v1/__pycache__/assemble_review.cpython-311.pyc",
+      "bytes": 14249,
+      "sha256": "bcd2dc1c9dd4ac44cd2b73a4da56970cf68910fd02e164a3ffbdd0680cb4d12e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/tube-repair-v1/full-lossless0-v5-review-v1/__pycache__/assemble_review.cpython-311.pyc",
+      "bytes": 14297,
+      "sha256": "6b45f6279a1da2c5704b7185618318339cfddb07bd3e1f0e46cc283a21db094b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/tube-repair-v1/local/__pycache__/assemble_local.cpython-311.pyc",
+      "bytes": 15733,
+      "sha256": "c7a0a2cbebeec382fe7445f0e0a076a48944e959d3bbdc2333059ed83efa7a5f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/reuse-local-v1/__pycache__/assemble_review.cpython-311.pyc",
+      "bytes": 10731,
+      "sha256": "fe3d3f81678c983847a9fd50129fb7776ee11ca754207dde64e74ac556cbe2f7"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/motion-appeal-xy-v1/__pycache__/assemble_local.cpython-311.pyc",
+      "bytes": 16289,
+      "sha256": "fb48ba2c4fd7618cc1593ceabf9f2bf79c9c80a9d923c69e3cd8c81f9a62377e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/motion-appeal-xy-v1/__pycache__/prepare_audio.cpython-311.pyc",
+      "bytes": 11484,
+      "sha256": "ea02e167a1e7d51d73940990d23386589a06d68ca87d6eb5799e13b5d104271e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/motion-appeal-xy-v1/full-v1/__pycache__/assemble_review.cpython-311.pyc",
+      "bytes": 14068,
+      "sha256": "136bee8d1f95efc924f4a61dea3c441d42193b3c844573a3ea54ea70f64afe11"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP04/editor/motion-appeal-xy-v1/full-v1/__pycache__/postflight_boundaries.cpython-311.pyc",
+      "bytes": 8399,
+      "sha256": "1a61ad9d9adbb18534edeeef98d0af79ef027fbaf891c2420162611f67348147"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/source/__pycache__/helpers.cpython-311.pyc",
+      "bytes": 4922,
+      "sha256": "54e6910fcc43df74916c44e302eb6181df896109d92e563615fd2389d563954e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/source/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1435,
+      "sha256": "3981c2435d04e33512f20abe45d10fb3661416118fc473892098ccc2df0216ea"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6722,
+      "sha256": "628fd565c08cef525ead5236c29ce995f3a07c58f6fab3467010980546aa1c6e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/source/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 16398,
+      "sha256": "43d818b78d4570b67cd43f0b78fd5b6e99989fe78ba1566f9a4bca7051e765a8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/__pycache__/run.cpython-311.pyc",
+      "bytes": 9178,
+      "sha256": "a2466d8bf60caed352f65952e99d7a8b376b9c070c79d00ed85569a5019e316a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/task-d543ae23d47d4f384d08/renderer/__pycache__/helpers.cpython-313.pyc",
+      "bytes": 4731,
+      "sha256": "214e24e16be4fab9ac4d4c12c07effae252e8c72288b2526fa6db3de5b9888cf"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/task-d543ae23d47d4f384d08/renderer/__pycache__/helpers.cpython-311.pyc",
+      "bytes": 4917,
+      "sha256": "350c78739739203503a87a7059a4b4d1cfe42c17c8ab840b72af325e4d21a95b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/task-d543ae23d47d4f384d08/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1430,
+      "sha256": "1b76a17c129a6db3141f029e9cd6af45f7eaaa3086b93df58948c0fc6513332f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/task-d543ae23d47d4f384d08/renderer/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6717,
+      "sha256": "e49ba78fe637ce595a580c4fbd55d9f04bdbfa944528c45f1285514be5b3d918"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-full-v1/task-d543ae23d47d4f384d08/renderer/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 16398,
+      "sha256": "43d818b78d4570b67cd43f0b78fd5b6e99989fe78ba1566f9a4bca7051e765a8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v1/task-8943682b36e5e6656ae2/renderer/__pycache__/audit_scene.cpython-313.pyc",
+      "bytes": 4850,
+      "sha256": "74de654dbd68cfc627afc2e9552a8aec4a78893d4428d91e56cf22c86ccc2623"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v1/task-8943682b36e5e6656ae2/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 5466,
+      "sha256": "5240471fa479c1109133b0e7fa10d249f1bdb3ad0c63b3abe6f428623c92f3ce"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/task-415ad6b2b1f33bbfd950/renderer/__pycache__/audit_scene.cpython-313.pyc",
+      "bytes": 4959,
+      "sha256": "28cd80ee64aa12e522185010fe2f2b9b37e18e08dd13eaa111cd63e1120a8535"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/task-415ad6b2b1f33bbfd950/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 5584,
+      "sha256": "b4daed1ce4644141a3e454075e4bf52a721864cb2d212141d76a10f3c3e4048e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 5517,
+      "sha256": "14bb01df8fc9a9446ade0179b47a1406e710cd7865899bb666092e02a0c04c15"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/renderer/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 20099,
+      "sha256": "d881ffbbb87930b7a6c62e29d384020402bc57dfccf88999ba259ff0d76a479f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/task-b7ca1910671567e32e9e/renderer/__pycache__/audit_scene.cpython-313.pyc",
+      "bytes": 4959,
+      "sha256": "9179fec6d109b7062001198d0de49555e024f4d4d54c148ba69f1445e68e3102"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/task-b7ca1910671567e32e9e/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 5584,
+      "sha256": "4309fd43193aa7c58c2aad833916d4083c7dc00d5c2440e668f87313207d79a5"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/__pycache__/render_local_ab.cpython-311.pyc",
+      "bytes": 23970,
+      "sha256": "4e1a481fac30cc5f49ac84d222c88740ceb42fcfeb11f647c211a4316ed2aa8c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/task-fe2fcb9397c9fc57f2ce/renderer/__pycache__/audit_scene.cpython-313.pyc",
+      "bytes": 4959,
+      "sha256": "55c85a94d2145c6af199ca9b092e4d8b81ea09ee6d66da005978dd9ef837765d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/local-ab/thermal-principle-v2/task-fe2fcb9397c9fc57f2ce/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 5584,
+      "sha256": "8da94dc12f0c4a09c9ddd5fab09dbdc6ffa94d2986a06a076256c5ee82195fd0"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/renderer/__pycache__/audit_scene.cpython-315.pyc",
+      "bytes": 7363,
+      "sha256": "50f0fc77350757c70f82df6967790fcf852c812f7e031210470d05fb149b1fb2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 8069,
+      "sha256": "2ca03f6b28826ec553f3d09aafc193906b7d91cd5d4c853fbda80a569b03292a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/renderer/__pycache__/narration.cpython-315.pyc",
+      "bytes": 6142,
+      "sha256": "b78229eac29cee4d5044b7c7b232cea1d1fcdffa290a364f9ff3e61359330130"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/renderer/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6744,
+      "sha256": "85e8a25ff5da6d825d6b17d541b9a93ca48afaaff97b567329337488bc54cd3c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/renderer/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 22058,
+      "sha256": "2439e7c8da32659c70cda5c076c79940f01983f7ff848379db097cd4ff1a0a8b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/renderer/__pycache__/blender_scene.cpython-315.pyc",
+      "bytes": 21307,
+      "sha256": "3db07d1d7f7e8dbcb36de8258c6b346065a7e94007c32139062db82946db38e8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-8e62683330a48b87c788/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 8136,
+      "sha256": "c19b7671cbbca705b797f131876ce4bd009cec9d1e77580e36b8fe3b62da0fd9"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-8e62683330a48b87c788/renderer/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6811,
+      "sha256": "c67f9d5a6b7ab1b6717b1e27b6f7d800a453e491195316db6a9cc0bbaf481375"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-c3ba7bd53b62409cf0ad/renderer/__pycache__/audit_scene.cpython-313.pyc",
+      "bytes": 6811,
+      "sha256": "0ca9b221769cd69d641bc159c03e94783879ed6ff89d1b91bc85855bf46f3449"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-c3ba7bd53b62409cf0ad/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 8136,
+      "sha256": "17d1f4970ac8574d77a5eb7ab399ba498945b2fd29d86f3f2763e9dd9ae85926"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-c3ba7bd53b62409cf0ad/renderer/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6811,
+      "sha256": "c20cc1e4e2885d557db29fa1b7085fdbba91d9b1cfa69e860c7632d14fd29378"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-2294a1739bd42af04370/renderer/__pycache__/audit_scene.cpython-313.pyc",
+      "bytes": 6811,
+      "sha256": "57fa81ef5f99a1387f8da227112d6d64049449a5803b1b599199a3e453071b3c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-2294a1739bd42af04370/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 8136,
+      "sha256": "813ae12fecc2e2640836c3ed3c3200adee673fb7b6a18103e304e55366812877"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-2294a1739bd42af04370/renderer/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6811,
+      "sha256": "6a596026cbb2d64cb693536b7e0196a73187839feb0235aaa8b37815aeb334d3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/__pycache__/render_local_ab.cpython-315.pyc",
+      "bytes": 42788,
+      "sha256": "a9a6c7f2cbf2b30ca38d165c819a29e883bcf1f6507019953b1c99c1fd8db3ea"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/__pycache__/render_local_ab.cpython-311.pyc",
+      "bytes": 47397,
+      "sha256": "b94002924ab722582e2e5913d78956cc0a1f2a686cfaf6960dc7f950fcf39ea8"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-3c1fb9cfc520c42d0baf/renderer/__pycache__/audit_scene.cpython-313.pyc",
+      "bytes": 6811,
+      "sha256": "62b31d104a5695a32b8c036bd47533a1dc3ea854a7793936da29709f48fb2ac2"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-3c1fb9cfc520c42d0baf/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 8136,
+      "sha256": "2affaa982cc6ebd806ec49a024cd965730a564fd581c1224eef9d540780aaea5"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/ep03-reuse-EP05-v1/causal-preview-v1/task-3c1fb9cfc520c42d0baf/renderer/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6811,
+      "sha256": "7700b08d834db99a8a6031c2a228c49a61e4de70a25b90ea8772bde109d90253"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-full-v1/source/__pycache__/scene.cpython-311.pyc",
+      "bytes": 34043,
+      "sha256": "023d6b402265abf46800ed5be5c82642db147d89b7e909b0e48df909662d2cbb"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-full-v1/__pycache__/run.cpython-311.pyc",
+      "bytes": 12997,
+      "sha256": "2c5afdd69e3470f2817d8473b2c1ab0d7875f738a44cad98f73440838198955e"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-full-v1/__pycache__/recover.cpython-311.pyc",
+      "bytes": 19930,
+      "sha256": "3313aeb3eff8a182ef61d9a07562d148e6fc6f8ce3d1c09b39078b8339aa66cc"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/task-6c7f49a1df29de5dfa80/renderer/__pycache__/helpers.cpython-313.pyc",
+      "bytes": 4726,
+      "sha256": "0c32ba709826d4c6e8798a451b1bf4bae930eaf7fb4854f4f802655dc07ec980"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/task-6c7f49a1df29de5dfa80/renderer/__pycache__/helpers.cpython-311.pyc",
+      "bytes": 4917,
+      "sha256": "350c78739739203503a87a7059a4b4d1cfe42c17c8ab840b72af325e4d21a95b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/task-6c7f49a1df29de5dfa80/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1430,
+      "sha256": "1b76a17c129a6db3141f029e9cd6af45f7eaaa3086b93df58948c0fc6513332f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/task-6c7f49a1df29de5dfa80/renderer/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6717,
+      "sha256": "e49ba78fe637ce595a580c4fbd55d9f04bdbfa944528c45f1285514be5b3d918"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/task-6c7f49a1df29de5dfa80/renderer/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 13237,
+      "sha256": "6f7182c44fc7f758043fc5b1d7a2af9ea7bf918717658c1dd0a57df420ec6fda"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/source/__pycache__/helpers.cpython-311.pyc",
+      "bytes": 4917,
+      "sha256": "350c78739739203503a87a7059a4b4d1cfe42c17c8ab840b72af325e4d21a95b"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/source/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1430,
+      "sha256": "1b76a17c129a6db3141f029e9cd6af45f7eaaa3086b93df58948c0fc6513332f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/source/__pycache__/narration.cpython-311.pyc",
+      "bytes": 6717,
+      "sha256": "e49ba78fe637ce595a580c4fbd55d9f04bdbfa944528c45f1285514be5b3d918"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/source/__pycache__/blender_scene.cpython-311.pyc",
+      "bytes": 13246,
+      "sha256": "69fd9b893d73d53a57b4ae979bd3484f8ee0488d5cc00e17d8c52548ceaf0f6f"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/__pycache__/run.cpython-311.pyc",
+      "bytes": 8283,
+      "sha256": "6b73078a95931c9eb46f48b0fb015449d63c5115e240981986039d39b4703210"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/task-8d52e11c1d15d02c4c67/renderer/__pycache__/helpers.cpython-313.pyc",
+      "bytes": 4726,
+      "sha256": "32b1184f06446da49dc7267c29f5ce586e152b6dc80259946661f4fdb7b9d476"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/recovery-v1/task-8d52e11c1d15d02c4c67/renderer/__pycache__/audit_scene.cpython-311.pyc",
+      "bytes": 1499,
+      "sha256": "7f0b5c3e28185ac42d60475a010e63863c02ed478d87aaa3dc5da24beae785ee"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/source/__pycache__/scene.cpython-311.pyc",
+      "bytes": 22287,
+      "sha256": "04f86940f2f08c7518d371e3e194f82c0a4e0984b9b82f31ab573afe095f6e25"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/task-1ef37925a1b16627fc85/renderer/__pycache__/scene.cpython-311.pyc",
+      "bytes": 20647,
+      "sha256": "e05fbb15ba8d21b1d82e5eb372fcd33de731a98cb4654d81a7083fa1060cd41c"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/task-002565efb47d22ace0ba/renderer/__pycache__/scene.cpython-311.pyc",
+      "bytes": 16092,
+      "sha256": "84353e95b72612e4c7137516da5b9c1f8041c49dd86af609dddc7462a5acfe80"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/__pycache__/run.cpython-311.pyc",
+      "bytes": 11213,
+      "sha256": "420da872fc5c8adb54d984e4f02556dee4bc36a0160bbfe20449ea4543a575c3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/__pycache__/run-local-render.cpython-311.pyc",
+      "bytes": 9382,
+      "sha256": "95465cd3a93ddc3d7c99169b4c7dc7ea3a07513b7e72f6a1b95b54ecab3797b6"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/task-5ca0ca1e9b2da31c867b/renderer/__pycache__/scene.cpython-311.pyc",
+      "bytes": 22287,
+      "sha256": "04f86940f2f08c7518d371e3e194f82c0a4e0984b9b82f31ab573afe095f6e25"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/task-b02c026ad2531a46bb3a/renderer/__pycache__/scene.cpython-311.pyc",
+      "bytes": 20705,
+      "sha256": "bd2f0720e4ab0ece25ed6e2ad493937cef147c4e07fa81bf68e6f3c2ab221097"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/source-local-render/__pycache__/scene.cpython-311.pyc",
+      "bytes": 22299,
+      "sha256": "e7203c788d7b10ddc32c98a7dc0c8bf7b6a6d76cd224cb35eab0b24f537684e1"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/visual/series-realignment-v1/task-87fad5bca24fde5c174a/renderer/__pycache__/scene.cpython-311.pyc",
+      "bytes": 20705,
+      "sha256": "bd2f0720e4ab0ece25ed6e2ad493937cef147c4e07fa81bf68e6f3c2ab221097"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/series-realignment-v1/__pycache__/inspect_references.cpython-311.pyc",
+      "bytes": 4958,
+      "sha256": "e1065ef279b46915793d1f62a03d9305352311f6e1999fd6a1036a830506c64a"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/series-full-v1/__pycache__/encode.cpython-311.pyc",
+      "bytes": 10663,
+      "sha256": "aa50b299ba53e6739972ba14265e8659118ca925e0dd4a25c886b9ee0fdfd0d7"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/series-full-v1/__pycache__/prepare.cpython-311.pyc",
+      "bytes": 6446,
+      "sha256": "e4d5e44188af2f136f7ccd0291f9dd59c926cd7cf45a38edcac0473fae950a46"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/series-full-v1/__pycache__/mix.cpython-311.pyc",
+      "bytes": 11245,
+      "sha256": "87aeca45043cb6e3c0b8a9fc94e08707d69aee839fa47bd6522c6ad0fb4a8be3"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/recovery-v1/__pycache__/encode-local.cpython-311.pyc",
+      "bytes": 5002,
+      "sha256": "1f92342729be8eb948fce8fcce18801260348c9895e00e6fed9f99fa41877eb7"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/recovery-v1/__pycache__/verify-assembly.cpython-311.pyc",
+      "bytes": 7582,
+      "sha256": "9463a3e50e58cdc2cf1dc13f4cfcb759a3e80e4387752a30d355943e891e705d"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/recovery-v1/__pycache__/splice.cpython-311.pyc",
+      "bytes": 16614,
+      "sha256": "f0c6a5706938506ce168a6071a61a09cfe0ed4c74d52ce93532bab34d4ed1a07"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/series-realignment-v1/__pycache__/encode.cpython-311.pyc",
+      "bytes": 6606,
+      "sha256": "9920a33a8b6f021aa8ec8cdf414744a4dd51252d3423839e68d0c98a810fcead"
+    },
+    {
+      "path": "series/3d-printer-v2/episodes-current/EP05/editor/series-realignment-v1/__pycache__/prepare.cpython-311.pyc",
+      "bytes": 9472,
+      "sha256": "d444cb90a72979adee65b818f67b50a3ec14ed6b65c6058dd42ac7554f1be890"
+    },
+    {
+      "path": "series/3d-printer-v2/experiments/.DS_Store",
+      "bytes": 6148,
+      "sha256": "17bca00b6ff1a81b1d6dc9e5e7188ea2491ea8090b51fbfa56d4f5b51ec574a2"
+    },
+    {
+      "path": "series/3d-printer-v2/experiments/mechanical-hook-6e21ea58c8729117/renderer/__pycache__/motion.cpython-313.pyc",
+      "bytes": 1230,
+      "sha256": "e7e4e24f331d8c0d7e6bfc062f55977aba171f007515114bee3a9f9feac9286e"
+    },
+    {
+      "path": "series/3d-printer-v2/experiments/mechanical-hook-6e21ea58c8729117/renderer/__pycache__/sound.cpython-311.pyc",
+      "bytes": 3051,
+      "sha256": "273b96b52f15257e61e68dc4e3600adc30ae2749f552bb5bea21ed4c0da29f31"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP02/863a5dc2c1a995e72d6c/renderer/__pycache__/guide_path.cpython-311.pyc",
+      "bytes": 2941,
+      "sha256": "738feb3a1e075be385c9f06ae1257df2bb4ffe7ddca85e24412106d73e2bceed"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP02/863a5dc2c1a995e72d6c/renderer/__pycache__/chain_path.cpython-311.pyc",
+      "bytes": 2697,
+      "sha256": "17be4daa6ed9bdc2f382b392c17a03a3b6795b8eee3c9bd8e80e00ac8c4a970a"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP01/.DS_Store",
+      "bytes": 6148,
+      "sha256": "e4bb82b86ae955fcbf84266c462f7c8db4eb9504811b5574a645b57ac8194e98"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP01/286fbb6553fde95a5e0d/renderer/__pycache__/motion.cpython-313.pyc",
+      "bytes": 3534,
+      "sha256": "832b1dc017793f9c18488cbb8c12ca4470c122e8b66985add741aa5494855798"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP01/286fbb6553fde95a5e0d/renderer/__pycache__/sound.cpython-311.pyc",
+      "bytes": 3689,
+      "sha256": "c38bc96d467c4de030a716445c45d010e913a21f0d27ad680447e6084010970b"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP01/286fbb6553fde95a5e0d/renderer/__pycache__/gear_kinematics.cpython-313.pyc",
+      "bytes": 5053,
+      "sha256": "f41660eb82b9271c63acdb35433e2f29fa1707301788951a19665e18d440c4b7"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP01/data-driven-20261030/visual/3deac0274714eadc860a/renderer/__pycache__/motion.cpython-313.pyc",
+      "bytes": 3562,
+      "sha256": "564165357e32b38295155f7b90056249e7698cdae296fe1b7f90ff79653b276a"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP01/data-driven-20261030/visual/3deac0274714eadc860a/renderer/__pycache__/gear_kinematics.cpython-313.pyc",
+      "bytes": 5081,
+      "sha256": "3f4108127dc3eb164dfaa963b3cc6cf5bae88b4234562dfb952b060843cacbc2"
+    },
+    {
+      "path": "series/3d-printer-v2/revisions/EP01/data-driven-20261030/editor/source/__pycache__/assemble.cpython-311.pyc",
+      "bytes": 23528,
+      "sha256": "3facb113f3f72325ed88777df0a445459ae0cd72fa8589ef0e1a84d2a32629a1"
+    },
+    {
+      "path": "artifacts/.DS_Store",
+      "bytes": 6148,
+      "sha256": "d3cd40bbeefa6827e9f3db359c443de860e1af0c0b97f490da4093cab86387e2"
+    },
+    {
+      "path": "artifacts/videos/.DS_Store",
+      "bytes": 14340,
+      "sha256": "ee4c30965d5949196ac30700d225c434847aab9131e8d3997ab2fd3811e900a4"
+    },
+    {
+      "path": "artifacts/videos/1de3ee9b2ee856f321df/.DS_Store",
+      "bytes": 8196,
+      "sha256": "dc13c6b96bfcda55722c12d13cc05b6555d7002c074b6ef1b7c377fe2308ea3c"
+    },
+    {
+      "path": "mechanical_video/__pycache__/web.cpython-311.pyc",
+      "bytes": 21798,
+      "sha256": "be220eab580ab20286f9e8761a33e50c8d4df1e6fc40ea201a832e213ab8e9dd"
+    },
+    {
+      "path": "mechanical_video/__pycache__/audio_direction.cpython-311.pyc",
+      "bytes": 3597,
+      "sha256": "1db5e2268a9574a05671f8560041e6602d293383218febd2383418bed5d92fad"
+    },
+    {
+      "path": "mechanical_video/__pycache__/runtime.cpython-311.pyc",
+      "bytes": 6044,
+      "sha256": "ee91533cbfaa93996e3e2e90cec31e47cb0286ae222972fee2d74e1d124c596e"
+    },
+    {
+      "path": "mechanical_video/__pycache__/config.cpython-311.pyc",
+      "bytes": 638,
+      "sha256": "0fca38835a31bb8a0f2fed5daeba56affd2f9dc4d1bffd041314fe5e875009af"
+    },
+    {
+      "path": "mechanical_video/__pycache__/drill_film.cpython-311.pyc",
+      "bytes": 7785,
+      "sha256": "713eec17a86e278d99478722aa4b3396aac5968e8940c5ddeeb1bc6edb402e6b"
+    },
+    {
+      "path": "mechanical_video/__pycache__/voiceover.cpython-311.pyc",
+      "bytes": 11855,
+      "sha256": "f04ba4ffa93b80121e2549a7b8a590e9330b3f4c76a6d50634ecd36b8ae8b4fe"
+    },
+    {
+      "path": "mechanical_video/__pycache__/remake_content.cpython-311.pyc",
+      "bytes": 21307,
+      "sha256": "93e56ef69a82484a9de3b778ec6c2fc62f8a91b0950ec61c2ed48205bc95eb7c"
+    },
+    {
+      "path": "mechanical_video/__pycache__/series.cpython-311.pyc",
+      "bytes": 68676,
+      "sha256": "6eacd9383455e4ef6b14ce2952dc2e0c2bc196ce5d235990fcbbb8f8c170e5af"
+    },
+    {
+      "path": "mechanical_video/__pycache__/acceptance.cpython-311.pyc",
+      "bytes": 6022,
+      "sha256": "ac92adfe8f575c99ab1f1d5bcde77fed137c3dfc10dcf010cab76729817d549d"
+    },
+    {
+      "path": "mechanical_video/__pycache__/remake.cpython-311.pyc",
+      "bytes": 37212,
+      "sha256": "9196fb820e67626a9793866002a82e6c5584712cce9fb381011d47d07a953acd"
+    },
+    {
+      "path": "mechanical_video/__pycache__/model.cpython-311.pyc",
+      "bytes": 11534,
+      "sha256": "a395617709e697669043bf4e4e49d95660530399e6d97fb711adcea06932a2de"
+    },
+    {
+      "path": "mechanical_video/__pycache__/narration.cpython-311.pyc",
+      "bytes": 5779,
+      "sha256": "b6c8fb16976f8564dee3427ce37df81d225eef37a33eae447ff02454455c4c14"
+    },
+    {
+      "path": "mechanical_video/__pycache__/video_qa.cpython-311.pyc",
+      "bytes": 15380,
+      "sha256": "9c1a118de36863c976055dad474bd614973abe3249f782b8e950439ae4d5ed6e"
+    },
+    {
+      "path": "mechanical_video/__pycache__/cli.cpython-311.pyc",
+      "bytes": 25761,
+      "sha256": "79d7868ac6afeacfc43b170dafd58c0f075b0edfecb89b26e73e2a0307f9d9e4"
+    },
+    {
+      "path": "mechanical_video/__pycache__/series_season.cpython-311.pyc",
+      "bytes": 16803,
+      "sha256": "ff7994fb93f06e0c8a8dd97d9b0fede2d480eede611ca94502f38c03e369c580"
+    },
+    {
+      "path": "mechanical_video/__pycache__/series_content.cpython-311.pyc",
+      "bytes": 8895,
+      "sha256": "7a4d6559a72367a1b751a3838349db29f9b7069f182e06b9891a358405643896"
+    },
+    {
+      "path": "mechanical_video/__pycache__/audio_qa.cpython-311.pyc",
+      "bytes": 13127,
+      "sha256": "e4dca3e2549cade9caac1ae6c445acd79d2b33e703e3282866b5a2b8e305a98c"
+    },
+    {
+      "path": "mechanical_video/__pycache__/film_audio.cpython-311.pyc",
+      "bytes": 14552,
+      "sha256": "ca8f7c082d33ebc069cb689ee39292a3f96308e98129675539a2535a2ea39dc2"
+    },
+    {
+      "path": "mechanical_video/__pycache__/catalog.cpython-311.pyc",
+      "bytes": 3789,
+      "sha256": "4e9bd8297b9e05dab871b4ec1df23537725aa9590b25fd221781bf5463d60b67"
+    },
+    {
+      "path": "mechanical_video/__pycache__/audience_qa.cpython-311.pyc",
+      "bytes": 17263,
+      "sha256": "307ee838521686ce46344475d2b1cfcdeb87c291e59eb97de41827f955be3230"
+    },
+    {
+      "path": "mechanical_video/__pycache__/episode_performance.cpython-311.pyc",
+      "bytes": 11118,
+      "sha256": "8653132c2856bf30187dc97c3c2646b7371f46a2351268cbc5d67cf66c961e18"
+    },
+    {
+      "path": "mechanical_video/__pycache__/drill.cpython-311.pyc",
+      "bytes": 19212,
+      "sha256": "ad3ee56be016ce1870a08246237e9478b53982917f43420c167ef68c8f48af2c"
+    },
+    {
+      "path": "mechanical_video/__pycache__/__init__.cpython-311.pyc",
+      "bytes": 238,
+      "sha256": "84dbf1dc76bdb5949bb0a0a65c14f27734758a182b75bea0d7d48c541637163b"
+    },
+    {
+      "path": "mechanical_video/__pycache__/series_geometry.cpython-311.pyc",
+      "bytes": 8203,
+      "sha256": "66a211000f914fe2001d2ebe11bee1f49366a08b7492b622c186b17e0b0d977b"
+    },
+    {
+      "path": "mechanical_video/__pycache__/drill_remake.cpython-311.pyc",
+      "bytes": 12017,
+      "sha256": "a8d88076670b721c960ab045f86ba16e5db371dd3fa73ead4d7100692899332b"
+    },
+    {
+      "path": "mechanical_video/__pycache__/audio_appeal.cpython-311.pyc",
+      "bytes": 9512,
+      "sha256": "093e92e1dcd455ded0e8a14ba974123635b6f8e3ed36cdf85958248863382373"
+    },
+    {
+      "path": "tests/__pycache__/test_ep02_continuity.cpython-311.pyc",
+      "bytes": 4354,
+      "sha256": "b8b711bb6397432fff2e5bfd0221b5df68fa52b783ed26c1da3910fc2a245c66"
+    },
+    {
+      "path": "tests/__pycache__/test_audience_qa.cpython-311.pyc",
+      "bytes": 5554,
+      "sha256": "496ad1ed02a367940b644b9cdf6964415d4f449094cd4195761f3725a87b846c"
+    },
+    {
+      "path": "tests/__pycache__/test_remake.cpython-311.pyc",
+      "bytes": 8951,
+      "sha256": "c34dfe8835f38a544415b02095a25fbea26a7c2b4977bd70aa6714ee86796ec8"
+    },
+    {
+      "path": "tests/__pycache__/test_drill.cpython-311.pyc",
+      "bytes": 5552,
+      "sha256": "47505ca7e65a30d60ed7771640183d9184b1a194c00f817179adc4b754961248"
+    },
+    {
+      "path": "tests/__pycache__/test_series.cpython-311.pyc",
+      "bytes": 19566,
+      "sha256": "4dfb0e38cbbfb454b1fdbc3a58451dc1215df68ed24f1faa0e9e7f2778dce9fd"
+    },
+    {
+      "path": "tests/__pycache__/test_audio_appeal.cpython-311.pyc",
+      "bytes": 4186,
+      "sha256": "84b99f55871359d9ab1a277a7bfc2aacb9c3575684b6cee059c2f49a3cd915b9"
+    },
+    {
+      "path": "tests/__pycache__/test_audit_token_usage.cpython-311.pyc",
+      "bytes": 20653,
+      "sha256": "9651d773b2b9bb09fc64dcae5a10165d24d606fcbf0deb169c59f4023e0edcb4"
+    },
+    {
+      "path": "tests/__pycache__/test_drill_film.cpython-311.pyc",
+      "bytes": 4977,
+      "sha256": "cd26a82448ef2179b0e351858096437005611a24326daa590d7f47c0ebaa5249"
+    },
+    {
+      "path": "tests/__pycache__/test_video_qa.cpython-311.pyc",
+      "bytes": 3432,
+      "sha256": "7710faf1e660c00bbb8f13dcb4a01a8e6ddfb7568acea3a59c753c252ddcd0c5"
+    },
+    {
+      "path": "tests/__pycache__/test_drill_remake.cpython-311.pyc",
+      "bytes": 1470,
+      "sha256": "bc01aba6504e7cfbdd5d4df84a3a7d4b64555966cda1b8216dc6faff5c3f3f19"
+    },
+    {
+      "path": "tests/__pycache__/test_ep01_deposition.cpython-311.pyc",
+      "bytes": 3215,
+      "sha256": "cf7d17609e0ae505007b306a7dc3ebba88176f8a4a62f7ef05fdbb5e1733d472"
+    },
+    {
+      "path": "tests/__pycache__/test_audio_qa.cpython-311.pyc",
+      "bytes": 3824,
+      "sha256": "d637b73aac5bd37f150de6af9ee26356494fe3cf155adae6d5c3499895ab8bca"
+    },
+    {
+      "path": "tests/__pycache__/test_pipeline.cpython-311.pyc",
+      "bytes": 28486,
+      "sha256": "9341385244d027b54ad70f3ab56ab34495a5ce669dedd281ac809cd12fa08cc9"
+    },
+    {
+      "path": "tests/__pycache__/test_ep01_frame_timing.cpython-311.pyc",
+      "bytes": 3848,
+      "sha256": "93b91742ef83845f8f86ca5e8945aac34eb6ac65e205dbfc3000da78f015c60c"
+    },
+    {
+      "path": "tests/__pycache__/test_ep01_feed_kinematics.cpython-311.pyc",
+      "bytes": 5548,
+      "sha256": "642f60231969fa1a69a6de45f0513d1a447f7f2f4fb364d16edad54990a3a443"
+    },
+    {
+      "path": "tests/__pycache__/test_film_audio.cpython-311.pyc",
+      "bytes": 3970,
+      "sha256": "f3990593bf15cbc03c40daeb14766e6d099ff66bb05d8a0ead85d3d101b0f5a6"
+    },
+    {
+      "path": "tests/__pycache__/test_web.cpython-311.pyc",
+      "bytes": 7865,
+      "sha256": "f90dde3f945088a8ca1077f5b4d17b3cffae6620b6ee8638e198ac0ea9cfcc05"
+    },
+    {
+      "path": "tests/__pycache__/test_voiceover.cpython-311.pyc",
+      "bytes": 5727,
+      "sha256": "0bc85b251f74e02615549c6d9c34b0093088847f67b6d375ee68f224415dea4d"
+    },
+    {
+      "path": "tests/__pycache__/test_episode_performance.cpython-311.pyc",
+      "bytes": 8532,
+      "sha256": "a658542bb1d921b9b970f1b617e630e445639aba9d731d0e333c88cccec6ae36"
+    },
+    {
+      "path": "scripts/ep01_data_driven/__pycache__/motion.cpython-311.pyc",
+      "bytes": 4296,
+      "sha256": "8a5bede2957fdca2f097bb5d8bfbd2de2949f8bcbd60a5a08c1d079cf0b0fb50"
+    },
+    {
+      "path": "scripts/ep01_data_driven/__pycache__/run.cpython-311.pyc",
+      "bytes": 7898,
+      "sha256": "57931e036d237031fea10bb5c59e5ef56ad0a87ea08f62b7a4422ceb19215852"
+    },
+    {
+      "path": "scripts/ep01_data_driven/__pycache__/scene.cpython-311.pyc",
+      "bytes": 35470,
+      "sha256": "134c44b1da01bef7448742d8c0b78c4eb81f45f64cde069938dd514635d1b1cf"
+    },
+    {
+      "path": "scripts/ep01_data_driven/__pycache__/gear_kinematics.cpython-311.pyc",
+      "bytes": 5766,
+      "sha256": "eade844f824e899aff82f79adeb58207e285d60bcdcb8288de0e6ae78d78f155"
+    },
+    {
+      "path": "scripts/ep02_frame/__pycache__/run.cpython-311.pyc",
+      "bytes": 16101,
+      "sha256": "7d681e7386bd9f672b3fecda64723bed8a4a23528064883d23339472f7e04a2f"
+    },
+    {
+      "path": "scripts/ep02_frame/__pycache__/scene.cpython-311.pyc",
+      "bytes": 16567,
+      "sha256": "af29da212dcdc81a88010bf16d14391b3d921756fbdfa4ef1bf688f12cce21fc"
+    },
+    {
+      "path": "scripts/__pycache__/audit_token_usage.cpython-311.pyc",
+      "bytes": 21643,
+      "sha256": "52f3293df0675ab792c7d092ebfd0a1703a3173acf50dd550cafbb291c4a51fe"
+    },
+    {
+      "path": "scripts/ep01_narration_revision/__pycache__/motion.cpython-311.pyc",
+      "bytes": 4250,
+      "sha256": "985e003b4a1717ad66aca6c938794597a972336a1200ca569a7b6ad7061e2251"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/guide_path.cpython-313.pyc",
+      "bytes": 2550,
+      "sha256": "df46c42eb8ff75acc5a7e4cd50d56eea4361d9f153ca01f7eb2ac4a9d622090d"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/guide_path.cpython-311.pyc",
+      "bytes": 2859,
+      "sha256": "9e4b686d0d9e48a15fd97b6b30265e7137ed29c411f69ceafde16396debdb8db"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/test_guide_path.cpython-311.pyc",
+      "bytes": 2756,
+      "sha256": "728ece487dcca417c2eae4206ca69bcec104163b3da256baaab63f9768a44956"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/test_guide_deform.cpython-311.pyc",
+      "bytes": 2356,
+      "sha256": "13684b9797e4517e794c19a255f43df9180a5ad1637c8a21f987f4b602aca500"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/run.cpython-311.pyc",
+      "bytes": 16660,
+      "sha256": "cf05794fbf1e28d8e0d1cd5c0069d9a11628036c5407c163143072ef2b89f40a"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/scene.cpython-311.pyc",
+      "bytes": 29991,
+      "sha256": "64e7ded5a15ee8d06ed1104aa579a028d15d64fdeeb7222a7e91e925a31d89dc"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/chain_path.cpython-311.pyc",
+      "bytes": 2656,
+      "sha256": "88112970a18648f5196f2ad89d8fcc3976f4b44e1205c60d8c1c7abd43aaa70b"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/guide_mesh_path.cpython-311.pyc",
+      "bytes": 4514,
+      "sha256": "fe9d9b68653a90ab59f6f354935963417e8cd818a73093157640326f9915b3bd"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/sound.cpython-311.pyc",
+      "bytes": 6576,
+      "sha256": "69376e7570f77ec2f4420e0f2bf0c09d19c7c164d37b241f21b5dc5f850675de"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/guide_mesh_path.cpython-313.pyc",
+      "bytes": 3996,
+      "sha256": "1febafd7e27a5f9c228896f6eb2edf5b39563113e045f3f57baec06242227802"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/chain_path.cpython-313.pyc",
+      "bytes": 2412,
+      "sha256": "b68b55fe46e1f1eb9ede037f1dd890c574b405969e7ae09a15d27fe5f0e0676d"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/guide_deform.cpython-311.pyc",
+      "bytes": 746,
+      "sha256": "5904c429523a693d0d3d90a95d15deed5e95a2e8866319cc3112aed1d5847aa8"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/guide_deform.cpython-313.pyc",
+      "bytes": 670,
+      "sha256": "405a63aea790c378d4b262ee1a16adc6a3b3fb2a98753100f7fc25747a1bf39b"
+    },
+    {
+      "path": "scripts/ep02_action_test/__pycache__/test_chain_path.cpython-311.pyc",
+      "bytes": 3757,
+      "sha256": "3925c7cdd911443464d299d471845cee1fffd7b771d013072a318ff6804e0f8b"
+    },
+    {
+      "path": "scripts/ep01_gear_corrected/__pycache__/gear_kinematics.cpython-311.pyc",
+      "bytes": 5810,
+      "sha256": "d8feb3510cf18d00c3c19e67171a7e2bece93e9d04f5179e97d1eff1774f34f7"
+    }
+  ],
+  "blender_backups": "All 21 differ from primary; retained",
+  "process_visibility": "ps denied by sandbox; existing project worker/render/production locks acquired nonblocking"
+}

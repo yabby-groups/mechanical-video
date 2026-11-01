@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "final_stage_deleted_files": 24911,
+  "final_stage_deleted_bytes": 25931115599,
+  "early_deep_stage_deleted_files": 1872,
+  "early_deep_stage_deleted_bytes": 3479114276,
+  "early_deep_archive_saved_bytes": 690340739,
+  "total_net_logical_reduction_bytes": 30100570614,
+  "protected_final_and_source_files": 13,
+  "retained_files_sha256_verified": 10118
+}

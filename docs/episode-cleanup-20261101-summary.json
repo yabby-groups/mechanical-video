@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "protected_files_sha256_verified": 10,
+  "gzip_archives_sha256_verified": 3758,
+  "per_episode": {
+    "EP03": {
+      "count": 9146,
+      "deleted_bytes": 3036861524,
+      "gzip_saved_bytes": 24254821
+    },
+    "EP04": {
+      "count": 8124,
+      "deleted_bytes": 20567835880,
+      "gzip_saved_bytes": 10955634832
+    },
+    "EP05": {
+      "count": 2235,
+      "deleted_bytes": 4194443646,
+      "gzip_saved_bytes": 2540780921
+    },
+    "EP01": {
+      "count": 1500,
+      "deleted_bytes": 74775896,
+      "gzip_saved_bytes": 0
+    },
+    "EP02": {
+      "count": 15631,
+      "deleted_bytes": 1693962342,
+      "gzip_saved_bytes": 0
+    }
+  },
+  "total_deleted_files": 36636,
+  "total_deleted_bytes": 29567879288,
+  "total_saved_bytes": 43088549862
+}
