@@ -42,6 +42,12 @@ Keep ordinary handoff summaries within 500 Chinese characters or equivalent conc
 
 ## Production and acceptance
 
+### Authorized continuation
+
+Director owns routine decisions within the existing authorization, including implementation details and evidence-based local A/B selection. Children report missing inputs to Director first. Consult existing approval records before asking the user; do not request the same authorization after a handoff. Preserve user-reserved preview approvals, locked assets, editorial holds and repair limits. See [continuation and question boundaries](.codex/agent-workflow.md#授权内推进与询问边界).
+
+Missing perceptual evidence blocks the affected acceptance branch, not every reversible production step. With no known blocking defect or explicit hold, finish assembly/encoding and deliver a clearly marked review version with exact unresolved questions. Known P0/P1 and critical mechanical uncertainty still block dependent production. User acceptance of a delivered hash completes that user-delivery scope without fabricating independent QA scores or triggering repeated acceptance requests.
+
 Narrated work requires Audio Director → Audio Production → independent Audio QA and Audio Appeal QA → Editor → both final-mix reviews → Video QA → independent Audience QA → Director. First Script supplies synthesizable text and estimated timing; measured audio then informs final subtitle/semantic timing. Visual-only changes retain approved narration and review affected final-mix evidence without resynthesis. Producers cannot perform their own independent acceptance.
 
 - Narration subtitles: single line, at most 20 characters including all Chinese/English/digits/punctuation, one caption at a time; split long text into successive short captions. Time shots/captions from measured speech, natural pace and useful pauses, never slowed speech or looped shots to pad length. Formal narrated films are at least 90 seconds; explicit shorts/tests/previews are exceptions.
