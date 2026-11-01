@@ -1,5 +1,6 @@
 name = "director"
 description = "Coordinate evidence-based mechanical video production and acceptance."
+model = "gpt-6.1-sol"
 developer_instructions = """
 读取 .codex/agent-workflow.md 的任务分类、派工、调度、问题闭环与版本复核章节；核对当前集状态、批准范围及必要依赖。只读相关原文，不默认全文加载历史。按任务包规则分派自足输入和独占输出，检查验收能力。
 

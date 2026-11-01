@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "sessions": [
+    {
+      "session_id": "01a1948b-b6df-75c1-a2d9-8b5261a758cb",
+      "parent_session_id": "01a19486-bb17-7920-9357-20da83855a1d",
+      "sha256": "d69244cd82cb79c990a6e6d00d68570cad18188958bd947cdb0452e0a613a637",
+      "usage_latest": {
+        "input_tokens": 103545,
+        "cached_input_tokens": 77952,
+        "output_tokens": 234,
+        "reasoning_output_tokens": 0,
+        "noncached_input_tokens": 25593,
+        "total_tokens": 103779
+      },
+      "usage_snapshots": 4,
+      "counter_resets": 0,
+      "phases": {
+        "unattributed": {
+          "input_tokens": 103545,
+          "cached_input_tokens": 77952,
+          "output_tokens": 234,
+          "reasoning_output_tokens": 0,
+          "noncached_input_tokens": 25593,
+          "total_tokens": 103779
+        }
+      },
+      "tool_calls": {
+        "exec": 2
+      },
+      "phase_deltas_complete": true,
+      "coordination": {
+        "spawn_agent": 0,
+        "send_message": 0,
+        "followup_task": 0,
+        "wait_agent": 0,
+        "sleep": 0
+      },
+      "tool_output_chars": 14412,
+      "tool_output_events": 2,
+      "spawned_session_ids": [],
+      "warnings": {}
+    },
+    {
+      "session_id": "01a1948b-c79b-7030-9161-631e22b9cac0",
+      "parent_session_id": "01a19486-bb17-7920-9357-20da83855a1d",
+      "sha256": "b6536c8d6b28d20d261d81cebbc8962b11758e36b3d3266238ede77f33b48c8d",
+      "usage_latest": {
+        "input_tokens": 157629,
+        "cached_input_tokens": 132352,
+        "output_tokens": 506,
+        "reasoning_output_tokens": 0,
+        "noncached_input_tokens": 25277,
+        "total_tokens": 158135
+      },
+      "usage_snapshots": 6,
+      "counter_resets": 0,
+      "phases": {
+        "unattributed": {
+          "input_tokens": 157629,
+          "cached_input_tokens": 132352,
+          "output_tokens": 506,
+          "reasoning_output_tokens": 0,
+          "noncached_input_tokens": 25277,
+          "total_tokens": 158135
+        }
+      },
+      "tool_calls": {
+        "exec": 2,
+        "send_message": 2
+      },
+      "phase_deltas_complete": true,
+      "coordination": {
+        "spawn_agent": 0,
+        "send_message": 2,
+        "followup_task": 0,
+        "wait_agent": 0,
+        "sleep": 0
+      },
+      "tool_output_chars": 12994,
+      "tool_output_events": 4,
+      "spawned_session_ids": [],
+      "warnings": {}
+    },
+    {
+      "session_id": "01a1948b-e84b-7cf3-836a-dbfcdcf72680",
+      "parent_session_id": "01a19486-bb17-7920-9357-20da83855a1d",
+      "sha256": "4cb40d8b980533512b78c7f680014ca791c1ef33b535e41af82fcee9f61adcd0",
+      "usage_latest": {
+        "input_tokens": 100865,
+        "cached_input_tokens": 76288,
+        "output_tokens": 482,
+        "reasoning_output_tokens": 82,
+        "noncached_input_tokens": 24577,
+        "total_tokens": 101347
+      },
+      "usage_snapshots": 4,
+      "counter_resets": 0,
+      "phases": {
+        "unattributed": {
+          "input_tokens": 100865,
+          "cached_input_tokens": 76288,
+          "output_tokens": 482,
+          "reasoning_output_tokens": 82,
+          "noncached_input_tokens": 24577,
+          "total_tokens": 101347
+        }
+      },
+      "tool_calls": {
+        "exec": 2
+      },
+      "phase_deltas_complete": true,
+      "coordination": {
+        "spawn_agent": 0,
+        "send_message": 0,
+        "followup_task": 0,
+        "wait_agent": 0,
+        "sleep": 0
+      },
+      "tool_output_chars": 12986,
+      "tool_output_events": 2,
+      "spawned_session_ids": [],
+      "warnings": {}
+    }
+  ],
+  "teams": [
+    {
+      "root_session_id": "01a1948b-b6df-75c1-a2d9-8b5261a758cb",
+      "members": [
+        "01a1948b-b6df-75c1-a2d9-8b5261a758cb"
+      ],
+      "coverage": "incomplete",
+      "missing_or_unverified_children": [],
+      "unresolved_spawn_calls": 0,
+      "reported_session_sum": null
+    },
+    {
+      "root_session_id": "01a1948b-c79b-7030-9161-631e22b9cac0",
+      "members": [
+        "01a1948b-c79b-7030-9161-631e22b9cac0"
+      ],
+      "coverage": "incomplete",
+      "missing_or_unverified_children": [],
+      "unresolved_spawn_calls": 0,
+      "reported_session_sum": null
+    },
+    {
+      "root_session_id": "01a1948b-e84b-7cf3-836a-dbfcdcf72680",
+      "members": [
+        "01a1948b-e84b-7cf3-836a-dbfcdcf72680"
+      ],
+      "coverage": "incomplete",
+      "missing_or_unverified_children": [],
+      "unresolved_spawn_calls": 0,
+      "reported_session_sum": null
+    }
+  ],
+  "unassigned_session_ids": [],
+  "duplicate_session_copies": 0,
+  "conflicting_session_copies": 0,
+  "notes": [
+    "Cumulative snapshots are not added; latest epoch only after a reset.",
+    "Reasoning is reported separately and is not added to output.",
+    "Team sums include only metadata-linked supplied sessions; fork history may overlap.",
+    "Cyclic parent links remain unassigned and are never aggregated.",
+    "Complete means supplied linked-log coverage, not complete billing coverage.",
+    "Tool output lengths count both tool formats; tool-call bodies are not interpreted.",
+    "No prices, message bodies, arguments, or tool output bodies are exported."
+  ]
+}

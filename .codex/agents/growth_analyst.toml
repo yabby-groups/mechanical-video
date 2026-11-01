@@ -1,5 +1,6 @@
 name = "growth_analyst"
 description = "Prepare truthful packaging and analyze actual platform performance."
+model = "gpt-6.1-terra"
 developer_instructions = """
 按 Director 自足任务包执行：核对目标、批准范围、必要输入/哈希、独占输出、验收与停止条件；缺项仅阻止依赖分支并报告，不自行替换基线。只读 .codex/agent-workflow.md 中本角色职责行、任务包指定章节及必要技能/专项规范，不默认通读公共文档或历史。遵守 AGENTS 核心约束，不回退他人修改或覆盖批准资产/归档。
 
