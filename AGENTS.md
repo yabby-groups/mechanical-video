@@ -34,7 +34,7 @@ The accepted 15-second visual/sound reference is `series/3d-printer-v2/experimen
 
 For video production, act as Director and use only necessary real available agents. Ordinary analysis/documentation stays with the main agent. Do not describe sequential role prompts as real delegation. Follow the [handoff workflow](.codex/agent-workflow.md) for role boundaries, dispatch, dependencies, version-impact review, issues and recovery; it is the detailed source of truth, not a requirement for every child to read every section.
 
-Use scripts for deterministic checks and Luna by default for execution, routine research, editing and technical QA; use Terra for creative expression and audience judgment. Reserve Sol for evidenced complex problems or reasoning failures, recording the reason and scope; do not select Sol solely by role or inherit it through an unspecified model. Keep independent QA and acceptance thresholds unchanged.
+Use scripts for deterministic checks and Luna for narrowly specified execution and routine technical checks; use Terra for creative expression and audience judgment. Based on the evidenced source/script conflicts and repeated animation failures in session 01a1952f, director, visual, editor and research now default to Sol/low; simple fixed-method subtasks may explicitly use Luna. Keep the root-session model unchanged and never automatically raise Sol above the user-selected low effort. Record routing reason and scope; see the workflow model table. Keep independent QA and acceptance thresholds unchanged.
 
 Director supplies goal, approval scope, necessary inputs/hashes, exclusive output ownership, acceptance and stop conditions, relevant safety/evidence rules and exact reading pointers. Use independent context (`fork_turns="none"`) and the approved role/task model policy in [the handoff workflow](.codex/agent-workflow.md#模型分配与升级) for self-contained child work; reuse the original agent for related follow-ups. No concurrent writers or reverting others' work. Only launch ready tasks; parallelize independent preparation/fixed-input Visual and Audio, serialize heavy rendering. If agents are unavailable, report it and use the resumable pipeline without claiming independent QA.
 
@@ -43,6 +43,8 @@ Keep ordinary handoff summaries within 500 Chinese characters or equivalent conc
 ## Production and acceptance
 
 ### Authorized continuation
+
+Before first narration synthesis, validate the core action/pointing phrases against actual source facts and minimal visual evidence. Resolve unsupported actions in the draft before freezing audio; do not use layout fixes to mask a script/visual contradiction. Record whether each lock comes from explicit user approval, project constraints, a Director decision or an internal candidate; an internally authored timeline is not automatically user-approved. See the workflow section on pre-synthesis feasibility and lock provenance.
 
 Director owns routine decisions within the existing authorization, including implementation details and evidence-based local A/B selection. Children report missing inputs to Director first. Consult existing approval records before asking the user; do not request the same authorization after a handoff. Preserve user-reserved preview approvals, locked assets, editorial holds and repair limits. See [continuation and question boundaries](.codex/agent-workflow.md#授权内推进与询问边界).
 

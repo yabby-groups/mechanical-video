@@ -1069,3 +1069,11 @@ EP04 RC010 follow-up correction: Editor actual11frames18.244–21.304 plus froze
 - Kept all 13 role models, root-session model, concurrency and sandbox unchanged. Set the eight Luna roles to explicit medium effort; documented direct Sol/high routing for evidenced complex tasks without requiring an initial failed attempt. Terra roles retain existing settings. Current tool role metadata exposes the new Luna effort settings.
 - PASS: parsed project config and all 13 role TOMLs, checked required fields and unique names, verified eight Luna effort settings and local links in AGENTS/workflow, and ran git diff --check. Existing validation entries were preserved.
 - Documentation/configuration change only: no video production, provider calls, agent smoke dispatch or end-to-end render was run. Behavioral reduction in questions and media production success remain to be measured on an authorized task; no formal QA scores claimed.
+
+
+### Evidence-based role upgrade and pre-synthesis checks — 2026-11-01
+
+- Session 01a1952f showed premature narration freezing, unsupported action wording, repeated layout repairs and no completed EP05 film. Updated director/visual/editor/research to gpt-6.1-sol with explicit low effort at user request; five Terra and four Luna roles remain. Root-session model, sandbox and concurrency are unchanged.
+- Added core phrase-to-visual feasibility before first synthesis, provenance for approval/lock claims, bounded source supplementation when STEP lacks joints, and early Terra/Sol routing for expression/implementation root causes. Existing approved audio, editorial holds, issue IDs and exhausted repair counts remain intact; no EP05 render or provider request was authorized by these configuration changes.
+- Validation PASS: 14 TOMLs parsed, 13 unique roles and required fields, four Sol roles all low, local document paths, working-tree and cached whitespace checks. Tool role metadata reflects Sol/low. A real read-only Sol/low child inspected role/workflow/AGENTS consistency; it found one Research-default wording conflict, which was corrected and independently rechecked. This was configuration verification, not media QA or an end-to-end production test.
+- Existing index/ambient changes were preserved; no staging or commit performed by this task.
