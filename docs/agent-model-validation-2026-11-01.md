@@ -1,5 +1,7 @@
 # Agent 模型分配验证 — 2026-11-01
 
+> 以下 Sol5/Terra7/Luna1 为首轮配置的历史验证，已由当日后续 Luna 优先配置取代：Luna8/Terra5/Sol0。原试派和用量数据保留，不作为新配置的完整运行验证；后续验证见 [validation.md](validation.md#luna-first-agent-routing--2026-11-01)。旧文末“恢复对应角色 Sol”策略也由当前工作流的按子任务升级规则取代。
+
 ## 配置与实际执行
 
 13 个角色 TOML 可解析：Sol 5 个、Terra 7 个、Luna 1 个；并发配置仍为 `max_threads = 4`。未更改主会话模型、权限、TTS、媒体或批准范围。角色职责和升级入口见 [协作规范](../.codex/agent-workflow.md#模型分配与升级)。

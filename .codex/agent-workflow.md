@@ -38,21 +38,23 @@ Director 使用本规范维护全局；子角色只读取任务包指定的相�
 
 ## 模型分配与升级
 
-Director 留在主线程协调，普通小任务直接完成，不为分层增加交接。角色默认由 `.codex/agents/*.toml` 的 `model` 定义：
+Director 留在主线程协调，普通小任务直接完成，不为分层增加交接，不额外启动 Sol Director。按具体子任务选模型：确定性工作先用脚本，其余执行任务默认 Luna；表达和观众体验判断按需 Terra；Sol 仅作为有证据的复杂任务或失败升级入口，不设固定调用比例。角色默认由 `.codex/agents/*.toml` 的 `model` 定义：
 
 | 默认模型 | 角色 |
 | --- | --- |
-| `gpt-6.1-sol` | director、visual、editor、video_qa、audio_qa |
-| `gpt-6.1-terra` | creative_director、script、audio_director、audience_qa、audio_appeal_qa、research、growth_analyst |
-| `gpt-6-luna` | audio |
+| `gpt-6-luna` | director、visual、editor、video_qa、audio_qa、research、growth_analyst、audio |
+| `gpt-6.1-terra` | creative_director、script、audio_director、audience_qa、audio_appeal_qa |
+| `gpt-6.1-sol` | 无固定默认角色；仅有明确理由的任务升级 |
 
-- 复杂 CAD/动画代码、未知机械关系、跨资产时序修改、来源冲突和关键验收争议直接用 Sol；文案、视觉表达及观众体验优先 Terra。输入明确的资料提取、哈希整理、既定命令执行可拆给 Luna，确定性检查优先脚本。Audio 的 Luna 是调度模型，不改变 `qwen3-tts-flash / Kai` 或批准音频。
+- Luna 承担资料提取、来源与哈希核对、既定脚本/渲染调度、字幕处理、常规剪辑、明确方案下的局部 CAD/动画修改、技术 QA 和已定义指标的数据整理。确定性检查优先脚本；不能仅因角色名称是 Visual、Editor 或 QA 就选 Sol。Audio 的 Luna 是调度模型，不改变 `qwen3-tts-flash / Kai` 或批准音频。
+- Terra 用于开场创意、脚本、旁白指导、视觉表达与观众体验评审。Research 的事实整理和 Growth 的指标计算默认 Luna；需要叙事/包装判断时只将该子任务交 Terra，不扩大整项任务模型。
+- Sol 仅用于明确复杂且未解决的机械关系、疑难 CAD/动画缺陷、跨资产时序故障、关键证据冲突，或 Luna/Terra 已有证据的推理失败。派工前写明具体难点/失败证据及升级范围；任务范围大、角色重要或缺工具本身不是升级理由。独立 QA 默认模型不因验收身份提高，证据和验收门槛保持不变。
 - 派工记录角色、实际 agent ID、选定模型、推理档位（未显式设置记 model-default）、理由、输入/独占输出和 issue。角色文件不固定推理档位；创建时显式传相同模型且不传 reasoning override，使用该模型默认档位，避免继承父会话高推理设置。复杂任务才指定客户端支持的档位。
-- 自定义角色文件的模型优先于 spawn 参数。目标模型与角色默认不同时，使用 `default` 或适用的未固定模型入口、`fork_turns="none"` 和显式目标模型；自足任务包写明原角色职责、精确阅读入口、独占输出及停止条件。不能仅给固定 Terra 角色传 Sol 就认定已升级。
+- 自定义角色文件的模型优先于 spawn 参数。目标模型与角色默认不同时，使用 `default` 或适用的未固定模型入口、`fork_turns="none"` 和显式目标模型；自足任务包写明原角色职责、精确阅读入口、独占输出及停止条件。不能仅给固定 Luna/Terra 角色传 Sol 就认定已升级；常规 Luna 任务也不得通过 default 入口遗漏 model 而继承主会话 Sol。
 - Luna/Terra 有证据的推理失败由新的 Sol agent 接管同一问题。先确认原写入者停止，保留 issue、策略、尝试次数、原证据及失败历史，升级不重置修复上限。相关追问复用原 agent；变更模型不能冒称原线程已切换。缺文件、缺观看/听审能力或供应商故障须解决具体阻塞，不靠升级循环重试。
 - 生产者与独立 QA 保持身份及资产责任隔离；不同模型不自动构成独立验收。实际观看、听审和同步证据门槛不变，缺证据继续 NEEDS_REVIEW/null。
 - 派工前检查工具实际列出的模型与角色。客户端版本和配置可解析不代表模型可调用；Terra 在 CLI 需 0.159.0+，仍须实际暴露并完成只读试派。不可用时记录阻塞，不静默换模型或虚称执行；继续无依赖的授权工作。配置更新后须在重新加载配置的会话核验。
-- 固定片段比较复用现有媒体，不触发重制或供应商请求。记录模型、任务/输入哈希、耗时、缓存/非缓存输入、输出、协调用量、返工及独立 QA；缺数据写 unavailable，缺感官证据不填评分。比较同等验收质量的总耗时/总用量，不由 token 总量推算价格或预设节省比例。质量下降或返工增加时将对应角色恢复 Sol，保留原配置/比较证据，不替用户批准新媒体。
+- 固定片段比较复用现有媒体，不触发重制或供应商请求。记录模型、任务/输入哈希、耗时、缓存/非缓存输入、输出、协调用量、返工及独立 QA；缺数据写 unavailable，缺感官证据不填评分。比较同等验收质量的总耗时/总用量，不由 token 总量推算价格或预设节省比例。质量下降或返工增加时记录具体失败，按上述条件只升级受影响子任务，不将整个角色永久恢复 Sol；保留原配置/比较证据，不替用户批准新媒体。
 
 官方依据：[子 agent 配置与优先级](https://learn.chatgpt.com/docs/agent-configuration/subagents)、[模型定位与 Terra 版本要求](https://learn.chatgpt.com/docs/models)。
 
