@@ -1,0 +1,468 @@
+Observed at 2026-11-02T14:27:46.263Z
+URL: https://creator.xiaohongshu.com/statistics/data-analysis
+[p2 "小红书创作服务平台" | space "printer-platform-analytics-20261102"(22): 2 managed, 0 untracked — p1 "抖音创作者中心", p2* "小红书创作服务平台"]
+root
+  button "打开创作助手" [ref=1, loc=css:button[aria-label="打开创作助手"]]
+    svg_root
+  container
+    container
+      container
+        svg_root
+        text "创作服务平台"
+      container
+        image
+        text "君哥拆机器"
+        image
+    container
+      container
+        container
+          svg_root
+          text "发布笔记"
+          svg_root
+        container
+          container
+            container
+              svg_root
+              text "首页"
+            container
+              svg_root
+              text "笔记管理"
+            container
+              container
+                svg_root
+                text "Builder hub"
+                svg_root
+              container
+                text "小工具"
+                text "Red Skill"
+            container
+              svg_root
+              text "数据看板"
+              svg_root
+            container
+              svg_root
+              text "活动中心"
+            container
+              svg_root
+              text "笔记灵感"
+            container
+              svg_root
+              text "创作学院"
+            container
+              svg_root
+              text "创作百科"
+          container
+            svg_root
+            text "收起侧边栏"
+      container
+        container
+          text "笔记数据"
+          text "直播数据"
+        container
+          paragraph
+            text "仅支持查看近半年发布的笔记数据 (不含未发布的定时笔记)"
+          container
+            container
+              container [ref=2]
+                text "笔记类型"
+                text "全部"
+                svg_root
+              container
+                text "笔记首发时间"
+                container
+                  textbox [ref=3]
+                    text "2026-10-02"
+                  text "至"
+                  textbox [ref=4]
+                    text "2026-11-02"
+                svg_root
+            button [ref=5]
+              svg_root
+              text "导出数据"
+          container [ref=6]
+            table
+              table_row
+                table_cell
+                  text "笔记基础信息"
+                table_cell
+                  text "曝光"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "观看"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "封面点击率"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "点赞"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "评论"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "收藏"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "涨粉"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "分享"
+                  svg_root
+                  container
+                    svg_root
+                    svg_root
+                table_cell
+                  text "人均观看时长"
+                  svg_root
+                table_cell
+                  text "弹幕"
+                  svg_root
+                table_cell
+                  text "操作"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  container
+                    text "喷嘴要加热，为什么还要两路冷却？"
+                    text "发布于2026-11-02 20:21"
+                table_cell
+                  text "-"
+                table_cell
+                  text "104"
+                table_cell
+                  text "-"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "3"
+                table_cell
+                  text "-"
+                table_cell
+                  text "0"
+                table_cell
+                  text "-"
+                table_cell
+                  text "-"
+                table_cell
+                  anchor [ref=7]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  container
+                    text "床不动，3D打印机的龙门怎么升高？"
+                    text "发布于2026-11-01 20:35"
+                table_cell
+                  text "901"
+                table_cell
+                  text "414"
+                table_cell
+                  text "15.60%"
+                table_cell
+                  text "13"
+                table_cell
+                  text "0"
+                table_cell
+                  text "4"
+                table_cell
+                  text "3"
+                table_cell
+                  text "0"
+                table_cell
+                  text "17s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=8]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  container
+                    text "只转一台电机，喷头为什么斜着走？"
+                    text "发布于2026-10-31 20:26"
+                table_cell
+                  text "10729"
+                table_cell
+                  text "2617"
+                table_cell
+                  text "20.10%"
+                table_cell
+                  text "49"
+                table_cell
+                  text "1"
+                table_cell
+                  text "59"
+                table_cell
+                  text "9"
+                table_cell
+                  text "6"
+                table_cell
+                  text "26s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=9]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  container
+                    text "3D打印机跑这么快，为什么还能打准？"
+                    text "发布于2026-10-30 21:35"
+                table_cell
+                  text "3123"
+                table_cell
+                  text "826"
+                table_cell
+                  text "21.00%"
+                table_cell
+                  text "8"
+                table_cell
+                  text "0"
+                table_cell
+                  text "8"
+                table_cell
+                  text "9"
+                table_cell
+                  text "0"
+                table_cell
+                  text "28s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=10]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  container
+                    text "3D打印机的线材，是怎么送进喷嘴的？"
+                    text "发布于2026-10-29 20:15"
+                table_cell
+                  text "1696"
+                table_cell
+                  text "539"
+                table_cell
+                  text "11.40%"
+                table_cell
+                  text "11"
+                table_cell
+                  text "0"
+                table_cell
+                  text "9"
+                table_cell
+                  text "8"
+                table_cell
+                  text "0"
+                table_cell
+                  text "36s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=11]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  container
+                    text "风车停在半山腰"
+                    text "发布于2026-10-28 09:01"
+                table_cell
+                  text "400"
+                table_cell
+                  text "54"
+                table_cell
+                  text "1.20%"
+                table_cell
+                  text "1"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "16s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=12]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  text "叶子船送橡果"
+                  text "发布于2026-10-27 08:54"
+                table_cell
+                  text "818"
+                table_cell
+                  text "129"
+                table_cell
+                  text "1.80%"
+                table_cell
+                  text "2"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "1"
+                table_cell
+                  text "0"
+                table_cell
+                  text "20s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=13]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  text "山洞里传来三声咚"
+                  text "发布于2026-10-26 08:38"
+                table_cell
+                  text "765"
+                table_cell
+                  text "135"
+                table_cell
+                  text "2.50%"
+                table_cell
+                  text "6"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "1"
+                table_cell
+                  text "4s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=14]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  text "月亮掉进了井里"
+                  text "发布于2026-10-24 22:17"
+                table_cell
+                  text "506"
+                table_cell
+                  text "112"
+                table_cell
+                  text "1.00%"
+                table_cell
+                  text "2"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "3s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=15]
+                    text "分析详情"
+              table_row
+                table_cell
+                  container
+                    image
+                    image
+                  text "帽子怎么变成了船"
+                  text "发布于2026-10-23 20:49"
+                table_cell
+                  text "541"
+                table_cell
+                  text "122"
+                table_cell
+                  text "2.60%"
+                table_cell
+                  text "2"
+                table_cell
+                  text "0"
+                table_cell
+                  text "0"
+                table_cell
+                  text "1"
+                table_cell
+                  text "0"
+                table_cell
+                  text "2s"
+                table_cell
+                  text "0"
+                table_cell
+                  anchor [ref=16]
+                    text "分析详情"
+          container
+            container
+              container [ref=17]
+                text "10 条/页"
+                svg_root
+              text "共 19 条，2 页"
+            container
+              container
+                svg_root
+                container
+                  text "1"
+                  text "1"
+                container
+                  text "2"
+                  text "2"
+                svg_root
+              container
+                text "跳至"
+                textbox [ref=18]
+                text "页"

@@ -1,0 +1,794 @@
+Observed at 2026-11-02T14:27:46.176Z
+URL: https://creator.douyin.com/creator-micro/content/manage?enter_from=publish
+[p1 "抖音创作者中心" | space "printer-platform-analytics-20261102"(22): 2 managed, 0 untracked — p1* "抖音创作者中心", p2 "小红书创作服务平台"]
+root
+  svg_root
+  container
+    container
+      container
+        button [ref=1]
+          container
+            image
+              svg_root
+            container
+              text "作品发布"
+              image
+                svg_root
+          canvas
+        menu
+          menuitem [ref=2]
+            image
+              svg_root
+            text "首页"
+          menuitem [ref=3]
+            image
+              svg_root
+            text "内容管理"
+          menuitem [ref=4]
+            image
+              svg_root
+            text "数据中心"
+          menuitem [ref=5]
+            image
+              svg_root
+            text "收入变现"
+          list_item [ref=6]
+            menuitem [ref=7]
+              image
+                svg_root
+              text "创作服务"
+              image "chevron_down"
+                svg_root
+      container
+        container
+          image
+          container "智能创作"
+            button [ref=8]
+              svg_root
+              text "首页"
+            button [ref=9]
+              text "AI分身"
+            button [ref=10]
+              text "随变"
+            button [ref=11]
+              text "世界书"
+            button [ref=12]
+              text "造世界"
+            button [ref=13]
+              text "AI工坊"
+          container
+            button "星光余额 0，打开星光浮层" [ref=14, loc=css:button[aria-label="星光余额 0，打开星光浮层"]]
+              image
+              text "0"
+            container [ref=15]
+        container
+          container
+            container
+              text "内容管理"
+              container
+                button [ref=16]
+                  text "作品 (151)"
+                container [ref=17]
+                  button [ref=18]
+                    text "作品合集 (3)"
+            container
+              comboboxgrouping [ref=19]
+                text "审核状态"
+                image
+                  svg_root
+              comboboxgrouping [ref=20]
+                text "体裁"
+                image
+                  svg_root
+              comboboxgrouping "Choose date" [ref=21]
+                button "发布日期" [ref=22, loc=css:button[aria-label="发布日期"]]
+                  text "发布日期"
+                  image "chevron_down"
+                    svg_root
+              comboboxgrouping "selected" [ref=23]
+                image
+                  image
+                    svg_root
+                text "最新发布"
+                image
+                  svg_root
+              container
+                image
+                  image
+                    svg_root
+                textbox [ref=24, loc=css:input[placeholder="搜索作品"]]
+                  text "搜索作品"
+              button [ref=25]
+                image
+                text "导出数据"
+          container [ref=26]
+            container
+              container
+                container
+                  text "置顶"
+                  text "01:47"
+                container
+                  container
+                    text "只转一台电机，喷头竟然斜着走？ 一台管左右，一台管前后？CoreXY 的两台电机可不是这样分工的。沿着皮带，看两路输入怎样配合，让喷头从斜线走成..."
+                    container
+                      container
+                        svg_root
+                        text "编辑作品"
+                        svg_root
+                      container
+                        svg_root
+                        text "设置权限"
+                      container
+                        svg_root
+                        text "取消置顶"
+                      container
+                        svg_root
+                        text "删除作品"
+                  container
+                    text "2026年10月31日 20:29"
+                    container
+                      image
+                      image
+                      text "已发布"
+                  container
+                    container
+                      text "播放"
+                      text "1.4万"
+                      svg_root
+                    container
+                      text "点赞"
+                      text "203"
+                      svg_root
+                    container
+                      text "评论"
+                      text "24"
+                      svg_root
+                    container
+                      text "分享"
+                      text "18"
+                      svg_root
+                    container
+                      text "收藏"
+                      text "122"
+                      svg_root
+                    container
+                      text "完播率"
+                      text "2.57%"
+                      svg_root
+                    container
+                      text "2秒跳出率"
+                      text "28.91%"
+                      svg_root
+                    container
+                      text "吸粉量"
+                      text "18"
+                      svg_root
+              container
+                container
+                  text "置顶"
+                  text "01:47"
+                container
+                  container
+                    text "3D打印机跑这么快，为什么还能打准？ 喷头突然掉头，受力的可不只是喷头。 这期把3D打印机的外板移开，沿着导轨、横梁和机架，看看每次加速和转�..."
+                    container
+                      container
+                        svg_root
+                        text "编辑作品"
+                        svg_root
+                      container
+                        svg_root
+                        text "设置权限"
+                      container
+                        svg_root
+                        text "取消置顶"
+                      container
+                        svg_root
+                        text "删除作品"
+                  container
+                    text "2026年10月30日 21:37"
+                    container
+                      image
+                      image
+                      text "已发布"
+                  container
+                    container
+                      text "播放"
+                      text "1900"
+                      svg_root
+                    container
+                      text "点赞"
+                      text "10"
+                      svg_root
+                    container
+                      text "评论"
+                      text "2"
+                      svg_root
+                    container
+                      text "分享"
+                      text "0"
+                      svg_root
+                    container
+                      text "收藏"
+                      text "1"
+                      svg_root
+                    container
+                      text "完播率"
+                      text "1.63%"
+                      svg_root
+                    container
+                      text "2秒跳出率"
+                      text "18.09%"
+                      svg_root
+                    container
+                      text "吸粉量"
+                      text "2"
+                      svg_root
+              container
+                container
+                  text "置顶"
+                  text "01:40"
+                container
+                  container
+                    text "3D打印机的线材，是怎么送进喷嘴的？ 一根线材，怎样从送料齿轮走到喷嘴？这期拆开 3D 打印机的工具头，看看齿轮如何夹送线材、热端怎样让材料软�..."
+                    container
+                      container
+                        svg_root
+                        text "编辑作品"
+                        svg_root
+                      container
+                        svg_root
+                        text "设置权限"
+                      container
+                        svg_root
+                        text "取消置顶"
+                      container
+                        svg_root
+                        text "删除作品"
+                  container
+                    text "2026年10月29日 20:19"
+                    container
+                      image
+                      image
+                      text "已发布"
+                  container
+                    container
+                      text "播放"
+                      text "2533"
+                      svg_root
+                    container
+                      text "点赞"
+                      text "17"
+                      svg_root
+                    container
+                      text "评论"
+                      text "0"
+                      svg_root
+                    container
+                      text "分享"
+                      text "1"
+                      svg_root
+                    container
+                      text "收藏"
+                      text "8"
+                      svg_root
+                    container
+                      text "完播率"
+                      text "3.58%"
+                      svg_root
+                    container
+                      text "2秒跳出率"
+                      text "22.25%"
+                      svg_root
+                    container
+                      text "吸粉量"
+                      text "7"
+                      svg_root
+              container
+                container
+                  text "01:30"
+                  container
+                    container
+                      text "喷嘴一边加热，旁边为什么还要冷却？ 喷嘴要热，上方的材料通道却不能跟着过热。 还有一路冷却，照顾的是刚挤出的塑料。 打开机头，90秒看清两路..."
+                      container
+                        container
+                          svg_root
+                          text "编辑作品"
+                          svg_root
+                        container
+                          svg_root
+                          text "设置权限"
+                        container
+                          svg_root
+                          text "作品置顶"
+                        container
+                          svg_root
+                          text "删除作品"
+                    container
+                      text "2026年11月02日 20:21"
+                      container
+                        image
+                        image
+                        text "已发布"
+                    container
+                      text "播放"
+                      text "264"
+                      svg_root
+                    container
+                      text "点赞"
+                      text "4"
+                      svg_root
+                    container
+                      text "评论"
+                      text "0"
+                      svg_root
+                    container
+                      text "分享"
+                      text "0"
+                      svg_root
+                    container
+                      text "收藏"
+                      text "0"
+                      svg_root
+                    container
+                      text "完播率"
+                      text "2.09%"
+                      svg_root
+                    container
+                      text "2秒跳出率"
+                      text "24.1%"
+                      svg_root
+                    container
+                      text "吸粉量"
+                      text "0"
+                      svg_root
+                container
+                  svg_root
+                  text "已智能生成章节要点，确认并添加，可以使视频结构更清晰"
+                  svg_root
+              container
+                text "01:41"
+                text "床没动，谁把整圈龙门提起来了？ 床没动，整圈龙门却在上升。沿着一个角拆开看：电机经过减速带动提升带，拉力从连接处传进龙门；四角协调高度�..."
+                container
+                  svg_root
+                  text "编辑作品"
+                  svg_root
+                container
+                  svg_root
+                  text "设置权限"
+                container
+                  svg_root
+                  text "作品置顶"
+                container
+                  svg_root
+                  text "删除作品"
+                container
+                  text "2026年11月01日 20:39"
+                  container
+                    image
+                    image
+                    text "已发布"
+                container
+                  text "播放"
+                  text "2243"
+                  svg_root
+                container
+                  text "点赞"
+                  text "28"
+                  svg_root
+                container
+                  text "评论"
+                  text "1"
+                  svg_root
+                container
+                  text "分享"
+                  text "0"
+                  svg_root
+                container
+                  text "收藏"
+                  text "7"
+                  svg_root
+                container
+                  text "完播率"
+                  text "1.23%"
+                  svg_root
+                container
+                  text "2秒跳出率"
+                  text "28.14%"
+                  svg_root
+                container
+                  text "吸粉量"
+                  text "2"
+                  svg_root
+              container
+                text "01:13"
+                text "月亮掉进了井里 小狐狸想把井里的月亮捞起来。木桶提上来了，月亮怎么还在井底？ 一则关于月光与一只小木桶的林间故事。 #白板动画 #原创故事 #林..."
+                container
+                  svg_root
+                  text "编辑作品"
+                  svg_root
+                container
+                  svg_root
+                  text "设置权限"
+                container
+                  svg_root
+                  text "作品置顶"
+                container
+                  svg_root
+                  text "删除作品"
+                container
+                  text "2026年10月27日 08:49"
+                  container
+                    image
+                    image
+                    text "已发布"
+                container
+                  text "播放"
+                  text "59"
+                  svg_root
+                container
+                  text "点赞"
+                  text "0"
+                  svg_root
+                container
+                  text "评论"
+                  text "0"
+                  svg_root
+                container
+                  text "分享"
+                  text "0"
+                  svg_root
+                container
+                  text "收藏"
+                  text "0"
+                  svg_root
+                container
+                  text "完播率"
+                  text "4.48%"
+                  svg_root
+                container
+                  text "2秒跳出率"
+                  text "52.31%"
+                  svg_root
+                container
+                  text "吸粉量"
+                  text "0"
+                  svg_root
+              container
+                text "01:04"
+                text "帽子怎么变成了船 风吹走了一顶帽子。小獾追过草地，追到小溪，最后接回来一位小乘客。 一则原创林间小故事。 #白板动画 #原创故事 #动画短片 #小�..."
+                container
+                  svg_root
+                  text "编辑作品"
+                  svg_root
+                container
+                  svg_root
+                  text "设置权限"
+                container
+                  svg_root
+                  text "作品置顶"
+                container
+                  svg_root
+                  text "删除作品"
+                container
+                  text "2026年10月24日 22:27"
+                  container
+                    image
+                    image
+                    text "已发布"
+                container
+                  text "播放"
+                  text "65"
+                  svg_root
+                container
+                  text "点赞"
+                  text "0"
+                  svg_root
+                container
+                  text "评论"
+                  text "0"
+                  svg_root
+                container
+                  text "分享"
+                  text "0"
+                  svg_root
+                container
+                  text "收藏"
+                  text "0"
+                  svg_root
+                container
+                  text "完播率"
+                  text "6.94%"
+                  svg_root
+                container
+                  text "2秒跳出率"
+                  text "66.22%"
+                  svg_root
+                container
+                  text "吸粉量"
+                  text "0"
+                  svg_root
+              container
+                text "01:59"
+                text "老牛索水 在我国西部的沙漠边缘，水比金子还珍贵。那里的土地裂开一道道口子。人和牲口，一天只有三斤水。喝的水，全靠军车从远方运来。这天清�..."
+                container
+                  svg_root
+                  text "编辑作品"
+                  svg_root
+                container
+                  svg_root
+                  text "设置权限"
+                container
+                  svg_root
+                  text "作品置顶"
+                container
+                  svg_root
+                  text "删除作品"
+                container
+                  text "2026年10月18日 12:08"
+                  container
+                    image
+                    image
+                    text "已发布"
+                container
+                  text "播放"
+                  text "19"
+                  svg_root
+                container
+                  text "点赞"
+                  text "0"
+                  svg_root
+                container
+                  text "评论"
+                  text "0"
+                  svg_root
+                container
+                  text "分享"
+                  text "0"
+                  svg_root
+                container
+                  text "收藏"
+                  text "0"
+                  svg_root
+                container
+                  text "完播率"
+                  text "4%"
+                  svg_root
+                container
+                  text "2秒跳出率"
+                  text "68%"
+                  svg_root
+                container
+                  text "吸粉量"
+                  text "0"
+                  svg_root
+              container
+                container
+                  text "01:15"
+                  svg_root
+                  text "私密"
+                container
+                  container
+                    text "#短视频变现"
+                    container
+                      container
+                        svg_root
+                        text "编辑作品"
+                        svg_root
+                      container
+                        svg_root
+                        text "设置权限"
+                      container
+                        svg_root
+                        text "删除作品"
+                  text "2026年10月16日 16:10"
+                  container
+                    container
+                      text "播放"
+                      text "-"
+                    container
+                      text "点赞"
+                      text "-"
+                    container
+                      text "评论"
+                      text "-"
+                    container
+                      text "分享"
+                      text "-"
+                    container
+                      text "收藏"
+                      text "-"
+                    container
+                      text "完播率"
+                      text "-"
+                    container
+                      text "2秒跳出率"
+                      text "-"
+                    container
+                      text "吸粉量"
+                      text "-"
+              container
+                text "01:15"
+                text "对牛弹琴 那年春天，郊外草色青青。走来一位抱琴的年轻人。他叫公明仪，琴弹得极好。他把琴摆在草地上，挑了最讲究的一支曲子。琴声慢慢飘了出�..."
+                container
+                  svg_root
+                  text "编辑作品"
+                  svg_root
+                container
+                  svg_root
+                  text "设置权限"
+                container
+                  svg_root
+                  text "作品置顶"
+                container
+                  svg_root
+                  text "删除作品"
+                container
+                  text "2026年10月16日 15:41"
+                  container
+                    image
+                    image
+                    text "已发布"
+                container
+                  text "播放"
+                  text "15"
+                  svg_root
+                container
+                  text "点赞"
+                  text "0"
+                  svg_root
+                container
+                  text "评论"
+                  text "0"
+                  svg_root
+                container
+                  text "分享"
+                  text "0"
+                  svg_root
+                container
+                  text "收藏"
+                  text "0"
+                  svg_root
+                container
+                  text "完播率"
+                  text "0%"
+                  svg_root
+                container
+                  text "2秒跳出率"
+                  text "81.25%"
+                  svg_root
+                container
+                  text "吸粉量"
+                  text "0"
+                  svg_root
+              container
+                text "01:26"
+                text "愚公移山 很久以前，有位老人叫愚公。他住在北山脚下，年近九十。门前挡着两座大山，太行与王屋。每次出门，都要绕很远的路。愚公召集儿孙，立�..."
+                container
+                  svg_root
+                  text "编辑作品"
+                  svg_root
+                container
+                  svg_root
+                  text "设置权限"
+                container
+                  svg_root
+                  text "作品置顶"
+                container
+                  svg_root
+                  text "删除作品"
+                container
+                  text "2026年10月15日 11:26"
+                  container
+                    image
+                    image
+                    text "已发布"
+                container
+                  text "播放"
+                  text "66"
+                  svg_root
+                container
+                  text "点赞"
+                  text "0"
+                  svg_root
+                container
+                  text "评论"
+                  text "0"
+                  svg_root
+                container
+                  text "分享"
+                  text "0"
+                  svg_root
+                container
+                  text "收藏"
+                  text "1"
+                  svg_root
+                container
+                  text "完播率"
+                  text "1.49%"
+                  svg_root
+                container
+                  text "2秒跳出率"
+                  text "60.87%"
+                  svg_root
+                container
+                  text "吸粉量"
+                  text "0"
+                  svg_root
+              container
+                text "01:26"
+                text "白板动画大禹治水 4000多年前，黄河流域洪水泛滥，鲧治水失败。禹继承父业，经过13年努力，疏导洪水，成功治理。他划分九州，铸九鼎，被尊为大禹�..."
+                container
+                  svg_root
+                  text "编辑作品"
+                  svg_root
+                container
+                  svg_root
+                  text "设置权限"
+                container
+                  svg_root
+                  text "作品置顶"
+                container
+                  svg_root
+                  text "删除作品"
+                container
+                  text "2026年10月13日 11:57"
+                  container
+                    image
+                    image
+                    text "已发布"
+                container
+                  text "播放"
+                  text "10"
+                  svg_root
+                container
+                  text "点赞"
+                  text "0"
+                  svg_root
+                container
+                  text "评论"
+                  text "0"
+                  svg_root
+                container
+                  text "分享"
+                  text "0"
+                  svg_root
+                container
+                  text "收藏"
+                  text "0"
+                  svg_root
+                container
+                  text "完播率"
+                  text "0%"
+                  svg_root
+                container
+                  text "2秒跳出率"
+                  text "83.33%"
+                  svg_root
+                container
+                  text "吸粉量"
+                  text "0"
+                  svg_root
+            svg_root
+            text "加载中…"
+    image
+      svg_root
+  iframe [ref=27]
+    root
+      container [ref=28]
+        dialog "审核通知"
+          heading
+            text "审核通知"
+          button "close" [ref=29]
+            svg_root
+          svg_root
+          text "加载中，请稍后^_^"
+  iframe [ref=30]
+    root
+      container [ref=31]
+        dialog "审核通知"
+          heading
+            text "审核通知"
+          button "close" [ref=32]
+            svg_root
+          svg_root
+          text "加载中，请稍后^_^"

@@ -1,0 +1,300 @@
+Observed at 2026-11-02T14:28:35.183Z
+URL: https://creator.douyin.com/creator-micro/work-management/work-detail/7702807987345214754?enter_from=content&tabKey=overview&metricKey=view_count
+[p4 "抖音创作者中心" | space "printer-platform-analytics-20261102"(22): 4 managed, 0 untracked — p1 "抖音创作者中心", p2 "小红书创作服务平台", p3 "小红书创作服务平台", p4* "抖音创作者中心"]
+root
+  svg_root
+  container
+    container
+      container
+        button [ref=1]
+          container
+            image
+              svg_root
+            container
+              text "作品发布"
+              image
+                svg_root
+          canvas
+        menu
+          menuitem [ref=2]
+            image
+              svg_root
+            text "首页"
+          menuitem [ref=3]
+            image
+              svg_root
+            text "内容管理"
+          menuitem [ref=4]
+            image
+              svg_root
+            text "数据中心"
+          menuitem [ref=5]
+            image
+              svg_root
+            text "收入变现"
+          list_item [ref=6]
+            menuitem [ref=7]
+              image
+                svg_root
+              text "创作服务"
+              image "chevron_down"
+                svg_root
+      container
+        container
+          image
+          container "智能创作"
+            button [ref=8]
+              svg_root
+              text "首页"
+            button [ref=9]
+              text "AI分身"
+            button [ref=10]
+              text "随变"
+            button [ref=11]
+              text "世界书"
+            button [ref=12]
+              text "造世界"
+            button [ref=13]
+              text "AI工坊"
+          container
+            button "星光余额 0，打开星光浮层" [ref=14, loc=css:button[aria-label="星光余额 0，打开星光浮层"]]
+              image
+              text "0"
+            container [ref=15]
+        container
+          text "数据指标说明"
+          container
+            container
+              image
+                svg_root
+              text "内容管理"
+            container
+              container
+                container
+                  image
+                  image
+                text "0:01:47"
+              container
+                text "只转一台电机，喷头竟然斜着走？ 一台管左右，一台管前后？CoreXY 的两台电机可不是这样分工的。沿着皮带，看两路输入怎样配合，让喷头从斜线走成..."
+                text "2026年10月31日 20:29"
+                container
+                  image
+                    svg_root
+                  text "作品状态正常"
+            container
+              tab
+                text "总览"
+              tab
+                text "流量分析"
+              tab
+                text "观众分析"
+              tab
+                text "评论热词"
+              tab
+                text "评论管理"
+            container
+              container
+                container
+                  container
+                    text "内容吸引力"
+                    container [ref=19]
+                      image
+                        svg_root
+                  button [ref=20]
+                    image
+                      svg_root
+                    text "导出"
+                container
+                  container
+                    text "完播率"
+                    container
+                      text "2.57"
+                      text "%"
+                  container
+                    text "平均播放时长"
+                    container
+                      text "14"
+                      text "秒"
+                  container
+                    text "2s跳出率"
+                    container
+                      text "28.91"
+                      text "%"
+                  container
+                    text "5s完播率"
+                    container
+                      text "44.68"
+                      text "%"
+                  container
+                    text "平均播放占比"
+                    container
+                      text "13.47"
+                      text "%"
+                container
+                  container
+                    text "观看趋势"
+                    container
+                      text "留存分析"
+                      text "跳出分析"
+                  canvas
+              text "观众参与度"
+              container [ref=21]
+                svg_root
+              button [ref=22]
+                svg_root
+                text "导出"
+              container
+                text "点赞率"
+                text "1.44"
+                text "%"
+                text "评论率"
+                text "0.17"
+                text "%"
+                text "分享率"
+                text "0.14"
+                text "%"
+                text "收藏率"
+                text "0.87"
+                text "%"
+                text "弹幕量"
+                text "0"
+                text "不感兴趣率"
+                text "0.01"
+                text "%"
+              text "弹幕分析"
+              text "弹幕"
+              text "点赞"
+              svg_root
+              text "视频未收到弹幕，暂无分析"
+              container
+                container
+                  container
+                    container
+                      text "流量来源"
+                      container [ref=23]
+                        image
+                          svg_root
+                    button [ref=24]
+                      image
+                        svg_root
+                      text "导出"
+                  table
+                    table_row
+                      table_cell
+                        text "抖音 App"
+                      table_cell
+                        text "来源占比"
+                      table_cell
+                        text "对比7日"
+                    table_row
+                      table_cell
+                        text "推荐页"
+                      table_cell
+                        container
+                          text "98.7"
+                          text "%"
+                      table_cell
+                        text "+"
+                        text "1.4"
+                        text "%"
+                    table_row
+                      table_cell
+                        text "搜索"
+                      table_cell
+                        container
+                          text "0.6"
+                          text "%"
+                      table_cell
+                        text "+"
+                        text "0.2"
+                        text "%"
+                    table_row
+                      table_cell
+                        text "个人主页"
+                      table_cell
+                        container
+                          text "0.2"
+                          text "%"
+                      table_cell
+                        text "-1.5"
+                        text "%"
+                    table_row
+                      table_cell
+                        text "消息页"
+                      table_cell
+                        container
+                          text "0.2"
+                          text "%"
+                      table_cell
+                        text "0"
+                        text "%"
+                    table_row
+                      table_cell
+                        text "其他"
+                      table_cell
+                        container
+                          text "0.2"
+                          text "%"
+                      table_cell
+                        text "0"
+                        text "%"
+                container
+                  container
+                    text "搜索关键词"
+                    container [ref=25]
+                      image
+                        svg_root
+                  container
+                    text "用户通过这些词看到作品"
+                    unordered_list
+                      list_item
+                        container
+                          text "1"
+                          text "corexy架构"
+                        container
+                          text "50"
+                          text "%"
+                      list_item
+                        container
+                          text "2"
+                          text "core xy结构拆解"
+                        container
+                          text "50"
+                          text "%"
+                  container
+                    text "用户看完作品后常搜的词"
+                    unordered_list
+                      list_item
+                        container
+                          text "1"
+                          text "corexy架构"
+                        container
+                          text "59.6"
+                          text "%"
+                      list_item
+                        text "2"
+                        text "corexy结构"
+                        text "12.5"
+                        text "%"
+                      list_item
+                        text "3"
+                        text "corexy原理动画演示"
+                        text "6.9"
+                        text "%"
+                      list_item
+                        text "4"
+                        text "直线龙门架打印机"
+                        text "5.6"
+                        text "%"
+                      list_item
+                        text "5"
+                        text "拓竹p1s结构"
+                        text "5.6"
+                        text "%"
+                      list_item
+                        text "6"
+                        text "corexy结构优缺点"
+                        text "5.6"
+                        text "%"
+    image
+      svg_root

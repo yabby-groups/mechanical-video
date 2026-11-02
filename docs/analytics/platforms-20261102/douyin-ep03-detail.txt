@@ -1,0 +1,174 @@
+Observed at 2026-11-02T14:28:26.885Z
+URL: https://creator.douyin.com/creator-micro/work-management/work-detail/7702807987345214754?enter_from=content&tabKey=overview&metricKey=view_count
+[p4 "抖音创作者中心" | space "printer-platform-analytics-20261102"(22): 4 managed, 0 untracked — p1 "抖音创作者中心", p2 "小红书创作服务平台", p3 "小红书创作服务平台", p4* "抖音创作者中心"]
+root
+  svg_root
+  container
+    container
+      container
+        button [ref=1]
+          container
+            image
+              svg_root
+            container
+              text "作品发布"
+              image
+                svg_root
+          canvas
+        menu
+          menuitem [ref=2]
+            image
+              svg_root
+            text "首页"
+          menuitem [ref=3]
+            image
+              svg_root
+            text "内容管理"
+          menuitem [ref=4]
+            image
+              svg_root
+            text "数据中心"
+          menuitem [ref=5]
+            image
+              svg_root
+            text "收入变现"
+          list_item [ref=6]
+            menuitem [ref=7]
+              image
+                svg_root
+              text "创作服务"
+              image "chevron_down"
+                svg_root
+      container
+        container
+          image
+          container "智能创作"
+            button [ref=8]
+              svg_root
+              text "首页"
+            button [ref=9]
+              text "AI分身"
+            button [ref=10]
+              text "随变"
+            button [ref=11]
+              text "世界书"
+            button [ref=12]
+              text "造世界"
+            button [ref=13]
+              text "AI工坊"
+          container
+            button "星光余额 0，打开星光浮层" [ref=14, loc=css:button[aria-label="星光余额 0，打开星光浮层"]]
+              image
+              text "0"
+            container [ref=15]
+        container
+          text "数据指标说明"
+          container
+            container
+              image
+                svg_root
+              text "内容管理"
+            container
+              container
+                container
+                  image
+                  image
+                text "0:01:47"
+              container
+                text "只转一台电机，喷头竟然斜着走？ 一台管左右，一台管前后？CoreXY 的两台电机可不是这样分工的。沿着皮带，看两路输入怎样配合，让喷头从斜线走成..."
+                text "2026年10月31日 20:29"
+                container
+                  image
+                    svg_root
+                  text "作品状态正常"
+            container
+              tab
+                text "总览"
+              tab
+                text "流量分析"
+              tab
+                text "观众分析"
+              tab
+                text "评论热词"
+              tab
+                text "评论管理"
+            container
+              container
+                container
+                  container
+                    text "流量"
+                    container [ref=16]
+                      image
+                        svg_root
+                  button [ref=17]
+                    image
+                      svg_root
+                    text "导出"
+                container
+                  container
+                    text "播放量"
+                    container
+                      text "1.41"
+                      text "万"
+                  container
+                    text "点赞量"
+                    text "203"
+                  container
+                    text "评论量"
+                    text "24"
+                  container
+                    text "分享量"
+                    text "19"
+                  container
+                    text "收藏量"
+                    text "122"
+                  container
+                    text "弹幕量"
+                    text "0"
+                  container
+                    text "完播率"
+                    container
+                      text "2.57"
+                      text "%"
+                  container
+                    text "2s跳出率"
+                    container
+                      text "28.91"
+                      text "%"
+                container
+                  container
+                    text "新增"
+                    text "累计"
+                  container
+                    text "每小时"
+                    text "每天"
+                canvas
+              container
+                container
+                  text "粉丝"
+                  button [ref=18]
+                    image
+                      svg_root
+                    text "导出"
+                container
+                  container
+                    text "涨粉量"
+                    text "18"
+                  container
+                    text "脱粉量"
+                    text "1"
+                  container
+                    text "粉丝播放占比"
+                    container
+                      text "0.3"
+                      text "%"
+                container
+                  container
+                    text "新增"
+                    text "累计"
+                  container
+                    text "每小时"
+                    text "每天"
+                canvas
+    image
+      svg_root
