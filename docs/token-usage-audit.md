@@ -79,3 +79,21 @@ Detailed ownership and version-impact rules remain in the
 [handoff workflow](../.codex/agent-workflow.md). Core constraints and acceptance
 thresholds remain in [AGENTS.md](../AGENTS.md). No model, concurrency, publication,
 provider, media asset or production scheduler is changed by this optimization.
+
+## 团队选择、比较与本次基线
+
+```sh
+.venv/bin/python scripts/audit_token_usage.py /explicit/log/directory \
+  --root-session REAL_THREAD_ID --format json
+.venv/bin/python scripts/audit_token_usage.py --compare before.json after.json
+```
+
+根选择仅使用明确提供的日志，按 `thread_id`、`session_meta.id` 及父线程元数据选子树；共享 `session_id` 不合并不同线程。guardian 默认独立列出，不计入制作团队；指定根时只列该团队的 guardian。去重按真实线程，缺子日志、冲突副本、计数重置仍限制覆盖，不用 spawn 结果替代父子关联。
+
+增加声明角色/最后观察到的模型汇总（不是逐轮模型用量归因）、协调对象计数和有成对时间戳的实际等待时长分布；缺时间戳不猜测。只解析协调 target/recipient 标识、spawn 结果 ID、元数据和用量白名单，不输出消息正文、加密字段、图片、参数或工具输出正文。模型和 target 只接受有限标识格式。
+
+比较分别报告缓存输入、非缓存输入、输出及协调的原值和差值；团队覆盖不全明确提示。只有两份报告均有完整已链接日志覆盖，且显式 `comparison_context: {scope, quality}` 非空且相同，才计算变化率。该元数据须来自可比实际任务与 QA，不由工具推断；不由累计 token 推算费用。
+
+[本次分析的脱敏冻结基线](token-usage-analysis-baseline-20261102.json)来自已结束的分析根线程 `01a19bce-951e-7670-bcc3-6d3257b6f612`，不是正在执行的实现会话，也不是完整 EP06 制作团队统计。记录了三个历史全片版本及其哈希、被拒的床板/工具头相交 P1、最终感官 QA 缺口；只读现有记录，未重查或渲染影片。旧的 10 月基线保留。
+
+下一次已授权实际制作在既有 director-record 同时记录首次交付耗时、重大返工、全片重渲次数、用户发现的缺陷、验收完整度及任务范围，再保存同口径审计。当前只能证明工具行为与测试通过，实际制作节省量尚未测量。

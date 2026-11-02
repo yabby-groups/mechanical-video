@@ -1241,3 +1241,15 @@ New full-task-dbdf3806e59559815455 preserves c6 all presentation source bytes;ne
 - 最终带声字幕MP4 SHA0092bf1d3c02b10dee30090c07eb45756ee2ebcb30a4071b2d9856cd6c8d87cd，93.366667s，原生/编码1080×1920@30，H.264/AAC。独立hash/ffprobe/完整AVdecode PASS。
 - 两类最终音频报告、独立VideoQA绑定同hash。AAC与新mix全片零延迟相关0.999972，满幅样本0；实际听审0，评分null。Director与独立专项QA均看过9contacts共104编码样点，含旧8–16s穿模窗、各回装阶段、45cue中点；在源+编码静态证据范围闭合BED-HEAD P1 attempt1。
 - 所有914源件每帧不隐藏，45.41s归位后1438帧残差0mm。未混帧、未重配Kai；原字幕一次叠加。正式实时运动/听审/逐词同步仍NEEDS_REVIEW，不因技术完成填分。最终待审交付说明EP06/bedclearance-repair-delivery.md。
+
+## 2026-11-02 — 制作效率工具与 token 审计实现
+
+范围：只改工具、入口引用、协作规范与文档；未重做 EP06、未调用生产供应商、未渲染现有影片、未改历史 director-record/批准资产。`.codex` 受保护文件通过既有审批机制写入，未调整模型、推理档位、并发或 sandbox。
+
+- `.venv/bin/python -m unittest discover -s tests`：**109 tests / 18.833s / OK**。包含 production gate 的缺证据、旧指纹、动作覆盖缩小、P1/hold/修复上限、身份冲突、存储过期、静帧不替代编码、待审与正式验收、EP06 隔离旧问题回归；共享包命中、参数/依赖/媒体/工具变化失效、损坏/失败/丢失结果、字幕约束、时间线关联和独立 QA 边界；审计线程选择、guardian 分离、共享 session_id、缺日志、副本、重置、敏感正文不输出及比较限制。
+- 共享包测试在临时目录生成 1 秒 160×120/10fps 合成测试片（testsrc2+sine，H.264/AAC），实际执行 ffprobe、完整音视频/音轨解码、音频测量、字幕检查、抽帧和联系表；缓存复用时禁止再次执行这些昂贵命令，QA 分数仍为 null、ASR 未请求。该片仅测试工具，不适用正式影片长度/画质验收。测试输出中的 Blender SIGSEGV 是已有模拟崩溃恢复用例，非实际渲染崩溃。
+- 实际只读调用 `scripts/production_gate.py --record series/3d-printer-v2/episodes-current/EP06/director-record.json --stage full-render`：退出 1 / BLOCKED，原因是旧记录缺 production_checks v1；未追改历史记录，也不把此结果解释为当前影片重新评审。
+- `scripts/audit_token_usage.py --compare docs/token-usage-analysis-baseline-20261102.json docs/token-usage-analysis-baseline-20261102.json`：退出 0，描述性差值为零，因未声明相同质量/范围而变化率 null；这只是比较命令验证，不是收益测量。
+- 15 份 TOML（pyproject、Codex 配置和角色）解析通过；对比 HEAD，角色 model/model_reasoning_effort 全部不变。新增/修改工作流文档的本地链接目标存在；脱敏基线恰有三个历史全片版本及最终 QA 缺口。`git diff --check` 通过。
+
+工具通过只证明记录关联、缓存和审计行为。本次没有新增动态/听感/观众验收结论；真实制作节省、首次交付耗时、重大返工、全片重渲次数、用户发现的缺陷和验收完整度，留给下一次已授权且范围/质量可比的实际制作记录。用量不换算费用。

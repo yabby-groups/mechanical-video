@@ -234,6 +234,8 @@ def worker():
                 state(n,'failed',error=f'{type(e).__name__}: {e}'); raise
 
 def main(argv=None):
+    # Current episode production: scripts/production_gate.py; docs/production-preflight.md.
+    # Historical holds below remain authoritative; this reference grants no continuation.
     p=argparse.ArgumentParser(description=__doc__); sub=p.add_subparsers(dest='command',required=True)
     sub.add_parser('plan'); sub.add_parser('worker'); sub.add_parser('status')
     render_parser=sub.add_parser('render'); render_parser.add_argument('--episode',type=int,required=True); render_parser.add_argument('--preview-only',action='store_true')

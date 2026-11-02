@@ -165,12 +165,23 @@ def main():
     sub=p.add_subparsers(dest='command',required=True)
     s=sub.add_parser('model'); s.add_argument('--family',choices=['planetary_reducer','cordless_drill'],default='planetary_reducer'); s.add_argument('--module',type=float,default=2); sub.add_parser('status'); sub.add_parser('retry')
     for name in ['batch','demo','image']:
-        s=sub.add_parser(name); s.add_argument('--portrait',action='store_true'); s.add_argument('--production',action='store_true'); s.add_argument('--seconds',type=float,default=5); s.add_argument('--engine',choices=['eevee','cycles'],default='eevee'); s.add_argument('--templates',nargs='+',choices=TEMPLATES,default=TEMPLATES if name=='batch' else ['shell','explode'])
+        s=sub.add_parser(name); s.add_argument('--portrait',action='store_true'); s.add_argument('--production',action='store_true'); s.add_argument('--record',type=Path,help='Existing director-record; required for production. See docs/production-preflight.md'); s.add_argument('--seconds',type=float,default=5); s.add_argument('--engine',choices=['eevee','cycles'],default='eevee'); s.add_argument('--templates',nargs='+',choices=TEMPLATES,default=TEMPLATES if name=='batch' else ['shell','explode'])
         if name=='image': s.add_argument('path',type=Path)
         else: s.add_argument('--module',type=float,default=2)
-    s=sub.add_parser('worker'); s.add_argument('--watch',action='store_true')
+    s=sub.add_parser('worker'); s.add_argument('--watch',action='store_true'); s.add_argument('--record',type=Path,help='Validate full-render gate before consuming; held historical jobs remain held')
     s=sub.add_parser('verify'); s.add_argument('path',type=Path)
-    a=p.parse_args(); a.root=a.root.resolve(); a.root.mkdir(parents=True,exist_ok=True)
+    a=p.parse_args()
+    if getattr(a, 'production', False) and not getattr(a, 'record', None):
+        p.error('--production requires --record (docs/production-preflight.md)')
+    if getattr(a, 'record', None):
+        from .production_gate import evaluate
+        try:
+            result = evaluate(json.loads(a.record.read_text()), a.record.resolve().parent, 'full-render')
+        except (OSError, ValueError, TypeError, KeyError, AttributeError):
+            p.error('Invalid production record')
+        if result['status'] == 'BLOCKED':
+            print(json.dumps(result)); return 1
+    a.root=a.root.resolve(); a.root.mkdir(parents=True,exist_ok=True)
     if a.command=='model':
         if a.family=='cordless_drill':
             from .drill import build as build_drill
@@ -187,4 +198,4 @@ def main():
     elif a.command=='status':
         db=connect(a.root)
         for row in db.execute('SELECT id,state,attempts,error FROM jobs'): print(dict(row))
-if __name__=='__main__': main()
+if __name__=='__main__': raise SystemExit(main())

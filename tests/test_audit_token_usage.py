@@ -175,5 +175,55 @@ class AuditTokenUsageTests(unittest.TestCase):
         self.assertIsNone(rec["phases"]["unattributed"]["output_tokens"])
 
 
+class TeamAuditTests(unittest.TestCase):
+    setUp = AuditTokenUsageTests.setUp
+    write = AuditTokenUsageTests.write
+    def test_shared_session_id_distinct_thread_ids_and_guardian(self):
+        root = meta('root')
+        child = meta('child', 'root')
+        child['payload']['session_id'] = 'root'
+        child['payload']['source']['subagent']['thread_spawn']['agent_role'] = 'visual'
+        guardian = meta('guard', 'root')
+        guardian['payload'].update(session_id='root', parent_thread_id='root', thread_source='guardian_review', source={'subagent': {'other': 'guardian'}})
+        self.write('a.jsonl', [root, usage(100), tool('function_call', 'spawn_agent'), tool('function_call_output', output='{"agent_id":"child"}')])
+        self.write('b.jsonl', [child, usage(40), {'type': 'turn_context', 'payload': {'model': 'gpt-6.1-sol', 'encrypted_content': 'secret'}}])
+        self.write('c.jsonl', [guardian, usage(500)])
+        self.write('d.jsonl', [meta('unrelated'), usage(900)])
+        report = audit.audit_paths([self.root], root_session='root')
+        self.assertEqual({r['thread_id'] for r in report['sessions']}, {'root', 'child'})
+        self.assertEqual(report['teams'][0]['reported_session_sum']['input_tokens'], 140)
+        self.assertEqual(report['guardians'][0]['thread_id'], 'guard')
+        self.assertEqual(report['summaries']['role']['visual']['threads'], 1)
+        self.assertNotIn('secret', json.dumps(report))
+
+    def test_wait_distribution_and_targets_only(self):
+        call = tool('function_call', 'wait_agent')
+        call['timestamp'] = '2026-11-02T00:00:00Z'
+        output = tool('function_call_output', output='secret-body')
+        output['timestamp'] = '2026-11-02T00:01:10Z'
+        message = tool('function_call', 'followup_task', 'message')
+        message['payload']['arguments'] = json.dumps({'target': '/root/visual', 'message': 'secret-text', 'encrypted_content': 'secret-encrypted'})
+        self.write('a.jsonl', [meta(), usage(100), call, output, message])
+        report = audit.audit_paths([self.root])
+        rec = report['sessions'][0]
+        self.assertEqual(rec['wait_seconds']['gte_60'], 1)
+        self.assertEqual(rec['coordination_targets']['followup_task:/root/visual'], 1)
+        self.assertNotIn('secret-', json.dumps(report))
+
+    def test_comparison_with_incomplete_or_incomparable_scope(self):
+        path = self.write('a.jsonl', [meta(), usage(100)])
+        before = audit.audit_paths([path], 'root')
+        path = self.write('a.jsonl', [meta(), usage(80)])
+        after = audit.audit_paths([path], 'root')
+        result = audit.compare_reports(before, after)
+        self.assertEqual(result['comparison']['noncached_input_tokens']['delta'], -20)
+        self.assertIsNone(result['comparison']['noncached_input_tokens']['change_rate'])
+        for report in (before, after):
+            report['comparison_context'] = {'scope': 'same', 'quality': 'all gates passed'}
+        self.assertEqual(audit.compare_reports(before, after)['comparison']['noncached_input_tokens']['change_rate'], -.2)
+        after['teams'][0]['coverage'] = 'incomplete'
+        self.assertIsNone(audit.compare_reports(before, after)['comparison']['noncached_input_tokens']['change_rate'])
+
+
 if __name__ == "__main__":
     unittest.main()

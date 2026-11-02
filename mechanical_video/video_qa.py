@@ -43,11 +43,18 @@ def audio_score(report, source_hash):
     return calculated if report.get('total') == calculated else None
 
 
-def inspect(video, output, visual=False, audio_report=None):
+def inspect(video, output, visual=False, audio_report=None, technical_evidence=None):
     video = video.resolve()
+    shared = None
+    execute = run
+    if technical_evidence is not None:
+        from .technical_evidence import load, evidence_runner
+        shared = load(technical_evidence, video, ('probe', 'decode', 'video_scan', 'frames'))
+        execute = evidence_runner(shared)
+
     output.mkdir(parents=True, exist_ok=False)
     digest = hashlib.sha256(video.read_bytes()).hexdigest()
-    probe = run(['ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(video)])
+    probe = execute(['ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(video)])
     issues = []
     def issue(category, severity, start, end, description, evidence=None):
         issues.append({'issue_id': f'I{len(issues)+1:04}', 'shot_id': None, 'start': start, 'end': end,
@@ -71,11 +78,11 @@ def inspect(video, output, visual=False, audio_report=None):
         issue('resolution', 'P1', 0, duration, 'Resolution below 1080p')
     if v.get('codec_name') != 'h264' or a.get('codec_name') != 'aac':
         issue('codec', 'P1', 0, duration, 'Expected H.264 and AAC')
-    decode = run(['ffmpeg', '-v', 'error', '-i', str(video), '-f', 'null', '-'])
+    decode = execute(['ffmpeg', '-v', 'error', '-i', str(video), '-f', 'null', '-'])
     if decode.returncode:
         issue('decode', 'P0', 0, duration, 'Full decode failed')
     # Long intervals are candidates: intended pauses and fades still require review.
-    scan = run(['ffmpeg', '-hide_banner', '-i', str(video), '-vf', 'blackdetect=d=1:pix_th=0.05,freezedetect=n=-60dB:d=2', '-af', 'silencedetect=n=-50dB:d=2', '-f', 'null', '-'])
+    scan = execute(['ffmpeg', '-hide_banner', '-i', str(video), '-vf', 'blackdetect=d=1:pix_th=0.05,freezedetect=n=-60dB:d=2', '-af', 'silencedetect=n=-50dB:d=2', '-f', 'null', '-'])
     (output / 'technical.log').write_text(scan.stderr)
     patterns = [('black', r'black_start:([\d.]+) black_end:([\d.]+)'),
                 ('freeze', r'freeze_start: ([\d.]+).*?freeze_end: ([\d.]+)'),
@@ -85,11 +92,17 @@ def inspect(video, output, visual=False, audio_report=None):
             start, end = map(float, match.groups())
             issue(category, 'P2', start, end, 'Candidate interval; intent requires review')
     frames = []
-    for index, stamp in enumerate([duration * x for x in (0.05, 0.25, 0.5, 0.75, 0.95)] if duration else []):
-        path = output / f'frame-{index:02}.jpg'
-        result = run(['ffmpeg', '-v', 'error', '-ss', str(stamp), '-i', str(video), '-frames:v', '1', str(path)])
-        if result.returncode == 0 and path.exists():
-            frames.append({'time': stamp, 'path': str(path)})
+    if shared is not None:
+        frames = shared['checks']['frames']['result']['frames']
+        from .technical_evidence import digest as frame_digest
+        if any(not Path(f['path']).is_file() or frame_digest(f['path']) != f['sha256'] for f in frames):
+            raise ValueError('Missing or stale evidence frames')
+    else:
+        for index, stamp in enumerate([duration * x for x in (0.05, 0.25, 0.5, 0.75, 0.95)] if duration else []):
+            path = output / f'frame-{index:02}.jpg'
+            result = execute(['ffmpeg', '-v', 'error', '-ss', str(stamp), '-i', str(video), '-frames:v', '1', str(path)])
+            if result.returncode == 0 and path.exists():
+                frames.append({'time': stamp, 'path': str(path)})
     vision = {'status': 'not_run'}
     if visual:
         endpoint = os.environ.get('VISION_ENDPOINT')
@@ -117,6 +130,8 @@ def inspect(video, output, visual=False, audio_report=None):
     # Technical is only scored when all required technical dimensions are measured.
     status, total = gate(scores, issues)
     report = {'video': str(video), 'sha256': digest, 'duration': duration, 'streams': streams,
+              'technical_evidence': str(technical_evidence) if technical_evidence else None,
+              'technical_origin': shared.get('producer') if shared else 'local QA execution',
               'decode_passed': decode.returncode == 0, 'scan_passed': scan.returncode == 0,
               'frames': frames, 'vision': vision, 'issues': issues, 'scores': scores,
               'audio_qa_report': str(audio_report) if audio_report else None,
@@ -131,8 +146,9 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--visual', action='store_true')
     p.add_argument('--audio-report', type=Path, help='Audio QA report for this exact video file')
+    p.add_argument('--technical-evidence', type=Path)
     args = p.parse_args()
-    report = inspect(args.video, args.output, args.visual, args.audio_report)
+    report = inspect(args.video, args.output, args.visual, args.audio_report, args.technical_evidence)
     print(json.dumps({'status': report['status'], 'issues': len(report['issues']), 'vision': report['vision']['status']}, ensure_ascii=False))
     return {'PASS': 0, 'REWORK': 2, 'NEEDS_REVIEW': 3, 'FAIL': 4}[report['status']]
 

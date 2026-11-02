@@ -1,0 +1,159 @@
+{
+  "schema_version": 2,
+  "root_thread_id": "01a19bce-951e-7670-bcc3-6d3257b6f612",
+  "guardians": [],
+  "summaries": {
+    "role": {
+      "unknown": {
+        "threads": 1,
+        "usage": {
+          "input_tokens": 1171390,
+          "cached_input_tokens": 1087360,
+          "output_tokens": 9328,
+          "reasoning_output_tokens": 1029,
+          "noncached_input_tokens": 84030
+        }
+      }
+    },
+    "model": {
+      "gpt-6.1-sol": {
+        "threads": 1,
+        "usage": {
+          "input_tokens": 1171390,
+          "cached_input_tokens": 1087360,
+          "output_tokens": 9328,
+          "reasoning_output_tokens": 1029,
+          "noncached_input_tokens": 84030
+        }
+      }
+    }
+  },
+  "sessions": [
+    {
+      "session_id": "01a19bce-951e-7670-bcc3-6d3257b6f612",
+      "thread_id": "01a19bce-951e-7670-bcc3-6d3257b6f612",
+      "parent_session_id": null,
+      "role": "unknown",
+      "model": "gpt-6.1-sol",
+      "guardian": false,
+      "coordination_targets": {},
+      "wait_seconds": {
+        "count": 0,
+        "total": 0,
+        "maximum": null,
+        "lt_10": 0,
+        "10_to_60": 0,
+        "gte_60": 0,
+        "unmatched_calls": 0
+      },
+      "sha256": "f2348f404847d9d5da566829345814174efb98e63ccaee9d8875e9eb68fc618f",
+      "usage_latest": {
+        "input_tokens": 1171390,
+        "cached_input_tokens": 1087360,
+        "output_tokens": 9328,
+        "reasoning_output_tokens": 1029,
+        "noncached_input_tokens": 84030,
+        "total_tokens": 1180718
+      },
+      "usage_snapshots": 15,
+      "counter_resets": 0,
+      "phases": {
+        "unattributed": {
+          "input_tokens": 1171390,
+          "cached_input_tokens": 1087360,
+          "output_tokens": 9328,
+          "reasoning_output_tokens": 1029,
+          "noncached_input_tokens": 84030,
+          "total_tokens": 1180718
+        }
+      },
+      "tool_calls": {
+        "exec": 12,
+        "request_user_input": 1
+      },
+      "phase_deltas_complete": true,
+      "coordination": {
+        "spawn_agent": 0,
+        "send_message": 0,
+        "followup_task": 0,
+        "wait_agent": 0,
+        "sleep": 0
+      },
+      "tool_output_chars": 219714,
+      "tool_output_events": 13,
+      "spawned_session_ids": [],
+      "warnings": {}
+    }
+  ],
+  "teams": [
+    {
+      "root_session_id": "01a19bce-951e-7670-bcc3-6d3257b6f612",
+      "members": [
+        "01a19bce-951e-7670-bcc3-6d3257b6f612"
+      ],
+      "coverage": "linked_logs_complete",
+      "missing_or_unverified_children": [],
+      "unresolved_spawn_calls": 0,
+      "reported_session_sum": {
+        "input_tokens": 1171390,
+        "cached_input_tokens": 1087360,
+        "output_tokens": 9328,
+        "reasoning_output_tokens": 1029,
+        "noncached_input_tokens": 84030,
+        "total_tokens": 1180718
+      }
+    }
+  ],
+  "unassigned_session_ids": [],
+  "duplicate_session_copies": 0,
+  "conflicting_session_copies": 0,
+  "notes": [
+    "Cumulative snapshots are not added; latest epoch only after a reset.",
+    "Reasoning is reported separately and is not added to output.",
+    "Team sums include only metadata-linked supplied sessions; fork history may overlap.",
+    "Cyclic parent links remain unassigned and are never aggregated.",
+    "Complete means supplied linked-log coverage, not complete billing coverage.",
+    "Tool output lengths count both formats; only coordination target IDs and spawn-result IDs are parsed.",
+    "Role/model summaries label each thread by declared role/latest observed model, not per-turn model usage.",
+    "No prices, message bodies, arguments, or tool output bodies are exported."
+  ],
+  "baseline_context": {
+    "captured_on": "2026-11-02",
+    "scope": "Pre-implementation video production efficiency analysis; metadata-only snapshot of supplied analysis session",
+    "source_selection": "Explicit 2026/11/02 log directory; root thread 01a19bce-951e-7670-bcc3-6d3257b6f612",
+    "production_scope": "EP06 historical reference only; no regeneration or acceptance change",
+    "three_full_production_versions": [
+      {
+        "path": "editor/final-review-v1/EP06-full-review-only.mp4",
+        "sha256": "d13c6a558492d07238671d519db25e4c59ef86c010360f72ee302ec9719c7801",
+        "scope": "historical review-only version; not independent acceptance"
+      },
+      {
+        "path": "/Users/lmj/yuntan/esp32/mechanical-video/series/3d-printer-v2/episodes-current/EP06/editor/repair-realhead-v1/realhead-full-review-v1/EP06-realhead-repair-review-only.mp4",
+        "sha256": "f6bfe84017b5ae0c64e158f2c1eb65304cb27c25272d023cd88d0976151b39f2",
+        "scope": "historical full review version rejected for bed/head intersection P1; preserved, not accepted"
+      },
+      {
+        "path": "/Users/lmj/yuntan/esp32/mechanical-video/series/3d-printer-v2/episodes-current/EP06/editor/repair-bedclearance-v1/full-review-v1/EP06-bedclearance-repair-review-only.mp4",
+        "sha256": "0092bf1d3c02b10dee30090c07eb45756ee2ebcb30a4071b2d9856cd6c8d87cd",
+        "scope": "historical review-only version; not independent acceptance"
+      }
+    ],
+    "final_qa_gaps": "Real-time full playback, listening, alignment/semantic correspondence and audience appeal remain NEEDS_REVIEW; no scores inferred",
+    "not_a_savings_result": true,
+    "next_task_metrics": [
+      "first_delivery_elapsed_seconds",
+      "major_rework",
+      "full_rerender_count",
+      "user_discovered_defects",
+      "acceptance_completeness",
+      "scope",
+      "quality",
+      "cached_input_tokens",
+      "noncached_input_tokens",
+      "output_tokens",
+      "coordination"
+    ],
+    "version_evidence": "Existing EP06 director-record and repair-realhead-v1/realhead-full-review-v1/delivery-manifest.json; media not re-probed or re-rendered"
+  }
+}

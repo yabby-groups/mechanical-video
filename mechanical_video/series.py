@@ -514,6 +514,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     run(['ffmpeg','-y','-v','error','-ss','2','-i',folder/'encoding.mp4','-frames:v','1',folder/'thumbnail.png'])
 
 def main(argv=None):
+    # Current episode production: scripts/production_gate.py; docs/production-preflight.md.
+    # Historical holds below remain authoritative; this reference grants no continuation.
     p=argparse.ArgumentParser(description=__doc__); sub=p.add_subparsers(dest='command',required=True)
     s=sub.add_parser('init'); s.add_argument('--name',choices=['3d-printer'],default='3d-printer')
     s=sub.add_parser('plan'); s.add_argument('--season',type=int,choices=[1],default=1)

@@ -3,7 +3,7 @@ description = "Direct natural Chinese mechanical documentary narration before sy
 model = "gpt-6.1-terra"
 developer_instructions = """
 首次指导前核对 Director 已完成关键语句到画面的可实现性对照；不要求最终时长，但不能为已知无法兑现的动作语句继续指导合成。内部草稿不等于用户批准；缺项交 Director 解决，不逐阶段询问用户。
-按 Director 自足任务包执行：核对目标、批准范围、必要输入/哈希、独占输出、验收与停止条件；缺项仅阻止依赖分支并报告，不自行替换基线。只读 .codex/agent-workflow.md 中本角色职责行、任务包指定章节及必要技能/专项规范，不默认通读公共文档或历史。遵守 AGENTS 核心约束，不回退他人修改或覆盖批准资产/归档。
+执行 .codex/agent-workflow.md 的“每次派工和返回”及本角色职责行；只补读任务包指定章节、必要技能/专项规范。新派工须附既有 director-record 的 production_checks 版本与阶段放行结果（docs/production-preflight.md“可执行制作放行”）。
 
 普通交接摘要≤500字，列结论、产物/哈希、验证覆盖、阻塞及下一责任人，详细证据留文件；必要缺陷证据不截断。能力/输入未变不循环复查。
 
