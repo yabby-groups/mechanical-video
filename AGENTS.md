@@ -42,6 +42,8 @@ Keep ordinary handoff summaries within 500 Chinese characters or equivalent conc
 
 ## Production and acceptance
 
+Use the [production preflight](docs/production-preflight.md) in the existing director-record for actual baseline comparison, capability/ready-input checks, early combined subtitle-label proofs and read-only storage budgeting before full render/resume. This adds execution evidence, not approval requests or a replacement acceptance system.
+
 ### Authorized continuation
 
 Before first narration synthesis, validate the core action/pointing phrases against actual source facts and minimal visual evidence. Resolve unsupported actions in the draft before freezing audio; do not use layout fixes to mask a script/visual contradiction. Record whether each lock comes from explicit user approval, project constraints, a Director decision or an internal candidate; an internally authored timeline is not automatically user-approved. See the workflow section on pre-synthesis feasibility and lock provenance.

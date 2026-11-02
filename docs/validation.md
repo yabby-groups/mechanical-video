@@ -1175,3 +1175,69 @@ EP04 RC010 follow-up correction: Editor actual11frames18.244–21.304 plus froze
 - 六个交付/风格MP4与七个最小场景前后SHA256一致；全部保留文件逐项SHA256一致，删除路径不存在核验PASS。执行期间持有既有项目锁，执行器前后Git索引SHA256一致。外部已暂存的先前清理记录保持原样，本轮不暂存/撤销/提交。
 - 记录：[本轮汇总](completed-episodes-cleanup-summary-20261101.json)、[最终阶段逐项删除与保留哈希](completed-episodes-intermediate-cleanup-20261101.json)、[前置深度清单](deep-cleanup-20261101.json)、[保留范围与不可恢复边界](completed-episodes-intermediate-cleanup-20261101.md)。早期清单是阶段快照；旧帧归档恢复指南不再适用于已删除的包。
 - 清单解析、当前成片/场景哈希、删除路径及git diff --check通过。本轮无生产代码或最终MP4内容修改，未运行单元测试、渲染、TTS或新感知验收，未发布。重新制作须重建中间数据，不承诺历史脚本直接重跑。
+
+
+## 2026-11-01 — Session 01a195a8 workflow optimization
+
+- Added `docs/production-preflight.md`, linked from AGENTS/workflow/subtitle placement: actual baseline comparison for continuation as well as new work, first-proof combined captions/labels/leaders, fixed-input handoffs, capability-gap reuse and completion/exception notification. Existing approval, holds, repair limits and independent acceptance remain in force; no new parallel episode ledger.
+- Added read-only `scripts/render_storage_preflight.py`: largest representative stored frame × remaining frames × safety factor, plus adjustable encoding/copy temporary space and reserve, checked against target filesystem free space. Exit 0/1/2 = budget PASS / insufficient space / invalid input. No automatic renderer integration is claimed; Director must run and record it before full render/resume. Sample settings and transient disk use limit the estimate.
+- Validation: `.venv/bin/python -m unittest discover -s tests` — 88 tests PASS, including three storage-budget tests covering largest-sample budgeting, existing-file accounting, insufficient space and invalid estimates. CLI synthetic-size smoke covered exit codes 0/1/2 and no file mutations. 28 local documentation links resolved; all `.codex/**/*.toml` parsed; `git diff --check` PASS. Test-suite simulated failure output is expected test coverage, not an actual render failure.
+- No media/provider calls or production renders were performed. This is workflow/read-only-tool validation, not perceptual acceptance or measured token/cost improvement. Preserve pre-existing staged cleanup records and validation history; changes were not staged or committed.
+
+
+## 2026-11-01 EP06 production preflight (in progress)
+
+- User authorized EP06 production after public-reference and EP01–EP05 style analysis. Records: `series/3d-printer-v2/episodes-current/EP06/director-record.json`, `analysis/series-inventory.json`, `analysis/viral-research.md`, `analysis/production-decisions.md`. Existing staged changes preserved; no platform actions.
+- Actual local full media hashes/ffprobe checked for EP01–EP05; Director viewed 2/15/45/80s encoded sample contacts for all five. This is static sample evidence, not realtime viewing/listening. Public references have four actual opening-time page screenshots and cumulative page metadata, not proven growth causality or full-film analysis.
+- EP06 Research independently re-exported/re-read 46 valid positive-volume bed/support/frame occurrences with source path and transforms matched. Additional n00124 composite failed validity; precise tip/gap measurement is excluded. Existing EP04 scene opens with bed/support objects; baseline copy reused, no machine rebuild.
+- Default sandbox Metal probe failed; scoped elevated read-only probe and source-scene inspection succeeded with existing sandbox configuration unchanged. Blender5.2.3LTS.
+- Current unittest discovery: `.venv/bin/python -m unittest discover -s tests` —88 tests PASS in9.826s. Simulated Blender SIGSEGV output belongs to an existing mock test, not production render failure.
+- Early visual proof identified bed support occlusion (EP06-SUPPORT-VIS-001); synthesis/full render held pending affected action review. Independent perceptual/word alignment scores remain null. More production validation will be appended when new media exists.
+
+### EP06 measured narration and local preparation
+
+- Kai/qwen3-tts-flash s1..s7 each succeeded once (85.272s). Added only s5b once after official generic first-layer fact check and actual same-space concept feasibility; original7 PCM unchanged. Current narration-v2.wav SHA256 `9aa6bbcb5ce7c207e9a9c372140fee0ee3624f669ee32011782b69404a92713b`:93.336s,2240064samples/24000Hz mono,all8segment sample hashes match,full decode PASS. Independent technical AudioQA and AppealQA reports preserve unavailable listening/null scores. Existing ASR plain-text association correction has only one same-sound 磁/瓷 substitution;7metadata-induced differences were not speech evidence. No provider retry/resynthesis.
+- Two actual16s A/B1080x1920/30 silent clips480frames each full-decode PASS. A1 SHA `6c6c3f072c3f7f3868e390dec373e67d9632511006865a93d0beb90301752117`, A2 `5ab93dee4c999e6e58bc6ce64fc52179cfad192a9d489eb7d8c4f759bca02d1b`. A2 discarded after actual4.8s frame showed raised sheet clipping concept nozzle/line; no repair or further work on discarded A2. A1 chosen within authorized local decision. Actual614.484/616.259s render samples imply about1.282s/frame;full estimate~60min is not guaranteed.
+- Editor actual ASS calibration and scene composites keep white glyphY1486–1531;one-time burn only. Layer-front-edge and label contrast repairs independently reviewed;EP06-SUPPORT-VIS-001 original3attempts retained. EP06-LAYER-CUE-001 attempt1 corrected14s magnet/plate mismatch;13native/13ASS and7encoded actual-PTS boundary proofs reviewed. Missing336/374 intermediate frames and all dynamic/perceptual evidence remain unverified. Reports under EP06/editor/overlay-layercue-v1 and qa/video/layercue-repair-review.md.
+-45source-text captions are explicitly UNCALIBRATED_REVIEW_CANDIDATE:measured8segment bounds with character-weighted initial cues snapped within250ms to PCM low-energy candidates,not verified word alignment. Director permits review-only assembly;formal timing acceptance stays open. Global cue/action timing issue EP06-SEMANTIC-TIMING-001 first repair is now task-cc7b09ce93b411e48ed3,94actual proof frames before full render. Old renderer tasks retained immutable.
+
+### EP06 final-mix-v2 technical association (2026-11-01)
+
+Review-only WAV `series/3d-printer-v2/episodes-current/EP06/editor/full-v2/mix.wav`, SHA256 `0db7001c0483461c1962d9b6fd8e1c6727d402d1cc1ee48feeadd4c8746e531b`: independent Audio QA confirms full decode, exact mix=speech+synthetic-foley PCM equality, unchanged speech reconstruction 0 LSB, three action-event windows, zero clipped samples and true peak -1.44 dBTP. Reports: EP06/audio-qa/final-mix-v2/report.md and EP06/audio-appeal/final-mix-v2/report.md. No actual listening; appeal/masking/alignment remain NEEDS_REVIEW with null scores. Final MP4/AAC association pending. No publication.
+
+### EP06 fixed-source full-render release (2026-11-02)
+
+Task `0f34095b2f15d531973a`, frozen scene SHA256 `73697cee5183a74388c54198417a10744941b40d29a878366ea363b47e7b5b68`: actual 2801-pose audit and caption-free audit pass. Director viewed native fallback3frames, actual encoded3frame contact and1133 longest-caption proof. Independent `EP06/qa/video/route-static-independent.md` finds original cue14 P1 whole-frame occlusion not reproduced in those3static samples; dynamic acceptance remains open. Editor `camera-0f-proof-v1/handoff.md` verifies4actual ASS/H264 proofs and unchanged three mechanical-foley event associations. Root ran `scripts/render_storage_preflight.py` with actual0751/0825 PNG40 samples,2801remaining,1.25safety,6GiB temporary+2GiB reserve: required17180706630B/available92569600000B PASS. Director released review-only full rendering under existing lock; render/completion/final-media acceptance not yet claimed. Existing user-staged content preserved.
+
+### EP06 final review-only AV delivery (2026-11-02)
+
+Final `series/3d-printer-v2/episodes-current/EP06/editor/final-review-v1/EP06-full-review-only.mp4`, SHA256 `d13c6a558492d07238671d519db25e4c59ef86c010360f72ee302ec9719c7801`,36644029B: H.264/AAC,2801frames,93.366667s video; native and encoded1080x1920/30. Editor strict fullAV decodePASS; root independently rehashed file. Actual decoded58frames cover45candidate caption midpoints/layer-adjacent boundaries/route repair/longest15character line. Director viewed all5final contact pages; independent Audience checked58PNGs+45native-caption strips and found no new sampled static collision/causal contradiction/style drift. Independent finalAAC AudioQA full decode/24kmono/2240064samples and source mix correlation0.999973,residualSNR42.54dB,zero clipped,-25.89LUFS/-1.45dBTP PASS. Final Audio Appeal samehash report retains actual listening0/nullscores. Source/render/frame,ASS,mix,event association and frozen provenance in final delivery-manifest.json/freeze-index.json.
+
+Status COMPLETE_REVIEW_ONLY / NEEDS_REVIEW; not formal sensory acceptance. Actual realtime motion, listening/foley audibility and sentence-level subtitle synchronization remain open;45candidate captions are not verified wordalignment. No publication. Root delivery.md local links check PASS; git diff --check PASS. Existing88unittest preflight PASS retained; no tracked application-code changes requiring unrelated rerender/provider calls. Independent VideoQA finalsamehash report pending at this entry; current later Director record is authoritative.
+
+EP06 finalsamehash independent VideoQA completed: `qa/video/final-review-v1.md/json`, exactMP4 d13c6a558492d07238671d519db25e4c59ef86c010360f72ee302ec9719c7801. Independent ffprobe/fullAVdecode PASS;actual58frames/45captionstrips and original inspected boundary/route/longestcaption frames no reproduced sampled P1. 11automatic low-motion P2 candidates are not established defects;exactintervals in report for contextual/realtime review. Numeric formal scores remain null, NEEDS_REVIEW;no new render or provider call.
+
+### EP06 user-requested real toolhead repair preflight (2026-11-02)
+
+Issue EP06-REALHEAD-MOTION-001 attempt1 addresses original conceptual-orange-nozzle motion with static realhead and missing XY mechanical sound. Reuse plan in EP06/visual/repair-realhead-v1/reuse-plan.json: EP04 accepted131part head+106crossbeam+27/18chains+tube+9wheel helpers, original scene/material/captions/Kai retained. Source n00124 compound remains invalid; original solid0 independently reexported/reloaded valid668.275750629mm3, STEP SHA1a23e9a43cbf1e550ab3e78950d7d7a068273c2ac0919113e960eafa525bf851. Cone/endring/bore faces and mounted surface anchor verify lower source end;actual source bedgap27.009293mm, no fake extrusion/contact claim.
+
+Actual8s48-56s encodedAB completed: B SHA c49d8070a8056e5b81a99134a6bc546b83e75a0a991d3b9bead43b26c9a1876f,240frames1080x1920/30 H264/AAC/fullAVdecodePASS;Director viewed A/B9framecontacts and1495/2090fullkeys. Truehead shell visible motion57.2px;orange substitute removed. Independent Video/Audience finite static scopes found no new establishedP1;small-tip occlusion recognition risk retainedP2. New speeddriven synthetic headfoley v2 WAV47a30cfa4de37eb99340a737b8fef5f3116dcd8109c78828524d0af8ebf9986a: independent PCM/source reconstruction0LSB,head only5movementwindows/stoppedhead0,finite smoothduck,0clip/-1.44dBTP PASS. Actual listening/realtime/no-pump/wordalignment scores remain null.
+
+New full-task-dbdf3806e59559815455 preserves c6 all presentation source bytes;new entry+2801cache only. 47cachekeys at257sharedframes and49posefields exact_equal;new1495/2090decode pixels equal c6. Independent qa/video/realhead-full-delta-v1.md verifies sameimage hashes/1133static no newP1.2801pose/source914visibility/captionfree/tube audits completed, no former-task frame reuse. PNG40 actual3sample storagepreflight safety1.25+6GiBtemporary+2GiBreserve PASS17.760GBrequired/84.787GBavailable. Full repair rendering not yet started at this entry.
+
+
+## 2026-11-02 EP06 床层/工具头穿插局部修复与整片放行
+
+- 保留上一版 f6bfe840…，明确为已知 P1 返工版本；问题 EP06-BED-HEAD-INTERSECTION-001 attempt 1，其他 issue 计数不变。
+- 选定局部 task475181efc9d182bd55d6：九床件先 Z+12mm/Y−310mm 移至机前，再分层；回装逆序。独立源重算及编码局部样点检查见 EP06/qa/video/bedclearance-independent-v1.md、bedclearance-local-encoded-v1.md。此为结构教学展开，不宣称维修顺序。
+- 两段局部 B 1080×1920/30 H.264/AAC 严格全解码通过；字幕只叠一次。新混音 a0a3a315…ea352a0 保留 Kai 与头声，床声随六阶段动作重新对时；独立音频技术与观众静帧审查未确认新 P0/P1。
+- full-task-0bede0b63d974439cabf 冻结源关联通过；全2801帧新渲，禁止跨任务混帧。实际存储预算需15.76GiB，可用68.66GiB，已放行。渲染/最终编码尚未完成，本条不记完成或正式验收。
+- 实时观看、听审、逐词同步证据缺失，相关分数 null；局部静帧/源检查不能代替上述验收。git diff --check PASS；未改应用代码，不重跑无关测试。
+
+
+### EP06 同版完整交付补记
+
+- 全2801新帧渲染完成，render5033.38s，后处理45.85s；完整clean silent SHA21d50d9276e1dabbf791608413682b69ed9af57093bf8fc44c04394024f8ab1e。
+- 最终带声字幕MP4 SHA0092bf1d3c02b10dee30090c07eb45756ee2ebcb30a4071b2d9856cd6c8d87cd，93.366667s，原生/编码1080×1920@30，H.264/AAC。独立hash/ffprobe/完整AVdecode PASS。
+- 两类最终音频报告、独立VideoQA绑定同hash。AAC与新mix全片零延迟相关0.999972，满幅样本0；实际听审0，评分null。Director与独立专项QA均看过9contacts共104编码样点，含旧8–16s穿模窗、各回装阶段、45cue中点；在源+编码静态证据范围闭合BED-HEAD P1 attempt1。
+- 所有914源件每帧不隐藏，45.41s归位后1438帧残差0mm。未混帧、未重配Kai；原字幕一次叠加。正式实时运动/听审/逐词同步仍NEEDS_REVIEW，不因技术完成填分。最终待审交付说明EP06/bedclearance-repair-delivery.md。
