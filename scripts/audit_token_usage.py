@@ -41,14 +41,83 @@ def normalize_usage(raw):
     return values
 
 
-def audit_file(path):
+def output_sizes(output):
+    """Count structured image payloads separately; never tokenize or export them."""
+    total = len(output) if isinstance(output, str) else len(json.dumps(output, ensure_ascii=False))
+    parsed = output
+    if isinstance(output, str):
+        try:
+            parsed = json.loads(output)
+        except ValueError:
+            return {'serialized_chars': total, 'text_chars': total, 'image_payload_chars': 0,
+                    'unclassified_chars': 0, 'images': 0}
+    text_chars = image_chars = images = 0
+    def visit(value):
+        nonlocal text_chars, image_chars, images
+        if isinstance(value, list):
+            for item in value:
+                visit(item)
+        elif isinstance(value, dict):
+            kind = value.get('type')
+            if kind in ('image', 'input_image', 'image_url'):
+                images += 1
+                image = value.get('image_url', value.get('data', ''))
+                image = image.get('url', '') if isinstance(image, dict) else image
+                if isinstance(image, str) and (image.startswith('data:') or kind == 'image'):
+                    image_chars += len(image)
+            elif kind in ('text', 'input_text', 'output_text') and isinstance(value.get('text'), str):
+                text_chars += len(value['text'])
+            else:
+                for key in ('content', 'output'):
+                    if key in value:
+                        visit(value[key])
+    visit(parsed)
+    return {'serialized_chars': total, 'text_chars': text_chars, 'image_payload_chars': image_chars,
+            'unclassified_chars': max(0, total - text_chars - image_chars), 'images': images}
+
+
+def event_time(value):
+    stamp = datetime.fromisoformat(value.replace('Z', '+00:00'))
+    if stamp.tzinfo is None:
+        raise ValueError('Timestamp must include timezone')
+    return stamp
+
+
+def load_phase_events(record):
+    events = record.get('workflow_events', [])
+    if not isinstance(events, list):
+        raise ValueError('Invalid workflow events')
+    states = {}
+    for event in sorted(events, key=lambda e: event_time(e['timestamp'])):
+        if (event.get('type') not in ('phase_start', 'phase_end') or event.get('phase') not in PHASES - {'unattributed'}
+                or not isinstance(event.get('thread_id'), str)
+                or not re.fullmatch(r'[A-Za-z0-9_.:/-]{1,150}', event['thread_id'])):
+            raise ValueError('Invalid workflow event')
+        thread = event['thread_id']
+        if event['type'] == 'phase_start':
+            if thread in states:
+                raise ValueError('Overlapping workflow phases')
+            states[thread] = event['phase']
+        elif states.pop(thread, None) != event['phase']:
+            raise ValueError('Unpaired workflow phase end')
+    return events
+
+
+def audit_file(path, phase_events=()):
     warnings = Counter()
     calls = Counter()
     usage = None
     previous = None
     phase = "unattributed"
+    explicit_phase_events = 0
+    phase_gap = False
+    phase_boundary = False
+    boundary_intervals = 0
+    external = iter(sorted(phase_events, key=lambda e: event_time(e['timestamp'])))
+    next_phase = next(external, None)
     phases = {}
     snapshots = resets = output_chars = outputs = 0
+    sizes = Counter()
     session_id = parent_id = thread_id = None
     role = model = "unknown"
     guardian = False
@@ -75,6 +144,16 @@ def audit_file(path):
                 continue
             kind = event.get("type")
             subtype = payload.get("type")
+            if next_phase is not None:
+                try:
+                    stamp = event_time(event['timestamp'])
+                except (KeyError, ValueError, TypeError, AttributeError):
+                    stamp = None
+                while stamp is not None and next_phase is not None and event_time(next_phase['timestamp']) <= stamp:
+                    phase = next_phase['phase'] if next_phase['type'] == 'phase_start' else 'unattributed'
+                    phase_boundary = True
+                    explicit_phase_events += 1
+                    next_phase = next(external, None)
             if kind == "turn_context":
                 candidate = payload.get('model')
                 if isinstance(candidate, str) and re.fullmatch(r'[A-Za-z0-9_.:/-]{1,100}', candidate):
@@ -100,15 +179,17 @@ def audit_file(path):
                 if spawn.get('agent_role') in {'visual', 'editor', 'research', 'audio', 'script', 'video_qa', 'audio_qa', 'audience_qa', 'creative_director', 'audio_director', 'audio_appeal_qa', 'growth_analyst'}:
                     role = spawn['agent_role']
                 guardian = guardian or object_value(source.get('subagent')).get('guardian') is not None or object_value(source.get('subagent')).get('other') == 'guardian' or payload.get('thread_source') == 'guardian_review'
-            if kind == "event_msg" and subtype == "phase_start":
+            if kind == "event_msg" and subtype in ('phase_start', 'phase_end'):
                 # Only explicit structured labels; never infer a stage from user/agent prose.
                 label = payload.get("phase")
-                phase = label if isinstance(label, str) and label in PHASES else "unattributed"
+                phase = label if subtype == 'phase_start' and isinstance(label, str) and label in PHASES else "unattributed"
+                explicit_phase_events += 1
             if kind == "event_msg" and subtype == "token_count":
                 info = object_value(payload.get("info"))
                 raw = info.get("total_token_usage")
                 if not isinstance(raw, dict):
                     warnings["missing_usage_snapshots"] += 1
+                    phase_gap = True
                     continue
                 current = normalize_usage(raw)
                 snapshots += 1
@@ -124,7 +205,13 @@ def audit_file(path):
                     resets += 1
                     warnings["counter_resets_latest_epoch_only"] += 1
                 # Deltas, not sums of cumulative snapshots. A reset/gap cannot be stage-attributed.
-                bucket = phase if previous is not None and not reset else "unattributed"
+                bucket = phase if previous is not None and not reset and not phase_gap and not phase_boundary else "unattributed"
+                if phase_boundary:
+                    boundary_intervals += 1
+                    phase_boundary = False
+                if phase_gap:
+                    warnings['unattributed_usage_gaps'] += 1
+                phase_gap = False
                 entry = phases.setdefault(bucket, {k: 0 for k in current})
                 for key in current:
                     now = current[key]
@@ -175,6 +262,7 @@ def audit_file(path):
                         warnings['wait_timestamp_missing'] += 1
                 output = payload.get("output", "")
                 output_chars += len(output) if isinstance(output, str) else len(json.dumps(output, ensure_ascii=False))
+                sizes.update(output_sizes(output))
                 outputs += 1
                 name = call_names.get(payload.get("call_id"), "").split("__")[-1].split(".")[-1]
                 if name == "spawn_agent":
@@ -183,6 +271,10 @@ def audit_file(path):
                         spawned_ids.add(child)
     if usage is None:
         warnings["no_usage"] += 1
+    if next_phase is not None:
+        warnings['phase_markers_outside_observed_log'] += 1
+    if phase_events and phase != 'unattributed':
+        warnings['unclosed_phase_markers'] += 1
     if not session_id:
         warnings["missing_session_id"] += 1
         session_id = "sha256:" + digest.hexdigest()
@@ -198,14 +290,17 @@ def audit_file(path):
         "sha256": digest.hexdigest(), "usage_latest": usage,
         "usage_snapshots": snapshots, "counter_resets": resets,
         "phases": phases, "tool_calls": dict(sorted(calls.items())),
-        "phase_deltas_complete": snapshots > 0 and not resets and not any(warnings.values()),
+        "explicit_phase_events": explicit_phase_events,
+        "phase_boundary_intervals": boundary_intervals,
+        "phase_deltas_complete": snapshots > 0 and not resets and not any(warnings.values()) and not boundary_intervals,
         "coordination": coordination, "tool_output_chars": output_chars,
         "tool_output_events": outputs, "spawned_session_ids": sorted(spawned_ids),
+        "tool_output_sizes": dict(sizes),
         "warnings": {key: value for key, value in warnings.items() if value},
     }
 
 
-def audit_paths(inputs, root_session=None):
+def audit_paths(inputs, root_session=None, phase_events=()):
     paths = set()
     for value in inputs:
         path = Path(value)
@@ -218,10 +313,15 @@ def audit_paths(inputs, root_session=None):
     if not paths:
         raise ValueError("No JSONL files found")
     sessions = {}
+    selected_paths = {}
+    copies = {}
     duplicates = conflicts = 0
     for path in sorted(paths):
         record = audit_file(path)
         key = record["thread_id"]
+        copies.setdefault(key, []).append({'sha256': record['sha256'],
+                                          'usage_snapshots': record['usage_snapshots'],
+                                          'warnings': dict(record['warnings'])})
         if key in sessions:
             duplicates += 1
             old = sessions[key]
@@ -230,9 +330,11 @@ def audit_paths(inputs, root_session=None):
                 # Prefer the copy with more snapshots; still flag the ambiguity, never add copies.
                 if record["usage_snapshots"] > old["usage_snapshots"]:
                     sessions[key] = record
+                    selected_paths[key] = path
                 sessions[key]["warnings"]["conflicting_session_copies"] = 1
         else:
             sessions[key] = record
+            selected_paths[key] = path
     guardians = [rec for rec in sessions.values() if rec['guardian']]
     sessions = {sid: rec for sid, rec in sessions.items() if not rec['guardian']}
     if root_session is not None:
@@ -249,6 +351,23 @@ def audit_paths(inputs, root_session=None):
             members = expanded
         sessions = {sid: rec for sid, rec in sessions.items() if sid in members}
         guardians = [rec for rec in guardians if rec['parent_session_id'] in members]
+    # Re-read only selected copies with their own explicit markers. Never infer
+    # phases from prose or modify original session logs.
+    if phase_events:
+        for key, rec in list(sessions.items()):
+            markers = [e for e in phase_events if e['thread_id'] == key]
+            if markers:
+                fresh = audit_file(selected_paths[key], markers)
+                fresh['warnings'].update(rec['warnings'])
+                fresh['phase_deltas_complete'] = fresh['phase_deltas_complete'] and not fresh['warnings']
+                sessions[key] = fresh
+    unmatched_phase_threads = sorted({e['thread_id'] for e in phase_events} - set(sessions))
+    for key, rec in sessions.items():
+        rec['copy_diagnostics'] = {'selected_sha256': rec['sha256'],
+                                 'selection': 'most usage snapshots; ties use first resolved path',
+                                 'copies': copies[key]}
+        if rec['warnings']:
+            rec['phase_deltas_complete'] = False
     teams = []
     for root_id, root in sorted(sessions.items()):
         if root["parent_session_id"] in sessions:
@@ -269,7 +388,7 @@ def audit_paths(inputs, root_session=None):
             known = {child for child in members if sessions[child]["parent_session_id"] == sid}
             unknown_spawns += max(0, rec["coordination"]["spawn_agent"] - len(known))
         valid = all(not sessions[s]["warnings"] for s in members)
-        complete = valid and not missing and not unknown_spawns and root["parent_session_id"] is None
+        complete = valid and not missing and not unknown_spawns and not unmatched_phase_threads and root["parent_session_id"] is None
         totals = None
         if len(members) > 1 or (root_session is not None and not unknown_spawns):
             totals = {}
@@ -279,7 +398,11 @@ def audit_paths(inputs, root_session=None):
         teams.append({"root_session_id": root_id, "members": sorted(members),
                       "coverage": "linked_logs_complete" if complete else "incomplete",
                       "missing_or_unverified_children": sorted(missing),
-                      "unresolved_spawn_calls": unknown_spawns, "reported_session_sum": totals})
+                      "unresolved_spawn_calls": unknown_spawns, "reported_session_sum": totals,
+                      'copy_diagnostics': {
+                          'duplicate_copies': sum(len(copies[s]) - 1 for s in members),
+                          'conflicting_threads': sorted(s for s in members if len({c['sha256'] for c in copies[s]}) > 1),
+                          'threads_with_missing_snapshots': sorted(s for s in members if sessions[s]['warnings'].get('missing_usage_snapshots'))}})
     assigned = {sid for team in teams for sid in team["members"]}
     summaries = {}
     for field in ('role', 'model'):
@@ -291,7 +414,8 @@ def audit_paths(inputs, root_session=None):
                 value = (rec['usage_latest'] or {}).get(key)
                 group['usage'][key] = None if value is None or group['usage'][key] is None else group['usage'][key] + value
         summaries[field] = groups
-    return {"schema_version": 2, "root_thread_id": root_session, "guardians": guardians,
+    return {"schema_version": 3, "root_thread_id": root_session, "guardians": guardians,
+            'unmatched_phase_threads': unmatched_phase_threads,
             "summaries": summaries, "sessions": list(sessions.values()), "teams": teams,
             "unassigned_session_ids": sorted(set(sessions) - assigned),
             "duplicate_session_copies": duplicates, "conflicting_session_copies": conflicts,
@@ -302,6 +426,7 @@ def audit_paths(inputs, root_session=None):
                       "Complete means supplied linked-log coverage, not complete billing coverage.",
                       "Tool output lengths count both formats; only coordination target IDs and spawn-result IDs are parsed.",
                       "Role/model summaries label each thread by declared role/latest observed model, not per-turn model usage.",
+                      "Image payload characters are not text tokens or cost; remaining serialized characters include structural/unclassified data.",
                       "No prices, message bodies, arguments, or tool output bodies are exported."]}
 
 
@@ -316,6 +441,8 @@ def markdown(report):
         lines.append("| " + " | ".join([rec["session_id"], *map(cell, values), str(rec["counter_resets"])]) + " |")
         lines.extend(["", "Coordination: " + json.dumps(rec["coordination"], sort_keys=True),
                       f"Tool output: {rec['tool_output_chars']} characters / {rec['tool_output_events']} events.",
+                      'Output sizes (characters, not tokens): ' + json.dumps(rec.get('tool_output_sizes', {}), sort_keys=True),
+                      'Selected copy: ' + json.dumps(rec.get('copy_diagnostics', {}), sort_keys=True),
                       "Warnings: " + json.dumps(rec["warnings"], sort_keys=True),
                       "Phases: " + json.dumps(rec["phases"], sort_keys=True),
                       f"Phase deltas complete: {rec['phase_deltas_complete']}.", ""])
@@ -352,13 +479,15 @@ def main(argv=None):
     parser.add_argument("inputs", nargs="*", help="JSONL session file(s) or directories (recursive)")
     parser.add_argument("--format", choices=("json", "markdown"), default="json")
     parser.add_argument('--root-session', help='Select one metadata-linked team by real thread ID')
+    parser.add_argument('--production-record', type=Path, help='Read explicit workflow_events from the existing director record')
     parser.add_argument('--compare', nargs=2, metavar=('BEFORE', 'AFTER'), type=Path, help='Compare saved JSON audit reports')
     args = parser.parse_args(argv)
     try:
         if args.compare:
             report = compare_reports(*(json.loads(path.read_text()) for path in args.compare))
         else:
-            report = audit_paths(args.inputs, args.root_session)
+            markers = load_phase_events(json.loads(args.production_record.read_text())) if args.production_record else []
+            report = audit_paths(args.inputs, args.root_session, markers)
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         # Do not echo paths, exception text, or malformed log contents.
         print("Unable to read audit inputs; check paths and permissions.", file=sys.stderr)

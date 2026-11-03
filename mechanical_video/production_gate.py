@@ -19,13 +19,15 @@ def sha(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def evaluate(record, base, stage, now=None):
-    """Validate production_checks v1 in an existing director-record, without writes."""
+def evaluate(record, base, stage, now=None, require_version=1):
+    """Validate production_checks v1 (historical) or v2, without writes."""
     now = time.time() if now is None else now
     errors, gaps = [], []
     p = record.get('production_checks')
-    if not isinstance(p, dict) or p.get('schema_version') != 1:
+    if not isinstance(p, dict) or type(p.get('schema_version')) is not int or p.get('schema_version') not in (1, 2):
         return {'status': 'BLOCKED', 'reasons': ['missing production_checks v1'], 'gaps': []}
+    if p['schema_version'] < require_version:
+        return {'status': 'BLOCKED', 'reasons': [f'production_checks v{require_version} required for new production'], 'gaps': []}
     assets = p.get('assets', {})
     if not isinstance(assets, dict) or not assets:
         errors.append('missing asset fingerprints')
@@ -71,6 +73,8 @@ def evaluate(record, base, stage, now=None):
         errors.append('missing action inventory')
     required = [(kind, action) for kind in STAGES[stage] for action in
                 (actions if kind in ('source_action', 'unfold', 'reassembly', 'attachments', 'clearance', 'neighbors', 'overlays', 'foley') else [None])]
+    if p['schema_version'] == 2 and stage in ('full-render', 'delivery'):
+        required.append(('baseline_fidelity', None))
     for kind, action in required:
         candidates = [c for c in checks if c.get('kind') == kind and c.get('action') == action]
         valid = False
@@ -91,6 +95,33 @@ def evaluate(record, base, stage, now=None):
             refs = c.get('evidence', [])
             if not refs or not all(linked(ref) for ref in refs):
                 continue
+            if kind == 'baseline_fidelity':
+                from . import scene_fidelity
+                try:
+                    def read_asset(name):
+                        path = Path(assets[name]['path'])
+                        return json.loads((path if path.is_absolute() else base / path).read_text())
+                    baseline = read_asset('baseline_inventory')
+                    current = read_asset('scene_inventory')
+                    result = scene_fidelity.compare(baseline, current, read_asset('scene_policy'))
+                    # Bind evaluated inventory to the actual frozen source inputs.
+                    if (result['status'] != 'PASS'
+                            or baseline['source']['sha256'] != fingerprints['baseline_scene']
+                            or current['source']['sha256'] != fingerprints['baseline_scene']
+                            or current['renderer']['sha256'] != fingerprints['renderer']
+                            or current['implementation_sha256'] != sha(scene_fidelity.__file__)):
+                        continue
+                    reports = []
+                    for ref in refs:
+                        path = Path(ref['path'])
+                        if path.suffix.lower() == '.json':
+                            reports.append(json.loads((path if path.is_absolute() else base / path).read_text()))
+                    views = {'whole_machine', 'bottom', 'routing', 'mechanism'}
+                    if (result not in reports or not views.issubset(set(c.get('reviewed_views', [])))
+                            or not any(Path(r['path']).suffix.lower() in ('.png', '.jpg', '.jpeg') for r in refs)):
+                        continue
+                except (OSError, ValueError, KeyError, TypeError, AttributeError):
+                    continue
             if kind in ('local_encode', 'final_encode'):
                 # Require media plus an associated deterministic probe/decode report,
                 # not a still image renamed as an encoding approval.
@@ -150,9 +181,20 @@ def evaluate(record, base, stage, now=None):
                         or not r.get('producer') or not r.get('reviewer') or r['producer'] == r['reviewer']
                         or not r.get('evidence') or not all(linked(ref) for ref in r['evidence'])):
                     errors.append('missing independent acceptance: ' + name)
+                if r.get('profile', 'formal') != 'formal':
+                    errors.append('local profile cannot provide formal acceptance: ' + name)
+                for ref in r.get('evidence', []):
+                    try:
+                        path = Path(ref['path'])
+                        if path.suffix.lower() == '.json':
+                            data = json.loads((path if path.is_absolute() else base / path).read_text())
+                            if isinstance(data, dict) and data.get('profile', 'formal') != 'formal':
+                                errors.append('local profile cannot provide formal acceptance: ' + name)
+                    except (OSError, ValueError, TypeError, KeyError):
+                        continue
             if gaps or p.get('all_established_gates_passed') is not True:
                 errors.append('formal acceptance gates incomplete')
-    return {'schema_version': 1, 'stage': stage,
+    return {'schema_version': p['schema_version'], 'stage': stage,
             'status': 'BLOCKED' if errors else ('REVIEW_DELIVERY' if stage == 'delivery' and not formal else 'READY'),
             'reasons': errors, 'gaps': gaps,
             'scope': 'Record integrity and associations only; no collision, playback or listening verdict.'}
@@ -162,12 +204,14 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--record', type=Path, required=True)
     parser.add_argument('--stage', choices=STAGES, required=True)
+    parser.add_argument('--require-version', type=int, choices=(1, 2), default=1,
+                        help='Use 2 for new production; default preserves historical read-only evaluation')
     args = parser.parse_args(argv)
     try:
         record = json.loads(args.record.read_text())
         if not isinstance(record, dict):
             raise ValueError('record must be an object')
-        report = evaluate(record, args.record.resolve().parent, args.stage)
+        report = evaluate(record, args.record.resolve().parent, args.stage, require_version=args.require_version)
     except (OSError, ValueError, TypeError, KeyError, AttributeError):
         print(json.dumps({'status': 'INPUT_ERROR', 'reasons': ['Invalid record or unreadable input']}))
         return 2

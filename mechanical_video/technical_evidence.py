@@ -141,34 +141,63 @@ def collect(media, output, dependencies=None, parameters=None, producer='produce
     return report
 
 
-def load(path, media, required, dependencies=None, parameters=None):
+def load(path, media, required, dependencies=None, parameters=None, partial=False):
     """Reject stale, incomplete, failed or corrupt evidence, never silently accept it."""
     report = json.loads(Path(path).read_text())
     if not isinstance(report, dict) or not isinstance(report.get('checks'), dict):
         raise ValueError('Corrupt technical manifest')
     dependencies = dependencies if dependencies is not None else report.get('dependency_paths', {})
-    ident = identity(Path(media), dependencies, parameters or {})
-    if report.get('schema_version') != SCHEMA or report.get('identity') != ident or not report.get('producer'):
-        raise ValueError('Technical evidence identity mismatch')
+    parameters = parameters if parameters is not None else report.get('identity', {}).get('parameters', {})
+    # Missing unrelated dependencies must not discard valid media-only decode evidence.
+    ident = identity(Path(media), {}, parameters)
+    for name, dependency in dependencies.items():
+        try:
+            ident['dependencies'][name] = digest(dependency)
+        except OSError as exc:
+            if partial:
+                ident['dependencies'][name] = None
+            else:
+                raise ValueError('Technical evidence identity mismatch: identity.dependencies.' + name) from exc
+    stored = report.get('identity', {})
+    if not isinstance(stored, dict):
+        raise ValueError('Corrupt technical identity')
+    mismatches = [f'identity.{key}' for key in ident if stored.get(key) != ident[key]]
+    global_valid = report.get('schema_version') == SCHEMA and bool(report.get('producer'))
+    if not global_valid:
+        mismatches.append('schema_version/producer')
+    if not partial and mismatches:
+        raise ValueError('Technical evidence identity mismatch: ' + ', '.join(mismatches))
+    validated = []
     for name in required:
         entry = report.get('checks', {}).get(name, {})
         if not isinstance(entry, dict) or not isinstance(entry.get('spec'), dict):
-            raise ValueError('Corrupt technical entry')
+            if partial:
+                mismatches.append('checks.' + name + '.entry')
+                continue
+            raise ValueError('Corrupt technical entry: ' + name)
         spec = entry['spec']
         expected = {k: ident[k] for k in ('media_sha256', 'tools', 'implementation')}
         expected.update(name=name, dependencies={k: ident['dependencies'].get(k) for k in spec.get('dependencies', {})},
                         parameters={k: ident['parameters'].get(k) for k in spec.get('parameters', {})})
-        if spec != expected or not valid_entry(entry, canonical(expected)):
+        valid = global_valid and spec == expected and valid_entry(entry, canonical(expected))
+        if spec != expected:
+            mismatches.extend('checks.' + name + '.spec.' + key for key in expected if spec.get(key) != expected[key])
+        if valid and name == 'frames':
+            result = entry['result']
+            artifacts = result.get('frames', []) + ([result['contact_sheet']] if result.get('contact_sheet') else [])
+            try:
+                valid = bool(result.get('frames') and result.get('contact_sheet')) and all(
+                    Path(a['path']).is_file() and digest(a['path']) == a['sha256'] for a in artifacts)
+            except (OSError, KeyError, TypeError):
+                valid = False
+        if valid:
+            validated.append(name)
+        elif partial:
+            mismatches.append('checks.' + name + '.spec/result/artifacts')
+        else:
             raise ValueError('Invalid technical evidence: ' + name)
-    if 'frames' in required:
-        result = report['checks']['frames']['result']
-        artifacts = result.get('frames', []) + ([result['contact_sheet']] if result.get('contact_sheet') else [])
-        if not result.get('frames') or not result.get('contact_sheet'):
-            raise ValueError('Missing frame artifacts')
-        for artifact in artifacts:
-            if not Path(artifact['path']).is_file() or digest(artifact['path']) != artifact['sha256']:
-                raise ValueError('Stale frame artifact')
-    report['_validated_checks'] = list(required)
+    report['_validated_checks'] = validated
+    report['_mismatches'] = mismatches
     return report
 
 
@@ -197,6 +226,7 @@ def evidence_runner(report):
             entry = report['checks'][name]
             result = entry['result']
             if entry['status'] == 'PASS' and result.get('command') == command:
+                report.setdefault('_reused_checks', []).append(name)
                 return subprocess.CompletedProcess(command, result['returncode'], result['stdout'], result['stderr'])
         return subprocess.run(command, capture_output=True, text=True, check=False, **kwargs)
     return execute

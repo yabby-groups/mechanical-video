@@ -5,6 +5,8 @@ Run from the project root, using existing session files or directories:
 ```sh
 .venv/bin/python scripts/audit_token_usage.py /path/to/session.jsonl --format markdown
 .venv/bin/python scripts/audit_token_usage.py /path/to/sessions --format json
+.venv/bin/python scripts/audit_token_usage.py /path/to/sessions --root-session REAL_THREAD_ID \
+  --production-record /path/to/director-record.json --format json
 ```
 
 Multiple inputs are accepted; directories are searched recursively for JSONL files.
@@ -38,10 +40,28 @@ so inspect warnings and coverage rather than treating exit 0 as proof of complet
   are not verified account usage or bills. No prices or monetary savings are calculated.
 - Phase deltas require explicit structured `event_msg` metadata with
   `type: phase_start` and a `phase` of research, creative, script, visual, audio,
-  editing, or qa. No production emitter is added or required. Existing logs without
+  editing, or qa. The optional `--production-record` also reads explicitly recorded
+  `workflow_events` with timezone-qualified timestamp, thread_id, type and phase;
+  see [ready handoff and phase recording](production-handoff.md). Existing logs without
   markers stay unattributed; prose is never classified into phases. First snapshots
   are unattributed because their earlier history is unknown. Gaps/resets mark phase
   deltas incomplete; unknown fields stay null.
+
+Schema v3 retains existing totals and adds per-thread `copy_diagnostics` (selected
+SHA256, snapshot count and warnings for each supplied copy), plus team-local
+duplicate/conflicting-thread/missing-snapshot diagnostics. Top-level duplicate
+counts still cover the whole input directory, so use team diagnostics for a
+selected root. Conflicts leave phase completeness false even for the selected copy.
+`tool_output_sizes` separates structured image payload characters, text characters,
+image count and unclassified/serialization characters; none are token estimates.
+Image URLs/data and message bodies are never exported.
+
+External phase markers never rewrite session logs. Same-thread overlapping or
+unpaired end markers are input errors; unclosed/out-of-log markers or unmatched
+threads restrict coverage. Snapshot intervals crossing a recorded boundary stay
+unattributed rather than being assigned to either phase. Known missing snapshots
+also leave their subsequent delta unattributed. Record stage events and outcome
+metrics in the existing director record; this is not an automatic scheduler.
 
 ## Frozen historical baseline
 

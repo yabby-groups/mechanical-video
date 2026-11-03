@@ -98,6 +98,57 @@ class AuditTokenUsageTests(unittest.TestCase):
         report = audit.audit_paths([self.root])
         self.assertEqual(report["conflicting_session_copies"], 1)
         self.assertEqual(report["sessions"][0]["usage_latest"]["input_tokens"], 200)
+        self.assertFalse(report['sessions'][0]['phase_deltas_complete'])
+        diagnostics = report['sessions'][0]['copy_diagnostics']
+        self.assertEqual(diagnostics['selected_sha256'], report['sessions'][0]['sha256'])
+        self.assertEqual(len(diagnostics['copies']), 2)
+
+    def test_structured_image_payload_is_not_counted_as_text(self):
+        payload = [{'type': 'input_text', 'text': 'secret-caption'},
+                   {'type': 'input_image', 'image_url': 'data:image/png;base64,secret-image'}]
+        path = self.write('images.jsonl', [meta(), usage(100),
+                          tool('custom_tool_call_output', output=json.dumps(payload))])
+        report = audit.audit_paths([path])
+        sizes = report['sessions'][0]['tool_output_sizes']
+        self.assertEqual(sizes['images'], 1)
+        self.assertEqual(sizes['text_chars'], len('secret-caption'))
+        self.assertEqual(sizes['image_payload_chars'], len('data:image/png;base64,secret-image'))
+        self.assertNotIn('secret-', json.dumps(report))
+
+    def test_selected_team_diagnostics_exclude_unrelated_duplicates(self):
+        self.write('root.jsonl', [meta(), usage(100)])
+        self.write('other-a.jsonl', [meta('unrelated'), usage(100)])
+        self.write('other-b.jsonl', [meta('unrelated'), usage(100), usage(200)])
+        report = audit.audit_paths([self.root], 'root')
+        self.assertEqual(report['conflicting_session_copies'], 1)
+        self.assertEqual(report['teams'][0]['copy_diagnostics']['duplicate_copies'], 0)
+        self.assertEqual(report['teams'][0]['copy_diagnostics']['conflicting_threads'], [])
+
+    def test_external_phase_events_leave_boundary_intervals_unattributed(self):
+        def stamped(event, seconds):
+            return dict(event, timestamp=f'2026-11-03T00:00:{seconds:02d}Z')
+        path = self.write('root.jsonl', [meta(), stamped(usage(100), 0), stamped(usage(150), 10),
+                          stamped(usage(200), 20), stamped(usage(250), 30), stamped(usage(300), 40)])
+        events = audit.load_phase_events({'workflow_events': [
+            {'type': 'phase_start', 'phase': 'visual', 'thread_id': 'root', 'timestamp': '2026-11-03T00:00:05Z'},
+            {'type': 'phase_end', 'phase': 'visual', 'thread_id': 'root', 'timestamp': '2026-11-03T00:00:25Z'}]})
+        before = path.read_bytes()
+        rec = audit.audit_paths([path], 'root', events)['sessions'][0]
+        self.assertEqual(rec['phases']['visual']['input_tokens'], 50)
+        self.assertEqual(rec['phases']['unattributed']['input_tokens'], 250)
+        self.assertEqual(rec['phase_boundary_intervals'], 2)
+        self.assertFalse(rec['phase_deltas_complete'])
+        self.assertEqual(path.read_bytes(), before)
+        with self.assertRaises(ValueError):
+            audit.load_phase_events({'workflow_events': [events[1]]})
+
+    def test_missing_snapshot_does_not_assign_gap_to_new_phase(self):
+        path = self.write('root.jsonl', [meta(), usage(100),
+                          {'type': 'event_msg', 'payload': {'type': 'token_count'}},
+                          {'type': 'event_msg', 'payload': {'type': 'phase_start', 'phase': 'visual'}}, usage(200)])
+        rec = audit.audit_paths([path])['sessions'][0]
+        self.assertEqual(rec['phases']['unattributed']['input_tokens'], 200)
+        self.assertNotIn('visual', rec['phases'])
 
     def test_linked_team_sum_and_missing_children(self):
         self.write("a.jsonl", [meta(), usage(100), tool("function_call", "spawn_agent"),

@@ -47,6 +47,59 @@ class ProductionGateTests(unittest.TestCase):
         before = copy.deepcopy(self.record)
         self.assertEqual(self.evaluate()['status'], 'READY')
         self.assertEqual(self.record, before)
+        self.assertEqual(gate.evaluate(self.record, self.base, 'full-render', self.now, require_version=2)['status'], 'BLOCKED')
+
+    def v2_fixture(self):
+        from mechanical_video import scene_fidelity
+        from mechanical_video.scene_fidelity import compare
+        ref = lambda name: {'path': name, 'sha256': gate.sha(self.base / name)}
+        matrix = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, .109], [0, 0, 0, 1]]
+        scene = {'schema_version': 1, 'capture': 'evaluated-rest-state', 'unit_scale': 1,
+                 'implementation_sha256': gate.sha(scene_fidelity.__file__),
+                 'source': ref('asset'), 'renderer': ref('asset'), 'scene': {'camera': 'camera'},
+                 'objects': {'belt': {'type': 'MESH', 'matrix_world': matrix, 'visibility': {},
+                                      'geometry_sha256': 'deformed', 'appearance_sha256': 'material',
+                                      'bounds_world': [[0, 0, 0], [1, 1, 1]]}}}
+        policy = {'schema_version': 1, 'changes': []}
+        for name, data in (('baseline.json', scene), ('current.json', scene), ('policy.json', policy),
+                           ('fidelity.json', compare(scene, scene, policy))):
+            (self.base / name).write_text(json.dumps(data))
+        (self.base / 'ab.png').write_bytes(b'fixture image')
+        p = self.record['production_checks']
+        p['schema_version'] = 2
+        p['assets'].update(baseline_scene=ref('asset'), renderer=ref('asset'),
+                           baseline_inventory=ref('baseline.json'), scene_inventory=ref('current.json'),
+                           scene_policy=ref('policy.json'))
+        p['checks'].append(dict(p['checks'][0], kind='baseline_fidelity', action=None,
+                                reviewed_views=['whole_machine', 'bottom', 'routing', 'mechanism'],
+                                evidence=[ref('fidelity.json'), ref('ab.png')]))
+        for c in p['checks']:
+            c['asset_fingerprints'] = {k: r['sha256'] for k, r in p['assets'].items()}
+        return p
+
+    def test_v2_requires_actual_baseline_comparison_and_independent_ab(self):
+        p = self.v2_fixture()
+        self.assertEqual(self.evaluate()['status'], 'READY')
+        self.assertEqual(self.evaluate('delivery')['status'], 'REVIEW_DELIVERY')
+        c = p['checks'][-1]
+        c['reviewed_views'].remove('bottom')
+        self.assertEqual(self.evaluate()['status'], 'BLOCKED')
+        c['reviewed_views'].append('bottom')
+        c['reviewer'] = c['producer']
+        self.assertEqual(self.evaluate()['status'], 'BLOCKED')
+
+    def test_v2_recomputes_instead_of_trusting_pass_report(self):
+        p = self.v2_fixture()
+        current = self.base / 'current.json'
+        data = json.loads(current.read_text())
+        data['objects']['belt']['matrix_world'][2][3] = 0
+        current.write_text(json.dumps(data))
+        p['assets']['scene_inventory']['sha256'] = gate.sha(current)
+        for c in p['checks']:
+            c['asset_fingerprints']['scene_inventory'] = gate.sha(current)
+        result = self.evaluate()
+        self.assertEqual(result['status'], 'BLOCKED')
+        self.assertIn('missing/stale check: baseline_fidelity', result['reasons'])
 
     def test_missing_evidence_and_stale_asset(self):
         for name in ('proof', 'asset'):
@@ -106,6 +159,9 @@ class ProductionGateTests(unittest.TestCase):
         template = p['checks'][0]
         p['acceptance'] = {key: dict(template, score=95) for key in ('overall', 'technical', 'audience', 'audio_technical', 'audio_appeal')}
         self.assertEqual(self.evaluate('delivery')['status'], 'READY')
+        p['acceptance']['audience']['profile'] = 'local-av'
+        self.assertEqual(self.evaluate('delivery')['status'], 'BLOCKED')
+        del p['acceptance']['audience']['profile']
         p['acceptance']['audience']['asset_fingerprints'] = {}
         self.assertEqual(self.evaluate('delivery')['status'], 'BLOCKED')
 

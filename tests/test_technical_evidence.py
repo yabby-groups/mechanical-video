@@ -104,7 +104,7 @@ class TechnicalEvidenceTests(unittest.TestCase):
         with patch('mechanical_video.technical_evidence.subprocess.run', side_effect=only_versions):
             video = video_qa.inspect(self.media, self.output / 'video', technical_evidence=path)
             audio = audio_qa.inspect(self.media, self.script, self.output / 'audio', technical_evidence=path)
-        self.assertEqual(video['status'], 'NEEDS_REVIEW')
+        self.assertEqual(video['status'], 'REWORK')  # Known formal duration/resolution failures remain failures.
         self.assertEqual(audio['status'], 'NEEDS_REVIEW')
         self.assertTrue(all(score is None for score in audio['scores'].values()))
         self.assertEqual(audio['asr']['status'], 'not_requested')
@@ -123,6 +123,26 @@ class TechnicalEvidenceTests(unittest.TestCase):
             evidence.load(path, self.media, ['decode'])
         rebuilt = self.collect()
         self.assertEqual(rebuilt['reused'], [])
+
+    def test_partial_loading_only_reexecutes_stale_checks(self):
+        report = self.collect(parameters={'frame_fractions': [.2, .8]})
+        path = self.output / 'cache/technical-evidence.json'
+        # Inherited parameters now work; unrelated missing dependencies leave decode reusable.
+        loaded = evidence.load(path, self.media, ['decode', 'frames'], partial=True)
+        self.assertEqual(loaded['_validated_checks'], ['decode', 'frames'])
+        Path(report['checks']['frames']['result']['frames'][0]['path']).unlink()
+        report['dependency_paths']['script'] = str(self.output / 'missing-script')
+        path.write_text(json.dumps(report))
+        loaded = evidence.load(path, self.media, ['decode', 'frames'], partial=True)
+        self.assertEqual(loaded['_validated_checks'], ['decode'])
+        self.assertIn('identity.dependencies', loaded['_mismatches'])
+        self.assertTrue(any('frames' in x for x in loaded['_mismatches']))
+        command = loaded['checks']['decode']['result']['command']
+        with patch('mechanical_video.technical_evidence.subprocess.run') as execute:
+            self.assertEqual(evidence.evidence_runner(loaded)(command).returncode, 0)
+            execute.assert_not_called()
+        with self.assertRaises(ValueError):
+            evidence.load(path, self.media, ['decode'])
 
     def test_timeline_association_and_overlap(self):
         timeline = self.output / 'timeline.json'
