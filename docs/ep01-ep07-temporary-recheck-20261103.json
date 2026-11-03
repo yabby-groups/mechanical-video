@@ -1,0 +1,20 @@
+{
+  "status": "COMPLETE",
+  "time": "2026-11-03T15:15:40.126680+08:00",
+  "prior_manifest": "docs/ep01-ep07-minimal-retention-20261103.json",
+  "prior_manifest_sha256": "4cc42807da7ae5e59d656f717cc666c98a7099c8161d47d8cfc8dc4855fc4417",
+  "prior_retained_files_verified": 15028,
+  "protected_files_verified": 18,
+  "hardlink_associations_verified": 4222,
+  "scanned_series_files": 15028,
+  "new_files_since_previous_manifest": [],
+  "deleted": [],
+  "deleted_files": 0,
+  "deleted_logical_bytes": 0,
+  "removed_empty_directories": [],
+  "retained_hashes_unchanged": true,
+  "git_index_unchanged": true,
+  "free_bytes_observed_before": 92979200000,
+  "free_bytes_observed_after": 92979200000,
+  "space_note": "Observed filesystem free-space changes include unrelated activity; no physical-space savings are attributed when no files are deleted."
+}

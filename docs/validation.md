@@ -1419,3 +1419,8 @@ New full-task-dbdf3806e59559815455 preserves c6 all presentation source bytes;ne
 - Restricted-executor check returned `GPU_ACCESS_REQUIRED`, exit3, `blender_started:false`, without creating the output directory. The same command through approved host GPU execution returned PASS/exit0, source_unchanged:true, four objects; result `/private/tmp/native-capture-20261103-metal-verified/capture-result.json`, inventory SHA `80fd6a6cea6aa2c16dc949df1b188bbdc744b54f4a5adac2060ad1fd49fd16d5`. Comparing the independently reloaded inventory to the earlier in-process baseline produced PASS with zero differences/exceptions.
 - `.venv/bin/python -m unittest discover -s tests`: **134 passed, 20.240s**. New coverage proves no Blender launch without GPU, native success/input associations, signal/timeout blocking without retries, and exit0 without inventory remaining BLOCKED. Documentation links, project/agent TOML and `git diff --check` passed.
 - This closes native-tooling verification for the synthetic fixture only. Historical startup failure evidence remains preserved; it does not confer EP07 saved-scene reload, motion, visual/listening or formal media acceptance. Existing production assets, archived scripts, approval records and sandbox configuration remain unchanged; no staging/commit/publication.
+
+## 2026-11-03 EP01～EP07 临时数据再次复查
+
+- 按用户授权完成[剩余临时数据复查](ep01-ep07-temporary-recheck-20261103.md)：两代系列共15,028个文件与前轮最小保留集逐项SHA256一致，无新增文件；18个受保护资产、4,222组硬链接关系验证通过。
+- 没有新增可删除临时文件或空目录，实际删除0文件/0字节；全部保留文件前后哈希及Git索引不变。执行期间持有现有制作锁，无渲染、配音、平台操作或验收状态变更。机器清单JSON解析、文档链接及`git diff --check`通过；本次仅复查与文档留证，不运行无关单测。
