@@ -1280,3 +1280,123 @@ New full-task-dbdf3806e59559815455 preserves c6 all presentation source bytes;ne
 - 根据用户明确范围新增第二批选题计划：XY张紧总成、滑架/导轨总成、挤出机内部传动/压紧总成；撤回偏向故障/原理课的中间方案。各题源可行性待验证，未声称完成CAD检查或独立创意派工。
 - 首批规划追加第二批入口与历史进度说明。EP06按用户明确审核通过记录当前0092用户交付接受，停止主动修改；原独立QA状态及评分保留，不伪造正式验收。
 - 计划本地链接目标存在，Director JSON可解析，用户接受与原QA状态分别核对。git diff --check通过。仅文档与记录修改，未运行单元测试、配音、渲染或平台操作。
+
+
+## 2026-11-02 EP07源件与最小实际画面预检（制作进行中）
+
+- 原源STEP独立完整导入，Front_Idler_A的15叶实例独立STEP导出再读均为有效正体积单实体；与选定修复缓存的ID、路径、矩阵、STEP/STL哈希逐件相等。证据EP07/research/source-evidence.json、corrected-cache-map.json；STL世界包围盒最大离散差0.014226mm，不将其等同制造精度或机械验收。
+- Director实际查看EP03/EP06各4/18/45/75秒抽帧及EP07首轮7帧、c330原生4秒、1155新版4帧；保留既有舞台和同机外观。立柱遮挡有静态改善，双轴承在教学分层图中可分别辨认；静帧不证明连续性、声音或完整路径。
+- 负Y1mm候选616次BRep配对未增加固定件干涉，但原位配静态源带会新增38.0318mm³穿模，禁止工作带路调节演示。整组Y−120mm移出路径有95项源干涉，其中77项对应实际保留场景，已停止该策略。源路径v2继续验证，不能启动依赖该动作的旁白或完整渲染。
+- Visual报告新源py_compile和限定diff检查通过；尚无EP07局部动态MP4、配音或正式片，未声称ffprobe/全片解码/感官QA通过。现有全部原集和历史资产保留，未调用平台发布。
+
+### EP07固定件静音局部验证与路径停止
+
+- 新指纹a37f6e93035911b979d6生成8秒静音局部MP4，SHA256 82cf6813ba207228dab29779d11ee1fb109ce5f1166b1ca3c4fc2ad6968e6966；原生/编码1080×1920、30fps、240帧，ffprobe和完整FFmpeg解码通过。只移动n00398/n00401/n00402，其他911实例含源带全240帧保持原位；7秒后矩阵归位差1.19e−7为浮点项。无音轨是本局部测试范围，不作音频验收。
+- Director实际查看三个原生关键帧联系图及五个编码抽帧联系图；这不等同实时播放。固定件路径各54采样、468精确近邻BRep行无新增/加重>0.001mm³，保持离散限制及原螺纹嵌入接口说明。
+- 系统Ghostscript将官方手册65–69页栅格化，Director实际查看印刷65/66/67/68页，补证先闭壳和轴承、单独插臂、最后插M5和M3的顺序。基于这项新证据的第三轮逆序抽臂−Y仍在10mm出现上下壳干涉；49位姿316近邻BRep行的失败保留source-path-v3。EP07-EXTRACTION-PATH-001累计3轮，停止自动路径试错，待同源真实脱离方向/中间姿态证据。
+- 未调用TTS，未冻结或渲染完整EP07，不能把本局部测试当90秒正片或通过正式验收。锁已释放，其他集和历史资产未改。
+
+- 本轮最终记录检查：EP07下27份Python AST与62份JSON解析通过，production-status四个本地链接存在，git diff --check通过；适用 unittest discovery（test_video_qa.py）3项通过。narration gate当前BLOCKED保留；这些技术检查不清除源路径P1。
+
+- 独立Video QA最终关联同一82cf媒体：probe/decode通过，实际采样及1/3/5/7秒边界字幕/标签可读并对应动作；连续运动未审、所有感官分数null。原通用正式片检查FAIL保留并按8秒静音测试范围解释，不补音轨/填时长掩盖范围。报告EP07/qa/video/fastener-validation-v1/final-review.md；完整片P1仍未解除。
+
+
+## 2026-11-03 EP07用户授权继续：源侧开口与局部动作制作
+
+- 用户明确要求下一步直到完成，历史EP07-EXTRACTION-PATH-001自动修复3轮保留；新增按同源真实开口证据的用户续做验证1次，累计4次，不重启旧整组Y移出或原位分壳失败策略。源BRep水平截层/大平面确认侧开口朝世界−X，与调节螺丝Y轴不同。
+- 先移M3螺丝/垫圈Y−50和M5轴Z+50，随后仅臂/嵌件/螺母X−30：实际914源实例宽相筛选、303位姿、8181对精确BRep相交均0；完整行程为0.1mm离散采样，不声称严格连续扫掠或维修稳定性。源带局部几何由实际STEP裁剪并保留哈希。
+- Director实际查看6张源XY截层、34任务10帧联系图及408任务7帧联系图。壳/轮/皮带原位，C臂和固定件可辨。两次同侧观察角试验未解决被壳遮住的轴承指认，已停该相机策略，正式V5删去被遮挡内部件/轴承层数指认；旧帧/报告/次数保留。
+- 最终局部新指纹408e9bca40cbae701c8c进行720新帧渲染，磁盘预检通过，未复制旧任务帧。源3D候选字幕呈暖灰，白墨RGB规则不通过；测得低阈值墨迹约Y1479–1508，不升级为正式字幕PASS。正式片将采用单次ASS字幕并复核真实白墨位置；当前尚未合成旁白或放行完整渲染。
+
+### EP07 V6配音放行与24秒源动作复核
+
+- 408局部MP4 SHA256 56f0b3a00fcd1e28d0607225eab825f13e9a2fc116d8ef7a3a86e42e1e39d9b5，独立probe和全部720帧解码通过。独立全矩阵聚合确认仅6个白名单件变化，其余908件含皮带原位；23秒后回位最大误差1.19e−7矩阵项。Director查看实际编码联系图；无实时播放/听审声明。
+- V6仅修订开场与结尾术语，独立文本diff已核验。Director按当前可见六件教学动作范围关闭原位遮挡/路径P1；历史失败与3+1累计4轮保留。带连接物理事实仍未验证并留档，V6不再依赖该叙事。旁白锁定来源为Director授权内实施选择，非用户明确批准文稿哈希。
+- production_gate narration READY；音频指导单已交Audio，使用qwen3-tts-flash/Kai九段原文自然速度合成。此时完整EP07尚未生成；正式ASS/全片时序/感官验收仍待后续证据。
+- unittest discovery test_production_gate.py共10项通过；git diff --check通过。
+
+### EP07实测配音与全片前联合proof
+
+- V6 Kai九段合成99.792s，WAV SHA256 76e55dea2ced8d1c63e6c0007fb50177364efdd59da3e6e740601d4e86607852，无拉伸/补静音。两类独立音频检查绑定同hash；技术decode/scan通过，无已证实缺陷，缺实际听审/词对齐，所有感官评分null。
+- 新ff249c68f60866ec37a4全片任务冻结2994帧99.8s，13原生关键帧和2994无图位姿审计完成。仅6件移动、908固定/皮带delta0，17964附件矩阵检查，平移误差1.49e−8m、最终矩阵误差1.19e−7。未混用旧帧。
+- Editor45条ASS单行最长14字；新场景联合样本实际白墨Y1489–1531。Director与独立VideoQA看实际13帧，所检范围未见字幕/标签/引线相交。混音-25.5LUFS/-2.4dBTP，拟音明确合成，事件与6个候选动作区间一致；听感与语义同步未验证。
+- VideoQA指出6.5s静态montage不等同当前renderer动作编码，已安排43.8–47.2s最小连续动作片补证；当时full-render gate只余local_encode/storage，不以缺感官证据停止可逆制作。
+- 新full_*生产源4份AST、Editor源2份AST通过；test_video_qa.py 3项通过，git diff --check通过。
+
+### EP07完整渲染启动
+
+- ff249当前renderer补证103新帧/43.8–47.233333s编码SHA49c0a855cba8957550e1f8d38c1c72b211ec3c21e8d476cd51aff9ddf462c96e；独立核对源103hash、原renderer/parentjob不变，probe与全AVdecode通过，实际字幕/标签样帧无遮挡，local_encode范围PASS。
+- full-render v1 READY；13原生样本预算14,289,010,404bytes、可用60,211,200,000bytes，fresh磁盘通过后由Visual持artifacts/render.lock启动2994新帧；Metal预检成功。启动不等于完整影片生成或感官验收通过。所有旧失败/局部片/渲染归档保留。
+
+### EP07完整原生画面渲染完成
+
+- ff249完整2994新帧/99.8s/1080×1920/30渲染3380.95秒exit0，finalizer exit0，锁释放。native-delivery SHA044b4b1119912c2790b131ebde55b607c63d4c8fb28ad8714363a96e2b461e64；frame manifest SHAbea03c397110c443d7225cb724b89798d84316880e8094438c01e3ba0d686c89。
+- 实际渲染矩阵再次确认六件动、908固定/皮带delta0，17964附件检查、最终误差1.19e−7。未拷旧帧/改冻结资产。此记录只证明原生全片与生产自检，Editor最终MP4及同版本专项复核待接续。
+
+### EP07完整审看版编码与最终混音复核
+
+- 最终EP07-review-only-v1.mp4 SHA256 bdefadf7f6d506689aad145836a2103b7141bbc1082413cf0366ff45aa3bb8d9；原生/编码1080×1920/30、2994帧、99.8s、H264/yuv420p+AAC mono48k。2994源帧哈希逐一一致；ASS单次烧录，Kai原音不拉伸，尾部仅8ms补齐容器时长。
+- 最终共享technical-evidence-v2 SHA f516ae84eaf9f196d1869b874a2c3eda8de574908bfa0646d7ec60af98570dbb，probe/full AV decode/独立audio decode/45字幕结构与timeline关联全PASS。13实际编码字幕白墨Y1489–1531；Director看过最终encoded contact，所检样本无可见overlay相交。首次技术包只有timeline dependency schema不匹配已保留，用新关联包修复，无媒体重编码。
+- 最终Audio QA绑定同MP4：AAC99.8s、decode/scanPASS，mean−25.8dBFS peak−2.4dBFS，无静音候选；PCM来源相关0.999980899，仅证明锁定mix来源。独立Audio Appeal同hash报告NEEDS_REVIEW。无已证实音频缺陷；听审/voice consistency/逐词与音画语义/实时播放未验证，所有感官评分null。
+
+### EP07完整待审交付闭环
+
+- 最终VideoQA及独立AudienceQA均已关联bdefadf7f6d506689aad145836a2103b7141bbc1082413cf0366ff45aa3bb8d9。所检技术/静帧范围无已证实P0/P1；2.833–5.833、19.467–22.600、93.567–96.267秒三个freeze为未确认P2候选，非已判定卡顿。实时听看、词级/音画语义与正式感官分数仍未验证/null。
+- 既有director-record已更新COMPLETE_REVIEW_DELIVERY，delivery-current.json汇总完整99.8秒MP4、native/encoded规格、4份同hash专项报告、技术包、时间线、来源与待审问题；production-status.md已替换旧源路径阻塞快照，旧状态另存。最终delivery gate REVIEW_DELIVERY、无记录阻断原因；不冒充正式验收。
+- 最终9项交付引用文件hash及状态链接检查通过；57份Python AST、184份小于5MB JSON解析通过，较大审计文件沿用已有实际生成/复核证据不重复全量装载。既有test_production_gate.py10项、test_video_qa.py3项通过；最终git diff --check通过。无Git暂存/提交、上传/平台草稿/发布动作。
+
+## 2026-11-03 EP07用户指出整机错误：撤回待审交付结论
+
+- 用户以4张截图指出皮带错位、打印线缺失、底部结构缺失。原bdefad…影片/4类QA/技术检查保留，当前交付改USER_REJECTED_REWORK；既有局部/码流验证不能证明整机保真。相关P1重新列入既有director-record，新的完整制作停止，先局部修复。
+- 独立只读Blender inventory发现914源mesh SHA均未变，但原配套world matrix被cache nominal覆盖；旧Stage保持topZ−35mm。EP07共234源件bounds完全落舞台之下（基线0）；基线C平移Z109.096mm，gantry末态再含Z96mm，且8个真实STEP支撑被误删。这解释底部沉没、变形带/管网格与nominal矩阵混用。
+- 最小修复保留已认可EP04末态mesh+matrix+8supports，仅移除旧字幕，从该真实基态执行六件相对动作；不改Kai/时序、不重建整机、不改镜头掩错。实际末态A/B/Z带邻接需新局部复验，不能继承旧nominal姿态clearance；原源路径3+1累计4轮保留，不重试旧失败路径。
+
+### EP07整机修复round1：基线保真与新姿态验证
+
+- 新453b3de2213f0deae668局部8native/frame保真：保留914源+8support及Stage；实际saved scene几何/材质/visibility保持，916非动作实体matrix差0。底部/竖带/PTFE可见，Director实际查看raw和old-new联合contact；diagnostic61/91/106不冒充production镜头。固定ASS白墨Y1489–1531。
+- 新实际922worldmesh全路径broadphase，3180刚体源STEP精确离散相交检验无新增/加重>.001mm³；保留原螺纹与极小导向接触，不称零接触制造验证。7变形belt组合实际三角面完整线性扫掠AABB无候选面交，双向初始winding无包含，严限实际mesh证据。新clearance-packet SHA638cc734ba636d8669932128ac81418566ce5636c3c41da82d5fd7c87c1f3709。
+- 同453全2994无图pose逐帧assert908source+8support+Stage固定；6相对路径误差1.49e−8m。新103frame局部MP4 SHA58e77933721792aa36f5bec54aed24ce9962f03fc39ffc164cd39e40e04e8d0f，43.8–47.233333s，原ASS/mix不改，probe/fullAVdecode/audio_decode/subtitles结构通过。
+- repair-round-log保留4准备指纹与两次零帧审计失败（matrix重复赋值分解舍入），没有放宽阈值掩错误；唯一8frame proof和唯一103frame连续proof属于用户三整机P1修复round1。原EXTRACTION自动3+用户1累计4不重置。
+- 453明确只local，生产ready源须新freeze、独立影响关联及full gate后才full，不改旧归档/用proof模式绕hold；此时完整修正版尚未渲染。
+
+### EP07整机修复production版独立局部放行与全片启动
+
+- 新production-task-3c4cc317137655255307，renderer222fb50260babfedef77f8aebeff65890dcec58712ea175cfed50088cc875b88；只相对453改执行guard和frame范围，5函数逐字等价、1844worldmesh数组与2994poseaudit一致，没改旧归档。新8proof+103local全部实际新渲，无旧帧复用。
+- 新局部MP4 SHA0cb6daad32b24d0f9ad3c97ca7e2c1eabcf475cdf13fb80b86412c720f1f7389；103源hash、probe/fullAVdecode/音轨/字幕结构通过；独立18顺序帧页检查覆盖103/103，未发现局部新P0/P1。独立报告SHA8dca09eb01b79e771cd6ab0654bfc97a32d6ff20d3eb1be98aa0a662793cf2ad，26引用hash匹配。Director仅在可见底部、源PTFE通路和belt基线位置范围内关闭当前3P1，不宣称独立filament或belt物理端接/contact已验证；正式感官分数仍null。
+- 17修复源AST、production_gate10项+video_qa3项单测与git diff --check通过。full-render READY；8样本预算14,757,335,626bytes需/50,790,400,000bytesfree。冻结runner以full模式启动，release/job/renderer/gate绑定均通过，未以proof模式绕hold。新103实耗185.262s，预计2994原生约85–90分钟，不沿用旧3380秒。
+
+
+## 2026-11-03 EP07 whole-machine repair round1 — complete corrected media
+
+- Frozen task `production-task-3c4cc317137655255307` completed one full render: 2994 new native 1080×1920 frames, 30fps, 99.8s, exit0, 4447.036s. Full frame manifest `0c03c2471e7e2b5585c36d913999ca32f5ae731898bdb0a19d185975fc743bae`; full pose audit byte-identical to preflight, 908 fixed matrices delta0, six paths max error1.487e-8m. No frame mixing.
+- Saved `full.blend` retained. Independent post-save reload could not run: Blender blocked before Python at macOS mounted-volume enumeration. Sample/stop evidence preserved; only own read-only inventory PIDs stopped, no rerender or system changes. Saved-scene reload remains NEEDS_REVIEW.
+- Corrected full review MP4 `editor/whole-machine-repair-v1/final-review-v1/EP07-whole-machine-repair-review-v1.mp4`, SHA `b7a83d949c84739d04ce7f56bd233e0e4edc29dd32e1efb30145b5ce395be74f`: native and encoded1080×1920/30fps, H264/AAC99.8s. Editor eight technical checks PASS including full AV/audio decode and proper timeline association. Original Kai/mix/ASS/timing retained; captions single-burn, sampled white ink Y1489–1531.
+- Independent final audio scan/decode PASS; decoded PCM zero-shift correlation0.9999809306 to locked mix. Audio appeal only source/version association; no listening or realtime playback/forced word alignment, scores null. Director viewed actual13sample native and final contacts, which supports visible bottom/feet/PTFE restoration only within sample coverage. Source has PTFE guides, no independent actual filament; no new filament/belt physical-contact claim.
+- AST parse PASS6 current production/editor Python files. Existing source/clearance, local independent review and repair history retained. Final Video/Audience associations and delivery gate recorded subsequently. No staging, commit, upload, draft or publication performed.
+
+- Final independent Video QA report `9bcb9d5c47fb63f4a6213ed6b4ea9545ad7d1d6e289189d9a17dd6c1390f47ee` and Audience report `bc28a6eb12af8d7f76080848d152dc44adb612238eb4c5f757bd723362d55868` bind corrected b7a83d media. No new confirmed P0/P1 within inspected scope; I0001–I0003 P2 static-hold candidates retained. Full corrected delivery gate REVIEW_DELIVERY, no reasons; perceptual scores remain null. Old rejected delivery archived and current pointer replaced only after full corrected media and associated reports were ready.
+
+## 2026-11-03 EP07 temporary data cleanup
+
+- Removed 6997 untracked generated frame/bytecode files, 17,266,899,825 bytes; retained all media, scenes, source, narration, proof and QA/audit records. Manifest: docs/ep07-temporary-cleanup-20261103.json, COMPLETE.
+- Nonblocking render.lock held; retained SHA256 hashes verified unchanged and Git index hash unchanged. Cleanup manifest JSON/scope/deleted-path checks and git diff --check passed. No code changes, provider requests, rendering or new perceptual acceptance; unit tests not applicable.
+
+## 2026-11-03 EP06 temporary data cleanup
+
+- Removed 9955 untracked generated frame/bytecode files, 22,606,048,419 bytes; retained all media, scenes, source, narration, proof and QA/audit records. Manifest: docs/ep06-temporary-cleanup-20261103.json, COMPLETE.
+- Nonblocking render.lock held; all retained SHA256 hashes verified unchanged and Git index hash unchanged. Manifest JSON/scope/deleted-path checks and git diff --check passed. No code changes, provider requests, rendering or new perceptual acceptance; unit tests not applicable.
+
+## 2026-11-03 EP01-EP07 complete temporary-data cleanup
+
+- EP06/EP07 deep pass additionally reclaimed 4,838,884,550 bytes; retained content hashes and lossless archive decompression hashes verified. Historical scene archives were subsequently removed under the expanded all-temporary-files authorization.
+- Final cross-episode pass removed 1333 untracked temporary files, 2,459,400,356 bytes. Current/revision/legacy episode trees, ignored files, external EP-tagged artifacts and script/test caches inspected. Session total net logical reclamation: 47,171,233,150 bytes; not a measurement of APFS free-space gain.
+- Original/provider narration, final films, minimal baseline/source scenes, CAD caches, QA imagery, audit/report records and locks retained. Nonblocking worker/render/model/production locks held; all retained/protected SHA256 hashes and Git index hash verified unchanged. No remaining classified temporary candidates; JSON/count/scope/path/link and git diff checks passed. Final manifest: docs/ep01-ep07-final-temporary-cleanup-20261103.json.
+- Data/docs only; no unit tests, rerender, provider call or new perceptual acceptance required. No staging, commit or publication.
+
+## 2026-11-03 EP01-EP07 minimum-retention deep cleanup
+
+- User superseded prior retention policy: keep only necessary assets. Deleted 4307 obsolete review frames, detailed audit dumps, test payloads and old deliveries, 2,294,008,469 bytes; removed 370 empty directories. Seven current MP4s plus approved style reference remain, with required source/final scenes and original audio.
+- Consolidated 4222 byte-identical CAD/audio/geometry-input copies using same-device hardlinks, 1,330,724,579 redundant bytes; original paths and content hashes retained. Shared inputs require versioned writes or atomic replacement, not in-place modification.
+- Unique-inode retained content across both printer series trees: 3,015,592,146 bytes; logical path total 4,346,316,725 bytes. These are content/storage-accounting metrics, not measured APFS free-space gain.
+- All retained/protected SHA256 hashes, canonical hardlink inode identity, deletion paths, exact current-media set, manifest counts, local doc links and unchanged Git index verified. Worker/render/model/production locks held; git diff checks pass. Data/docs only: no unrelated unit tests, provider calls, rerender or new perceptual claims. No staging, commit or publication.
+- Final evidence: docs/ep01-ep07-minimal-retention-20261103.json; earlier manifests are historical snapshots.
