@@ -1424,3 +1424,72 @@ New full-task-dbdf3806e59559815455 preserves c6 all presentation source bytes;ne
 
 - 按用户授权完成[剩余临时数据复查](ep01-ep07-temporary-recheck-20261103.md)：两代系列共15,028个文件与前轮最小保留集逐项SHA256一致，无新增文件；18个受保护资产、4,222组硬链接关系验证通过。
 - 没有新增可删除临时文件或空目录，实际删除0文件/0字节；全部保留文件前后哈希及Git索引不变。执行期间持有现有制作锁，无渲染、配音、平台操作或验收状态变更。机器清单JSON解析、文档链接及`git diff --check`通过；本次仅复查与文档留证，不运行无关单测。
+
+## 2026-11-03 全项目旧任务清理（更正前轮范围判断）
+
+- 用户指出已完成影片的旧任务无需继续保留，并要求全项目分析。按当前交付/场景保护集、Git跟踪范围及保留源码直接路径依赖检查后，删除119个旧任务/编辑版本目录及全项目缓存、自动备份、旧演示/诊断图片，共1,680文件、220,283,087路径逻辑字节。包括明确指定的`task-ccdda5d93a03bb14ad28`。前轮“文件与清单一致”不足以得出“仍然有用”，本次更正该判断。
+- 最后链接已删除的独立内容65,918,664字节，分配块估算69,361,664字节；观察到的文件系统可用空间增量为0，不声称实际磁盘收益。15,167个保留文件逐项SHA256一致，18个受保护资产及Git索引不变；现有制作锁内执行，无暂存/提交。
+- 删除后同规则复扫候选为0；五个存在源码引用的目录仍保留。逐项删除哈希、依赖排除及结果见[全项目清理](project-obsolete-task-cleanup-20261103.md)和关联JSON。JSON、文档链接及`git diff --check`通过；只处理数据和文档，不运行无关单测/渲染/配音，不改变QA或用户验收状态。
+
+## 2026-11-03 用户最终要求：仅成片和报告
+
+- 用户明确授权删除其他制作数据，取代此前对CAD、场景、冻结制作源、锁定音频和付费缓存的保留。整个series/artifacts/output清理删除7,720文件、3,407,650,269路径逻辑字节；独立内容2,345,500,183字节，分配块估算2,354,483,200字节，不等同于实际APFS空间收益。
+- 仅保留七集当前最终MP4、批准参考MP4、报告及现有运行锁。839个保留文件前后SHA256一致，8个视频及Git索引SHA256不变，制作目录内未分类残留为0。未完成任务的非报告制作数据也已删除，不能直接续渲或重做。项目应用程序、配置/环境、技能及Git保留。
+- [最新保留策略和机器清单](final-videos-reports-only-cleanup-20261103.md)取代前轮保留范围。JSON、文档链接、删除清单及`git diff --check`通过；未运行无关单测/渲染/配音/平台操作，不改变历史媒体验收结论。
+
+
+## 2026-11-03 EP08 production start: source feasibility and native static proof
+
+- Authorized scope: EP08 X-carriage/linear-rail teardown only; preserve all earlier episodes, staged recheck work and manual publication boundary. Director record: `series/3d-printer-v2/episodes-current/EP08/director-record.json`.
+- Director inspected actual EP03/EP06 encoded samples at 4/18/45/75s via EP08 baseline contact; source media SHA-256 reverified. Source investigation independently exported 152 original STEP leaves and measured the toolhead → carriage → block → rail → beam chain. Evidence: EP08/research/report.md, mapping.json and source-evidence.json. Not all exports are valid: n00097/n00098 remain invalid after fresh corrected-cache import/export. Historical manifest True was not treated as current validation.
+- EP08-CARRIAGE-BREP-001 remains P1. Visual targeted default ShapeFix attempt 1 failed fresh-export validity; shape/volume preservation does not establish valid BRep. Original/cache/archive assets preserved.
+- Visual produced actual 1080×1920 static whole/connection/rail proofs in EP08/visual/rest-task-d906af567f9cf9b604fd; Director inspected whole.png. Exact baseline matrices and 914 part meshes + 8 supports retained per producer audit. Connection visibility and subtitle placement need correction; this is not action-path or formal acceptance.
+- Creative compared three openings and selected a source-bounded stationary-machine adaptation. Script draft-v1 is internal, timing estimated, not synthesized or locked. Full render and narration not released.
+- Static-image viewing and FFmpeg available; real-time playback, listening and word alignment not established. Independent static QA in progress; perceptual scores remain null. No motion clip or completed episode is claimed.
+
+
+### EP08 same-run evidence availability correction
+
+Concurrent external cleanup recorded in docs/current-delivery-minimum-cleanup-20261103.json removed current EP08 baseline images, native proof images, renderer source and validity attempt evidence after their generation/inspection. Earlier run statements describe work performed, not currently available acceptance evidence. Independent QA could inspect 0/3 native stills and no baseline image; NEEDS_REVIEW, scores null. All EP08 production writers stopped pending coordination of active-task exclusion. No re-render or asset restoration was attempted after detecting the conflict. Source report, mapping, creative proposal, script draft and director-record remain. Default ShapeFix attempt1 remains failed; deletion does not reset its count.
+
+
+### EP08 authorized recovery and generic protected template vault
+
+User subsequently explicitly excluded active EP08 from cleanup, authorized restoration/continuation, confirmed no scene backup and required reusable template names independent of EP08. Generic permanent vault: production-vault/printer-series-template/. Exact upstream archive restored (SHA25636c6c58e096aa89aa05a0ef22f3b49cbceedc950424332772461ab0c779cc1c6); extracted STEP SHA25606b372e40217caa1a7d1f516cb74887247f809e41e1e389f740f290e98441b55. Historical EP03/EP06 MP4 hashes reverified and static contact regenerated. Original native baseline scene is not recoverable from existing files; new scene is a reconstructed candidate requiring actual style review.
+
+Protected generic snapshots include source, historical style reference, source-occurrence cache candidate and carriage repair evidence. Each has SHA-256 manifest; macOS user-immutable flags applied. Dedicated nonasset deletion probe was blocked with EPERM and remained present (deletion-protection-verification-v1.json); no production asset deletion attempted. This is local accidental-cleanup protection, not an off-device backup.
+
+EP08-CARRIAGE-BREP-001 strategy2 independently passed fresh STEP import and a further independent export/reimport for97/98, single valid positive-volume solids, bbox differences0. Boundary sample maximum97=0.00081617mm and98=1.624e-7mm; not full-surface Hausdorff or physical validation. Source-validity scope resolved, attempt1FAIL preserved and total attempts2.
+
+Full source-display restoration produced1428 occurrenceSTLs with finite nonempty meshes/hash association;6 originalBReps invalid and401 meshes nonwatertight in initial Trimesh processing, explicitly candidate-only. Focused restoration/audit continues; no full-geometry, motion or film PASS. Resource coordination exception: source exporter initially used root/render.lock while Visual used artifacts/render.lock; agents disclosed brief overlap, now coordinate canonical artifacts lock then root lock for subsequent heavy work. No concurrency setting/security configuration changed.
+
+
+### Generic native template candidate and independent static review
+
+Open-frame native scene candidate (not original deleted scene): EP08/visual/open-frame-candidate-e923569c34a0f1ad726e. All1428source occurrences retained; six verified exterior panel surfaces omitted by explicit teaching policy, labeled in diagnostic images. Clean common .blend saved before episode caption/label creation; snapshot production-vault/printer-series-template/visual-scene-candidate-v1-640e364f protected with user-immutable flags. Template names contain no episode number.
+
+Independent VideoQA template-static-v2 verified12/12 asset hashes,3 actual1080x1920PNGs, historical MP4 hashes and caption white inkY1491–1526 within referenceY1489–1531. Actualleader visiblypoints to221toolheadfrontshell. No new confirmedstaticdefect; limited candidate discussion only, not template/motion/clearance/audio/fullfilm acceptance.
+
+Focusmesh attempt1 mature periodic UV restoration made151closed and improved97volumeerror. Attempt2 removed exactly3zeroarea faces97; independent triangle-multiset/bbox/volume verification confirms no new triangles or movedvertices and closedmesh.151/97sourcegeometrybranches passed bounded independent review.153source-onlyfaceted display output also independently valid/closed, with producer fine-volume convergence0.01848percent; not manufacturingCAD. Remaining86zeroarea cleanup,221two real boundaryloops,121/124failed productionpaths preserve criticalscopeblock; no narration or fullfilm release. See EP08/research/periodic-mesh-review-v1/report.md and currentdirectorrecord.
+
+
+### Protected native template self-containment
+
+One authorized native read-only reload audit PASS_SELF_CONTAINED_SAVED_SCENE:1428part meshes+stage, nofonts/episodecaptions or externalruntimeassets,1080x1920/30. Audit EP08/visual/dependency-audit-cc18eaf14d458da88680/dependency-audit.json. Genericvaultvisual-dependency-record-v1 manifest records separate rebuild-helper app/cache/workspace dependencies; native self-containment does not prove helper independence. Corrected-display candidates are protected separately and not yet integrated into currentcandidate scene. Director authorized bounded exactsourceface diagnosis and onlyconditional existing-helper repair within counts; nofullrender/synthesis release.
+
+
+### Permanent template naming and cleanup rule
+
+Added generic-template permanent-infrastructure exclusion to AGENTS.md and docs/production-vault.md per explicit user naming/protection instruction. Verified catalog-v2.json parses, its native scene exists, generic path and documentation links resolve; git diff --check passed. No application behavior changed by these documentation edits, so no unrelated unittest/render/provider calls were added for them.
+
+
+### Focused source repair limit and independently restored parts
+
+Active mesh common round3 on221 did not close31nonzero boundaries after targeted source-pcurve synchronization. STEP remained valid1solid/bboxunchanged/relativevolume8.885e-7; failed STL closure independently corroborated. KeepFAIL and stop branch/no automatic round4;121 remains nulltriangulation-blocked.86exact4zeroareafacecleanup independently closed.124per-solidbranchattempt2 independently verified all10STEP/closedperpartSTLs, preserving9native and onlyinvalid1sourcefaceted approximation; coarse/finevolume convergence0.3066769percent. Production should consume10verifiedperpartmeshes, combinedSTL isdifferenttessellation. Protectedgenericvisual-hotend-per-solid-verified-v1manifest records outputs+independent evidence. No repairedparts mixed into oldnativeframes.
+
+Read-only official alternative-source investigation is separate from productionrepair/replacement. Fixedupstreamrevision8bcb9c246fac19d8ac03931ef97fa07c5e5f0f2b downloadedSTLverifiedGitblob6a5515d3d35ca11210f7b853a10bb10c59aca524/SHA256be070b34b71feffd2a3da4b8962854eed401fc946541b5764a7bf197d6f08994; raw10nonmanifoldedges so notdeclaredusable. SeparateofficialCW2STEPsha526fe18bd11c046deba0a2b193fa3874e8f6d6e5a282fbdc25f06fe5acb3021d/Gitblob9c14155df8d744336e906e63e58247a8d6a428e5 verified; one unchangedpartaudit inprogress, nofix/tuning/application.
+
+
+### Same-stage final alternative investigation and decision boundary
+
+Official body/Revofront unchanged candidate STEPs read valid but display meshes still have71/281nonzero boundaries after diagnostic-onlyzeroarea exclusion. No production replacement or fourth repair was run. Full source/evidence protected as generic official-toolhead-cad-investigation-v1 snapshot. A bounded source-boundary-repair-proposal.md is ready and linked in EP08directorrecord. Explicit user decision requested only because AGENTS.md line66 automatic three-round limit was reached; generic template storage/protection already complete and not awaiting approval. Narration gate remainsBLOCKED; all current production/research processes completed, locks released.
