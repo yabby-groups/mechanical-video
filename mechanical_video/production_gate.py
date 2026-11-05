@@ -80,6 +80,17 @@ def evaluate(record, base, stage, now=None, require_version=1):
         valid = False
         for c in candidates:
             interval = actions[action] if action is not None else p.get('required_interval')
+            # A local encoding proves its selected excerpt, not the full film.
+            # Keep all action/global checks and final encoding on their full scope.
+            if kind == 'local_encode' and p['schema_version'] == 2 and 'local_encode_interval' in p:
+                local = p['local_encode_interval']
+                finite = lambda v: isinstance(v, (float, int)) and not isinstance(v, bool) and math.isfinite(v)
+                if not (isinstance(local, list) and isinstance(interval, list)
+                        and len(local) == len(interval) == 2
+                        and all(finite(v) for v in local + interval)
+                        and 0 <= interval[0] <= local[0] < local[1] <= interval[1]):
+                    continue
+                interval = local
             coverage = c.get('coverage')
             numeric = lambda v: isinstance(v, (float, int)) and not isinstance(v, bool) and math.isfinite(v)
             if not (isinstance(interval, list) and isinstance(coverage, list) and len(interval) == len(coverage) == 2

@@ -130,6 +130,33 @@ class ProductionGateTests(unittest.TestCase):
         check.update(coverage=[0, 2], required_interval=[0, 2])
         self.assertEqual(self.evaluate()['status'], 'BLOCKED')
 
+    def test_v2_local_encoding_has_explicit_excerpt_scope_only(self):
+        p = self.v2_fixture()
+        p['local_encode_interval'] = [0, 2]
+        local = next(c for c in p['checks'] if c['kind'] == 'local_encode')
+        local['coverage'] = [0, 2]
+        self.assertEqual(self.evaluate()['status'], 'READY')
+        clearance = next(c for c in p['checks'] if c['kind'] == 'clearance')
+        clearance['coverage'] = [0, 2]
+        self.assertEqual(self.evaluate()['status'], 'BLOCKED')
+        clearance['coverage'] = [0, 10]
+        final = next(c for c in p['checks'] if c['kind'] == 'final_encode')
+        final['coverage'] = [0, 2]
+        self.assertEqual(self.evaluate('delivery')['status'], 'BLOCKED')
+
+    def test_v2_local_encoding_rejects_invalid_excerpt_bounds(self):
+        p = self.v2_fixture()
+        for interval in ([-1, 2], [0, 11], [2, 2], [True, 2], [0, float('nan')]):
+            with self.subTest(interval=interval):
+                p['local_encode_interval'] = interval
+                self.assertEqual(self.evaluate()['status'], 'BLOCKED')
+
+    def test_legacy_local_encoding_cannot_shrink_with_v2_field(self):
+        p = self.record['production_checks']
+        p['local_encode_interval'] = [0, 2]
+        next(c for c in p['checks'] if c['kind'] == 'local_encode')['coverage'] = [0, 2]
+        self.assertEqual(self.evaluate()['status'], 'BLOCKED')
+
     def test_identity_conflict_not_overridden_by_flag(self):
         for c in self.record['production_checks']['checks']:
             c.update(reviewer='visual-agent', independent_required=False)

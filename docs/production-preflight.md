@@ -63,6 +63,7 @@
 | `assets` | `{资产ID: {path, sha256}}`；必须包含源件、工具头、运动/渲染源、实际时间线、字幕/标注和音效依赖；交付再包含最终媒体。路径相对 director-record 所在目录或绝对路径 |
 | `actions` | `{动作ID: [开始秒, 结束秒]}`；完整列展开、回装和相关附件运动，不以检查自己的短区间缩小覆盖 |
 | `required_interval` | 当前检查范围 `[开始秒, 结束秒]`，全局检查覆盖全段 |
+| `local_encode_interval` | v2 可选的实际局部编码区间；非空且须包含在 `required_interval` 内，仅 `local_encode` 按此区间核覆盖。动作检查、其他全局项与 `final_encode` 仍须原完整范围；不把局部编码冒称全片编码 |
 | `critical_mechanical_uncertainty` | 已依据源件消除关键机械不确定性才填 `false` |
 | `holds` / `issues` | 活跃 hold 列表；问题保留 `issue_id, severity, status, repair_attempts, rounds_without_improvement`；仅明确 closed/resolved/verified 视作关闭，不把局部静态关闭升级为全片关闭 |
 | `checks` | 以下检查数组，保留旧版本；新增证据必须关联当前资产指纹 |
@@ -70,6 +71,8 @@
 | `delivery_mode` | `review` 或 `formal`；待审可交付不等于正式验收 |
 
 每个检查必须包含 `kind, action`（全局项为 null）、`status: PASS`、`asset_fingerprints`（资产ID→SHA-256，全量精确相符）、`coverage: [开始秒,结束秒]`、`method, scope, producer, reviewer`、`evidence: [{path,sha256}]`。生产与独立复核身份必须不同；工具只验证声明。几何方法按当前机构选择，不能用一般包围盒零交集替代精确净空验证。工具头、路径或依赖变化必须更新资产，旧检查随即失效。
+
+这里的 PASS 是当前阶段的预检关联结论，不自动表示整段实际观看或正式验收。独立评审只支持有界预检时，保留原 `independent_verdict: PASS_SCOPED`、`preflight_only: true`、精确的 `actual_observation_intervals` 及 `full_action_perceptual_status: NEEDS_REVIEW`；`coverage` 只表示证据适用的冻结动作区间，实际媒体观测范围必须另列，不能冒称整段观看。该关联须有独立评审对本次有界问题的明确结论及同版源/时序依据，不能仅从稀疏样帧自行推断通过；已知缺陷或具体机械不确定性仍阻断，正式 acceptance 原要求不变。
 
 - narration：每个动作需 `source_action`；附 `source_parts`、`representation: real|teaching|mixed`、`explanation_roles`，说明实际源件与明确标注示意件各承担什么讲解，并引用最小真实画面证据。
 - full-render：每个动作需 `source_action, unfold, reassembly, attachments, clearance, neighbors, overlays, foley`；全局需 `style, local_encode, storage`。分别覆盖完整路径、移动附件联动、受影响固定件净空、邻段、实际字幕/标注与机械声时点。`local_encode`/`final_encode` 引用实际 MP4/MOV/MKV 与共享技术包 JSON（identity.media_sha256 匹配，probe/decode 成功且结果摘要完整）；`local_encode` 引用实际局部编码及其检查报告，不接受仅原生静帧。
