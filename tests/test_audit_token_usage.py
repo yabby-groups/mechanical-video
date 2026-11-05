@@ -115,6 +115,32 @@ class AuditTokenUsageTests(unittest.TestCase):
         self.assertEqual(sizes['image_payload_chars'], len('data:image/png;base64,secret-image'))
         self.assertNotIn('secret-', json.dumps(report))
 
+    def test_large_image_and_wait_usage_get_diagnostics(self):
+        image = [{'type': 'image', 'data': 'data:image/png;base64,' + ('x' * 100)}]
+        events = [meta(), usage(100)]
+        for i in range(6):
+            events.append(tool('custom_tool_call', 'exec', str(i)))
+            events.append(tool('custom_tool_call_output', call_id=str(i), output=json.dumps(image)))
+        rec = audit.audit_paths([self.write('large.jsonl', events)])['sessions'][0]
+        self.assertEqual(rec['tool_output_sizes']['images'], 6)
+        self.assertIn('image_count_over_default_limit', rec['warnings'])
+        self.assertEqual(rec['tool_output_by_tool']['exec'], sum(len(json.dumps(image)) for _ in range(6)))
+        self.assertGreater(rec['max_tool_output_chars'], 0)
+
+    def test_coordination_overuse_gets_diagnostics(self):
+        events = [meta(), usage(100)]
+        for i in range(5):
+            events.append(tool('custom_tool_call', 'spawn_agent', f's{i}'))
+        for i in range(13):
+            events.append(tool('custom_tool_call', 'followup_task', f'f{i}'))
+        for i in range(22):
+            events.append(tool('custom_tool_call', 'send_message', f'm{i}'))
+        rec = audit.audit_paths([self.write('coord.jsonl', events)])['sessions'][0]
+        self.assertIn('spawn_count_over_default_limit', rec['warnings'])
+        self.assertIn('followup_count_over_default_limit', rec['warnings'])
+        self.assertIn('message_count_over_default_limit', rec['warnings'])
+        self.assertIn('coordination_over_default_limit', rec['warnings'])
+
     def test_selected_team_diagnostics_exclude_unrelated_duplicates(self):
         self.write('root.jsonl', [meta(), usage(100)])
         self.write('other-a.jsonl', [meta('unrelated'), usage(100)])

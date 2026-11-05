@@ -56,6 +56,12 @@ selected root. Conflicts leave phase completeness false even for the selected co
 image count and unclassified/serialization characters; none are token estimates.
 Image URLs/data and message bodies are never exported.
 
+## 协作图片与等待诊断
+
+制作协作默认每回合传递 1 张联系图和最多 4 张关键帧；联系图最长边 1280、关键帧最长边 1024，单张默认不超过 300 KB。同一组图片不在 follow-up 中重复发送，细节不足时才升级原图。审计报告会额外输出按工具的字符量、最大单次工具输出和等待分布。
+
+默认诊断阈值为 5 张图片、1,500,000 个图片 payload 字符、50 次等待、4 次 spawn、12 次 follow-up、20 次消息和 40 次协调调用；超过阈值会在该 session 的 `warnings` 中标记。图片字符是结构化输出诊断，不是 token 或费用估算；等待时长来自成对的工具调用和输出时间戳。
+
 External phase markers never rewrite session logs. Same-thread overlapping or
 unpaired end markers are input errors; unclosed/out-of-log markers or unmatched
 threads restrict coverage. Snapshot intervals crossing a recorded boundary stay

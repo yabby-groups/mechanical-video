@@ -36,6 +36,10 @@ The accepted 15-second visual/sound reference is `series/3d-printer-v2/experimen
 
 ## Dispatch and efficient context
 
+协作视觉证据默认采用缩略图与关键帧：每个回合最多 1 张联系图加 4 张关键帧；联系图最长边 1280、关键帧最长边 1024、单张默认不超过 300 KB。子代理只回传选定证据、时间码和结论，同一组图片不得在 follow-up 中重复发送；细节不足时才升级原图。
+
+多 Agent 调度是硬预算：每个 session 默认只允许一个 Director，最多 4 次 `spawn_agent`，每个子代理最多 1 次 `followup_task`，总消息交接最多 20 次。达到任一上限后必须停止派工，主线程合并已有结果并继续可完成工作；不得通过换名字、重复 spawn 或循环等待绕过预算。等待必须绑定明确的完成事件，不能用轮询代替进展。图片超过本段限额时必须先压缩、拼图或改为文件路径/时间码，禁止继续传原图。
+
 For video production, act as Director and use only necessary real available agents. Ordinary analysis/documentation stays with the main agent. Do not describe sequential role prompts as real delegation. Follow the [handoff workflow](.codex/agent-workflow.md) for role boundaries, dispatch, dependencies, version-impact review, issues and recovery; it is the detailed source of truth, not a requirement for every child to read every section.
 
 Use one main-thread Director (recommended model Sol/low; do not change the active root-session model automatically). Visual and complex Editor work default to Sol/low; Terra handles creative expression and audience judgment. Research defaults to Luna for bounded fact extraction; route complex mechanical/source questions directly to explicit Sol/low without requiring a failed Luna attempt. Deterministic checks use scripts. Reuse the same ready production agents for related work; do not add a Director relay or instantiate all roles by default. See the workflow model table and stage gates. Never automatically raise Sol above the user-selected low effort; independent QA and acceptance thresholds remain unchanged.

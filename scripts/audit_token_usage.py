@@ -14,6 +14,14 @@ import sys
 FIELDS = ("input_tokens", "cached_input_tokens", "output_tokens", "reasoning_output_tokens")
 PHASES = {"research", "creative", "script", "visual", "audio", "editing", "qa", "unattributed"}
 COORDINATION = ("spawn_agent", "send_message", "followup_task", "wait_agent", "sleep")
+IMAGE_LIMIT = 5
+IMAGE_CHAR_LIMIT = 1_500_000
+LONG_WAIT_LIMIT = 60
+WAIT_COUNT_LIMIT = 50
+SPAWN_LIMIT = 4
+FOLLOWUP_LIMIT = 12
+MESSAGE_LIMIT = 20
+COORDINATION_LIMIT = 40
 
 
 def object_value(value):
@@ -118,6 +126,8 @@ def audit_file(path, phase_events=()):
     phases = {}
     snapshots = resets = output_chars = outputs = 0
     sizes = Counter()
+    output_by_tool = Counter()
+    max_tool_output = 0
     session_id = parent_id = thread_id = None
     role = model = "unknown"
     guardian = False
@@ -261,10 +271,13 @@ def audit_file(path, phase_events=()):
                     except (KeyError, ValueError, TypeError):
                         warnings['wait_timestamp_missing'] += 1
                 output = payload.get("output", "")
+                name = call_names.get(payload.get("call_id"), "").split("__")[-1].split(".")[-1]
                 output_chars += len(output) if isinstance(output, str) else len(json.dumps(output, ensure_ascii=False))
+                output_size = len(output) if isinstance(output, str) else len(json.dumps(output, ensure_ascii=False))
+                max_tool_output = max(max_tool_output, output_size)
+                output_by_tool[name or 'unknown'] += output_size
                 sizes.update(output_sizes(output))
                 outputs += 1
-                name = call_names.get(payload.get("call_id"), "").split("__")[-1].split(".")[-1]
                 if name == "spawn_agent":
                     child = object_value(output).get("agent_id")
                     if isinstance(child, str):
@@ -280,6 +293,21 @@ def audit_file(path, phase_events=()):
         session_id = "sha256:" + digest.hexdigest()
     coordination = {name: sum(n for tool, n in calls.items() if tool.split("__")[-1].split(".")[-1] == name)
                     for name in COORDINATION}
+    if sizes['images'] > IMAGE_LIMIT:
+        warnings['image_count_over_default_limit'] = sizes['images']
+    if sizes['image_payload_chars'] > IMAGE_CHAR_LIMIT:
+        warnings['image_payload_over_default_limit'] = sizes['image_payload_chars']
+    if len(waits) > WAIT_COUNT_LIMIT:
+        warnings['wait_count_over_default_limit'] = len(waits)
+    if coordination['spawn_agent'] > SPAWN_LIMIT:
+        warnings['spawn_count_over_default_limit'] = coordination['spawn_agent']
+    if coordination['followup_task'] > FOLLOWUP_LIMIT:
+        warnings['followup_count_over_default_limit'] = coordination['followup_task']
+    if coordination['send_message'] > MESSAGE_LIMIT:
+        warnings['message_count_over_default_limit'] = coordination['send_message']
+    coordination_total = sum(coordination.values())
+    if coordination_total >= COORDINATION_LIMIT:
+        warnings['coordination_over_default_limit'] = coordination_total
     return {
         "session_id": session_id, "thread_id": thread_id or session_id, "parent_session_id": parent_id,
         "role": role, "model": model, "guardian": guardian,
@@ -296,6 +324,8 @@ def audit_file(path, phase_events=()):
         "coordination": coordination, "tool_output_chars": output_chars,
         "tool_output_events": outputs, "spawned_session_ids": sorted(spawned_ids),
         "tool_output_sizes": dict(sizes),
+        "tool_output_by_tool": dict(sorted(output_by_tool.items())),
+        "max_tool_output_chars": max_tool_output,
         "warnings": {key: value for key, value in warnings.items() if value},
     }
 
@@ -441,6 +471,9 @@ def markdown(report):
         lines.append("| " + " | ".join([rec["session_id"], *map(cell, values), str(rec["counter_resets"])]) + " |")
         lines.extend(["", "Coordination: " + json.dumps(rec["coordination"], sort_keys=True),
                       f"Tool output: {rec['tool_output_chars']} characters / {rec['tool_output_events']} events.",
+                      f"Max single tool output: {rec.get('max_tool_output_chars', 0)} characters.",
+                      "Output by tool (characters): " + json.dumps(rec.get('tool_output_by_tool', {}), sort_keys=True),
+                      "Waits: " + json.dumps(rec['wait_seconds'], sort_keys=True),
                       'Output sizes (characters, not tokens): ' + json.dumps(rec.get('tool_output_sizes', {}), sort_keys=True),
                       'Selected copy: ' + json.dumps(rec.get('copy_diagnostics', {}), sort_keys=True),
                       "Warnings: " + json.dumps(rec["warnings"], sort_keys=True),
