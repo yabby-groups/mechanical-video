@@ -44,6 +44,48 @@ def evaluate(record, base, stage, now=None, require_version=1):
     if any(not linked(ref) for ref in assets.values()):
         errors.append('missing or stale asset')
     fingerprints = {key: ref.get('sha256') for key, ref in assets.items() if isinstance(ref, dict)}
+    def quoted_authorization(authorization):
+        if not isinstance(authorization, dict) or authorization.get('origin') != 'explicit_user':
+            return False
+        quote, ref = authorization.get('quote'), authorization.get('evidence')
+        if not isinstance(quote, str) or not quote.strip() or not linked(ref):
+            return False
+        try:
+            path = Path(ref['path'])
+            return quote in (path if path.is_absolute() else base / path).read_text(encoding='utf-8')
+        except (OSError, UnicodeError):
+            return False
+
+    def manual_continuation(issue):
+        # An explicit, version-bound user continuation preserves an exhausted
+        # P2 issue instead of falsely closing it or resetting its repair count.
+        # It never overrides blocking defects, holds, evidence or acceptance.
+        if p['schema_version'] != 2 or issue.get('severity') != 'P2':
+            return False
+        entries = p.get('manual_continuations', [])
+        if not isinstance(entries, list):
+            return False
+        for entry in entries:
+            if not isinstance(entry, dict):
+                continue
+            authorization = entry.get('authorization', {})
+            if not isinstance(authorization, dict):
+                continue
+            if (entry.get('issue_id') == issue.get('issue_id')
+                    and bool(issue.get('issue_id'))
+                    and entry.get('issue_status') == issue.get('status')
+                    and type(entry.get('repair_attempts')) is int
+                    and entry['repair_attempts'] == issue.get('repair_attempts')
+                    and type(entry.get('rounds_without_improvement')) is int
+                    and entry.get('rounds_without_improvement') == issue.get('rounds_without_improvement', 0)
+                    and isinstance(entry.get('stages'), list)
+                    and stage in entry['stages']
+                    and stage in ('full-render', 'delivery')
+                    and entry.get('asset_fingerprints') == fingerprints
+                    and isinstance(entry.get('scope'), str) and entry['scope'].strip()
+                    and quoted_authorization(authorization)):
+                return True
+        return False
     if record.get('hold') or record.get('editorial_hold') or p.get('holds'):
         errors.append('active hold')
     if p.get('critical_mechanical_uncertainty') is not False:
@@ -61,7 +103,7 @@ def evaluate(record, base, stage, now=None, require_version=1):
         attempts = issue.get('repair_attempts')
         if not isinstance(attempts, int) or isinstance(attempts, bool) or attempts < 0:
             errors.append('missing repair count')
-        elif not closed and (attempts >= 3 or issue.get('rounds_without_improvement', 0) >= 2):
+        elif not closed and (attempts >= 3 or issue.get('rounds_without_improvement', 0) >= 2) and not manual_continuation(issue):
             errors.append('repair strategy exhausted')
     checks = p.get('checks', [])
     if not isinstance(checks, list):

@@ -1642,3 +1642,143 @@ EP09 final review delivery: MP4 SHA256 fc10735f35d69c58b4c9df512e0bc8466d14e131f
 ## 2026-11-05 — EP09 目标优化分析
 
 复核最终编码联系图静帧、原脚本/实测语音段、源齿轮几何与修复计数，形成 `series/3d-printer-v2/episodes-current/EP09/optimization/goal-v2/optimization-plan.md`；既有 director-record 追加本轮分析及 VIS-004 三轮封顶决策门槛，原交付未替换。JSON 解析、输入存在性、方案 issue 关联及 `git diff --check` 通过。仅文档/状态记录，无代码变更，无新 CAD、渲染、配音、实时播放或听审；不执行无关媒体测试，不宣称感官验收或增长改善。
+
+
+## 2026-11-05 — EP09 有界齿轮相位验证
+
+用户继续授权后实际执行 optimization/goal-v2/check_gear_phase.py：4份独立STEP哈希/有效正体积通过；48个OCCT相位交集检查完成，149/201最小样本交集0.0858497131mm³，202/207最小0.0083817601mm³，均未找到无相交初态。未进入运动路径与渲染，不能推断穷尽所有相位或真实机械不能运行。脚本py_compile/AST、结果JSON及director-record解析通过，git diff --check通过；历史VIS-004三轮不重置，旧交付未替换，无新配音/编码/独立QA或感官验收。报告：series/3d-printer-v2/episodes-current/EP09/optimization/goal-v2/phase-feasibility-v1/report.md。
+
+
+## 2026-11-05 EP09 session continuation checkpoint
+
+Documentation-only: added optimization/goal-v2/session-resume-20261105.md under EP09. Recomputed five existing artifact SHA-256 values; baseline MP4, narration text and phase results match recorded values. All five listed artifact paths exist. git diff --check passed before this append. No CAD/media/code changes, provider calls, new rendering, playback or listening; no unrelated tests run. Existing review/repair gates unchanged.
+
+
+## 2026-11-05 EP09 local-ab-v3 局部动态图形候选
+
+原片前8秒A与教学关系图形B均已生成独立版本，1080×1920/30fps/240帧/8秒，无音轨，ffprobe与FFmpeg完整解码通过。生成脚本AST解析、git diff --check通过。输入及媒体SHA-256见 `series/3d-printer-v2/episodes-current/EP09/optimization/goal-v2/local-ab-v3/manifest.json`。这是核心CAD静止的前景关系示意，不证明啮合/送料动作或连续净空；VIS004三轮保留，正式片与时间线未改。独立局部QA见同目录qa/，缺实时播放/听审/词级对齐，不作为正式验收。
+
+
+## 2026-11-05 EP09 mechanical-local-v1 路径验证
+
+实际OCCT有界路径审计在第一个移动样本(5%)发现固定155/156及紧定螺钉210的新增/增深实体穿透，候选BLOCKED，按条件没有Blender渲染/媒体编码。四关键STEP独立导出重读有效正体积，16个有效邻件覆盖；主壳153源BRep无效明确为覆盖缺口，未借此通过。报告/哈希/源码在 EP09/optimization/goal-v2/mechanical-local-v1/。VIS004历史3轮保留，原片保持不变。独立证据审计另存qa/，不能把源检查称为媒体感知验收。
+
+
+## 2026-11-05 EP09 teardown-local-v4/v5 静音局部剪辑
+
+保留同机头真实前壳拆解；v5连续源0–12.6秒、前6.6秒提速至5秒，取消v4第8秒跳切；回扣连续源42.312–52.312秒，改明确两侧轮外齿配合措辞。A/B原生来源及编码均1080×1920/30fps，局部开场11秒、回扣10秒，无音轨，完整FFmpeg解码与ffprobe通过；脚本AST、字幕单行<=20、git diff --check通过。源原片SHA-256仍fc10735f35d69c58b4c9df512e0bc8466d14e131ff2b59f7259c5a3980020210。v4独立QA提出两项P2，v5按原ID一轮编辑修复并交同角色复核；报告各自目录qa-video/，不迁移哈希。核心齿轮静止，未证明真实啮合或送料；新旁白文本未合成，narration gate的source_action:shell_teaching_cycle缺失/过期仍BLOCKED，实时播放/听审/词级对齐未闭合，非全片验收。候选旁白v2字幕43条最长16字，去空白与文本逐字一致。
+
+2026-11-05同版独立复核追加：teardown-local-v5/qa-video/report.md确认EP09-TLV4-VIDEO-001相邻帧5秒/8秒连续构图修复、EP09-TLV4-VIDEO-002末句措辞修复，各1次且无改善轮次0。两片独立全解码通过，overall仍NEEDS_REVIEW，不作为轮转/送料或正式全片放行。
+
+
+## 2026-11-05 EP09 subtitle-style-v6
+
+用户指出局部字幕风格漂移，恢复原final-review-v1原生编码字形/字幕基线与窄底板，弃用FFmpeg重选字体和920×150大底板。开场11秒和回扣10秒均1080×1920/30fps、无声；ffprobe和完整FFmpeg解码通过；原生字形回归经生产者静帧自检，单行<=20、脚本AST、git diff --check通过。精确方法、哈希及非原生重渲染限制见EP09/optimization/goal-v2/subtitle-style-v6/manifest.json和style-repair.md。未获得独立v6感知QA，不沿用v5哈希结论，不更新正式交付或重配音。
+
+
+## 2026-11-05 EP09字幕基准纠正：实际EP08对照
+
+重新核SHA确认EP08 revision-v2当前成片，查看实际8秒帧并读取同版captions.ass。确认Heiti SC44、白字、202020描边2、无阴影/无矩形底板、Alignment8及pos(540,1484)。复制原ASS样式运行同一FFmpeg/libass测试，实际fontselect解析STHeiti Medium.ttc/STHeitiSC-Medium，原生1080×1920中性背景静帧通过。对照图已实际查看，EP09v6错误黑底板与EP08描边白字差异明确；v6标为用户拒绝，不称字幕修复成功。证据与报告位于EP09/optimization/goal-v2/ep08-subtitle-analysis-v1。此为分析/样式测试，不是清理烧录字幕后的EP09新媒体；需同版干净实际源帧后再应用。git diff --check通过。
+
+
+## 2026-11-05 EP09 EP08字幕样张
+
+执行批准主机Metal路径、持双render.lock，复用production-v4源与同版timeline渲染frame210，渲染前仅隐藏caption与其backing，旧源归档未改；Blender退出0、锁释放。干净实际1080×1920帧叠加EP08同版ASS样式，输出原尺寸PNG及3秒/30fps无声静态样片，完整FFmpeg解码通过；实际查看576×1024预览确认无字幕黑底板。文件与来源SHA-256见EP09/optimization/goal-v2/ep08-style-proof-v1/manifest.json。仅样式预览，不是新动画、全片、独立QA或用户接受。git diff --check通过。
+
+
+## 2026-11-05 EP09 optimized review v2
+
+- User accepted actual EP08-style proof and authorized completion. New immutable review: `series/3d-printer-v2/episodes-current/EP09/editor/final-review-v2/EP09-optimized-v2-review.mp4` SHA-256 `233c046dac01a1d9d0bce0302da759fb7cbdcf7cfa0b3b3e24ce4064f05ce2d2`; original v1 hash verified unchanged.
+- Original frozen scene source reused; clean native subtitle bands (392 exact-state representatives) and four static same-camera relation callbacks rendered via host Metal with both render locks. No CAD/core gear motion added; VIS004 three-repair history retained. Exact EP08 ASS; no backing box.
+- 90.6s, native/encoded1080×1920,30fps,H.264/AAC,2718 frames; full decode PASS. Narration timing measured without stretching; captions <=20 chars, proportional within-paragraph estimates. Synthetic quiet movement foley, not recording.
+- Deterministic technical evidence, main-thread static samples and external-model same-hash static sample assessment (one contact/four keys, no scores) in final-review-v2/checks. Real-time full viewing, listening, word-level alignment and independent same-version QA unavailable: NEEDS_REVIEW, no acceptance scores. No platform actions.
+- Production Python AST checks and actual execution; no generic application/CAD code changed, so no unrelated unit-test or geometry regeneration.
+
+
+## 2026-11-05 EP09 content repair v3
+
+- User request: 修复. Immutable new review `series/3d-printer-v2/episodes-current/EP09/editor/final-review-v3/EP09-content-fixed-v3-review.mp4`, SHA-256 `b5753180de86623ae433480417917b599670d611ef245f191b72d5267fd06079`. Original v1/v2 hashes verified unchanged.
+- Reused original native assembly/source shell motion and EP08 ASS; captured head-first opening/same-source push on host Metal under both locks. Source inventory check: no mechanical geometry changes, only existing shell transforms and explicit155/156 pressure-support teaching opacity. No gear rotation or physical feeding simulation.
+- 96.367s,2891frames,native/encoded1080×1920,30fps,H.264/AAC; exact final full decode and zero-lag AAC/mix association PASS. Every caption frame matches the authored semantic graph role; estimated paragraph timing is not word alignment. Source surface pointers and trimmed actual shaft endpoints documented.
+-32s silent A/B and39.967s audio local integration retained with hashes; final graphics refinement/identity has new final evidence. External model static sample scope is separate from full independent video/audio/audience QA.
+- Main-thread final static samples and bounded external static assessment; full realtime playback, listening and word alignment unavailable (local whisper package had no cached model, no download/request). Content REWORK: same-hash external static review still finds shared-axis/groove/path-indication ambiguity; no acceptance/growth scores; no platform action. EDITORIAL/OVERLAY round3 preserved and stopped; VIS0043 unchanged.
+- Production Python AST and actual render/encode/decode executed; no generic code or CAD modification, no unrelated unit tests or geometry re-export.
+
+## 2026-11-05 EP09 manual continuation4 local structure proof
+
+- New immutable native structure renders and 12s silent A/B at optimization/goal-v2/core-proof-v4-manual/local-ab-v1; hashes and ffprobe records bound in manifest.json. Both full FFmpeg decodes passed. Native Metal process exited0 under both render locks.
+- Main-thread static observation: true coax shaft more visible; local feed grooves remain partly occluded. REWORK, no full-film extension, no independent QA or perceptual scores. Static view changes are not continuous motion proof. EP08 ASS retained. Prior automatic rounds3 and VIS004 repairs3 preserved; this is manual continuation4. No CAD or original media overwritten, no platform action.
+
+## 2026-11-05 EP09 user-requested filament/sound preview
+
+- New15s local-feed-sound-v1 candidate SHA-256 c3d966a302e4b02afe1c94cd597cbc6d3248480e377405b4df6d4a17c9160c60.1080x1920/30,H.264/AAC, ffprobe and full decode passed. Native source stills reused unchanged; EP08 ASS retained.
+- Added abstract animated direction indicators, native local filament position and depth-limited downward marker, labeled synthetic motor/gear texture. No physical source rotation or continuous hotend-route claim. Actual encoded2/7/13s contact inspected; groove occlusion remains. Candidate NEEDS_REVIEW; full EP09 REWORK. No real-time playback, listening, independent QA, new narration or platform operation. Prior counts preserved.
+
+## 2026-11-05 EP09 actual teaching-wheel body motion
+
+- User correction: wheels did not move. New independent4s candidate native-rotating-teaching-v1, SHA-25652e4e6d28abd112cd7c4e64bae5b48b20c2c40d8c3142ad04c001f843019bfb7. Native host Metal24frames540x960,6fps phase playback, encoded30fps with repeated frames. ffprobe/full decode and production-script AST checks passed.
+- New smooth teaching disks/rollers at original axes actually rotate; wheel-attached marks visibly change orientation in encoded0/1.9/3.8s contact. Source geometry preserved and hidden; copied motor casing pinion-face removal remains unvalidated. No source-tooth meshing, friction or manufacturing claim. Labeled teaching/filament/synthetic sound.
+- Small wheel occlusion and simplified representation remain review questions. Candidate NEEDS_REVIEW, full episode REWORK; no perceptual or independent QA scores. Prior repair counts remain intact. No full render or platform action.
+
+## 2026-11-05 EP09 rejected disk candidate; original-tooth clearance diagnostic
+
+- Marked native-rotating-teaching-v1 REJECTED_BY_USER; no deletion or reuse as approved. User requested original gears without added disks/marks, then continued. Source STEP hashes and validity rechecked.
+- New bounded original-tooth-motion-v1 failed OCCT nonuniform torus conversion; evidence preserved, no geometry verdict. Version2 uniform-similarity copies tested .025/.05mm radial reduction at source axes and best +6deg large-gear phase. Both initial states still intersect (.0531168982/.0300054239mm3); no candidate within bounded limit, no full-motion check, no STEP/STL export and no render. Axial dimensions also change under similarity; not source-exact.
+- Production diagnostic scripts AST-pass; exact OCCT computations executed. Existing repair counts preserved; full EP09 REWORK, source-tooth motion NOT_READY; no new QA/media/growth claim or platform operation.
+
+## 2026-11-05 EP09 EP01 actual-motion baseline recheck
+
+- User pointed to accepted EP01. Rehashed exact baseline ee0664aae24fbc8e771b3883104b49f093cd33f4921de3129e05f75dff324dc3 and inspected actual6/10/14s encoded contact plus scene/gear_kinematics source. Existing EP09 ep01-reuse-v1 was rediscovered; later disk/marks/gear-scaling routes diverged from this established reference and are abandoned.
+- EP01 rotates original drive/idler/50T meshes with opposite feed rotation and coaxial synchrony; illustrative1.75mm filament/2.5mm/s and alias-frequency check. Motor pinion is not animated and motor moves out35mm during teaching opening. This baseline does not certify EP09 source contact clearance or motor-to-large motion.
+- Exact hashes/evidence and scoped reuse decision saved in ep01-reuse-check-v2; no new EP09 animation, realtime playback/listening, independent QA or platform operation. EP09 remains REWORK, issue history retained.
+
+
+## 2026-11-05 EP09 原齿形教学运动局部候选
+
+- 在既有人工续做范围内复用EP01矩阵旋转方式；不改源齿形、不加圆盘/轮面标记/箭头；按10:50、同轴同步、17:17反向推导。电机小输出独立源STEP导出并回读，固定机壳不转。
+- 新媒体：`series/3d-printer-v2/episodes-current/EP09/optimization/goal-v2/core-proof-v4-manual/ep01-original-motion-v1/EP09-original-gears-expanded-preview.mp4`；SHA-256 `10eb398a70bb115e2c422a87c0bd0a443e0ae9423a148a01946f07c633d7ad9a`；原生1080×1920/30fps，180帧，6秒，H.264/AAC；ffprobe与完整FFmpeg解码通过。A参考片也完整解码通过。
+- 明确轴向教学展开，7个时刻的相关轮体精确共体积均为零，不能外推为原位真实啮合或连续碰撞仿真。实际编码0/2/4秒联系图已静态检查；机械拟音已标注合成，未听审。
+- 局部NEEDS_REVIEW；全片REWORK，打印线夹送、整集连续性、实时观看/听审及独立QA尚缺。旧视频/源CAD/失败报告与修复次数保留，无全片重渲或平台操作。
+
+
+## 2026-11-05 EP09 approved-motion full optimization continuation — local preflight
+
+- Current user supplied complete-optimization plan explicitly approves motion sample `10eb398a70bb115e2c422a87c0bd0a443e0ae9423a148a01946f07c633d7ad9a` and continued completion; hash rechecked against disk. Scope is motion expression, not original-position meshing or independent QA. No publication authorization.
+- Root appended authorization, ownership, locked dependencies, caveats and local status to existing EP09 director-record, preserving existing issue IDs/counts and old deliveries. Added episode-local approved-motion-implementation.md. Existing production_checks v2 full-render gate actually returned BLOCKED for exhausted historical strategies and stale storage; no old-version gate/QA transfer claimed.
+- Root locked-timeline check: 42 captions, max18 characters, zero overlaps/out-of-bounds; hashed all7 original Kai WAVs. This is static timing/source evidence, not forced alignment/listening.
+- Producer actual native minimal frames exposed baseline hidden-state/camera regressions and groove occlusion before full rendering; corrections stay local. Root inspected one46.333s sampled frame, with visible local line but groove rim occlusion still under repair. New sampled expanded-geometry report has12 exact-common-volume phases with zero listed pair intersections; not continuous collision proof or original-position clearance.
+- Accepted-preview renderer may snapshot matrices before requested location offsets update; declared offsets/old clearance are not reused as new execution evidence. New actual transform and same-version local independent checks required. Full-film completion remains pending at this entry. No realtime playback/listening, word alignment, independent final verdict or scores claimed.
+- Director JSON parsed and current static constraints checked; git diff --check passed. No generic code changes or unrelated unittest run; final production-specific validation will be appended once actual new media exists. Ambient staged/unstaged validation work retained.
+
+
+## 2026-11-05 Explicit version-bound P2 manual continuation gate
+
+- Added optional production_checks v2 manual_continuations to represent actual explicit user continuation after historical P2 repair exhaustion without deleting issues, resetting counters or falsely marking them resolved. Bound to current full asset fingerprint set, issue ID/status/counters, named stage and hash-linked text containing the authorization quote. v1 behavior is unchanged.
+- Open P0/P1, holds, critical mechanical uncertainty, absent geometry/media evidence, formal scores and all existing checks remain blocking. Continuation scope is a Director-verified record; string/file association does not authenticate a user identity or certify actual media.
+- Regression checks cover exact-version/read-only continuation, legacy duplicate issue preservation, stale/changed authorization, mismatched issue/counters/assets/stage/quote, v1 refusal and retained defect/hold/evidence blocking. `.venv/bin/python -m unittest discover -s tests` passed142 tests in31.730s; focused gate suite passed18 tests before the final full run. No renderer/provider invoked by this gate change.
+- EP09 feeding repair1 independent native/encoded19-of19 downward texture tracks support only84.5–86.5s scoped resolution; whole episode remains held on independent transition-clearance REWORK. Original source intersections, parent issue counts4 and VIS0043 retained.
+
+
+## 2026-11-05 EP09 approved-motion complete v4 local review delivery
+
+- Completed frozen task bdaf1e165e684623e411d7ad53981d6ac2a58156b009db66bacf2f5cee774fbf under approved host Metal execution and both render locks; process exit0, locks released. Archived renderer unchanged. All2891 native1080x1920/30 frames individually hash/dimension verified:1390 byte-identical same-task local frames and1501 new native frames. No cross-renderer frame mix or upsampling.
+- Delivered `series/3d-printer-v2/episodes-current/EP09/editor/final-review-v4-motion/EP09-optimized-motion-v4-review.mp4`, SHA-256 `6d235620aea7f4b40057df0f87e2fb72db928b21fff24beed312b053dcc39622`,96.366667s,2891 frames,H.264/AAC48000Hz. ffprobe, entire-file FFmpeg video/audio decode, technical dependency/timeline association,42 captions(max18 characters,no overlap/out-of-bounds),Heiti SC44 at(540,1484) passed.
+- Decoded AAC PCM peak0.853668,zero clipped samples,source-mix correlation0.9999833. Audio source Kai retained exact SHA c6dac12890494ee358640ed26f6ba00d21b6fc909832788e35e670e210ba041a; mechanical audio is synthetic. Scan found no black/freeze events at its thresholds; -50dB low-level intervals3.624708–5.000167s and95.229542–96.348833s are disclosed for listening review. Measurement success does not certify audio appeal.
+- Root actually inspected one eight-frame encoded contact(6.3/18/31/43/59/77/85/93s) and96.3s encoded keyframe. Static framing/visibility observations only; no real-time playback or listening claimed. Source independent direct-world OCP7 extremal phases/19pairs agrees with producer58-phase source checks; source intersections remain, no continuous collision/original-position physical meshing/no-slip/manufacturing claim. Earlier located-Boolean candidate reports remain historical and superseded.
+- Exact-file technical report, static review, captions, synthetic-audio provenance, difference/review questions and byte-preserving previous delivery/director records are in final-review-v4-motion. New delivery-current.json bound to this file. Oldv1/v2/v3 videos and accepted motion sample rehashed unchanged. Source preflight QA retains its original scope; derived-file fingerprint bookkeeping explicitly does not transfer independent perceptual acceptance.
+- Schema2 delivery gate actually returned REVIEW_DELIVERY,reasons=[]; formal scores null. Historical EDITORIAL001/OVERLAY001 remain P2 REWORK at4attempts,VIS004 retains3; explicit-user version-bound continuation preserved. Full realtime viewing,listening/appeal,word/semantic alignment and independent final-file video/audience/audio acceptance remain NEEDS_REVIEW. No platform action.
+- Prior code change verification:142 unittest discovery tests passed; focused18 gate tests passed. Added episode-local execution/delivery scripts parsed and successfully executed. Final git diff --check performed; no staging or commit. Ambient staged/unstaged docs and production-vault preserved.
+
+
+## 2026-11-05 EP09 user-reported audio consistency defect
+
+- User heard uneven volume and delivery. Original source paragraphs range−34.02 to−24.88LUFS(span9.14LU); first-to-second jump8.86LU. Prior zero-clipping/full-file level checks did not verify paragraph consistency. S01–S03 exact v2 reuse; S04–S07 separately synthesized v3, boundary28.18s. Same Kai request does not certify delivery consistency.
+- New immutable gain-only candidate audio/loudness-repair-v1/EP09-v4-loudness-fixed-tone-review.mp4 SHA256 f1eb7e5926c081d28d0900a54d2e94bc6eb9e944b8649861e3b87417738a2f15. Constant per-paragraph gain, narration−27LUFS; source/stem/timing/video preserved, AAC re-encoded. Actual final mixed AAC segments−27.05 to−26.90LUFS(span0.15LU),zero PCM clipping,full decode and identical copied video bitstream checks pass.
+- Initial encoded-window measurement used output seeking and failed tolerance; corrected to explicit atrim before loudnorm. Existing media preserved, only measurements/report resumed; no duplicate encoding/TTS.
+- EP09-AUDIO-CONSISTENCY-001 remains REWORK for user-reported prosody; one gain-repair attempt. No actual listening available,no resynthesis,no fabricated voice/appeal judgment. delivery-current and director now explicitly mark user audio REWORK; media pointer retained, prior JSON bytes archived. Candidate is not complete prosody repair or accepted replacement. Diagnosis/report and exact remaining listening intervals stored locally. git diff --check passed; no unrelated tests or platform actions.
+
+
+## 2026-11-05 EP09 director optimization analysis
+
+- Analyzed actual gain-only candidate f1eb7e5926c081d28d0900a54d2e94bc6eb9e944b8649861e3b87417738a2f15; copied video bitstream identical to originalv4. Inspected one12-frame contact and4keys at3/34/43/94s, complying with thumbnail budgets. Correlated captions and frozen camera/filament windows; no real-time viewing/listening or sensory scores claimed.
+- Report qa/director-optimization-analysis-v1/analysis.md prioritizes existing audio consistency REWORK,40.37–43.36s axis-pointing mismatch,5–39.5s weak visual progression,first local filament at42s,loss of spatial anchors in cutaway,18.62s callback and ending picture/word timing. Findings distinguish static facts/editorial hypotheses from unobserved motion/audio/platform behavior. Existing teeth/motion/no-arrow constraints and issue counts preserved. No media production or source changes made in this analysis. git diff --check passed.

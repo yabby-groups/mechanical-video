@@ -130,6 +130,64 @@ class ProductionGateTests(unittest.TestCase):
         check.update(coverage=[0, 2], required_interval=[0, 2])
         self.assertEqual(self.evaluate()['status'], 'BLOCKED')
 
+    def manual_continuation_fixture(self):
+        p = self.v2_fixture()
+        issue = {'issue_id': 'historical-P2', 'severity': 'P2', 'status': 'rework',
+                 'repair_attempts': 4, 'rounds_without_improvement': 2}
+        p['issues'] = [issue]
+        # Legacy copies must retain their history too, not be silently removed.
+        self.record['issues'] = [copy.deepcopy(issue)]
+        (self.base / 'authorization.md').write_text('User: Continue this episode.')
+        entry = dict(issue, stages=['full-render', 'delivery'], issue_status=issue['status'],
+                     scope='Explicitly authorized local representation and review delivery',
+                     asset_fingerprints={k: r['sha256'] for k, r in p['assets'].items()},
+                     authorization={'origin': 'explicit_user', 'quote': 'Continue this episode.',
+                                    'evidence': {'path': 'authorization.md', 'sha256': gate.sha(self.base / 'authorization.md')}})
+        p['manual_continuations'] = [entry]
+        return p, entry
+
+    def test_explicit_manual_continuation_preserves_open_issue_and_counts(self):
+        p, entry = self.manual_continuation_fixture()
+        before = copy.deepcopy(self.record)
+        self.assertEqual(self.evaluate()['status'], 'READY')
+        self.assertEqual(self.evaluate('delivery')['status'], 'REVIEW_DELIVERY')
+        self.assertEqual(self.record, before)
+        p['schema_version'] = 1
+        self.assertIn('repair strategy exhausted', self.evaluate()['reasons'])
+
+    def test_manual_continuation_cannot_transfer_or_expand(self):
+        p, entry = self.manual_continuation_fixture()
+        original = copy.deepcopy(entry)
+        changes = [dict(issue_id='different'), dict(issue_status='resolved'),
+                   dict(repair_attempts=5), dict(rounds_without_improvement=0),
+                   dict(asset_fingerprints={}), dict(stages=['delivery']), dict(scope=''),
+                   dict(authorization={'origin': 'director', 'quote': 'continue'}),
+                   dict(authorization={'origin': 'explicit_user', 'quote': '', 'evidence': original['authorization']['evidence']}),
+                   dict(authorization={'origin': 'explicit_user', 'quote': 'An unrelated task.', 'evidence': original['authorization']['evidence']}),
+                   dict(authorization={'origin': 'explicit_user', 'quote': 'continue', 'evidence': {'path': 'proof', 'sha256': 'stale'}})]
+        for change in changes:
+            with self.subTest(change=change):
+                entry.clear()
+                entry.update(copy.deepcopy(original))
+                entry.update(change)
+                self.assertIn('repair strategy exhausted', self.evaluate()['reasons'])
+
+    def test_manual_continuation_does_not_override_blockers_or_missing_checks(self):
+        p, entry = self.manual_continuation_fixture()
+        for severity in ('P0', 'P1'):
+            with self.subTest(severity=severity):
+                p['issues'][0]['severity'] = severity
+                self.assertIn('open blocking issue: historical-P2', self.evaluate()['reasons'])
+        p['issues'][0]['severity'] = 'P2'
+        p['holds'] = ['preview hold']
+        self.assertIn('active hold', self.evaluate()['reasons'])
+        p['holds'] = []
+        p['critical_mechanical_uncertainty'] = True
+        self.assertIn('critical mechanical certainty not established', self.evaluate()['reasons'])
+        p['critical_mechanical_uncertainty'] = False
+        p['checks'] = [c for c in p['checks'] if c['kind'] != 'clearance']
+        self.assertIn('missing/stale check: clearance:lift', self.evaluate()['reasons'])
+
     def test_v2_local_encoding_has_explicit_excerpt_scope_only(self):
         p = self.v2_fixture()
         p['local_encode_interval'] = [0, 2]

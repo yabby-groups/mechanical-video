@@ -70,6 +70,8 @@
 | `capability_gaps` | 具体缺失能力、方法、首次记录、待答问题与下一评审人；同资产/能力下复用首次记录 |
 | `delivery_mode` | `review` 或 `formal`；待审可交付不等于正式验收 |
 
+v2 可选 `manual_continuations` 用于用户在历史 P2 修复上限后明确授权的本版续做，避免删除未闭问题或重置次数。每条记录须含 `issue_id, issue_status, repair_attempts, rounds_without_improvement`（与当前问题完全一致）、`stages`（仅 `full-render` / `delivery`）、具体 `scope`、当前完整 `asset_fingerprints`，以及 `authorization: {origin: explicit_user, quote: 原话, evidence: {path, sha256}}`。授权证据须真实可读、哈希匹配且文本包含所录原话；来源真实性仍由 Director 核对，工具不证明用户身份。任何资产、问题状态或修复计数变化都会使旧关联失效。该记录仅允许明确的人工续做，不关闭 P2、不产生验收分数，也不能解除 P0/P1、hold、关键机械不确定性、缺失制作检查或正式验收门槛。没有该记录时保留原有上限阻断行为；历史 v1 不支持此字段。
+
 每个检查必须包含 `kind, action`（全局项为 null）、`status: PASS`、`asset_fingerprints`（资产ID→SHA-256，全量精确相符）、`coverage: [开始秒,结束秒]`、`method, scope, producer, reviewer`、`evidence: [{path,sha256}]`。生产与独立复核身份必须不同；工具只验证声明。几何方法按当前机构选择，不能用一般包围盒零交集替代精确净空验证。工具头、路径或依赖变化必须更新资产，旧检查随即失效。
 
 这里的 PASS 是当前阶段的预检关联结论，不自动表示整段实际观看或正式验收。独立评审只支持有界预检时，保留原 `independent_verdict: PASS_SCOPED`、`preflight_only: true`、精确的 `actual_observation_intervals` 及 `full_action_perceptual_status: NEEDS_REVIEW`；`coverage` 只表示证据适用的冻结动作区间，实际媒体观测范围必须另列，不能冒称整段观看。该关联须有独立评审对本次有界问题的明确结论及同版源/时序依据，不能仅从稀疏样帧自行推断通过；已知缺陷或具体机械不确定性仍阻断，正式 acceptance 原要求不变。
