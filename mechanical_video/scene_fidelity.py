@@ -72,7 +72,7 @@ def node_signature(owner):
                       'use_nodes': getattr(owner, 'use_nodes', False)})
 
 
-def capture_scene(scene, source, renderer):
+def capture_scene(scene, source, renderer, cad_objects=()):
     """Capture the actual evaluated rest state in the current Blender process.
 
     Caller sets the intended baseline/rest frame first. Does not open, save or
@@ -106,6 +106,13 @@ def capture_scene(scene, source, renderer):
                 points = [evaluated.matrix_world @ v.co for v in mesh.vertices]
                 row['bounds_world'] = [[min(p[i] for p in points) for i in range(3)],
                                        [max(p[i] for p in points) for i in range(3)]] if points else []
+                if obj.name in cad_objects:
+                    # Opt-in local mechanism evidence; avoid duplicating whole
+                    # printer meshes in ordinary scene inventories.
+                    mesh.calc_loop_triangles()
+                    row['cad_geometry'] = {
+                        'vertices_world': [list(p) for p in points],
+                        'triangles': [list(t.vertices) for t in mesh.loop_triangles]}
             finally:
                 evaluated.to_mesh_clear()
         data = evaluated.data
@@ -130,7 +137,13 @@ def capture_scene(scene, source, renderer):
                 'hide_viewport': collection.hide_viewport,
                 'objects': sorted(o.name for o in collection.objects),
                 'children': [collection_state(c) for c in sorted(collection.children, key=lambda c: c.name)]}
+    missing = set(cad_objects) - {name for name, row in objects.items() if row['type'] == 'MESH'}
+    if missing:
+        raise ValueError('Missing CAD mesh objects: ' + ', '.join(sorted(missing)))
     return {'schema_version': 1, 'capture': 'evaluated-rest-state',
+            **({'cad_frame': {'presentation_shift_m': list(scene.get('presentation_shift_m'))
+                             if scene.get('presentation_shift_m') is not None else None}}
+               if cad_objects and hasattr(scene, 'get') else {}),
             'source': file_ref(source), 'renderer': file_ref(renderer),
             'implementation_sha256': file_ref(__file__)['sha256'],
             'unit_scale': scene.unit_settings.scale_length,
@@ -146,9 +159,9 @@ def capture_scene(scene, source, renderer):
             'objects': objects}
 
 
-def write_inventory(path, scene, source, renderer):
+def write_inventory(path, scene, source, renderer, cad_objects=()):
     """Exclusive output: never overwrite a baseline or an archived inventory."""
-    inventory = capture_scene(scene, source, renderer)
+    inventory = capture_scene(scene, source, renderer, cad_objects=cad_objects)
     with Path(path).open('x') as stream:
         json.dump(inventory, stream, ensure_ascii=False, indent=2, allow_nan=False)
     return inventory

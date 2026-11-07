@@ -84,3 +84,7 @@ v2 可选 `manual_continuations` 用于用户在历史 P2 修复上限后明确�
 - formal 另需 `acceptance` 中 `overall≥90, technical≥90, audience≥85, audio_technical≥90, audio_appeal≥85`；各项必须有 score、PASS、当前 asset_fingerprints、不同 producer/reviewer 和 evidence；`all_established_gates_passed: true` 且无能力缺口。分数由实际独立评审提供，工具不计算感官分，也不替代专项 QA 原有维度门槛。
 
 新派工统一引用该阶段结果。通用 CLI 的 `--production` 要求 `--record`，worker 可用 `--record` 在消费前检查；历史 series/remake 入口继续原有 hold。直接 Python API、自定义/手工脚本和未传 record 的非 production 演示不被全局拦截。归档渲染器完全不改。通过工具也不授予制作、批准或发布授权。
+
+### OCCT 渲染前几何证据（新生产 v3）
+
+新正式生产使用 `production_checks.schema_version:3` 和 `--require-version 3`。v3 继承 v2 全部规则，并要求 `assets.cad_preflight` 指向当前 PASS 的 CAD 检查报告；报告所有 inputs 也须绑定到 assets，且报告的实际 mesh 几何覆盖全部列入的 CAD 实例、scene inventory 必须对应本版 `assets.scene_inventory`。先在现有 evaluated rest-state 采集流程用 `capture_scene(...,cad_objects=[实际对象名])` 采集目标机构，再运行 `.venv/bin/python -m mechanical_video.cad_preflight manifest.json --output 新报告.json`，通过后才跑 full-render gate。详细字段、允许接触/过盈、真实 EP09 回归和有限采样边界见 [OCCT 集成](occt-integration.md)。历史 v1/v2 只读规则保留；不自动迁移旧记录，不以几何 PASS 关闭机械不确定性或替代独立 QA。

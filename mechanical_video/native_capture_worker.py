@@ -18,7 +18,7 @@ def main():
     if job['frame'] is not None:
         bpy.context.scene.frame_set(job['frame'])
     inventory = write_inventory(Path(job['output']) / 'scene-inventory.json', bpy.context.scene,
-                                job['source']['path'], job['renderer']['path'])
+                                job['source']['path'], job['renderer']['path'], cad_objects=job.get('cad_objects', []))
     print('NATIVE_CAPTURE_COMPLETE', len(inventory['objects']), flush=True)
 
 

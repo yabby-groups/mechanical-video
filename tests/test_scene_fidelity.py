@@ -118,6 +118,14 @@ class SceneFidelityTests(unittest.TestCase):
             matrix[2][3] = 0
             current = capture_scene(scene, source, renderer)
             self.assertEqual(compare(baseline, current)['status'], 'BLOCKED')
+            mesh.calc_loop_triangles = lambda: None
+            mesh.loop_triangles = [SimpleNamespace(vertices=(0, 1, 0))]
+            scene.get = lambda name: (.1, .2, .3)
+            sampled = capture_scene(scene, source, renderer, cad_objects=['untagged-support'])
+            self.assertEqual(sampled['cad_frame']['presentation_shift_m'], [.1,.2,.3])
+            geometry = sampled['objects']['untagged-support']['cad_geometry']
+            self.assertEqual(geometry['vertices_world'], [[0, 0, 0], [1, 1, 1]])
+            self.assertEqual(geometry['triangles'], [[0, 1, 0]])
 
 
 if __name__ == '__main__':

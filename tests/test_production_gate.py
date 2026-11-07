@@ -61,6 +61,12 @@ class ProductionGateTests(unittest.TestCase):
                                       'geometry_sha256': 'deformed', 'appearance_sha256': 'material',
                                       'bounds_world': [[0, 0, 0], [1, 1, 1]]}}}
         policy = {'schema_version': 1, 'changes': []}
+        import trimesh
+        for name, x in [('a', 0), ('b', 4)]:
+            mesh = trimesh.creation.box(extents=[2, 2, 2])
+            mesh.apply_translation([x, 0, 0])
+            scene['objects'][name] = dict(scene['objects']['belt'], bounds_world=mesh.bounds.tolist(),
+                cad_geometry=dict(vertices_world=mesh.vertices.tolist(), triangles=mesh.faces.tolist()))
         for name, data in (('baseline.json', scene), ('current.json', scene), ('policy.json', policy),
                            ('fidelity.json', compare(scene, scene, policy))):
             (self.base / name).write_text(json.dumps(data))
@@ -70,12 +76,56 @@ class ProductionGateTests(unittest.TestCase):
         p['assets'].update(baseline_scene=ref('asset'), renderer=ref('asset'),
                            baseline_inventory=ref('baseline.json'), scene_inventory=ref('current.json'),
                            scene_policy=ref('policy.json'))
+        from tests.test_cad_preflight import fixture
+        from mechanical_video.cad_preflight import inspect_manifest
+        cad_path, cad_spec = fixture(self.base)
+        cad_spec.update(scene_inventory='current.json', blender_to_mm=1,
+                        require_mesh_geometry=True, scene_objects={'a':'a','b':'b'})
+        cad_path.write_text(json.dumps(cad_spec))
+        cad_report = inspect_manifest(cad_path)
+        (self.base / 'cad-report.json').write_text(json.dumps(cad_report))
+        p['assets']['cad_preflight'] = ref('cad-report.json')
+        for name, source in cad_report['inputs'].items():
+            p['assets']['cad_' + name] = source
         p['checks'].append(dict(p['checks'][0], kind='baseline_fidelity', action=None,
                                 reviewed_views=['whole_machine', 'bottom', 'routing', 'mechanism'],
                                 evidence=[ref('fidelity.json'), ref('ab.png')]))
         for c in p['checks']:
             c['asset_fingerprints'] = {k: r['sha256'] for k, r in p['assets'].items()}
         return p
+
+    def test_v3_cad_blocks_before_render_on_missing_stale_or_failure(self):
+        p = self.v2_fixture()
+        p['schema_version'] = 3
+        self.assertEqual(self.evaluate()['status'], 'READY')
+        ref = p['assets'].pop('cad_preflight')
+        self.assertIn('missing/stale/blocked CAD preflight', self.evaluate()['reasons'])
+        p['assets']['cad_preflight'] = ref
+        report_path = self.base / 'cad-report.json'
+        data = json.loads(report_path.read_text())
+        data['status'] = 'BLOCKED'
+        report_path.write_text(json.dumps(data))
+        p['assets']['cad_preflight']['sha256'] = gate.sha(report_path)
+        self.assertIn('missing/stale/blocked CAD preflight', self.evaluate()['reasons'])
+        self.assertIn('missing/stale/blocked CAD preflight', self.evaluate('delivery')['reasons'])
+
+    def test_v3_rejects_bounds_only_and_unbound_cad(self):
+        from mechanical_video.technical_evidence import canonical
+        p = self.v2_fixture()
+        p['schema_version'] = 3
+        path = self.base / 'cad-report.json'
+        data = json.loads(path.read_text())
+        data['coverage']['mesh_geometry_parts'] = []
+        data['result_sha256'] = canonical({k:v for k,v in data.items() if k != 'result_sha256'})
+        path.write_text(json.dumps(data))
+        p['assets']['cad_preflight']['sha256'] = gate.sha(path)
+        self.assertIn('missing/stale/blocked CAD preflight', self.evaluate()['reasons'])
+        self.assertEqual(gate.evaluate(self.record, self.base, 'full-render', self.now, require_version=3)['status'], 'BLOCKED')
+        p = self.v2_fixture()
+        p['schema_version'] = 3
+        p['assets'].pop('cad_a')
+        p['assets'].pop('cad_b')
+        self.assertIn('missing/stale/blocked CAD preflight', self.evaluate()['reasons'])
 
     def test_v2_requires_actual_baseline_comparison_and_independent_ab(self):
         p = self.v2_fixture()

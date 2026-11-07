@@ -177,7 +177,7 @@ def main():
         from .production_gate import evaluate
         try:
             result = evaluate(json.loads(a.record.read_text()), a.record.resolve().parent, 'full-render',
-                              require_version=2 if getattr(a, 'production', False) else 1)
+                              require_version=3 if getattr(a, 'production', False) else 1)
         except (OSError, ValueError, TypeError, KeyError, AttributeError):
             p.error('Invalid production record')
         if result['status'] == 'BLOCKED':

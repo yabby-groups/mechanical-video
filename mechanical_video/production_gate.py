@@ -20,11 +20,11 @@ def sha(path):
 
 
 def evaluate(record, base, stage, now=None, require_version=1):
-    """Validate production_checks v1 (historical) or v2, without writes."""
+    """Validate historical v1/v2 or CAD-gated v3, without writes."""
     now = time.time() if now is None else now
     errors, gaps = [], []
     p = record.get('production_checks')
-    if not isinstance(p, dict) or type(p.get('schema_version')) is not int or p.get('schema_version') not in (1, 2):
+    if not isinstance(p, dict) or type(p.get('schema_version')) is not int or p.get('schema_version') not in (1, 2, 3):
         return {'status': 'BLOCKED', 'reasons': ['missing production_checks v1'], 'gaps': []}
     if p['schema_version'] < require_version:
         return {'status': 'BLOCKED', 'reasons': [f'production_checks v{require_version} required for new production'], 'gaps': []}
@@ -60,7 +60,7 @@ def evaluate(record, base, stage, now=None, require_version=1):
         # An explicit, version-bound user continuation preserves an exhausted
         # P2 issue instead of falsely closing it or resetting its repair count.
         # It never overrides blocking defects, holds, evidence or acceptance.
-        if p['schema_version'] != 2 or issue.get('severity') != 'P2':
+        if p['schema_version'] < 2 or issue.get('severity') != 'P2':
             return False
         entries = p.get('manual_continuations', [])
         if not isinstance(entries, list):
@@ -115,8 +115,25 @@ def evaluate(record, base, stage, now=None, require_version=1):
         errors.append('missing action inventory')
     required = [(kind, action) for kind in STAGES[stage] for action in
                 (actions if kind in ('source_action', 'unfold', 'reassembly', 'attachments', 'clearance', 'neighbors', 'overlays', 'foley') else [None])]
-    if p['schema_version'] == 2 and stage in ('full-render', 'delivery'):
+    if p['schema_version'] >= 2 and stage in ('full-render', 'delivery'):
         required.append(('baseline_fidelity', None))
+    if p['schema_version'] >= 3 and stage in ('full-render', 'delivery'):
+        # Deterministic CAD diagnostics precede expensive rendering. This is
+        # separate from independent visual/mechanical review, never a substitute.
+        from .cad_preflight import verify_report
+        cad_ref = assets.get('cad_preflight')
+        try:
+            if not linked(cad_ref):
+                raise ValueError('missing CAD evidence')
+            cad_path = Path(cad_ref['path'])
+            cad_report = json.loads((cad_path if cad_path.is_absolute() else base / cad_path).read_text())
+            if (not verify_report(cad_report)
+                    or not all(ref['sha256'] in fingerprints.values() for ref in cad_report['inputs'].values())
+                    or cad_report['inputs'].get('scene_inventory', {}).get('sha256') != fingerprints.get('scene_inventory')
+                    or set(cad_report['coverage'].get('mesh_geometry_parts', [])) != set(cad_report['facts'])):
+                raise ValueError('stale CAD evidence or unbound CAD sources')
+        except (OSError, ValueError, KeyError, TypeError, AttributeError, RuntimeError):
+            errors.append('missing/stale/blocked CAD preflight')
     for kind, action in required:
         candidates = [c for c in checks if c.get('kind') == kind and c.get('action') == action]
         valid = False
@@ -124,7 +141,7 @@ def evaluate(record, base, stage, now=None, require_version=1):
             interval = actions[action] if action is not None else p.get('required_interval')
             # A local encoding proves its selected excerpt, not the full film.
             # Keep all action/global checks and final encoding on their full scope.
-            if kind == 'local_encode' and p['schema_version'] == 2 and 'local_encode_interval' in p:
+            if kind == 'local_encode' and p['schema_version'] >= 2 and 'local_encode_interval' in p:
                 local = p['local_encode_interval']
                 finite = lambda v: isinstance(v, (float, int)) and not isinstance(v, bool) and math.isfinite(v)
                 if not (isinstance(local, list) and isinstance(interval, list)
@@ -257,8 +274,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--record', type=Path, required=True)
     parser.add_argument('--stage', choices=STAGES, required=True)
-    parser.add_argument('--require-version', type=int, choices=(1, 2), default=1,
-                        help='Use 2 for new production; default preserves historical read-only evaluation')
+    parser.add_argument('--require-version', type=int, choices=(1, 2, 3), default=1,
+                        help='Use 3 for new CAD-gated production; default preserves historical read-only evaluation')
     args = parser.parse_args(argv)
     try:
         record = json.loads(args.record.read_text())

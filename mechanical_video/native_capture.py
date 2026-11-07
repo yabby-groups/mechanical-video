@@ -12,7 +12,7 @@ from .runtime import GPUUnavailable, exclusive_lock, require_metal_device
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def capture(source, renderer, output, blender=None, frame=None, timeout=120):
+def capture(source, renderer, output, blender=None, frame=None, timeout=120, cad_objects=()):
     source, renderer, output = Path(source).resolve(), Path(renderer).resolve(), Path(output).resolve()
     inputs = {'source': scene_fidelity.file_ref(source), 'renderer': scene_fidelity.file_ref(renderer),
               'implementation': scene_fidelity.file_ref(scene_fidelity.__file__)}
@@ -20,6 +20,8 @@ def capture(source, renderer, output, blender=None, frame=None, timeout=120):
         raise ValueError('Invalid capture inputs')
     if output.exists():
         raise ValueError('Output must be a new task directory')
+    if not isinstance(cad_objects, (list, tuple)) or any(not isinstance(n, str) or not n for n in cad_objects):
+        raise ValueError('Invalid CAD object names')
     # A sandbox without Metal must not launch Blender and consume a crash attempt.
     require_metal_device()
     executable = blender or os.environ.get('BLENDER_BIN') or shutil.which('blender') or '/Applications/Blender.app/Contents/MacOS/Blender'
@@ -27,7 +29,7 @@ def capture(source, renderer, output, blender=None, frame=None, timeout=120):
         output.mkdir(parents=True, exist_ok=False)
         worker = output / 'capture-worker.py'
         worker.write_bytes(Path(__file__).with_name('native_capture_worker.py').read_bytes())
-        job = dict(inputs, project_root=str(ROOT), output=str(output), frame=frame,
+        job = dict(inputs, project_root=str(ROOT), output=str(output), frame=frame, cad_objects=list(cad_objects),
                    worker=scene_fidelity.file_ref(worker))
         request = output / 'request.json'
         request.write_text(json.dumps(job, ensure_ascii=False, indent=2))
@@ -48,7 +50,8 @@ def capture(source, renderer, output, blender=None, frame=None, timeout=120):
                     unchanged = all(scene_fidelity.file_ref(ref['path'])['sha256'] == ref['sha256'] for ref in inputs.values())
                     if (not unchanged or inventory.get('source') != inputs['source']
                             or inventory.get('renderer') != inputs['renderer']
-                            or inventory.get('implementation_sha256') != inputs['implementation']['sha256']):
+                            or inventory.get('implementation_sha256') != inputs['implementation']['sha256']
+                            or any(not inventory['objects'].get(n, {}).get('cad_geometry') for n in cad_objects)):
                         result['reason'] = 'Capture input association changed'
                     else:
                         result.update(status='PASS', source_unchanged=True, objects=len(inventory['objects']),
@@ -69,9 +72,10 @@ def main(argv=None):
     parser.add_argument('--frame', type=int, help='Default: frame stored in the saved scene')
     parser.add_argument('--blender', help='Default: BLENDER_BIN, PATH, or installed macOS Blender')
     parser.add_argument('--timeout', type=int, default=120)
+    parser.add_argument('--cad-object', action='append', default=[], help='Actual mesh name for evaluated CAD geometry; repeat for local mechanism')
     args = parser.parse_args(argv)
     try:
-        result = capture(args.scene, args.renderer, args.output, args.blender, args.frame, args.timeout)
+        result = capture(args.scene, args.renderer, args.output, args.blender, args.frame, args.timeout, args.cad_object)
     except GPUUnavailable:
         print(json.dumps({'status': 'GPU_ACCESS_REQUIRED', 'blender_started': False,
                           'next_action': 'Run this same command through the executor-approved host GPU path; keep sandbox configuration unchanged.'}))

@@ -69,6 +69,26 @@ class NativeCaptureTests(unittest.TestCase):
             result = native_capture.capture(self.source, self.renderer, self.output)
         self.assertEqual(result['status'], 'BLOCKED')
 
+    def test_cad_request_does_not_pass_without_actual_geometry(self):
+        def execute(command, **kwargs):
+            job = json.loads((self.output / 'request.json').read_text())
+            self.assertEqual(job['cad_objects'], ['gear'])
+            inventory = {'source': job['source'], 'renderer': job['renderer'],
+                         'implementation_sha256': job['implementation']['sha256'],
+                         'objects': {'gear': {}}}
+            (self.output / 'scene-inventory.json').write_text(json.dumps(inventory))
+            return subprocess.CompletedProcess(command, 0)
+        with patch.object(native_capture, 'ROOT', self.root), patch.object(native_capture, 'require_metal_device'), \
+                patch.object(native_capture.scene_fidelity, 'compare'), \
+                patch.object(native_capture.subprocess, 'run', side_effect=execute):
+            self.assertEqual(native_capture.capture(self.source, self.renderer, self.output, cad_objects=['gear'])['status'], 'BLOCKED')
+
+    def test_invalid_cad_request_never_starts_blender(self):
+        with patch.object(native_capture.subprocess, 'run') as run:
+            with self.assertRaises(ValueError):
+                native_capture.capture(self.source, self.renderer, self.output, cad_objects='gear')
+            run.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()
