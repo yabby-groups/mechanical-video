@@ -23,6 +23,7 @@ def validate_benchmark(report, base):
     if not isinstance(cases, list) or not cases:
         raise ValueError('sensory benchmark cases missing')
     topics, identities = {}, set()
+    digests = {}
     for case in cases:
         if not isinstance(case, dict):
             raise ValueError('malformed sensory benchmark case')
@@ -54,7 +55,11 @@ def validate_benchmark(report, base):
                 raise ValueError('benchmark evidence missing: ' + key)
             path = Path(ref['path'])
             path = path if path.is_absolute() else Path(base) / path
-            if hashlib.sha256(path.read_bytes()).hexdigest() != ref['sha256']:
+            path = path.resolve()
+            if path not in digests:
+                with path.open('rb') as stream:
+                    digests[path] = hashlib.file_digest(stream, 'sha256').hexdigest()
+            if digests[path] != ref['sha256']:
                 raise ValueError('stale benchmark evidence: ' + key)
         topics.setdefault(topic, set()).add(kind)
     if len(topics) < 2 or any(not (DEFECTS | CONTROLS) <= kinds for kinds in topics.values()):
