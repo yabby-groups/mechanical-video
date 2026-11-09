@@ -37,7 +37,7 @@ def silence_intervals(log, duration):
     return intervals
 
 
-def inspect(audio, script, output, use_asr=False, technical_evidence=None):
+def inspect(audio, script, output, use_asr=False, technical_evidence=None, htm_review=None):
     audio, script, output = audio.resolve(), script.resolve(), output.resolve()
     shared = None
     execute = run
@@ -137,6 +137,15 @@ def inspect(audio, script, output, use_asr=False, technical_evidence=None):
               'technical_evidence': str(technical_evidence) if technical_evidence else None,
               'technical_origin': shared.get('producer') if shared else 'local QA execution',
               'asr': asr, 'issues': issues, 'scores': scores, 'total': None, 'status': status}
+    if htm_review is not None:
+        from .htm_audio_bridge import validate_report
+        htm = validate_report(htm_review, audio, script)
+        report['htm_audio_review'] = {'report': str(Path(htm_review).resolve()),
+                                     'sha256': digest(Path(htm_review)),
+                                     'status': htm['status'], 'dimensions': htm['dimensions'],
+                                     'scope': 'audio only; existing scores and formal gates remain independent'}
+        if htm['status'] == 'REWORK' and report['status'] != 'FAIL':
+            report['status'] = 'REWORK'
     (output / 'audio-qa-report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2))
     return report
 
@@ -148,8 +157,9 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--asr', action='store_true', help='submit real audio to the configured existing ASR service')
     parser.add_argument('--technical-evidence', type=Path)
+    parser.add_argument('--htm-review', type=Path, help='Frozen, qualified-scope HTM audio evidence')
     args = parser.parse_args()
-    report = inspect(args.audio, args.script, args.output, args.asr, args.technical_evidence)
+    report = inspect(args.audio, args.script, args.output, args.asr, args.technical_evidence, args.htm_review)
     print(json.dumps({'status': report['status'], 'issues': len(report['issues']), 'asr': report['asr']['status']}))
     return {'PASS': 0, 'REWORK': 2, 'NEEDS_REVIEW': 3, 'FAIL': 4}[report['status']]
 

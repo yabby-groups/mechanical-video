@@ -178,6 +178,13 @@ def _capability_errors(state, required, base):
             validate_benchmark(report, base)
         except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
             errors.append(str(exc))
+    for name in set(required):
+        if name.startswith('htm_audio:'):
+            try:
+                from .htm_audio_bridge import validate_capability
+                validate_capability(name, state.get('capability_benchmarks', {}).get(name, {}))
+            except (OSError, ValueError, KeyError, TypeError, ImportError) as exc:
+                errors.append('unqualified scoped audio capability: ' + str(exc))
     if missing:
         errors.append('capabilities unavailable: ' + ', '.join(sorted(missing)))
     return errors
@@ -569,7 +576,7 @@ def command_guard(record, base, stage, command):
 
 def capability(path, name, benchmark):
     """Register an actually exercised adapter; declarations alone cannot enable it."""
-    if name not in ('continuous_av', 'audio'):
+    if name not in ('continuous_av', 'audio') and not name.startswith('htm_audio:'):
         raise ValueError('unsupported review capability')
     with _transaction(path) as (record, base):
         state = record['repair_controller']
