@@ -61,3 +61,15 @@ class EventTimelineTests(unittest.TestCase):
         save('timeline',{'duration':2,'captions':timeline['captions']})
         save('motion',{'event_bindings':[]})
         self.assertTrue(gate_errors({'assets':assets},base))
+
+    def test_measured_drift_detects_shift_and_repaired_clock(self):
+        from mechanical_video.event_timeline import compare_clocks
+        baseline=copy.deepcopy(self.build())
+        self.measurement['spans'][0].update(start=.45,end=1.95)
+        shifted=self.build()
+        result=compare_clocks(baseline,shifted)
+        self.assertEqual(result['status'],'BLOCKED')
+        self.assertAlmostEqual(result['checks'][0]['start_drift'],.2)
+        self.assertEqual(compare_clocks(baseline,baseline)['status'],'PASS')
+        self.audio.write_bytes(b'stale')
+        with self.assertRaises(ValueError):compare_clocks(baseline,shifted)

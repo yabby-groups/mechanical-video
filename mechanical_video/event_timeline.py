@@ -86,3 +86,23 @@ def gate_errors(checks, base):
         return []
     except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         return ['measured event timeline missing/stale: ' + str(exc)]
+
+
+def compare_clocks(reference, candidate, tolerance=0.1):
+    """Detect measured event drift in an isolated revision, not perceptual quality."""
+    if type(tolerance) not in (int, float) or not math.isfinite(tolerance) or tolerance < 0:
+        raise ValueError('invalid clock tolerance')
+    if not verify(reference) or not verify(candidate):
+        raise ValueError('stale or invalid event clock')
+    def identity(event):
+        return {k:v for k,v in event.items() if k not in ('start','end')}
+    if [identity(e) for e in reference['events']] != [identity(e) for e in candidate['events']]:
+        raise ValueError('event content differs; cannot compare timing alone')
+    checks=[]
+    for expected, actual in zip(reference['events'],candidate['events']):
+        start=actual['start']-expected['start'];end=actual['end']-expected['end']
+        checks.append(dict(event_id=actual['id'],start_drift=start,end_drift=end,
+                           status='PASS' if max(abs(start),abs(end)) <= tolerance else 'BLOCKED'))
+    return dict(status='BLOCKED' if any(c['status']=='BLOCKED' for c in checks) else 'PASS',
+                tolerance_seconds=tolerance,checks=checks,
+                scope='Measured event drift only; no audiovisual acceptance')
