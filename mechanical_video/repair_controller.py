@@ -463,10 +463,19 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
             if repair_id not in state['tasks']:
                 subject = state['tasks'].get(task.get('subject'), task)
                 repair_outputs = failure.get('repair_outputs', subject['outputs'])
-                reserved = [_path(base, p) for t in state['tasks'].values() for p in t.get('outputs', [])]
-                if any(_overlap(_path(base,p), q) for p in repair_outputs for q in reserved):
+                normalized = [_path(base, p) for p in repair_outputs]
+                if (len(set(normalized)) != len(normalized)
+                        or any(_overlap(a, b) for n, a in enumerate(normalized)
+                               for b in normalized[n + 1:])):
+                    raise ValueError('repair outputs must have exclusive ownership')
+                reserved = [_path(base, p) for t in state['tasks'].values()
+                            for p in t.get('outputs', [])]
+                if any(_overlap(p, q) for p in normalized for q in reserved):
                     raise ValueError('repair output conflicts with an existing exclusive output')
-                if any(_path(base, p) in {_path(base, q) for t in state['tasks'].values() for q in t.get('inputs', {})} for p in repair_outputs):
+                protected = [_path(base, p) for t in state['tasks'].values()
+                             for p in t.get('inputs', {})]
+                if (any(p.exists() for p in normalized)
+                        or any(_overlap(p, q) for p in normalized for q in protected)):
                     raise ValueError('repair must use new version outputs; preserve existing evidence')
                 state['tasks'][repair_id] = dict(id=repair_id, stage=subject['stage'], kind='repair',
                     issue_id=key, owner=issue['owner'], deps=[], inputs=deepcopy(failure.get('repair_inputs', payload['outputs'] or task['inputs'])),

@@ -126,6 +126,29 @@ class ControllerTests(unittest.TestCase):
         self.ref('v3', 'changed after review')
         self.assertNotEqual(rc.resume(self.record)['workflow_status'], 'COMPLETE')
 
+    def test_invalid_repair_outputs_leave_failed_completion_retryable(self):
+        self.setup(); self.produce(); self.claim('sample:review', 'reviewer')
+        for outputs in (['v2', './v2'], ['folder', 'folder/child'], ['source/child']):
+            before = self.record.read_bytes()
+            with self.subTest(outputs=outputs), self.assertRaises(ValueError):
+                rc.complete(self.record, 'sample:review', 'reviewer', 'invalid-failure',
+                    verdict='fail', failures=[dict(issue_id='gap', owner='Visual',
+                        severity='P1', required_checks=['contact'], evidence=self.proof,
+                        repair_outputs=outputs)])
+            self.assertEqual(self.record.read_bytes(), before)
+
+    def test_repair_output_cannot_overwrite_unregistered_existing_asset(self):
+        self.setup(); self.produce(); self.claim('sample:review', 'reviewer')
+        self.ref('protected', 'existing asset outside the task graph')
+        before = self.record.read_bytes()
+        with self.assertRaises(ValueError):
+            rc.complete(self.record, 'sample:review', 'reviewer', 'invalid-failure',
+                verdict='fail', failures=[dict(issue_id='gap', owner='Visual',
+                    severity='P1', required_checks=['contact'], evidence=self.proof,
+                    repair_outputs=['protected'])])
+        self.assertEqual(self.record.read_bytes(), before)
+        self.assertEqual((self.base / 'protected').read_text(), 'existing asset outside the task graph')
+
     def test_duplicate_and_resume(self):
         self.setup()
         self.claim('sample', 'producer')
