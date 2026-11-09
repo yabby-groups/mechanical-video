@@ -71,6 +71,25 @@ class WorkflowAutonomyTests(unittest.TestCase):
                                            evidence={str(other):rc._sha(other)}))
         self.assertIn('minimal-sample',rc.next(self.path)['blocked'])
 
+    def test_legacy_capability_registration_preserves_controller_history(self):
+        rc.initialize(self.path)
+        record=json.loads(self.path.read_text())
+        state=record['repair_controller'];state.pop('capability_benchmarks')
+        state['handoffs']=7
+        old_tasks=json.loads(json.dumps(state['tasks']))
+        old_events=json.loads(json.dumps(state['events']))
+        self.path.write_text(json.dumps(record))
+        before=self.path.read_bytes()
+        with self.assertRaises(ValueError):
+            rc.capability(self.path,'audio',dict(adapter='failed',detected=[]))
+        self.assertEqual(self.path.read_bytes(),before)
+        rc.capability(self.path,'audio',self.bench)
+        after=self.state()
+        self.assertEqual(after['handoffs'],7)
+        self.assertEqual(after['tasks'],old_tasks)
+        self.assertEqual(after['events'][:-1],old_events)
+        self.assertEqual(after['capability_benchmarks']['audio'],self.bench)
+
     def test_failed_cases_and_changed_raw_evidence_block_registration_and_resume(self):
         rc.initialize(self.path)
         report=benchmark_fixture(self.base)

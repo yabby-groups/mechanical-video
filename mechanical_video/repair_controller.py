@@ -534,12 +534,12 @@ def capability(path, name, benchmark):
         candidate = deepcopy(state)
         if name not in candidate['capabilities']:
             candidate['capabilities'].append(name)
-        candidate['capability_benchmarks'][name] = deepcopy(benchmark)
+        candidate.setdefault('capability_benchmarks', {})[name] = deepcopy(benchmark)
         errors = _capability_errors(candidate, [name], base)
         if errors:
             raise ValueError('; '.join(errors))
         state['events'].append(dict(event='capability', name=name,
-            prior=deepcopy(state['capability_benchmarks'].get(name)), benchmark=deepcopy(benchmark)))
+            prior=deepcopy(state.get('capability_benchmarks', {}).get(name)), benchmark=deepcopy(benchmark)))
         state['capabilities'] = candidate['capabilities']
         state['capability_benchmarks'] = candidate['capability_benchmarks']
         return deepcopy(benchmark)
