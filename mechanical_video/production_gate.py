@@ -103,6 +103,22 @@ def evaluate(record, base, stage, now=None, require_version=1):
         closed = issue.get('status') in ('closed', 'resolved', 'verified')
         if issue.get('severity') in ('P0', 'P1') and not closed:
             errors.append('open blocking issue: ' + str(issue.get('issue_id', 'unknown')))
+        if p['schema_version'] >= 4 and closed and issue.get('severity') in ('P0', 'P1'):
+            resolution = issue.get('resolution', {})
+            needed = issue.get('required_checks')
+            if (not issue.get('issue_id') or not isinstance(needed, list) or not needed
+                    or not all(isinstance(k, str) and k for k in needed)
+                    or not isinstance(resolution, dict)
+                    or resolution.get('issue_id') != issue['issue_id']
+                    or resolution.get('verdict') != 'verified'
+                    or not resolution.get('producer') or not resolution.get('reviewer')
+                    or resolution['producer'] == resolution['reviewer']
+                    or not isinstance(resolution.get('checks_covered'), list)
+                    or not set(needed).issubset(set(resolution['checks_covered']))
+                    or resolution.get('asset_fingerprints') != fingerprints
+                    or not isinstance(resolution.get('evidence'), list)
+                    or not resolution['evidence'] or not all(linked(ref) for ref in resolution['evidence'])):
+                errors.append('blocking issue closure lacks independent current-version proof: ' + str(issue.get('issue_id', 'unknown')))
         attempts = issue.get('repair_attempts')
         if not isinstance(attempts, int) or isinstance(attempts, bool) or attempts < 0:
             errors.append('missing repair count')
