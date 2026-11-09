@@ -1,11 +1,30 @@
+# Environments and credentials
 .venv/
 __pycache__/
-artifacts/
 *.egg-info/
 .DS_Store
 .env
 .env.*
 !.env.example
-output
+
+# Local production workspaces, including their frozen scripts and metadata.
+/artifacts/
+/output/
+/series/
+/experiments/
+/reports/
+/production-vault/
+/render.lock
+/worker.lock
 *.mp4
-series
+
+# Episode/session-specific helpers are local experiments, not maintained tools.
+/scripts/validate_repair_assets.py
+/scripts/validate_ep09_occt.py
+
+# Keep authored analytics documents, not browser captures or generated exports.
+/docs/analytics/**
+!/docs/analytics/**/
+!/docs/analytics/**/*.md
+/docs/*cache-cleanup-*.json
+/docs/agent-model-usage-*.json
