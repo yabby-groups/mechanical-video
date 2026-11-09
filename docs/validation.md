@@ -1884,6 +1884,308 @@ Documentation-only: added optimization/goal-v2/session-resume-20261105.md under 
 - README增加当前批次入口；既有validation改动原样保留并追加本条。
 - 文档检查：git diff --check通过；本次没有代码或媒体变更，不运行渲染/视听验收，不声称制作或用户验收完成。
 
+## 2026-11-06 — EVERYDAY_EP01 棘轮局部机构验证
+
+- 用户「继续做视频」后从最新日常机械交接开始棘轮首集，保留全部打印机旧集/模板/队列/当前暂存工作。读取实际EP03编码片12秒帧，绑定实片、候选原生模板、工具和源PDF等9项身份，实际哈希核对一致；仅复用舞台/灯光/材料/相机语言及工具，不继承其他集验收。
+- 留存CA2628386C公开PDF及摘录/OCR，主线程核对FIG.1与§0025/26/0031–35：外齿轮、两爪、选择簧与片簧；17为选择柱，非固定轴证据。采用原创教学尺寸与圆头单齿替代，不声称零售型号拆解、制造精度或动力学。CAD技能STEP入口因OCP8缺TDF_LabelSequence启动失败，记录后使用现有build123d直接导出/重导入，未修改Skill/全局环境。
+- EVERYDAY-CORE-001保留三次尝试：v1弹簧断接；v2连接修复但推力方向错误，180原生帧保留且未编码放行；v3改变弹簧座、片簧接触侧和鼻部支撑。7个STEP独立重导入均有效单正体积，37弹簧实体相位无非许可穿透；721有限位置必要压簧方向为−0.861808至−0.735670、片簧径向向内分量为+0.156187至+0.176409。有限样本/正确方向不证明力平衡、刚度、载荷或连续路径。
+- 实际字幕样帧发现遮爪，记录EVERYDAY-OVERLAY-001；保持y1484及44字号，通过新layout-v2相机目标上移解决。几何缓存不变，新任务指纹/渲染器归档/帧独立保留，不混帧。四张真实叠字样帧通过主线程检查后重新预算并渲染；GPU预检先返回GPU_ACCESS_REQUIRED且未启动Blender，同任务经scoped主机Metal执行并持render.lock，结束后释放。
+- 交付`series/everyday-mechanisms/episodes/EVERYDAY_EP01/visual/core-v3-layout-v2/EVERYDAY_EP01-core-v3-silent-review.mp4`，SHA-256 `237a4554a093bf7fb3d46b5c9490baf7687f8a8a6e37caf6821131a7b1e58906`：6秒/180帧，原生与编码均1080×1920/30、H.264、无音轨，全FFmpeg解码通过。共享local-silent检查无技术issue，整体NEEDS_REVIEW不冒充视觉/听审PASS。
+- 独立局部QA实际检查36张有序编码静帧（6fps）、独立重算721位置、重导入6个STEP；PASS_SCOPED，无本范围已证P0/P1，未独立重做全部布尔相位检查。两簧在0–2.5秒偏小为P2；实时观看、弹性/载荷、连续全路径和正式字幕/旁白同步仍未验。正式评分null，未合成声音、未制作90秒正式片、无平台操作。当前集记录、delivery-local-v3.json和script-ready-packet.md保留确切续做范围。
+- 验证：基础unittest discovery 158项通过（66.287秒，非新机构验收）；10个新版本Python源AST解析通过；源/交付JSON及引用路径检查、git diff --check通过。当前session已达项目4次spawn硬预算，不再派工；新产物在被.gitignore忽略的series目录，未自动暂存或提交。
+
+
+## 2026-11-06 — EVERYDAY_EP01 按高互动参考重制短片
+
+- 用户要求先找爆款再复刻；实际抖音同题参考 `7674149904713661348`，观察4.6万赞，证据和新制作位于 `series/everyday-mechanisms/episodes/EVERYDAY_EP01/reference-remake-v1/`。旧6秒局部机构保留，不转用旧QA。
+- 新片 `look-v2/Ratchet-reference-remake-v1-review.mp4`，SHA-256 `c6e24a20f4db050dd62a6f40ed1ceb37a69b867458c61070b6c0e94d96f17aca`；原生及编码1080×1920/30，306帧/10.2秒，H264/AAC。Metal Eevee渲染成功，完整A/V解码0退出，ffprobe断言通过。原创合成音效，无旁白，无源片/源音轨复用。
+- 4个独立STEP重导入正体；242有限姿态，26实体接触/邻件抽样见poses.json；非动力学或连续全路径证明。三个早期合成标题状态与最终0.5秒抽样静帧已看，未见标题遮挡。
+- `video_qa --profile local-av`：NEEDS_REVIEW、0 issues、vision not_run；不假报独立QA或实时观看/听审，分数null。正式接受与发布均未发生。活动Python AST和JSON解析通过；旧158项单测结果仅覆盖基础代码，本轮未改共享产品代码。
+
+
+## 2026-11-06 — EVERYDAY_EP01 原理配音版
+
+- 用户「视频可以但是不能只是这个样子，你要配音，讲明原理」：保留认可模型/材质/灯光/镜头，新增Ethan解说、9条单行字幕（最多11字），按实测语音重排正常速度的工作/回程及换向，不修改旧版。产物在 `series/everyday-mechanisms/episodes/EVERYDAY_EP01/reference-remake-v1/narrated-v1/`。
+- `Ratchet-principle-Ethan-narrated-v1-review.mp4`，SHA-256 `9e1ac5d2cad5c3d9765cb0319df80324b10a62ad4708d569c2842efd878eb4c3`；原生及编码1080×1920/30，499帧/16.633秒，H264/AAC；ffprobe断言、完整A/V解码通过。Metal Eevee同指纹全渲染成功。
+- 配音前核心语句到可见机构/动作对照见script.json；qwen3-tts-flash/Ethan，4段实测共15.672秒，无调速；实际旁白ASR去标点逐字一致，无差异。语音及最终MP4技术音频检查均NEEDS_REVIEW、0 issues；最终local-av视频检查NEEDS_REVIEW、0 issues、vision not_run。上述检查由主线程执行，不冒称独立QA。
+- STL与认可基线哈希一致；实际renderer函数499帧有限值/10次回程输出角保持检查通过。预览字幕合成和17张最终1fps抽样已检查，未见关键机构遮挡。句内字幕为测时/停顿候选；实时观看、听感、精确词级与音画对应仍待审，分数null。
+- 活动Python AST/JSON解析、渲染输入指纹一致性和git diff --check通过。本轮未改共享产品代码，未重复无关单测；旧CAD有限实体验证范围见基线poses.json，不新增制造/动力学准确性声明。
+
+
+## 2026-11-06 — EVERYDAY_EP01 对照EP03风格并改Kai
+
+- 用户要求「你看一看 EP03 的风格，现在的风格不对，配音的为止也不对，用音色 Kai」。实际核对EP03最新成片SHA-256 `1fa11d7a5240611bd1f4adde237154a10bfab5f7dac41fb1e34eae3d0057351b`，看4/12/35秒编码帧，读取保留native场景及源配方；记录复用计划后改教学台/调色/柔光/连续近景/标注和字幕位置，CAD保持逐字节一致。
+- 新片 `series/everyday-mechanisms/episodes/EVERYDAY_EP01/reference-remake-v1/ep03-style-kai-v3/Ratchet-EP03-style-Kai-v1-review.mp4`，SHA-256 `0ba9bfe59ee9705c0d22f1b3b0bd2e46050e11bbdcce1bc8b3b8f45e5fc8c9ba`；原生及编码1080×1920/30、552帧/18.4秒、H264/AAC；Metal Eevee同指纹全片渲染、ffprobe断言、完整A/V解码通过。
+- Kai为用户显式覆盖；4段实测17.424秒，不调速；9条字幕最多11字，句内为测时/停顿候选。最终6/10/15秒字幕白字Y1489–1529，EP03同算法12秒样本Y1486–1531；实际看最终6/15秒，机构关键部位未见字幕遮挡。早期v1/v2候选保留。
+- 552个实际renderer状态有限，11次回程输出角保持，源STL及Kai音频一致性、源码AST/JSON、渲染指纹检查通过。没有共享产品代码变化，未运行无关单测或重复生成未变CAD。
+- 最终MP4音频和local-av视频技术报告NEEDS_REVIEW、各0技术问题，非独立QA。整段旁白/混音ASR的“不”候选未获两个隔离源句佐证；原自动P1候选报告未修改，详见asr-boundary-review.json，9.392–9.512秒附近仍须实际听审。不以ASR判定口误或盲目重配。实时观看/听感/精确音画对齐及独立感知评分仍待审；未发布。
+
+
+## 2026-11-07 — EVERYDAY_EP01 用户试听反馈与优化分析
+
+- 用户对当前Kai版反馈「我听了没感觉有啥问题」，记录为用户试听无异常，保留Kai、不因ASR候选重配；不扩展为独立QA或全片正式接受。
+- 核对成片SHA-256 `0ba9bfe59ee9705c0d22f1b3b0bd2e46050e11bbdcce1bc8b3b8f45e5fc8c9ba`，实际抽查九个静帧并执行实际renderer状态函数对照字幕。7.1秒为回程却仍显示工作指认，10.7秒为工作却仍显示回程指认；属教学对应的改进候选，非机械原理倒置。
+- 分析与证据在 `series/everyday-mechanisms/episodes/EVERYDAY_EP01/reference-remake-v1/ep03-style-kai-v3/analysis-20261107/`；只分析/记录反馈，未改媒体、未调用TTS、未渲染、未发布。静帧和源时序不冒称实时观看/亲自听审，不填感知评分。
+
+
+## 2026-11-07 — EVERYDAY_EP01 原理指认与接触点优化交付
+
+- 用户「优化」授权落实前轮两项建议；新片 `series/everyday-mechanisms/episodes/EVERYDAY_EP01/reference-remake-v1/teaching-focus-v1/Ratchet-Kai-teaching-focus-v1-review.mp4`，SHA-256 `e9d143b19cd052dfefee712795987c43d34e2ebb78ffa94274787b971dd51d5c`；18.4秒/552帧、原生来源及编码1080×1920/30、H264/AAC，完整A/V解码通过。
+- 工作解释5.9145–9.392秒只做一次传力、回程解释9.512–13.64秒只做一次回程；增强描边标注并用CAD轮廓最近点小圈指示齿面。Kai WAV与用户试听基线逐字节一致，0次TTS、无调速；19个合成拟音事件重新对时。
+- 新原生渲染只含全局133–413帧281张同指纹PNG，首尾复用基线编码片段，不混用旧renderer原生帧。存储检查/实际局部A/B制作解码通过，STEP结束姿态180度对称差集体积0、原生边界图PSNR83.57dB；最终8个精确帧源对应PSNR41.51–50.85dB，包含两个切点相邻帧。
+- 552状态有限、7个时序样本和7个独立重导入STEP实体接触样本通过；原件均有效单正体，STL不变。源AST/JSON/渲染指纹和git diff --check通过。一次编码因-r与passthrough冲突在建文件前失败，保留日志；改用明确fps30/start0/roundnear后成功，无重渲或供应商重试。
+- 实际看局部A/B静态对照和最终7.1/10.7秒关键帧，指认对应、关键部位无遮挡。最终音视频技术报告NEEDS_REVIEW、各0技术问题；没有独立/实时观看/最终混音听审、强制词对齐或感知评分。未改共享产品代码，未重复无关单测；未发布。
+
+
+## 2026-11-07 — EVERYDAY_EP01 机械声增强对照与加长分析
+
+- 用户指出解说少、机械声小，并允许必要时加长。实测语音17.424/18.4秒（94.7%）；内容缺少越齿复位因果细节。新增约33秒讲解/画面草稿，尚未合成或渲染加长片。
+- 新18.4秒对照片 sound-presence-v1/Ratchet-Kai-mechanical-presence-v1-review.mp4，SHA-256 99c0ab15c255588fb486fa92b9810f536df7b3a642094bdd2ad2ddd9fc58fda4；机械合成拟音轨+14dB，保留原Kai源、语速及画面包/时间戳。原旁白−18.45 LUFS、机械轨−43.89 LUFS；最终峰值−4.09dBTP。
+- ffprobe断言1080×1920/30、552帧，完整解码通过；主线程audio_qa及local-av video_qa均NEEDS_REVIEW、0技术问题，未运行ASR/vision，无独立听审/实时观看或感知评分。没有TTS请求、GPU重渲、CAD/共享产品代码变更，未重复无关单测，未发布。
+
+
+## 2026-11-07 — EVERYDAY_EP01 自主完成Kai加长与机械声优化
+
+- 用户「你自己循环处理，分析，不要然我一直确认」授权自主完成前轮加长/机械声修改，不再发起例行阶段确认；实际请求用户决定0次，无平台操作。
+- 最终片 `series/everyday-mechanisms/episodes/EVERYDAY_EP01/reference-remake-v1/extended-kai-v1/closing-phase-v2/Ratchet-Kai-extended-principle-v2-review.mp4`，SHA-256 `e1318586c0d4c20aa87ade6837472cb599b5f60b23b26a2efc4ff14fae8fdf59`；36.8667秒/1106帧，原生来源及编码1080×1920/30、H264/AAC，ffprobe断言、完整A/V解码通过。前9.4秒复用旧优化片，中段独立渲染824帧，结尾另建同指纹任务219帧并作为独立编辑来源；无跨renderer原生帧混入新任务。
+- Kai四段旧MP3逐字节一致；只新增三段一次请求各成功，无重试/调速。讲解87→159字，17条单行字幕、最多11字、无重叠；新句实测时间线，句内字幕为候选，不冒称强制词对齐。
+- 合成拟音+14dB、31个实际回程对时事件，17.9167/36.4542秒无旁白点击窗口；旁白幅度映射保持。真实听感不由综合响度或峰值代替，详细响度/峰值见final-technical-evidence.json。
+- 修复新增工作段裁切、负向越齿声触发及结尾总结动作覆盖，各1轮；有限状态与相位、10+6个实际导入STEP配对采样、独立重导出有效单正体、824+219个实际原生关键件投影范围及最终8个精确帧源对应检查通过。保存旧候选、冻结源、预览、局部A/B和旧报告。
+- 最终音频及local-av视频技术报告NEEDS_REVIEW、0技术问题；主线程执行，无独立/实际听审、实时观看或词级对齐能力，感知评分null，未正式验收。历史95秒分支production_checks保持原状，不把其BLOCKED状态改为PASS。
+- 活动Python AST、JSON解析、素材哈希及git diff --check检查；本轮仅episode制作源与台账/验证记录，未改共享产品代码，不重复无关单测或未变CAD重建。
+
+
+## 2026-11-07 EVERYDAY_EP02 source and reference preflight
+
+User authorized the next click-pen film and autonomous reference-led iteration. Selected same-topic Douyin 7406290966925151514 (90.4s; observed 4902 likes, 2690 saves, 1237 shares); comparison 7541246753329270043 (display 3.5万 likes) has different sampled ball-tip/history/manufacturing focus. Actual browser paused samples and metadata are retained under `series/everyday-mechanisms/episodes/EVERYDAY_EP02/references/`; sampled stills do not prove full playback, listening or performance causality. Browser space12 finished without platform writes.
+
+Research saved primary US3120837A PDF/text/figures and source manifest. Specific three-lug, six-tooth, three-channel, two-spring topology supports original teaching reconstruction; dimensions and generated contact remain unverified. Actual EP03 encoded12s frame and existing scene/render sources inspected; immutable vault scene is preserved. Restricted Metal preflight correctly returned GPU_ACCESS_REQUIRED without Blender; scoped host Metal read-only preflight PASS. Local narration configuration availability checked without exposing credentials or making provider calls. `git diff --check` passed for touched documentary scope. No narration, full rendering or independent acceptance is claimed by this preflight. Current state and exact evidence live in EP02 director-record.json.
+
+## 2026-11-07 — EVERYDAY_EP02 按动圆珠笔完整审片版
+
+- 用户授权找同题高互动参考并自主迭代至完成。本集原创US3120837A教学重建，维持EP03工作室、字幕/音频工作流；保留来源、所有候选、冻结renderer、原始语音和回滚证据，无平台操作。
+- 成片 `series/everyday-mechanisms/episodes/EVERYDAY_EP02/editor-v2/Click-pen-Ethan-v1-review.mp4`，SHA-256 `a395e08b4e6c02e1e6a880b905e8737d76c1d2b9aa29e7295a0997dbb5ed0a6f`：94.1667秒、原生与编码1080×1920/30、2825帧、H264/AAC48k单声道，ffprobe断言及完整A/V解码通过。
+- 固定渲染指纹 `de049abb7c7b820c3c87aa414bac444cbc3c8cee44b6c6f723fb0f9ad3af223c`；同版本124帧局部预览后续渲染剩余2701帧，单个host Metal Eevee任务正常结束，无崩溃重试或跨版本帧混合。渲染前存储预算PASS，完整逐帧哈希清单保存在validation/final-v1/native-frame-manifest.json。
+- 新场景五个有效正体与实际闭合网格CAD关联PASS，六类邻件各九个关键姿态无超阈相交；此前33姿态与独立15姿态报告保留。全2825帧解析包络/角度单向/单元边界与12个机械声事件对时通过；有限检查不等于连续碰撞仿真。
+- PEN-POINTER-001、PEN-OVERLAY-001、PEN-SEMANTIC-TIMING-001各修复1轮并记录限定核查：36条实际可见性射线、22张实际字幕白墨采样，主线程独立检查四张新原生关键帧并复算白像素；字幕实际Y1491–1529对照EP03基线Y1486–1531。全片版v3制作门READY；独立源事实QA保留，制作门不替代感知评分。
+- Ethan八个请求一次成功、0重试，451字、47条逐字保留字幕，最长17字符。保留语音原速，12个明确标注合成拟音。最终AAC实测−20.21 LUFS/−1.99dBTP；音频技术脚本0问题、NEEDS_REVIEW，非独立听审。
+- 最终8个精确编码帧对源PNG PSNR最低39.9697dB；实际查看最终联系图及0/31.9/44.5/94.133秒关键帧。自动视频扫描9个P2静止候选原报告未改，另存源时间线意图核查，属于稳定状态/部件讲解或微动低于检测阈值，节奏受众判断仍NEEDS_REVIEW。无黑帧/解码错误。静态抽帧不等于实时观看。
+- 最终delivery门REVIEW_DELIVERY。实际连续观看、完整旁白/最终混音听审、词级对齐与独立受众/音频吸引力评价未完成，分数null、formal_acceptance=false。主线程技术报告不冒称独立QA。新任务脚本py_compile、JSON解析/哈希关联与git diff --check通过；共享代码未改，先前158项单测通过，本阶段未重复无关单测。
+- 检查脚本的FFmpeg select逗号转义及loudnorm JSON尾部解析各出现一次本地输入解析错误，均修复后重跑检查；未改成片、重合成配音或重复供应商请求。
+
+## 2026-11-07 — EVERYDAY_EP02 Kai吸引力优化完整交付
+
+- 用户明确要求对比爆款、优化吸引力、Kai音色并自主循环完成。新同题参考浏览器实际暂停抽看2/12/40/62秒，作品7406290966925151514新观察4903赞/190评论/2691收藏/1238分享；保留原观察值与原图。参考评论确有“为什么会旋转”的疑问，只作为该参考受众问题，不冒充本片数据；无发布/平台写操作，浏览器任务正常finish。样本不支持完整观看、听感或增长因果。
+- 新成片 `series/everyday-mechanisms/episodes/EVERYDAY_EP02/revision-kai-v2/editor/Click-pen-Kai-appeal-v2-review.mp4`，SHA-256 `4ce554c194a381cca153d5d878d5bdc89503a1443b19dee40e3319546ada6a6c`：99.9秒、2997帧、原生主图与编码1080×1920/30、同步原生小窗270×420/30、H264/AAC48k单声道。完整A/V解码、ffprobe/帧数/字幕规则通过；逐帧主图+小窗哈希清单保留。
+- 基于实际旧片和参考关键帧，不改源CAD或朝向，保留原工作室及字幕位置。新脚本去开头部件清单，以凸耳/长槽/斜面/止挡串联，内部近景约11.7→4.65秒、解释转动31.70→15.47秒；同屏实际同步笔尖结果，最多两条部件指认加一个阶段词。实际6秒旧A/新B编码与4.8秒并排对照已制作/查看，非平台单变量实验。新52条逐字单行字幕，最长15字。
+- Kai首候选9个完整段落实测约107秒，保留全部；有意义删去重复解释后仅四段新版本重配，其余五段Kai逐字节复用。总13个确定成功请求、0重试，最终选用9段，不调速；不沿用Ethan声音。初始及新语音、请求状态均保留，最终12个合成机械声随源姿态端点对时。
+- 新预览发现结尾按压中止挡指示线被推杆遮挡，延迟至真实止挡稳定阶段显示；PEN-POINTER-001总计2轮，不重置旧计数。新U5“按钮已经回来”之前补齐源按钮回位；PEN-SEMANTIC-TIMING-001总计2轮，声音不再重配。最终27张实际字幕采样、33条评估网格可见性射线全通过；所有2997帧解析间隙最低0.001mm、角度单向0→360、12拟音端点和8个段落边界通过，均是有限教学证据，不是动力学。
+- 所有原候选eebb77d9及6e75b4ff的来源、归档、预览和局部帧保留。最终指纹d3e5ab2a3247e4fbe8f180d2ad900b5bed4be7765974194f53240d7398f63ec7，本机host Metal Eevee单任务生成2997对原生帧，先180帧局部验证后只续其自身缺失帧，正常结束，无跨指纹帧混用/崩溃重试。高PNG压缩候选实测较慢，恢复基线无损compression15；无画质替换。存储预算同时计主图/小窗，安全系数1.25、临时1GiB（成片预期<100MB）、保留2GiB，启动前PASS，未删除源或旧片。
+- 新场景实际闭合网格与未变STEP五件正体、六类邻件各九关键姿态报告PASS；首次新场景及修指示线后的新场景各有独立内容寻址报告。最终仅U5时间锚变更，scene.py与初始姿态/静态网格完全相同，保留并关联同一实际CAD库存和诊断输入；当前全帧运动另行复核。制作门v3 READY，最终REVIEW_DELIVERY，不代表独立感知验收。
+- 最终8个精确编码帧对同帧主图/小窗合成PSNR最低39.8293dB；实际查看联系图和4.8/20.97/45.87/99.87秒四关键帧。自动视频静止候选旧9→新1（42.93–45.33秒2.4秒），不是留存/吸引力评分；最终音频还有15.03–16.21秒约1.19秒停顿候选。原始报告不改，感官解释留NEEDS_REVIEW，分数null。所有专项最终证据绑定当前MP4，主线程自检不冒称独立QA。
+- 本session4次spawn/20交接硬预算已耗尽，未再派工。实际完整实时观看、Kai及最终混音听审、词级对齐、独立Audience/Audio Appeal仍未具备；只完成可逆生产与待审交付。该分支旧Ethan文件、旧报告与锁定来源保留；当前Kai配置由用户明确指令覆盖旧默认。
+- 新任务Python脚本py_compile、JSON/哈希关联、交付门v3和git diff --check通过。共享产品代码/源CAD不变，未重复无关单测。制作检查中出现过一次内联shell引号语法错误及一次读取尚在写入的预览PNG失败，改用文件脚本/已完成预览后成功，不是提供商失败或重试；未改最终媒体。
+
+
+### 2026-11-08 EP02 contact-view v3 local proof
+- Preserved original CAD/Kai/final artifacts; three actual retained-teeth Eevee camera proofs and source-derived circular development in `series/everyday-mechanisms/episodes/EVERYDAY_EP02/revision-contact-view-v3/`.
+- Silent proof: native/encoded 1080x1920 at 30fps, 16s; ffprobe and full FFmpeg decode passed. Local proof only; clarity, realtime perception, Kai integration and independent QA remain open. P1 PEN-CONTACT-CLARITY-001 recorded without resetting prior issue counts.
+
+### 2026-11-08 EP02 context v4 static correction
+- User rejected standalone developed view for loss of object recognition. Preserved v3 and created actual full-pen plus synchronized 3D-detail native stills; visually inspected static composite in revision-context-v4.
+- Original cached geometry/Kai unchanged. No motion/independent/perceptual acceptance claimed; PEN-CONTACT-CLARITY-001 remains REWORK at attempt2. No new video encoded.
+
+### 2026-11-08 EP02 approved context video v4r1
+- User approved context-proof.png and authorized style-preserving continuation. Native task39932f01cbbfd87d: 2997 whole400x1500 and detail640x1150 frames retained; CAD/Kai/semantic timeline unchanged.
+- Final revision-context-v4/video/Click-pen-Kai-context-v4r1-review.mp4: 99.9s, encoded1080x1920@30 H264/AAC, SHA256 344d4ac47f4292607f65de3a15e96daac0d7fd6d11cf19a9e691f6b70edf879e. ffprobe/full decode/scan passed; AAC packet hash exactly matches previous Kai film.
+- PEN-CONTEXT-WINDOW-001 repaired once in compositor only; all2997 boxes inside whole view; actual encoded3s overlay maxY1645 vs1919 before. Old candidate/archives preserved.
+- QA NEEDS_REVIEW with12 freeze candidates, not confirmed defects. Independent realtime/audio/audience and forced alignment unavailable; scores null. Static producer review remains scoped.
+
+
+## 2026-11-08 EP02 reference-remake-v5 wide-head local candidate
+
+Third repair round of PEN-CONTACT-CLARITY-001, not a new round. Enlarged inferred working head generated as five valid positive single-solid STEP parts; 132 analytic poses and 33 independently reimported OCCT placements, six pair classes, maximum intersection 0 mm3. Four nominal spring STEP reimports valid; minimum main spring pitch .327375 mm vs .28 mm wire. CAD skill launcher failed OCP TDF_LabelSequence import and inspect lacked GLB sidecar; no Explorer success claimed. Original Kai/timeline retained. New Metal native proof +300 frame 15–25s local render completed,1080x1920 main and270x420 inset at30fps; ffprobe and full A/V FFmpeg decode passed. Exact artifact/hash and streams: series/everyday-mechanisms/episodes/EVERYDAY_EP02/reference-remake-v5-wide-head/local-validation.json. Producer static review still finds pusher/spring dominates contact; P1 remains REWORK, no full movie rendered. Three-round limit reached; independent listening/realtime/audience QA unavailable, scores null. Old assets preserved; no publication. No code unittest run: standalone production CAD/scene scripts only, actual generation/render checks used.
+
+
+## 2026-11-08 EP02 Kai pace-v6 short review
+
+User approved wide-head sample improvement and requested faster rhythm. Preserved exact visual/CAD baseline and old repair counts, created distinct pacing revision with local1.15/1.25 rate candidates; both decode. Selected1.15 conservatively, not a perceptual verdict. Complete new frozen Metal native render:2607 main1080x1920 and2607 inset270x420 JPEG frames at30fps. Source motion/camera/captions/labels/synthetic foley share source_time=output_time*1.15. Kai original master retained, atempo pitch-preserving version86.9s.52 single-line captions,max13chars,no overlaps; forced alignment remains unavailable. Frozen input hash checks and Python compilation passed. Exact final hash/specs/full A/V decode PASS recorded in EP02/revision-pace-v6/delivery-manifest.json and ffprobe.json. Full native frame count/resolutions checked. Actual encoded nine-timecode contact sheet generated. QA scripts run on exact new MP4; missing listening/realtime/independent evidence remains NEEDS_REVIEW,scores null. Intentional short review below formal90s minimum, not formal film acceptance. No library/unit-test changes; actual production render/encode verification used. Old assets preserved,no provider call,no upload/publication.
+
+
+## 2026-11-08 EP02 angle-v7r2 target-shot review
+
+User screenshot requests changed angle for first release/stop action. Original geometry,1.15 pacing andKai kept. Native candidate comparisons3 angles×3 states plus2 narrowed static views; selected side-under145deg/axial−0.2,scale.17,targetCADz2.3. Springs get same assembly-fixed material section in target shot, not changed CAD. Frozen native task450 main/inset pairs for editor23–38s; follow-up camera-return110 pairs and label-visibility11 pairs in independent immutable task directories. New neighbour checks found11 off-canvas label endpoints, then9 after camera-return repair;2nd repair gates labels until actual target within frame. Combined450 target frames now zero visible off-canvas label endpoints. Error evidence and interrupted candidate preserved. One final edit reuses immutablev6 source outside target and explicit three local clip ranges, not mixed native frame directories. Final86.9s1080x1920@30H264/AAC2607 frames and15s local both full A/V decode PASS; raw AAC data identical to v6. All native sequence sizes/counts and frozen input hashes verified. Current full hash81c73026052bcc8cb37f17fa33c3aba99d93427a0f22c7d4bd2e201d2b59bda2; exact specs/provenance: EP02/revision-angle-v7/delivery-current.json. Python encode compile passed. No CAD/library changes; cached validated solids reused and no unrelated unit suite run. Actual video QA scanner on exact final file; independent realtime/listening/audience acceptance unavailable,scores null. No upload/publication.
+
+### 2026-11-08 临时缓存清理
+
+- 清理 1503 个未跟踪的工具/Python 缓存文件，逻辑大小 169979727 字节；清单见 temporary-cache-cleanup-20261108.json。
+- 持有 worker.lock 与 render.lock；逐项确认删除，Git 暂存区差异保持不变。保留制作帧、音频、源件、模板库和报告。
+- 清单 JSON 解析及 git diff --check 通过；未修改代码，未运行单元测试或渲染。
+
+### 2026-11-08 大体积渲染缓存清理
+
+- 按用户追加的至少 60G 清理范围，删除 49993 张连续编号渲染帧，逻辑大小 72359275661 字节；扣除硬链接后可释放分配空间 65722691584 字节。每组保留首、中、尾三张抽样图。
+- 全部视频、音频、源文件、报告和 production-vault 保留；15158 个保留文件清理前后 SHA-256 一致。重渲染需要重新生成已删除帧，历史报告中的完整帧路径可能不再存在。
+- 非阻塞持有项目 worker/render/production 锁，删除前落盘逐文件清单；删除核对通过，暂存区不变。磁盘可用空间由 2289664000 增至 67993600000 字节（共享卷实时数值）。
+- 清单 docs/render-cache-cleanup-20261108.json 已解析验证；git diff --check 通过。无代码改动，未运行单测或渲染。
+
+
+## 2026-11-08 EVERYDAY_EP03 tape source and silent brake local proof
+
+New episode authorized by user “继续下一个视频”; previous episodes/assets preserved. Two explicitly cross-referenced Stanley sources US3214836A/US3216117A establish the arced shoe brake and spring-inner-fixed/outer-to-tape topology; 18 archived source files hash-verified. Three opening comparison and source-bound narration draft recorded; no synthesis/release. Core-v1 13 positive valid STEP solids independently reimported by producer and root, but static topology only; lower framing/subtitle collision and unimplemented continuous flexible motion remain documented.
+
+Brake-local-v2 corrects an inverted extrusion direction and inherited camera shift, preserves failed evidence, and renders 120 native1080x1920 JPEG90 frames at30fps on scoped host Metal with render.lock. 13 producer finite STEP/OCCT poses are valid; root separately reimports and recomputes three placements: shoe/tape gaps2.361197,1.138762,0mm and no positive common volumes in checked pairs. Nominal first touch only, not friction/preload/whole-cycle proof. Exact4s silent H264 MP4 SHA256 a7150e99225b4c543aa241e66bd5ebcb24b89efb5465542c37e88d46e31ea82b, root ffprobe and full FFmpeg decode PASS. local-silent scanner0 issues/NEEDS_REVIEW; generic evidence audio FAIL retained because intentional no audio. CAD launcher OCP.TDF.TDF_LabelSequence failure preserved, direct build123d export/reimport used; no Explorer success claimed. Python AST, JSON parsing and git diff --check passed; no library changes or unrelated unittest suite run.
+
+Storage first BLOCKED (about2.1GiB free), later external filesystem change restored about63GiB without agent cleanup; fresh local budget PASS, old reports retained. Narration/full episode remain BLOCKED by TAPE-CORE-MOTION-001: length-conserving spring/tape motion, payout/recoil, preload/release correspondence, actual local A/B and independent same-version perceptual review. No full film, narration, formal acceptance, upload, platform draft or publication. Evidence in series/everyday-mechanisms/episodes/EVERYDAY_EP03/director-record.json, root-static-part-check.json, root-brake-geometry-check.json and visual/brake-local-v2/.
+
+
+## 2026-11-08 EVERYDAY_EP03 reference-led tape-hook complete review film
+
+- Reference analysis: `series/everyday-mechanisms/episodes/EVERYDAY_EP03/reference-remake-v3/references/analysis.md`; main same-topic post observed6.1万 likes, paused sampled reference only, not retention causality. Original CAD/narration/foley.
+- Final `series/everyday-mechanisms/episodes/EVERYDAY_EP03/reference-remake-v3/Tape-hook-reference-remake-v3-review.mp4` SHA256 `4a7864cf16f0f4dc2bab7e6d9522f7e1a9889c5602be605ac737f8bb7b834653`; 109.066667s,3272frames. Native1080x1920/30 Eevee; encoded1080x1920/30 H.264/AAC. Actual full-render inventory matches frozen final pre-production inventory (`full-native-fidelity.json`:PASS); all native frame hashes preserved.
+- Generated12 independent positive-volume STEP parts; core6 actual evaluated meshes versus STEP preflight PASS (`cad-preflight-v4.json`).2940 finite sampled path pair checks no intersections, two rivet rest unions symmetric difference0. Interrupted predecessor full task and all repair evidence preserved. Not swept-volume/dynamics/manufacturing certification.
+- Existing `test_cad_preflight.py` discovery:12 tests PASS,50.844s. Natural Ethan/qwen3-tts-flash seven measured units retained through visual repair; synthetic sliding sound is labeled, not a recording.58 one-line captions,max18characters; internal caption timing estimated, not forced aligned.
+- Final shared technical package probe/full A/V decode/audio scan/caption checks collected; Audio QA0 issues/NEEDS_REVIEW; Video QA9 P2 freeze/hold candidates of2-4seconds/NEEDS_REVIEW. Candidates retained, not silently closed. Full-render record gate READY before render; final delivery gate REVIEW_DELIVERY with no blocking reasons.
+- Independent source/predecessor bounded static reviews do not become independent final-hash acceptance. Realtime viewing, listening/final mix appeal, exact word/action/caption correspondence,9hold candidates and independent audience review remain open; scores=null,formal_acceptance=false. No platform writes or publication.
+
+
+## 2026-11-08 日常机械后续规划同步
+
+仅文档与只读运营证据：新增后续brief、复盘及7份JSON，README补充最新入口。9份跨项目文件逐一SHA256一致，JSON均可解析，新增相对Markdown链接已核对存在。未运行渲染、生成、代码测试或平台写入；既有未提交内容保留。
+
+
+## 2026-11-09 EVERYDAY_EP03 用户否决后的外形与风格修正 v4
+
+- 用户否决v3（风格改变、主体不像卷尺），旧片/报告完整保留并标记REJECTED_BY_USER；新片`revision-identity-v4/Tape-measure-original-style-v4-review.mp4`，SHA256 `c9e8a67d9d462c2db16ec7260ae9a666f82eacf079bf41cf2e3af95c6b0f0290`，109.066667s/3272帧，原生及编码1080×1920/30 H264/AAC。
+- 实际观察EP01/EP02/v3联系图及官方产品外形图，恢复原舞台金属/直接描边字幕，无大黑卡；圆角壳体、锁钮和下出带口明确整只卷尺。外壳尺寸/静态卷绕为推测，不主张真实收卷仿真。实物参考网页长度文案与图示不一致已记录，不复制品牌标称。
+- 18个STEP回读有效正体积，六件原尺钩核心差体积零；CAD预检PASS，2940组有限姿态间隙PASS_SCOPED。保留受限CAD入口OCP导入失败证据，未变更依赖环境。完整帧清单与原生库存对照见native-frame-manifest.json/full-native-fidelity.json。
+- 8秒同指纹局部编码/解码通过后全渲染；仅复用同一不可变任务的首240帧，无跨版本混帧。新鲜只读存储预算PASS；全片ffprobe/完整FFmpeg音视频解码、字幕/音频扫描已收集。局部报告曾误传全片字幕导致超时范围FAIL，原报告保留，按8秒裁切字幕后通过。
+- 保留实测原旁白，重新按同版运动合成低电平滑动声（非录音）；58单行字幕最长18字符，句内估算非强制对齐。小视图名义投影4623点未遮挡，252个读数字幕帧的40mm点均在屏内；非字形/遮挡/实时可读性验收。
+- 技术和生产侧静态观察不冒充独立验收；实时观看、听审、语词动作对齐、同哈希独立音视频/观众QA及用户验收保留NEEDS_REVIEW/null。修正两项用户P1仅标明生产侧已修，用户未批准。无平台写入或发布。无库代码改动，不重复既有12项CAD工具测试；本次实际CAD生成/预检、渲染、完整解码和脚本语法验证。
+
+- 本版最终技术包7项PASS；Audio QA零自动问题/NEEDS_REVIEW；Video QA保留9项P2停留候选（0–2.5667、33.7333–41.0333、46.5–49.5、51.0667–56.4、68.2667–74.2667、89.1667–91.6667、95.0333–97.7秒，含相邻分项），不能自动判定为故障或创作通过。最终原生库存与同任务预检库存SHA256一致，静态保真PASS；不替代动态/风格验收。
+
+
+## 2026-11-09 EVERYDAY_EP03 用户纠正主题：内部工作原理 v5
+
+用户明确否决尺头主题；v3/v4保留且标记REJECTED_BY_USER_WRONG_TOPIC。恢复US3214836A与其交叉引用US3216117A的内部源：卷簧固定内端、外端接尺带、弧形压脚压尺带。新增internal-principle-v5连续12秒无声局部，原生/编码1080×1920@30，360帧，H264，完整FFmpeg解码PASS；SHA256 da0f890e26e9a868076d7a5120147ffcef8bd9d7374db66e18e14436d26c1bbe。
+
+361时点解析中心线簧长/带长误差<1e-7mm、连接端点零间隙、锁止期间不放带；10份有限STEP回读有效正体积，3姿态压脚间隙2.361197/1.138762/0mm、交体积0。静态20件有效正体积；非连续碰撞、预紧/摩擦/应力或动力学验证。初次样帧后修正开盖先抬升再侧移、导盘先抬离再侧移，以及状态字幕先接近后接触；各不可变指纹保留。原生尺带出口前15mm渐变凹度与CAD全宽凹度差异明示，未冒称完整同网格CAD预检。
+
+实际有限静帧与EP02成片帧对照；本会话代理预算已耗尽，主线程不能冒充独立局部复核。TAPE-CORE-MOTION-001记录第一次生产侧修复，完整集/新旁白仍须独立同版机构检查后放行；未合成旁白、未全片渲染、未发布。脚本AST、JSON解析及git diff --check通过；无库代码变更，不运行无关单测。
+
+- 本轮适用unittest discovery实际4项PASS，含独立数值积分对照、固定/连接端点、锁止/回收与导盘抬离时序；local-silent视频扫描零问题/NEEDS_REVIEW，vision未运行。最后实际查看编码10.5秒返回帧，仅生产侧有限静态观察，不报实时或独立通过。
+
+## 2026-11-09 卷尺内部局部方向获用户认可
+
+用户反馈“可以就是这种刚觉”。核对12秒样片SHA256 da0f890e26e9a868076d7a5120147ffcef8bd9d7374db66e18e14436d26c1bbe一致后，记录internal-principle-v5/user-approval.json，锁定内部原理与连续展开质感为同集后续基线。认可范围不扩张为未产出全片、音频或独立机构QA通过；不再询问相同样片方向。仅记录更新，无重新渲染、供应商调用或发布。
+
+## 2026-11-09 复刻参考筛选标准：低粉爆款
+
+按用户明确要求记录到audience-growth.md：复刻先核对小账号粉丝量、同题作品表现及账号常态，不能仅凭大号高赞或单条点赞称爆款。粉丝量与统计观察时点分明，发布时粉丝未知不得编造，不擅设统一数值阈值。仅文档更新，无平台查询/写入、制作或发布；git diff --check通过。
+
+
+## 2026-11-09 月度日常机械规划同步
+
+新增 docs/briefs/everyday-mechanisms-month-plan-20261109.md，README增加入口并保留卷尺当前状态。28个具体候选加2个弹性内容位；与运营库源文档SHA256一致：b47fdc288014ce7c02c1f39441a507098285c22e14d7d64b3aeb9351d5fad5bc。核对日期连续覆盖30天、新入口目标存在；仅文档同步，不运行生成或媒体测试。
+
+
+## 2026-11-09 月度选题与增长改进同步
+
+新增逐题改进brief，更新月度brief、README与audience-growth入口，同步阶段复盘及7份原始JSON。10份映射文件内容/哈希逐项验证，月度brief仅将本地相对链接映射为制作端文件名；原目标差异版本留运营库handoff备份。JSON解析与新入口链接检查通过，git diff --check通过。纯文档与证据变更，未运行媒体生成、代码测试、平台操作；既有未提交修改保留。
+
+
+## 2026-11-09 EVERYDAY_EP03 内部原理完整待审片 v6
+
+- 用户认可V5内部样片后明确“继续完成视频”。本轮完成`internal-film-v6/Tape-measure-internal-principle-v6-review.mp4`，SHA256 `87d3daf4547e23bb32ba1316d3296f00b200a16f15c97684883bd3d26fa2897e`；91.433333秒/2743帧，原生与编码1080×1920@30，H264/AAC。此前尺头v3/v4保持用户否决状态；本片未声称是已验证低粉爆款复刻。
+- 沿用实际认可V5场景、20件机构、材质/灯光、连续展开及字幕位置。8段全新内部原理Ethan/qwen3-tts-flash旁白均单次成功提交，实测后编排；未变速。51单行字幕最长16，句内估算非强制对齐。合成滑动拟音非录音。全2743帧端点、锁止保持与边界连续检查PASS_SCOPED；适用4项unittest discovery PASS。
+- 实际CAD预检发现两件旧STEP挤出方向与原生居中宽度不符，导盘交体积28.48879/120.54241mm³，出口上游底壁交体积7.56945mm³。源修复为显式+Z及渐变段后方底壁/背部支撑；复查均0。20件独立回读有效正体积，20件实际原生网格CAD映射、闭合绕序与表面抽样PASS。阈值仍0.35mm/3%用于0.3mm外壳展示倒角，不主张制造精度；原始失败证据及输入映射完整保留。只读报告首次重跑因已有文件保护拒写，换新输出cad-preflight-final.json后通过，未覆盖旧失败报告。
+- 修正后的24秒720帧带旁白局部通过完整解码/字幕检查，fresh storage PASS，schema3 full-render gate READY后启动全片。只复用同一9ad2717872d6b453指纹的首720帧，无跨版本混帧。完整原生库存核对发现教学连接标记哈希不同、包围盒及变换一致，保留BLOCKED；隔离Blender网格检查崩溃未重试，逐帧SHA清单保留。10份有限姿态按正确Z基准独立重导有效，不称连续碰撞或应力/预紧/速度仿真。
+- 最终共享技术包7项全部PASS；音频自动QA 0问题/NEEDS_REVIEW，视频自动QA 5候选/NEEDS_REVIEW，候选不自动关闭。交付门禁REVIEW_DELIVERY，不是正式验收。缺实时观看、自然听审、词语动作/字幕对应及同最终哈希独立专项，scores=null/formal_acceptance=false。用户对V5局部认可不扩张为V6全片批准；派工预算耗尽未再新增/冒充独立角色。无上传、平台草稿或发布。
+
+
+## 2026-11-09 连续视听评审工具与交付门禁修复
+
+用户要求解决评估能力/执行缺口。新增 mechanical_video/perceptual_review.py：原片播放包、hash-bound独立评审契约校验、保留失败的评审导入；audience_qa.delivery_gate重新检查实际证据与原始评分，不以PASS标签/总分代替验收；video_qa拒绝缺字段/NaN/布尔评分。扫描报告显式review_kind/blocking_gaps/formal_acceptance=false。更新两个QA角色指令、流程和文档入口；未改模型、评分权重、媒体或历史报告。
+
+验证：unittest discovery test_*qa.py 共11项PASS；test_perceptual_review.py 共5项PASS（含合成音视频prepare/import以及理解失败导入REWORK）。AST、两份角色TOML、git diff --check均通过。棘轮e1318586与按动笔81c73026实际交付文件复制至reports/perceptual-review-20261109/，媒体哈希一致。ego-browser空间9实际本地播放器冒烟通过：86.9秒按动笔、正常速率、未静音、播放至0.272秒后暂停并记录时间码。此为功能验证，不是观看/听审或独立观众验收。已生成页面的旧换行事件行在最终核对后更新并再次校验，媒体未改。
+
+残余：本会话未验证任何自动连续视频+音频感知工具；未派真实独立影片QA、未填写真实影片评分，生产者不能验收自己的影片。原片待审包与空模板具备接手条件；Director须核实完整生产者名单后由具备能力的独立评审执行。COMPLETE只是证据契约完整，不认证评审身份真伪或真实注意力。正式验收仍要求同版本各专项及原门槛，当前两片均NEEDS_REVIEW，不操作平台或启动生成。
+
+
+## 2026-11-09 核心内容优先于片长
+
+按用户“视频不能为了凑时长，而把最关键的漏掉”修正新片规则：取消统一90秒下限，保留标题答案、关键接触/状态切换和完整周期。同步AGENTS、README、4个角色指令、video-qa/preflight/perceptual-review与月度/增长brief。video_qa不再以不足90秒报P1，仍拒绝非有限/无效片长；其他视听和独立验收门槛不变。旧成片/报告不改。test_*qa.py 11项PASS，test_perceptual_review.py 5项PASS，四份TOML解析及git diff --check通过。
+
+
+## 2026-11-09 返工根因与上游执行门禁 v4
+
+- 真实记录审计：原 EP03 回卷/锁止原题被尺头补偿替代，旧 narration/full-render READY、delivery REVIEW_DELIVERY；EP02 接触清晰度 P1 三轮仍未关闭；V7 记录补修 V6 外部按钮遮挡与尺钩连接。审计源路径/hash 见 `reports/rework-prevention-20261109/historical-audit.json`，不是全片感官验收。
+- 新增 content_contract、production_run；v4 在配音/全片/交付前检查原题、完整必答集、脚本、可解码动作小样、前后状态、输入/连接/输出及最终区间。prior_version_issues 的未关闭严重问题继续阻断；新生产 CLI/显式记录 worker 要求 v4。命令 argv 绑定执行记录与独立评审，阻断时不启动子进程。
+- unittest discovery：test_content_contract.py 10/10（包含实际 FFmpeg 微型视频、错题/漏项/假 MP4/缺因果/自审/旧 P1/最终漏讲/阻断不执行）；test_production_gate.py 20/20；test_*qa.py 11/11；test_production_handoff.py 6/6；test_perceptual_review.py 5/5。合计 52/52。
+- 修改模块 AST、角色 TOML、新 JSON、原简报 hash/摘录关联、制作仓库 git diff --check PASS。未生成正式视频、未调用付费/配音服务、未发布、未修改在制 V7 或历史媒体。
+- 已知能力边界：无经过验证的自动连续视听评审接入；证据关联不能自动证明语义/情绪理解或身份真实性；直接运行归档脚本仍可绕过协作入口，未实施全局进程锁或操作系统级拦截。不得将以上程序检查称作全自动内容验收。
+
+
+## 2026-11-09 出图前实际姿态检查
+
+- 新增 `scene_preflight.audit`：在正式 Blender 场景构建后、首次出图前调用同一 pose 回调，逐个必答机制窗口覆盖全部整数帧；evaluated mesh/BVH 检查关键目标框内与近远裁切、像素尺寸、指定表面几何遮挡、连接锚点距离及实际运动。恢复原帧/姿态，不渲染/保存/调用服务。相机 border 和集合实例未支持，明确拒绝。
+- v4 full-render/delivery 强制关联 assets.scene_preflight 及实际 scene_source/renderer/scene_preflight_policy，校验 requirement、全部帧覆盖、输入/实现 hash 和无失败。新源须先运行 preflight-only 模式，不从会立即出图的归档脚本 import。
+- 新测试 test_scene_preflight.py 8/8（含现有真实 CAD/基线门禁集成）；test_production_gate.py 20/20、test_content_contract.py 10/10；本轮38项通过。AST、文档相对链接、git diff --check PASS。
+- 已准备 `scripts/validate_scene_preflight.py` 六例真实 Blender 无出图回归（正常/壳体遮挡/出框/过小/断连/无动作），render_pre 钩子禁止渲染。Metal 主机预检已通过，但既有 render.lock 被 PID17536 持有，调用在获取锁时即退出；Blender 启动次数0，实际六例尚未执行。未删除/抢占锁、未修改在制影片或归档脚本，不将单元测试说成 Blender 实测。
+- 待占锁任务完成后，在同一主机GPU路径和 render.lock 下运行新夹具至独占新目录，并核对 results.json；若已有输出/崩溃须先诊断，不自动覆盖或重试。当前无源片感官验收结论。
+- 已知局限：整数帧/指定几何点不证明帧间连续、完整接触面、透明/光照/景深/文字/共鸣；CAD 干涉与最终小样/成片感官审核仍独立。
+
+
+## 2026-11-09 EVERYDAY_EP03 v7 外控与尺钩结构修复
+
+用户指出V6内部压脚缺外部控制、尺头不真实。修复凸前壁/贯穿槽/壳外滑钮、单实体内部传动链；13有限姿态直接OCP Common无壳壁干涉。折弯尺钩+两铆钉+带端长孔，三活动姿态无交叠，缩短初始外伸并使尺钩回收到壳口挡止。22件STEP独立回读有效正体积，实际原生CAD映射PASS；4项solver unittest discovery PASS。保持原配音/字幕/混音/时间线，无供应商请求。原生库存对照PASS；91.433333秒2743帧1080×1920@30 H264/AAC完整解码等7技术检查PASS。文件SHA256 `3f542ad8dfaa83ff325bb9f7a10d724fadf72b98d44e9eb4cb15f7b58e8793cc`。包装层Compound布尔曾忽略旋转返回包围盒外假交集，直接OCP复核；旧报告保留。不宣称独立视听或制造通过，自动候选与词级对应待审，formal_acceptance=false，无平台写入。
+
+
+## 2026-11-09 制作流程与评审现状报告
+
+新增 docs/production-workflow-status-20261109.md，与运营项目报告同步。报告区分当前规则/实现/实际单集证据，涵盖制作、前检、小样、后审、情绪与互动判断、缺陷闭环及交付。现场核对卷尺内部V7为最新待审版，91.433333秒、1080x1920@30、H.264/AAC，实际SHA256匹配3f542ad8dfaa83ff325bb9f7a10d724fadf72b98d44e9eb4cb15f7b58e8793cc。独立感官QA仍未完成；无出图Blender六例结果文件仍不存在，旧锁占用仅作为历史尝试原因，不宣称当前锁状态。标明旧文档90秒措辞由当前用户决定/AGENTS覆盖。本次仅文档与只读源/媒体身份核对，不生成/发布，不重跑制作测试或填写感官评分。
+
+
+## 2026-11-09 卷尺V7实际复审与动作门禁修复
+
+本次源文件SHA256=3f542ad8dfaa83ff325bb9f7a10d724fadf72b98d44e9eb4cb15f7b58e8793cc。实际看16帧总览+4关键帧，并用同版motion/timeline与解码ROI核对；冻结renderer-abfa629005e222d2构建及同一pose在Blender5.2.3执行四姿态无出图射线复核，render调用0，Metal预检与render.lock遵守。web38在26/51/54.8/70.5秒采样面中心均0/108可见，有限采样不等于全表面全片不可见。
+
+新增action_alignment.py及v4 full-render/delivery强制关联并重算。12项真实字幕动作声明5项失败：开头回收仍拉出，结尾保持未锁住、解除时加锁、释放及收回时伸出量不变。结果BLOCKED，影片内容复核REWORK；未修改原视频/批准音轨/共享导演记录，旧控制问题及计数作为补充证据保留。7项新动作检查+8项场景/集成+20项制作门禁=35项PASS。听审、词级对齐、独立整片体验仍未完成。详见docs/reviews/tape-v7-review-20261109.md与reports/tape-v7-review-20261109/。
+
+先前通用六例无出图回归再次在获取render.lock时因其他制作进程占用退出，Blender未启动；不覆盖首次状态、不把本次四姿态复核混称六例通过。无重渲、无TTS/发布。
+
+
+## 2026-11-09 多Agent主动修复与关闭证据
+
+核实production_handoff只读检查不派工，production_run受控命令不修复，generic worker为渲染/编码执行；当前无已验证的无人值守内容修复调度器及连续视听接口。本次更新Director/Visual/Editor/Video QA主动前检、派修、独立复验责任，详见docs/agent-repair-loop.md，不宣称已实际派出代理或修好影片。
+
+v4新增P0/P1关闭证据门禁：closed/resolved/verified仍须非空required_checks、同issue_id的独立resolution、完整同版资产指纹、有效evidence及全部checks_covered；上一版本同样适用。裸状态、自审、只验几何却漏相机可见性、过期证据均BLOCKED；历史v1–v3保留只读语义，不重置修复次数。
+
+8项新test_repair_closure通过；原制作门禁20、场景预检/集成8、原题契约10、动作对应7，通过53项不同用例（早期导入测试类造成的重复执行已修正，不计入新增数量）。AST、角色TOML、git diff --check PASS。本次未启动子Agent、未调用生成或渲染、未关闭任何真实影片缺陷；卷尺V7仍按前次复审REWORK处理。
+
+
+## 2026-11-09 EVERYDAY_EP03 v8 装配剖视修订
+
+用户明确要求“连拆开的展示方式也不要，改为装配状态展示内部”。取消所有盖板/前导盘展开位移及回装，以装配位置的显示剖面展示内部；完整名义CAD保留，侧盖和前导盘两件剖面独立STEP回读有效正体积，实际21件可见原生网格/CAD对应PASS。全2851帧无展开位移、固定/连接端、保持和边界连续检查PASS_SCOPED；4项继承solver unittest discovery PASS（当前固定装配另有全帧检查）。同风格同声线，U1/U2/U8新旁白各单次成功，其余5段MP3逐字节复用；新时长自然实测，无拉慢/填充，合成拟音去掉盖板运动分量。字幕52条单行最长15字符，句内估算非强制对齐。前24秒局部及全片共享技术包完整A/V解码等检查PASS；95.033333秒/2851帧，原生/编码1080×1920@30，SHA256 `5cd13ab96c9052a95ce30f407924f778515cdcbe7ed6f6a97b8108d44d21469b`。仅同一254a51420481258b冻结任务首720帧复用，无旧版混帧。原生库存对照PASS。独立实时、听审、词语动作对应和观众QA仍待审，分数null，无平台写入。
+
+## 2026-11-09 原会话卷尺续作：V8缺陷复现与V9局部候选
+
+续接01a1bb3e-ba15-78d1-849a-87ae1b955b76。V8全部交付清单引用的当前SHA256匹配，重新全片A/V解码退出0；原12项动作断言重新计算仍有5项BLOCKED，不能将V8技术PASS解释为内容完成。保留原成片、源、报告、issue与修复计数。
+
+V9保留原旁白/字幕/物理CAD/工作机构，按冻结字幕窗口安排运动；独立source_review重算原12项及额外6项PASS，2851帧与源码、固定装配、循环和边界一致。旁白WAV/PCM逐字节复用；仅按新尺带/按钮速度重排合成拟音，95.033333秒新混音SHA256 `2ee1cd63c057df6e50959cbc6b3234f9b55574518e9c48f458314a9b5ee7e1bc`，48kHz单声道PCM，完整解码退出0，听审分null。
+
+首次真实主机GPU全帧诊断2033b962f8159470为BLOCKED，原结果保留。独立五姿态最近射线诊断区分了真实遮挡与错误表面锚点；之后仅扩大显示cover/rim剖口、修正真实表面点和保持→释放段构图，完整nominal STEP、装配位置及功能件不变。新增显示件独立STEP回读，各实体有效且正体积；不宣称制造设计。CAD技能step启动器仍因既有OCP.TDF.TDF_LabelSequence导入错误不可用，未更改环境，实际导出/回读走直接build123d/OCCT，再用项目cad_preflight核验。
+
+共享scene_preflight新增求值网格vertex_index/face_index锚点，复制坐标后释放临时网格，非法/越界索引阻断；旧局部扩展报告不追认。unittest discovery：scene_preflight11、action_alignment7、content_contract10、repair_closure8、production_gate20，共56项PASS。实际主机Metal探测PASS；正式同pose完整2851帧预检e4dacc07ff850f1c为PASS、failures为空、render_called=false；该实测覆盖变形面中心，不等于通用六例回归或像素/感官验收。随后同冻结pose渲染约26秒局部，原生1080×1920、30fps求值每两帧采一帧并以15fps原速编码，旧/新A/B分开，全A/V解码通过；不将局部15fps写成完整成片30fps已完成。
+
+V9局部rest-state与V8原生基线比较仅允许明确绑定的两显示剖面和不出图端点datum差异，scene_fidelity PASS；21件实际可见CAD/原生映射cad_preflight PASS。实际查看1张1024×970/106KB联系图，未当作连续观看或听审。详情与指纹见reports/tape-v8-continuation-20261109/。当前新局部尚缺独立复验；本轮4次spawn已用完，按AGENTS硬预算停止新派工并请求一次复用现有QA的例外。未执行整片full-render/delivery，未关闭P1，scores=null/formal_acceptance=false，无平台写入。AST及git diff --check PASS。
+
+
+### 2026-11-09 V9 局部预览衔接返工
+
+用户报告衔接卡顿。证实旧局部预览三处跨源时间硬接及实际15fps；见 reports/tape-v9-continuity-fix-20261109/diagnosis.json。冻结场景及原混音不变，新生成连续源区间[46.4,79.933333)的1080×1920@30fps局部审看片，1006帧、33.533333秒；同版本221帧复用，其余原生补齐。源帧连续/哈希、输出帧数/时间戳、完整音视频解码通过，最大PTS步长误差6.667e-7秒，AAC与原音频相关0.9999765。MP4 SHA-256: 6ef7885a69f8975b3764f1392c41b8f221578acef96f017a4e30a9f724982183。实际GPU渲染成功；3个脚本AST通过。状态TECHNICAL_CONTINUITY_PASS_PERCEPTUAL_NEEDS_REVIEW；未宣称连续播放、听审或独立感官通过，未解锁95秒全片门禁，未发布。新问题EP03-V9-PREVIEW-CONTINUITY-001，repair1，独立感官复验待完成；保留历史问题与计数。详见新目录README.md及verification.json。
+
 
 ## 2026-11-09 持久化控制器与真实派修（部分完成）
 
@@ -1901,3 +2203,12 @@ Documentation-only: added optimization/goal-v2/session-resume-20261105.md under 
 两段local-av扫描完成，周期无候选；长局部4.766667–7.3秒freeze阈值候选保留为P2，不直接判真实卡帧。对应源77帧连续，lock从0.250073到0.750013且首尾真实原生像素不同；来源数值与图像变化不代替连续播放感知。8张实际原生关键帧联系表已查看；未做实时视听或独立感官验收。两个原片复制播放包哈希/实际生产者身份已冻结。
 
 增量更新既有director-record.json与input-assets.json至99真实引用，原始记录快照保留；当前v4 full-render真实门禁仍BLOCKED，旧P1、预览问题与各独立预检关联未伪造关闭。8个局部工具脚本AST通过；git diff --check通过。交接、证据、当前门禁见reports/tape-v9-continuity-fix-20261109/。整片未启动，等待已请求的一次现有独立评审复用预算例外；没有供应商/平台操作。
+
+
+### 2026-11-09 已授权独立局部复验完成
+
+用户明确允许一次复用现有评审；实际visibility_diagnosis followup已完成，例外已耗用，无新增Agent。独立99项资产hash、1264张原生帧hash/映射、1264个PTS、两段完整AV解码和共享技术包验证通过。实际观察仅8离散静帧+4缩放关键帧，PASS_SCOPED，分数null，原P1与freeze候选未关闭。真实报告在reports/tape-v9-continuity-fix-20261109/independent-local-recheck/，已核对报告evidence哈希并导入原director-record；只增加独立支持的local_encode有界关联，原问题与修复计数保留。
+
+现场新增v5 production_run要求已核对：当前记录仍v4，event_timeline缺失，controller缺失；现有估计字幕不是实际词级对齐，未配置对齐器/未验证连续视听通道。只读v5执行预检BLOCKED，未改写旧v4结论、未改冻结场景/动作/音频、未运行full-render或供应商。精确缺口见v5-entry-readiness.json和当前两版本gate报告。
+
+本轮9个报告工具脚本AST、当前99项指纹关联与独立报告引用检查通过；git diff --check通过。没有修改产品代码，因此未重复此前56项测试/重新生成CAD或渲染已完成局部。
