@@ -34,6 +34,38 @@ class ControllerTests(unittest.TestCase):
         rc.complete(self.record, 'sample', 'producer', 'produce', outputs=output, checks=['contact'])
         return output
 
+    def test_director_executes_without_spoofing_spawn_or_self_review(self):
+        tasks=[dict(id='local',stage='minimal-sample',owner='Director',inputs=self.source,
+                    outputs=['v1'],required_checks=['contact'])]
+        rc.initialize(self.record,tasks=tasks)
+        receipt={'agent_id':'/root','source':'active_session','role':'Director'}
+        rc.claim(self.record,'local','/root',receipt,'director')
+        rc.complete(self.record,'local','/root','local-done',outputs=self.ref('v1','candidate'),checks=['contact'])
+        for kind in ('director','reuse','followup'):
+            with self.assertRaises(ValueError):
+                rc.claim(self.record,'local:review','/root',receipt,kind)
+        self.claim('local:review','independent')
+        state=json.loads(self.record.read_text())['repair_controller']
+        self.assertEqual(sum(not a.get('director') for a in state['agents'].values()),1)
+
+    def test_failed_standalone_review_assigns_production_repair(self):
+        rc.initialize(self.record,tasks=[dict(id='check',stage='independent-check',owner='Reviewer',
+                      inputs=self.source,outputs=[],required_checks=['contact'])])
+        self.claim('check','reviewer')
+        rc.complete(self.record,'check','reviewer','failed',verdict='fail',failures=[
+            dict(issue_id='standalone',owner='Director',severity='P1',required_checks=['contact'],
+                 evidence=self.proof,repair_outputs=['v2'])])
+        task='standalone:repair:1'
+        receipt={'agent_id':'/root','source':'active_session','role':'Director'}
+        rc.claim(self.record,task,'/root',receipt,'director')
+        rc.complete(self.record,task,'/root','fixed',outputs=self.ref('v2','fixed'),checks=['contact'],improvement=True)
+        with self.assertRaises(ValueError):rc.claim(self.record,task+':review','/root',receipt,'director')
+        self.claim(task+':review','reviewer','followup')
+        rc.complete(self.record,task+':review','reviewer','verified',checks=['contact'],evidence=self.proof)
+        state=json.loads(self.record.read_text())['repair_controller']
+        self.assertEqual(state['issues']['standalone']['status'],'closed')
+        self.assertEqual(state['issues']['standalone']['repair_attempts'],1)
+
     def test_failure_repair_independent_close(self):
         self.setup()
         self.produce()

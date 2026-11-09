@@ -19,6 +19,10 @@ CHAIN = ('original-intent', 'minimal-sample', 'independent-check',
 REVIEW_STAGES = {'independent-check', 'independent-post-review'}
 
 
+def _is_review(task):
+    return task.get('kind') == 'review' or (task.get('kind') != 'repair' and task['stage'] in REVIEW_STAGES)
+
+
 def _sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -196,7 +200,7 @@ def claim(path, task_id, agent_id, dispatch_receipt, dispatch_kind='spawn'):
             raise ValueError('real agent id and tool dispatch receipt required')
         if dispatch_receipt.get('agent_id') != agent_id:
             raise ValueError('receipt agent mismatch')
-        review = task.get('kind') == 'review' or task['stage'] in REVIEW_STAGES
+        review = _is_review(task)
         if review and agent_id in task.get('excluded_agents', []):
             raise ValueError('producer cannot independently review')
         # Review lineage includes producing ancestors, including rewritten review dependencies.
@@ -206,7 +210,7 @@ def claim(path, task_id, agent_id, dispatch_receipt, dispatch_kind='spawn'):
             if dependency not in ancestors:
                 ancestors.add(dependency)
                 frontier.extend(state['tasks'][dependency]['deps'])
-        if review and any(state['tasks'][d].get('agent_id') == agent_id and state['tasks'][d].get('kind') != 'review' and state['tasks'][d]['stage'] not in REVIEW_STAGES for d in ancestors):
+        if review and any(state['tasks'][d].get('agent_id') == agent_id and not _is_review(state['tasks'][d]) for d in ancestors):
             raise ValueError('producer cannot review own upstream work')
         # Generic review stages also exclude every direct dependency producer.
         if review and any(state['tasks'][d].get('agent_id') == agent_id for d in task['deps']):
@@ -217,20 +221,29 @@ def claim(path, task_id, agent_id, dispatch_receipt, dispatch_kind='spawn'):
         for identity, entry in agents.items():
             entry.setdefault('receipts', [deepcopy(t['dispatch_receipt']) for t in state['tasks'].values()
                                          if t.get('agent_id') == identity and t.get('dispatch_receipt')])
-        if dispatch_kind == 'spawn':
-            if agent_id in agents or len(agents) >= (4 if review else 3):
+        if dispatch_kind == 'director':
+            if (review or task['owner'] != 'Director'
+                    or dispatch_receipt != {'agent_id': agent_id, 'source': 'active_session', 'role': 'Director'}
+                    or (state.get('director_id') not in (None, agent_id))
+                    or (agent_id in agents and not agents[agent_id].get('director'))):
+                raise ValueError('Director execution requires the active session and cannot review')
+            state['director_id'] = agent_id
+            agents.setdefault(agent_id, {'director': True, 'followups': 0, 'receipts': [deepcopy(dispatch_receipt)]})
+        elif dispatch_kind == 'spawn':
+            spawned = sum(not entry.get('director') for entry in agents.values())
+            if agent_id in agents or spawned >= (4 if review else 3):
                 raise ValueError('spawn budget exhausted or review slot reserved')
             agents[agent_id] = {'followups': 0, 'receipts': [deepcopy(dispatch_receipt)]}
         elif dispatch_kind == 'followup':
-            if agent_id not in agents or agents[agent_id]['followups'] >= 1:
+            if agent_id not in agents or agents[agent_id].get('director') or agents[agent_id]['followups'] >= 1:
                 raise ValueError('followup budget exhausted')
             agents[agent_id]['followups'] += 1
             agents[agent_id]['receipts'].append(deepcopy(dispatch_receipt))
         elif dispatch_kind == 'reuse':
-            if agent_id not in agents or dispatch_receipt not in agents[agent_id]['receipts']:
+            if agent_id not in agents or agents[agent_id].get('director') or dispatch_receipt not in agents[agent_id]['receipts']:
                 raise ValueError('reuse requires identical actual prior dispatch receipt')
         else:
-            raise ValueError('dispatch_kind must be spawn, followup or reuse')
+            raise ValueError('dispatch_kind must be director, spawn, followup or reuse')
         if any(t['status'] == 'running' and t.get('agent_id') == agent_id for t in state['tasks'].values()):
             raise ValueError('agent already has running task')
         occupied = {_path(base, p) for t in state['tasks'].values() if t['status'] == 'running' for p in t['outputs']}
@@ -290,7 +303,7 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
         _refs(base, payload['evidence'])
         if {_path(base, p) for p in payload['outputs']} != {_path(base, p) for p in task['outputs']}:
             raise ValueError('completion outputs differ from exclusive ownership')
-        review = task.get('kind') == 'review' or task['stage'] in REVIEW_STAGES
+        review = _is_review(task)
         if verdict == 'pass' and not set(task['required_checks']) <= set(payload['checks']):
             raise ValueError('required checks incomplete')
         if review and verdict == 'pass' and not payload['evidence']:
