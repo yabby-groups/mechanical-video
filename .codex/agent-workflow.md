@@ -177,3 +177,18 @@ Video QA 按既有视频评分口径给技术/综合结论，只引用同版本�
 ## 验证与用量
 
 文档/配置检查 TOML 解析、唯一名称、链接、范围及 git diff --check，追加 [validation.md](../docs/validation.md)；静态推演不等于真实派工或媒体验收，不因此启动生产。只读审计命令、口径和冻结基线见[用量审计](../docs/token-usage-audit.md)。按可比任务记录缓存/非缓存输入、输出、协调次数、交付和 QA 完整性；无清晰阶段边界则未归属，不按消息内容猜阶段，不预承诺节省率。
+
+
+## 连续视听评估执行门槛｜2026-11-09
+
+执行[连续视听评审](../docs/perceptual-review.md)。Director提前核查并为实际独立QA预留派工预算；仅静帧能力不能承接完整体验验收。原片播放包冻结哈希与生产者身份，评审填写实际覆盖和理解时间码，再导入新报告。能力缺失保留待审交付，不把技术完成、用户接受或播放日志冒充独立感官通过。当前工具没有验证可用的自动连续视听通道。
+
+
+### 2026-11-09 返工预防执行修复
+
+新制作遵循 [返工预防](../docs/production-rework-prevention.md)：Director 冻结原题与必答机制，先独立审查可解码局部小样的输入—接触/传动—输出及脚本对应，未解决 P0/P1 不扩为整片。新记录 v4；自定义配音/全片渲染/交付命令走 `python -m mechanical_video.production_run --record ... --stage ... -- command`，完整 argv 绑定 execution、源文件绑定 assets。不可用归档脚本直接运行绕过；旧版本问题和计数保留。文件/几何 PASS 与局部认可均不替代题意、因果或感官验收；不要求用户来发现制作前可定位的缺陷。
+
+
+### 主动修复闭环（2026-11-09）
+
+执行[多Agent主动发现、修复与复验](../docs/agent-repair-loop.md)。Director在每次已授权制作内主动安排前检、小样和后审，不等待用户指出缺陷；根据实际失败证据交唯一所有者修复，回传后重跑失败检查并交独立评审复验。v4的P0/P1关闭状态必须有稳定issue_id、非空required_checks及同版resolution（对应issue_id、verified、不同producer/reviewer、完整asset_fingerprints、覆盖全部必查项的checks_covered和有效evidence），否则BLOCKED。制作完成不等于修复关闭；上一版本问题同样保留。真实感官能力不足不填分，不重复派同能力代理。当前没有无人值守内容修复调度器，不能将交接检查或渲染worker称为自动内容闭环。

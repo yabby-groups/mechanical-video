@@ -72,3 +72,8 @@ Director 在实际阶段变化时将输出追加到同一 director-record 的 `w
 Director 在既有记录追加 `workflow_metrics`，未知值用 null：`first_delivery_seconds`、`major_reworks`、`full_rerenders`、`user_found_defects`（保留问题 ID）、`qa_completeness`、`scope`、`quality`。首次交付从授权制作开始到首个完整审看文件交付；用户等待时间单列，不能混入制作耗时。重大返工指已进入全片后因 P0/P1 或用户确认缺陷改变源/场景并重建受影响媒体。
 
 用量审计分别报告缓存/非缓存输入、输出及协调次数，结合交付耗时、重渲和 QA 完整度评估。相同范围与质量且团队覆盖完整才计算变化率；图片载荷字符不是文本 token，不能由此推算费用或承诺节省。
+
+
+### 主动修复闭环（2026-11-09）
+
+执行[多Agent主动发现、修复与复验](agent-repair-loop.md)。Director在每次已授权制作内主动安排前检、小样和后审，不等待用户指出缺陷；根据实际失败证据交唯一所有者修复，回传后重跑失败检查并交独立评审复验。v4的P0/P1关闭状态必须有稳定issue_id、非空required_checks及同版resolution（对应issue_id、verified、不同producer/reviewer、完整asset_fingerprints、覆盖全部必查项的checks_covered和有效evidence），否则BLOCKED。制作完成不等于修复关闭；上一版本问题同样保留。真实感官能力不足不填分，不重复派同能力代理。当前没有无人值守内容修复调度器，不能将交接检查或渲染worker称为自动内容闭环。

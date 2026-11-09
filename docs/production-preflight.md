@@ -2,7 +2,7 @@
 
 适用于新集、续做及受影响局改。Director 将以下字段追加到**当前集既有 director-record**，不另建状态台账；既有授权、hold、修复计数与独立 QA 门槛不变。未具备的项目记录具体缺口，不填虚假的 PASS。
 
-新制作使用 `production_checks` v2，新增[实际基线一致性](scene-fidelity.md)与[就绪交接/阶段事件](production-handoff.md)。历史 v1 记录继续按原口径只读评估，不改写历史结论；`--production` 新任务要求 v2。
+新制作使用 `production_checks` v4，先执行[返工预防门禁](production-rework-prevention.md)，继承[实际基线一致性](scene-fidelity.md)与[就绪交接/阶段事件](production-handoff.md)。历史 v1–v3 继续按原口径只读评估，不改写历史结论；`--production` 新任务要求 v4。
 
 ## 局部制作前
 
@@ -48,9 +48,9 @@
 统一入口（只读、不调用供应商、不渲染）：
 
 ```sh
-.venv/bin/python scripts/production_gate.py --record /path/to/director-record.json --stage narration --require-version 2
-.venv/bin/python scripts/production_gate.py --record /path/to/director-record.json --stage full-render --require-version 2
-.venv/bin/python scripts/production_gate.py --record /path/to/director-record.json --stage delivery --require-version 2
+.venv/bin/python scripts/production_gate.py --record /path/to/director-record.json --stage narration --require-version 4
+.venv/bin/python scripts/production_gate.py --record /path/to/director-record.json --stage full-render --require-version 4
+.venv/bin/python scripts/production_gate.py --record /path/to/director-record.json --stage delivery --require-version 4
 ```
 
 退出码 0=当前阶段可推进（交付可能仅 `REVIEW_DELIVERY`），1=BLOCKED，2=输入错误。输出 JSON。缺新版字段的旧记录保守阻断，不迁移历史结论。Director 在**既有记录**增量追加 `production_checks`，不得另建制作台账；历史开放问题不能静默删除。工具校验声明与证据关联，不能证明实际碰撞、听感、连续运动或评审者身份真实性。
@@ -87,4 +87,24 @@ v2 可选 `manual_continuations` 用于用户在历史 P2 修复上限后明确�
 
 ### OCCT 渲染前几何证据（新生产 v3）
 
-新正式生产使用 `production_checks.schema_version:3` 和 `--require-version 3`。v3 继承 v2 全部规则，并要求 `assets.cad_preflight` 指向当前 PASS 的 CAD 检查报告；报告所有 inputs 也须绑定到 assets，且报告的实际 mesh 几何覆盖全部列入的 CAD 实例、scene inventory 必须对应本版 `assets.scene_inventory`。先在现有 evaluated rest-state 采集流程用 `capture_scene(...,cad_objects=[实际对象名])` 采集目标机构，再运行 `.venv/bin/python -m mechanical_video.cad_preflight manifest.json --output 新报告.json`，通过后才跑 full-render gate。详细字段、允许接触/过盈、真实 EP09 回归和有限采样边界见 [OCCT 集成](occt-integration.md)。历史 v1/v2 只读规则保留；不自动迁移旧记录，不以几何 PASS 关闭机械不确定性或替代独立 QA。
+CAD 检查从 `production_checks.schema_version:3` 引入；新制作现须 v4，见[返工预防](production-rework-prevention.md)。v3 继承 v2 全部规则，并要求 `assets.cad_preflight` 指向当前 PASS 的 CAD 检查报告；报告所有 inputs 也须绑定到 assets，且报告的实际 mesh 几何覆盖全部列入的 CAD 实例、scene inventory 必须对应本版 `assets.scene_inventory`。先在现有 evaluated rest-state 采集流程用 `capture_scene(...,cad_objects=[实际对象名])` 采集目标机构，再运行 `.venv/bin/python -m mechanical_video.cad_preflight manifest.json --output 新报告.json`，通过后才跑 full-render gate。详细字段、允许接触/过盈、真实 EP09 回归和有限采样边界见 [OCCT 集成](occt-integration.md)。历史 v1/v2 只读规则保留；不自动迁移旧记录，不以几何 PASS 关闭机械不确定性或替代独立 QA。
+
+
+### 2026-11-09内容优先的时长规则
+
+用户明确新片不能凑时长而漏掉最关键内容。以AGENTS当前规则为准：取消统一90秒下限，先证明标题答案、关键接触/状态切换、完整动作周期，再编排必要的展开与回装。记录实际时间码与看懂证据；缺少核心因果不能正式通过，技术检查与片长不替代内容验收。旧报告与已批准媒体不改写。
+
+
+### 渲染前检查实际姿态（2026-11-09）
+
+新渲染器必须在第一次出图前，用正式制作同一个 pose 回调逐帧运行 [场景预检](pre-render-scene-checks.md)，检测关键部件出框/过小、指定表面遮挡、连接锚点脱开和缺失运动。静态保存场景不能代替自定义 pose 求值。v4 full-render/delivery 额外要求绑定同版 source/renderer/policy、完整 requirement 和逐帧覆盖的 `assets.scene_preflight`。缺失或失败先阻断，不等用户发现；不把几何 PASS 宣称为完整视觉/因果理解。保留在制与归档脚本，接入独占新版本；当前真实 Blender 回归状态见 validation.md。
+
+
+### 动作声明与逐帧状态核对（2026-11-09）
+
+本次卷尺V7复核已确认开头/结尾动作与字幕相反或错位；执行[动作声明核对](caption-action-alignment.md)，v4 full-render/delivery 必须绑定 action_alignment、action_alignment_policy、motion、timeline 及原题requirement。门禁会重算，不信单独PASS；“回收”却拉出、“解除”却加锁不能交给用户发现。场景预检目标必须包含穿壳连片及关键接触件，不能只测整个机构/可见按钮。新增检查不能倒填为旧V7已经通过；原片与旧批准记录保留。
+
+
+### 主动修复闭环（2026-11-09）
+
+执行[多Agent主动发现、修复与复验](agent-repair-loop.md)。Director在每次已授权制作内主动安排前检、小样和后审，不等待用户指出缺陷；根据实际失败证据交唯一所有者修复，回传后重跑失败检查并交独立评审复验。v4的P0/P1关闭状态必须有稳定issue_id、非空required_checks及同版resolution（对应issue_id、verified、不同producer/reviewer、完整asset_fingerprints、覆盖全部必查项的checks_covered和有效evidence），否则BLOCKED。制作完成不等于修复关闭；上一版本问题同样保留。真实感官能力不足不填分，不重复派同能力代理。当前没有无人值守内容修复调度器，不能将交接检查或渲染worker称为自动内容闭环。

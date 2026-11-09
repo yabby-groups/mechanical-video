@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "question": "卷尺能往回收，又是怎么停住的？",
+  "brief": {
+    "path": "/Users/lmj/yuntan/esp32/mechanical-video/docs/briefs/everyday-mechanisms-batch-20261106.md",
+    "sha256": "664152b88e9e80cbbe20b260f9ef58e456889691994e375e342000fdc6bb1b63"
+  },
+  "requirements": [
+    {
+      "id": "rewind",
+      "brief_quote": "追踪尺带/卷盘与内部卷簧的关系",
+      "observable": "拉出储能与释放回卷时，尺带、卷盘和卷簧的连续对应；标明教学示意边界",
+      "source_parts": [
+        "尺带",
+        "卷盘",
+        "卷簧"
+      ]
+    },
+    {
+      "id": "lock",
+      "brief_quote": "比较锁住与释放时的接触关系",
+      "observable": "外壳完整时外部按钮可操作，经穿壳连接传到制动接触；锁住后输出停止",
+      "source_parts": [
+        "外部按钮",
+        "穿壳连接",
+        "制动/锁止件",
+        "尺带"
+      ]
+    },
+    {
+      "id": "release-reset",
+      "brief_quote": "显示拉出、锁住、释放后的受控回卷三个状态",
+      "observable": "解除制动后恢复回卷，完整三态循环可复述；接触、复位与运动方向一致",
+      "source_parts": [
+        "按钮",
+        "制动件",
+        "卷盘",
+        "尺带"
+      ]
+    }
+  ],
+  "provenance": "Director extracted from the original approved topic; requirement list is not media acceptance or a claim of completed independent review."
+}

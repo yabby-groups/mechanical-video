@@ -62,7 +62,7 @@ Missing perceptual evidence blocks the affected acceptance branch, not every rev
 
 Narrated work requires Audio Director → Audio Production → independent Audio QA and Audio Appeal QA → Editor → both final-mix reviews → Video QA → independent Audience QA → Director. First Script supplies synthesizable text and estimated timing; measured audio then informs final subtitle/semantic timing. Visual-only changes retain approved narration and review affected final-mix evidence without resynthesis. Producers cannot perform their own independent acceptance.
 
-- Narration subtitles: single line, at most 20 characters including all Chinese/English/digits/punctuation, one caption at a time; split long text into successive short captions. Time shots/captions from measured speech, natural pace and useful pauses, never slowed speech or looped shots to pad length. Formal narrated films are at least 90 seconds; explicit shorts/tests/previews are exceptions.
+- Narration subtitles: single line, at most 20 characters including all Chinese/English/digits/punctuation, one caption at a time; split long text into successive short captions. Time shots/captions from measured speech, natural pace and useful pauses, never slowed speech or looped shots to pad length. For new work, duration follows the complete mechanical explanation; there is no universal 90-second minimum. User instruction (2026-11-09): “视频不能为了凑时长，而把最关键的漏掉”. Preserve the title payoff, key contact/state transition and a complete action cycle before allocating time to teardown/reassembly. Missing or unreadable core causality blocks content acceptance regardless of length; do not pad with slowed speech, repeated motion or empty views. Necessary explanatory slow motion is allowed when it reveals new evidence. Preserve existing approved media and historical report results.
 - Follow [video QA](docs/video-qa.md), [audio QA](docs/audio-qa.md) and [audience QA](docs/audience-qa.md) for applicable dimensions. Inspect actual media and record method/coverage; sampled frames, ordered static frames, real-time playback, listening and full decode are different evidence. Decode/ASR/PCM/TTS logs/local approval cannot replace perceptual acceptance. ASR discrepancies require corroboration; never resubmit uncertain provider requests automatically. Verified speech repairs regenerate only affected sentences into new versions, then remeasure, update captions/shots and recheck speech/mix.
 - Keep generation status, user approval and QA separate. Missing perceptual, alignment or shot-correspondence evidence leaves relevant scores null. Known failures remain REWORK/FAIL; missing evidence may be NEEDS_REVIEW. Handoffs identify file/hash, shot/timecode (or unavailable), evidence and exact review question.
 - Formal acceptance requires overall and technical ≥90, audience ≥85, audio technical ≥90, audio appeal ≥85, all established gates passed, no unresolved P0/P1 or critical mechanical/audiovisual uncertainty. Audio technical contributes once to the existing video audio dimension; audio appeal stays separate. Never invent scores or lower thresholds.
@@ -80,6 +80,26 @@ For ego-browser use `/Users/lmj/.local/bin/ego-browser`, JavaScript via `nodejs 
 Run applicable unittest discovery for code changes. Production CAD/video changes additionally need actual CAD generation, independently exported valid positive-volume solids, render, ffprobe and full FFmpeg decode. Record native versus encoded resolution/frame rate separately; technical completion is not perceptual acceptance. Documentation/configuration and read-only audit-tool changes need their applicable tests, links/scope/TOML checks and `git diff --check`, not unrelated renders or provider calls. Append current validation to [validation.md](docs/validation.md), preserving historical records.
 
 Read-only usage audit: `.venv/bin/python scripts/audit_token_usage.py <session.jsonl-or-directory> --format json|markdown`. See [audit usage and baseline](docs/token-usage-audit.md). Report cached/noncached inputs, outputs and coordination separately; do not equate cumulative tokens with cost or promise savings before comparable real-task measurement.
+
+
+### 2026-11-09 返工预防执行修复
+
+新制作遵循 [返工预防](docs/production-rework-prevention.md)：Director 冻结原题与必答机制，先独立审查可解码局部小样的输入—接触/传动—输出及脚本对应，未解决 P0/P1 不扩为整片。新记录 v4；自定义配音/全片渲染/交付命令走 `python -m mechanical_video.production_run --record ... --stage ... -- command`，完整 argv 绑定 execution、源文件绑定 assets。不可用归档脚本直接运行绕过；旧版本问题和计数保留。文件/几何 PASS 与局部认可均不替代题意、因果或感官验收；不要求用户来发现制作前可定位的缺陷。
+
+
+### 渲染前检查实际姿态（2026-11-09）
+
+新渲染器必须在第一次出图前，用正式制作同一个 pose 回调逐帧运行 [场景预检](docs/pre-render-scene-checks.md)，检测关键部件出框/过小、指定表面遮挡、连接锚点脱开和缺失运动。静态保存场景不能代替自定义 pose 求值。v4 full-render/delivery 额外要求绑定同版 source/renderer/policy、完整 requirement 和逐帧覆盖的 `assets.scene_preflight`。缺失或失败先阻断，不等用户发现；不把几何 PASS 宣称为完整视觉/因果理解。保留在制与归档脚本，接入独占新版本；当前真实 Blender 回归状态见 validation.md。
+
+
+### 动作声明与逐帧状态核对（2026-11-09）
+
+本次卷尺V7复核已确认开头/结尾动作与字幕相反或错位；执行[动作声明核对](docs/caption-action-alignment.md)，v4 full-render/delivery 必须绑定 action_alignment、action_alignment_policy、motion、timeline 及原题requirement。门禁会重算，不信单独PASS；“回收”却拉出、“解除”却加锁不能交给用户发现。场景预检目标必须包含穿壳连片及关键接触件，不能只测整个机构/可见按钮。新增检查不能倒填为旧V7已经通过；原片与旧批准记录保留。
+
+
+### 主动修复闭环（2026-11-09）
+
+执行[多Agent主动发现、修复与复验](docs/agent-repair-loop.md)。Director在每次已授权制作内主动安排前检、小样和后审，不等待用户指出缺陷；根据实际失败证据交唯一所有者修复，回传后重跑失败检查并交独立评审复验。v4的P0/P1关闭状态必须有稳定issue_id、非空required_checks及同版resolution（对应issue_id、verified、不同producer/reviewer、完整asset_fingerprints、覆盖全部必查项的checks_covered和有效evidence），否则BLOCKED。制作完成不等于修复关闭；上一版本问题同样保留。真实感官能力不足不填分，不重复派同能力代理。当前没有无人值守内容修复调度器，不能将交接检查或渲染worker称为自动内容闭环。
 
 
 ### 持久化修复调度 v5（2026-11-09）
