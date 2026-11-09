@@ -117,4 +117,3 @@ class WorkflowAutonomyTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'depend on its producer'):
             rc.initialize(self.path,tasks=[dict(id='sample',stage='minimal-sample',owner='Producer',review_by='review'),
                 dict(id='review',stage='independent-check',owner='QA')])
-

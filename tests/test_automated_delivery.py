@@ -65,4 +65,3 @@ class AutomatedDeliveryTests(unittest.TestCase):
         self.assertTrue(production_gate.automated_review_errors(record,self.base))
         record=record_for(review);path.write_text('changed')
         self.assertTrue(production_gate.automated_review_errors(record,self.base))
-
