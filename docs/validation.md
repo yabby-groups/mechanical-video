@@ -2233,3 +2233,12 @@ V9局部rest-state与V8原生基线比较仅允许明确绑定的两显示剖面
 attempt-1早期尺头裁切主动停机；attempt-2取景修复但主体偏小；attempt-3保持机构/观察方向，以固定画面内旋转和实际姿态包围拟合完成255帧正式pose预检及渲染。8.5秒原生/编码1080×1920@30、全部帧hash、锁止状态与回收互斥、PTS及完整AV解码通过。媒体SHA-256 5fdef04b95335662eaa1e66170f5afc81fd0d7a1996a3c3f0282b55aac0594cf。合成拟音，无新旁白/供应商/发布。
 
 生产者只看三张实际编码静帧：0/.9/5.6秒。尺头取景改善，但标签对比度低、压脚因果接触仍不突出，内容REWORK、分数null、增长UNMEASURED。EP03-AUDIENCE-OPENING-001保留三轮，停止新增自动策略；旧P1、99项生产索引及v5整片门禁不变。inspect.py命名冲突原字节改名保存，编码恢复，无重渲染。新helper AST、JSON及引用hash检查通过；diff hygiene另行运行。
+
+
+### 2026-11-09 Future-task repair controller regressions
+
+Scope: future production scheduling only. No published video, narration, render, provider, or browser review was changed or executed. Generated fixtures stay in temporary directories and are not media acceptance evidence.
+
+Three failures were reproduced before fixes: a successful second repair left the first failed recheck blocked; repair requests accepted duplicate/nested output paths and existing destinations; changing the repair producer let the original producer review the repaired asset. The controller now resolves every failed round through the independent resolution while preserving failure history and attempt counts, rejects unsafe output ownership atomically, and propagates producer exclusions through repair lineage.
+
+Validation: 22 repair-controller, 9 workflow-autonomy, 3 controller-integration, 3 automated-delivery, 20 production-gate, and 8 repair-closure tests passed (65 total); git diff --check passed. The two-round test also verifies unchanged handoff accounting and invalidation after the final output changes. These are scheduler contract tests with explicitly synthetic assignments, not actual independent audiovisual acceptance. Unattended formal delivery remains unqualified until a real eligible reviewer and a new-task production run pass the existing gates.
