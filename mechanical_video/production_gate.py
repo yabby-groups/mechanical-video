@@ -20,14 +20,17 @@ def sha(path):
 
 
 def evaluate(record, base, stage, now=None, require_version=1):
-    """Validate historical v1/v2 or CAD-gated v3, without writes."""
+    """Validate historical records or intent-bound v4, without writes."""
     now = time.time() if now is None else now
     errors, gaps = [], []
     p = record.get('production_checks')
-    if not isinstance(p, dict) or type(p.get('schema_version')) is not int or p.get('schema_version') not in (1, 2, 3):
+    if not isinstance(p, dict) or type(p.get('schema_version')) is not int or p.get('schema_version') not in (1, 2, 3, 4):
         return {'status': 'BLOCKED', 'reasons': ['missing production_checks v1'], 'gaps': []}
     if p['schema_version'] < require_version:
         return {'status': 'BLOCKED', 'reasons': [f'production_checks v{require_version} required for new production'], 'gaps': []}
+    if p['schema_version'] >= 4:
+        from .content_contract import evaluate as evaluate_content
+        errors.extend(evaluate_content(p, base, stage))
     assets = p.get('assets', {})
     if not isinstance(assets, dict) or not assets:
         errors.append('missing asset fingerprints')
@@ -92,7 +95,7 @@ def evaluate(record, base, stage, now=None, require_version=1):
         errors.append('critical mechanical certainty not established')
     # Legacy records are not silently superseded by the new block.
     issues = list(p.get('issues', []))
-    for key in ('issues', 'open_issues'):
+    for key in (('issues', 'open_issues', 'prior_version_issues') if p['schema_version'] >= 4 else ('issues', 'open_issues')):
         legacy = record.get(key, [])
         if isinstance(legacy, list):
             issues.extend(i for i in legacy if isinstance(i, dict))
@@ -274,8 +277,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--record', type=Path, required=True)
     parser.add_argument('--stage', choices=STAGES, required=True)
-    parser.add_argument('--require-version', type=int, choices=(1, 2, 3), default=1,
-                        help='Use 3 for new CAD-gated production; default preserves historical read-only evaluation')
+    parser.add_argument('--require-version', type=int, choices=(1, 2, 3, 4), default=1,
+                        help='Use 4 for new intent-bound production; default preserves historical read-only evaluation')
     args = parser.parse_args(argv)
     try:
         record = json.loads(args.record.read_text())
