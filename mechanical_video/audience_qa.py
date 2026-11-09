@@ -31,18 +31,35 @@ def gate(dimensions, coverage):
 
 
 def delivery_gate(technical, audience):
-    """Apply independent gates to the same actual video."""
+    """Require same-version scores AND independent continuous AV evidence."""
+    from .perceptual_review import validate
+    from .video_qa import gate as video_gate
     if not technical.get('sha256') or technical['sha256'] != audience.get('video_sha256'):
         raise ValueError('Technical and audience reports must describe the same video')
     if technical.get('status') == 'FAIL':
         return 'FAIL'
     if technical.get('status') == 'REWORK':
         return 'REWORK_TECHNICAL'
-    if technical.get('status') != 'PASS' or technical.get('total') is None or technical['total'] < 90:
-        return 'NEEDS_REVIEW'
     if audience.get('status') == 'REWORK':
         return 'REWORK_AUDIENCE'
-    if audience.get('status') != 'PASS' or audience.get('total') is None or audience['total'] < 85:
+    for report, failed in ((technical, 'REWORK_TECHNICAL'), (audience, 'REWORK_AUDIENCE')):
+        evidence = validate(report.get('perceptual_review'), technical['sha256'],
+                            report.get('duration'), report.get('producer_ids', []))
+        if evidence['status'] == 'REWORK':
+            return failed
+        if evidence['status'] != 'COMPLETE':
+            return 'NEEDS_REVIEW'
+    technical_status, technical_total = video_gate(technical.get('scores', {}), technical.get('issues', []))
+    audience_status, audience_total = gate(audience.get('dimensions', {}), audience.get('coverage', {}))
+    if technical_status == 'FAIL':
+        return 'FAIL'
+    if technical_status == 'REWORK':
+        return 'REWORK_TECHNICAL'
+    if audience_status == 'REWORK':
+        return 'REWORK_AUDIENCE'
+    if (technical.get('status') != 'PASS' or technical_status != 'PASS' or
+            technical.get('total') != technical_total or audience.get('status') != 'PASS' or
+            audience_status != 'PASS' or audience.get('total') != audience_total):
         return 'NEEDS_REVIEW'
     return 'PASS'
 
@@ -159,6 +176,8 @@ def inspect(video, output, timeline=None, visual=False):
     report = {'video': str(video), 'video_sha256': digest(video), 'duration': duration,
               'timeline': str(timeline) if timeline else None, 'timeline_sha256': timeline_hash,
               'frames': frames, 'vision': vision, 'issues': issues,
+              'review_kind': 'sampled_stills_only', 'formal_acceptance': False,
+              'blocking_gaps': ['independent full-length AV review', 'timecoded comprehension evidence'],
               'coverage': coverage, 'dimensions': dimensions, 'weights': WEIGHTS,
               'total': total, 'status': status,
               'scope': 'Sampled stills only; no audio, subtitle timing, continuous motion or audience metrics were analyzed.'}

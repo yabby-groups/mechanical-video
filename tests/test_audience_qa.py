@@ -10,7 +10,7 @@ class AudienceQATest(unittest.TestCase):
     def test_delivery_requires_both_gates_for_same_video(self):
         technical = {'sha256': 'a', 'status': 'PASS', 'total': 90}
         audience = {'video_sha256': 'a', 'status': 'PASS', 'total': 85}
-        self.assertEqual(delivery_gate(technical, audience), 'PASS')
+        self.assertEqual(delivery_gate(technical, audience), 'NEEDS_REVIEW')
         technical['status'] = 'REWORK'
         self.assertEqual(delivery_gate(technical, audience), 'REWORK_TECHNICAL')
         technical['status'] = 'NEEDS_REVIEW'

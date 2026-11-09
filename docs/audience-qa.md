@@ -51,3 +51,8 @@ remain descriptive; they do not establish matching topics, random assignment,
 independent viewers or growth causality. For image posts, do not invent a video
 duration to force them into this duration-based comparison tool; retain their
 native image-count metrics in the source evidence instead.
+
+
+## 连续视听评审入口｜2026-11-09
+
+完整审片必须执行[连续视听评审与证据导入](perceptual-review.md)，扫描工具的NEEDS_REVIEW不能称为通过。使用原片播放包记录实际覆盖与理解时间码，独立评审后导入新报告；缺感官能力则保留明确缺口。delivery_gate重新校验连续视听证据和原始评分，不信任单独PASS标签。
