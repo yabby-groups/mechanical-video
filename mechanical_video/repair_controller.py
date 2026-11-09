@@ -49,6 +49,9 @@ def _transaction(path):
     with path.with_suffix(path.suffix + '.repair.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         record = json.loads(path.read_text())
+        bound = record.get('repair_controller', {}).get('record_path')
+        if bound and bound != str(path):
+            raise ValueError('resume the canonical controller record; copied versions cannot dispatch')
         yield record, path.parent
         fd, temporary = tempfile.mkstemp(prefix='.repair-', dir=path.parent)
         try:
@@ -72,12 +75,20 @@ def initialize(path, tasks=None, capabilities=None, capability_benchmarks=None):
     with _transaction(path) as (record, base):
         if 'repair_controller' in record:
             return deepcopy(record['repair_controller'])
+        default_workflow = tasks is None
         if tasks is None:
             tasks = [dict(id=stage, stage=stage, owner='Director' if i == 0 else
                           ('Reviewer' if stage in REVIEW_STAGES else 'Producer'),
                           deps=[] if i == 0 else [CHAIN[i-1]], inputs={}, outputs=[],
                           required_checks=[stage], capabilities=(['continuous_av', 'audio'] if stage in REVIEW_STAGES else []))
                      for i, stage in enumerate(CHAIN)]
+            by_id = {task['id']: task for task in tasks}
+            for producer, reviewer in [('original-intent', 'independent-check'),
+                    ('minimal-sample', 'independent-check'),
+                    ('measured-narration-timeline', 'preflight'), ('render', 'independent-post-review')]:
+                by_id[producer]['review_by'] = reviewer
+            by_id['preflight'].update(kind='review', owner='Reviewer')
+            by_id['delivery'].update(kind='handoff', owner='Director')
         tasks = deepcopy(tasks)
         ids = [t['id'] for t in tasks]
         if len(set(ids)) != len(ids):
@@ -108,7 +119,25 @@ def initialize(path, tasks=None, capabilities=None, capability_benchmarks=None):
                 raise ValueError('cyclic task DAG')
             pending -= ready
             visited |= ready
-        state = dict(schema_version=1, tasks={t['id']: t for t in tasks}, issues={},
+        for task in tasks:
+            target = task.get('review_by')
+            if target:
+                reviewer = __import__('builtins').next((t for t in tasks if t['id'] == target), None)
+                if not reviewer or not _is_review(reviewer):
+                    raise ValueError('review_by must name an explicit independent review task')
+                ancestors, frontier = set(), list(reviewer['deps'])
+                by_id = {t['id']: t for t in tasks}
+                while frontier:
+                    dependency = frontier.pop()
+                    if dependency not in ancestors:
+                        ancestors.add(dependency); frontier.extend(by_id[dependency]['deps'])
+                if task['id'] not in ancestors:
+                    raise ValueError('explicit reviewer must depend on its producer')
+            if task.get('kind') == 'handoff' and (task['stage'] != 'delivery' or task['outputs']):
+                raise ValueError('terminal handoff cannot create unreviewed assets')
+        state = dict(schema_version=1, record_path=str(Path(path).resolve()),
+                     unattended=default_workflow or record.get('production_checks', {}).get('schema_version', 0) >= 5,
+                     tasks={t['id']: t for t in tasks}, issues={},
                      capabilities=list(capabilities or []), capability_benchmarks=deepcopy(capability_benchmarks or {}), agents={}, handoffs=0,
                      completions={}, events=[])
         for collection in (record.get('issues', []), record.get('open_issues', []), record.get('prior_version_issues', []), record.get('production_checks', {}).get('issues', [])):
@@ -124,6 +153,26 @@ def initialize(path, tasks=None, capabilities=None, capability_benchmarks=None):
                         state['issues'][key] = imported
         record['repair_controller'] = state
         return deepcopy(state)
+
+
+def _capability_errors(state, required, base):
+    errors = []
+    missing = set(required) - set(state['capabilities'])
+    for capability in set(required) & {'continuous_av', 'audio'}:
+        benchmark = state.get('capability_benchmarks', {}).get(capability, {})
+        try:
+            _refs(base, benchmark.get('evidence', {}))
+            if not benchmark.get('evidence') or not benchmark.get('adapter') or not {'action_contradiction', 'occlusion', 'speech_desync'} <= set(benchmark.get('detected', [])):
+                raise ValueError('unbenchmarked sensory capability: ' + capability)
+            report_path = __import__('builtins').next(iter(benchmark['evidence']))
+            report = json.loads(_path(base, report_path).read_text())
+            if report.get('adapter') != benchmark['adapter'] or not {'action_contradiction', 'occlusion', 'speech_desync'} <= set(report.get('detected', [])):
+                raise ValueError('sensory benchmark mismatch')
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            errors.append(str(exc))
+    if missing:
+        errors.append('capabilities unavailable: ' + ', '.join(sorted(missing)))
+    return errors
 
 
 def _blockers(state, task, base, seen=None):
@@ -142,21 +191,10 @@ def _blockers(state, task, base, seen=None):
             _refs(base, upstream.get('result', {}).get('evidence', {}))
         except (OSError, ValueError, TypeError) as exc:
             errors.append(str(exc))
-    missing = set(task['capabilities']) - set(state['capabilities'])
-    for capability in set(task['capabilities']) & {'continuous_av', 'audio'}:
-        benchmark = state.get('capability_benchmarks', {}).get(capability, {})
-        try:
-            _refs(base, benchmark.get('evidence', {}))
-            if not benchmark.get('evidence') or not benchmark.get('adapter') or not {'action_contradiction', 'occlusion', 'speech_desync'} <= set(benchmark.get('detected', [])):
-                raise ValueError('unbenchmarked sensory capability: ' + capability)
-            report_path = __import__('builtins').next(iter(benchmark['evidence']))
-            report = json.loads(_path(base, report_path).read_text())
-            if report.get('adapter') != benchmark['adapter'] or not {'action_contradiction', 'occlusion', 'speech_desync'} <= set(report.get('detected', [])):
-                raise ValueError('sensory benchmark mismatch')
-        except (OSError, ValueError, TypeError, KeyError) as exc:
-            errors.append(str(exc))
-    if missing:
-        errors.append('capabilities unavailable: ' + ', '.join(sorted(missing)))
+    required = list(task['capabilities'])
+    if state.get('unattended') and not _is_review(task) and task['stage'] in ('minimal-sample', 'measured-narration-timeline', 'render', 'delivery'):
+        required = sorted(set(required) | {'continuous_av', 'audio'})
+    errors.extend(_capability_errors(state, required, base))
     try:
         _refs(base, task['inputs'])
     except (OSError, ValueError, TypeError) as exc:
@@ -171,8 +209,12 @@ def next(path):
     """Read readiness without dispatching anything."""
     record = json.loads(Path(path).read_text())
     state, base = record['repair_controller'], Path(path).resolve().parent
+    if state.get('record_path') and state['record_path'] != str(Path(path).resolve()):
+        raise ValueError('resume the canonical controller record; copied versions cannot dispatch')
     ready, blocked = [], {}
     for task in state['tasks'].values():
+        if task['status'] == 'blocked':
+            blocked[task['id']] = ['failed/incomplete check; owned repair required']
         if task['status'] != 'pending':
             continue
         errors = _blockers(state, task, base)
@@ -180,7 +222,24 @@ def next(path):
             blocked[task['id']] = errors
         else:
             ready.append(deepcopy(task))
-    return {'ready': ready, 'blocked': blocked,
+    capability_errors = _capability_errors(state, ['continuous_av', 'audio'], base) if state.get('unattended') else []
+    for task in state['tasks'].values():
+        if task['status'] == 'done':
+            errors = _blockers(state, task, base)
+            try:
+                _refs(base, task.get('result', {}).get('outputs', {}))
+                _refs(base, task.get('result', {}).get('evidence', {}))
+            except (OSError, ValueError, TypeError) as exc:
+                errors.append(str(exc))
+            if errors:
+                blocked[task['id']] = sorted(set(errors))
+    workflow_status = ('DEPENDENCY_BLOCKED' if capability_errors else
+        ('COMPLETE' if not blocked and all(t['status'] == 'done' for t in state['tasks'].values())
+         and all(i['status'] == 'closed' for i in state['issues'].values()) else 'IN_PROGRESS'))
+    return {'workflow_status': workflow_status,
+            'dependency_owner': 'Director' if capability_errors else None,
+            'dependency_errors': capability_errors,
+            'ready': ready, 'blocked': blocked,
             'running': [deepcopy(t) for t in state['tasks'].values() if t['status'] == 'running']}
 
 
@@ -256,10 +315,23 @@ def claim(path, task_id, agent_id, dispatch_receipt, dispatch_kind='spawn'):
 
 
 def _review(state, task, outputs):
+    if task.get('kind') == 'handoff':
+        if task['stage'] != 'delivery' or outputs:
+            raise ValueError('terminal handoff cannot create unreviewed assets')
+        return
+    if task.get('review_by') and task.get('kind') != 'repair':
+        review = state['tasks'][task['review_by']]
+        if review['status'] != 'pending' or not _is_review(review):
+            raise ValueError('explicit independent reviewer is not pending')
+        review['inputs'].update(deepcopy(outputs))
+        review['required_checks'] = sorted(set(review['required_checks']) | set(task['required_checks']))
+        review.setdefault('excluded_agents', []).append(task['agent_id'])
+        review.setdefault('subjects', []).append(task['id'])
+        return
     review_id = task['id'] + ':review'
     state['tasks'][review_id] = dict(id=review_id, stage=task['stage'], kind='review',
         owner='Independent Reviewer', deps=[task['id']], inputs=deepcopy(outputs), outputs=[],
-        required_checks=list(task['required_checks']), capabilities=list(task['capabilities']),
+        required_checks=list(task['required_checks']), capabilities=list(task.get('review_capabilities', task['capabilities'])),
         status='pending', excluded_agents=[task['agent_id']], producer=task['agent_id'],
         issue_id=task.get('issue_id'), subject=task['id'])
     # Existing dependents must wait for this actual independent review.
@@ -308,8 +380,8 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
             raise ValueError('required checks incomplete')
         if review and verdict == 'pass' and not payload['evidence']:
             raise ValueError('independent review evidence required')
-        if verdict == 'fail' and not payload['failures']:
-            raise ValueError('failure details required')
+        if verdict in ('fail', 'needs-review') and not payload['failures']:
+            raise ValueError('failed or incomplete review needs an owned repair/dependency issue')
         for failure in payload['failures']:
             if not all(failure.get(k) for k in ('issue_id', 'owner', 'required_checks', 'severity', 'evidence')):
                 raise ValueError('incomplete stable issue')
@@ -318,9 +390,14 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
             executions = state.get('executions', {}).values()
             if not any(e['task_id'] == task_id and e['command'] == task['command'] and e['status'] == 'completed' and e.get('returncode') == 0 and e['inputs'] == task['inputs'] for e in executions):
                 raise ValueError('successful bound command execution receipt required')
+        if verdict == 'pass' and task['stage'] == 'delivery':
+            from .production_gate import evaluate
+            gate = evaluate(record, base, 'delivery', require_version=5)
+            if gate['status'] != 'READY':
+                raise ValueError('delivery requires independent acceptance: ' + '; '.join(gate.get('reasons', [])))
         state['handoffs'] += 1
         task.update(status='done' if verdict == 'pass' else 'blocked', result=payload)
-        if task.get('kind') == 'repair' and verdict in ('pass', 'fail'):
+        if task.get('kind') == 'repair' and verdict in ('pass', 'fail', 'needs-review'):
             issue = state['issues'][task['issue_id']]
             issue['repair_attempts'] += 1
             issue['rounds_without_improvement'] = 0 if improvement is True else issue['rounds_without_improvement'] + 1
@@ -372,7 +449,8 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
                 state['tasks'][repair_id] = dict(id=repair_id, stage=subject['stage'], kind='repair',
                     issue_id=key, owner=issue['owner'], deps=[], inputs=deepcopy(failure.get('repair_inputs', payload['outputs'] or task['inputs'])),
                     outputs=list(repair_outputs), required_checks=list(issue['required_checks']),
-                    capabilities=list(subject['capabilities']), status='pending')
+                    capabilities=list(failure.get('repair_capabilities', subject['capabilities'])),
+                    review_capabilities=list(subject.get('review_capabilities', subject['capabilities'])), status='pending')
                 # Superseded completed output owner is historical, never running concurrently.
         result = dict(task_id=task_id, status=task['status'], verdict=verdict)
         state['completions'][completion_id] = {'digest': digest, 'result': result}
@@ -405,7 +483,7 @@ def validate_execution(record, base, stage):
     if record.get('hold') or record.get('editorial_hold'):
         errors.append('active hold')
     for name in required:
-        candidates = [t for t in state['tasks'].values() if t['stage'] == name and t.get('kind') not in ('repair', 'review')]
+        candidates = [t for t in state['tasks'].values() if t['stage'] == name and t.get('kind') != 'repair' and not t.get('subject')]
         if not candidates or any(t['status'] != 'done' for t in candidates):
             errors.append('controller stage incomplete: ' + name)
     for task in state['tasks'].values():
@@ -439,10 +517,30 @@ def command_guard(record, base, stage, command):
     return errors
 
 
+def capability(path, name, benchmark):
+    """Register an actually exercised adapter; declarations alone cannot enable it."""
+    if name not in ('continuous_av', 'audio'):
+        raise ValueError('unsupported review capability')
+    with _transaction(path) as (record, base):
+        state = record['repair_controller']
+        candidate = deepcopy(state)
+        if name not in candidate['capabilities']:
+            candidate['capabilities'].append(name)
+        candidate['capability_benchmarks'][name] = deepcopy(benchmark)
+        errors = _capability_errors(candidate, [name], base)
+        if errors:
+            raise ValueError('; '.join(errors))
+        state['events'].append(dict(event='capability', name=name,
+            prior=deepcopy(state['capability_benchmarks'].get(name)), benchmark=deepcopy(benchmark)))
+        state['capabilities'] = candidate['capabilities']
+        state['capability_benchmarks'] = candidate['capability_benchmarks']
+        return deepcopy(benchmark)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--record', required=True, type=Path)
-    parser.add_argument('action', choices=('initialize', 'next', 'claim', 'complete', 'resume'))
+    parser.add_argument('action', choices=('initialize', 'next', 'claim', 'complete', 'resume', 'capability'))
     parser.add_argument('--payload', type=Path, help='JSON object with API keyword arguments')
     args = parser.parse_args(argv)
     payload = json.loads(args.payload.read_text()) if args.payload else {}
