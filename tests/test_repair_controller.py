@@ -149,6 +149,24 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(self.record.read_bytes(), before)
         self.assertEqual((self.base / 'protected').read_text(), 'existing asset outside the task graph')
 
+    def test_changing_repair_owner_does_not_allow_original_producer_to_review(self):
+        self.setup(); self.produce(); self.claim('sample:review', 'reviewer')
+        rc.complete(self.record, 'sample:review', 'reviewer', 'failure', verdict='fail',
+            failures=[dict(issue_id='gap', owner='Other Visual', severity='P1',
+                required_checks=['contact'], evidence=self.proof, repair_outputs=['v2'])])
+        task = 'gap:repair:1'
+        self.claim(task, 'other-producer')
+        rc.complete(self.record, task, 'other-producer', 'repaired',
+                    outputs=self.ref('v2', 'fixed'), checks=['contact'], improvement=True)
+        before = self.record.read_bytes()
+        with self.assertRaisesRegex(ValueError, 'producer cannot'):
+            self.claim(task + ':review', 'producer', 'followup')
+        self.assertEqual(self.record.read_bytes(), before)
+        self.claim(task + ':review', 'reviewer', 'followup')
+        rc.complete(self.record, task + ':review', 'reviewer', 'verified',
+                    checks=['contact'], evidence=self.proof)
+        self.assertEqual(rc.resume(self.record)['workflow_status'], 'COMPLETE')
+
     def test_duplicate_and_resume(self):
         self.setup()
         self.claim('sample', 'producer')

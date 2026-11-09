@@ -322,6 +322,23 @@ def claim(path, task_id, agent_id, dispatch_receipt, dispatch_kind='spawn'):
         return deepcopy(task)
 
 
+def _producer_lineage(state, task):
+    """Keep original and intermediate producers excluded across local repairs."""
+    excluded, visited, pending = set(), set(), [task['id']]
+    while pending:
+        task_id = pending.pop()
+        if task_id in visited:
+            continue
+        visited.add(task_id)
+        current = state['tasks'][task_id]
+        excluded.update(current.get('excluded_agents', []))
+        excluded.update(current.get('review_excluded_agents', []))
+        if not _is_review(current) and current.get('agent_id'):
+            excluded.add(current['agent_id'])
+        pending.extend(current['deps'])
+    return sorted(excluded)
+
+
 def _review(state, task, outputs):
     if task.get('kind') == 'handoff':
         if task['stage'] != 'delivery' or outputs:
@@ -333,14 +350,15 @@ def _review(state, task, outputs):
             raise ValueError('explicit independent reviewer is not pending')
         review['inputs'].update(deepcopy(outputs))
         review['required_checks'] = sorted(set(review['required_checks']) | set(task['required_checks']))
-        review.setdefault('excluded_agents', []).append(task['agent_id'])
+        review['excluded_agents'] = sorted(set(review.get('excluded_agents', []))
+                                           | set(_producer_lineage(state, task)))
         review.setdefault('subjects', []).append(task['id'])
         return
     review_id = task['id'] + ':review'
     state['tasks'][review_id] = dict(id=review_id, stage=task['stage'], kind='review',
         owner='Independent Reviewer', deps=[task['id']], inputs=deepcopy(outputs), outputs=[],
         required_checks=list(task['required_checks']), capabilities=list(task.get('review_capabilities', task['capabilities'])),
-        status='pending', excluded_agents=[task['agent_id']], producer=task['agent_id'],
+        status='pending', excluded_agents=_producer_lineage(state, task), producer=task['agent_id'],
         issue_id=task.get('issue_id'), subject=task['id'])
     # Existing dependents must wait for this actual independent review.
     for other in list(state['tasks'].values()):
@@ -481,7 +499,8 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
                     issue_id=key, owner=issue['owner'], deps=[], inputs=deepcopy(failure.get('repair_inputs', payload['outputs'] or task['inputs'])),
                     outputs=list(repair_outputs), required_checks=list(issue['required_checks']),
                     capabilities=list(failure.get('repair_capabilities', subject['capabilities'])),
-                    review_capabilities=list(subject.get('review_capabilities', subject['capabilities'])), status='pending')
+                    review_capabilities=list(subject.get('review_capabilities', subject['capabilities'])),
+                    review_excluded_agents=_producer_lineage(state, task), status='pending')
                 # Superseded completed output owner is historical, never running concurrently.
         result = dict(task_id=task_id, status=task['status'], verdict=verdict)
         state['completions'][completion_id] = {'digest': digest, 'result': result}
