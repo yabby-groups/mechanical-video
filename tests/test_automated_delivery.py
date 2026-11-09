@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 import tempfile
 import unittest
+from test_review_benchmark import benchmark_fixture
 from unittest.mock import patch
 from mechanical_video import repair_controller as rc, production_run, production_gate
 
@@ -16,8 +17,7 @@ class AutomatedDeliveryTests(unittest.TestCase):
         proof=self.base/'fixture-proof';proof.write_text('Synthetic scheduler fixture, not media acceptance')
         self.evidence={str(proof):rc._sha(proof)}
         self.benchmark=self.base/'fixture-benchmark.json'
-        self.benchmark.write_text(json.dumps(dict(adapter='fixture-adapter',
-            detected=['action_contradiction','occlusion','speech_desync'])))
+        self.benchmark.write_text(json.dumps(benchmark_fixture(self.base)))
         self.bench=dict(adapter='fixture-adapter',detected=['action_contradiction','occlusion','speech_desync'],
                         evidence={str(self.benchmark):rc._sha(self.benchmark)})
 

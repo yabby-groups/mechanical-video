@@ -173,7 +173,9 @@ def _capability_errors(state, required, base):
             report = json.loads(_path(base, report_path).read_text())
             if report.get('adapter') != benchmark['adapter'] or not {'action_contradiction', 'occlusion', 'speech_desync'} <= set(report.get('detected', [])):
                 raise ValueError('sensory benchmark mismatch')
-        except (OSError, ValueError, TypeError, KeyError) as exc:
+            from .review_benchmark import validate_benchmark
+            validate_benchmark(report, base)
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
             errors.append(str(exc))
     if missing:
         errors.append('capabilities unavailable: ' + ', '.join(sorted(missing)))
