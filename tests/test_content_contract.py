@@ -111,7 +111,9 @@ class ContentContractTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertFalse(sentinel.exists())
         # Isolate command dispatch from the separately integration-tested gate.
-        with patch.object(production_run, 'evaluate', return_value={'status':'READY'}):
+        with patch.object(production_run, 'evaluate', return_value={'status':'READY'}), \
+                patch('mechanical_video.repair_controller.start_execution', return_value='test-token'), \
+                patch('mechanical_video.repair_controller.finish_execution'):
             self.assertEqual(production_run.run(record, 'narration', cmd)[1], 0)
         self.assertTrue(sentinel.exists())
         sentinel.unlink()

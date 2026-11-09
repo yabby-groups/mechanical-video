@@ -22,9 +22,22 @@ def connect(root):
     db.execute('CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, spec TEXT, state TEXT, attempts INTEGER DEFAULT 0, error TEXT, updated REAL)')
     return db
 
-def enqueue(root,manifest,templates,portrait=False,production=False,seconds=5,engine="eevee",storyboard=None):
+def enqueue(root,manifest,templates,portrait=False,production=False,seconds=5,engine="eevee",storyboard=None,record=None):
     import math
     from .runtime import source_fingerprints,snapshot_sources
+    binding = None
+    if production:
+        if record is None:
+            raise ValueError('New production requires controller-bound director record')
+        from .production_gate import evaluate, sha
+        record = Path(record).resolve()
+        gate = evaluate(json.loads(record.read_text()), record.parent, 'full-render', require_version=5)
+        if gate['status'] == 'BLOCKED':
+            raise ValueError('Production blocked: ' + '; '.join(gate['reasons']))
+        assets = json.loads(record.read_text())['production_checks']['assets']
+        if not any(ref.get('sha256') == sha(manifest) and Path(ref.get('path','')).resolve() == manifest.resolve() for ref in assets.values()):
+            raise ValueError('Queued model manifest not bound to reviewed production assets')
+        binding = {'path': str(record), 'sha256': sha(record)}
     if not math.isfinite(seconds) or not 1/30 <= seconds <= 120: raise ValueError('seconds must be finite and between 1/30 and 120')
     seconds=round(seconds*30)/30
     if seconds.is_integer(): seconds=int(seconds)
@@ -44,6 +57,8 @@ def enqueue(root,manifest,templates,portrait=False,production=False,seconds=5,en
                 raise ValueError('Storyboard requires cordless_drill explanation')
             spec['storyboard']=storyboard
         if engine!='eevee': spec['engine']=engine
+        if binding:
+            spec['production_record'] = binding
         spec['renderer_files']=source_fingerprints()
         spec['model_hash']=hashlib.sha256(manifest.read_bytes()).hexdigest()
         key=hashlib.sha256(json.dumps(spec,sort_keys=True).encode()).hexdigest()[:20]
@@ -80,7 +95,13 @@ def _consume(root,watch,retries):
     from .runtime import exclusive_lock, render_sources, caption_video, require_metal_device
     db=connect(root)
     with exclusive_lock(root/'render.lock',blocking=True):
-        db.execute("UPDATE jobs SET state='pending' WHERE state='running'"); db.commit()
+        # Only legacy diagnostics retain automatic restart. Production has an
+        # uncertain launch receipt and must be reconciled, never redispatched.
+        for row in db.execute("SELECT id,spec FROM jobs WHERE state='running'").fetchall():
+            production = bool(json.loads(row['spec']).get('production_record'))
+            db.execute("UPDATE jobs SET state=?,error=? WHERE id=?", ('blocked' if production else 'pending',
+                'Uncertain production execution; reconcile existing task' if production else None, row['id']))
+        db.commit()
     blender=os.environ.get('BLENDER_BIN') or shutil.which('blender') or '/Applications/Blender.app/Contents/MacOS/Blender'
     try:
         while True:
@@ -88,13 +109,31 @@ def _consume(root,watch,retries):
             if row is None:
                 if watch: time.sleep(5); continue
                 break
+            spec=json.loads(row['spec'])
+            if spec.get('production_record'):
+                from .production_gate import evaluate, sha
+                binding=spec['production_record']; record_path=Path(binding['path'])
+                try:
+                    if sha(record_path) != binding['sha256']:
+                        raise ValueError('Production record changed after enqueue')
+                    report=evaluate(json.loads(record_path.read_text()),record_path.parent,'full-render',require_version=5)
+                    if report['status']=='BLOCKED':
+                        raise ValueError('; '.join(report['reasons']))
+                except (OSError,ValueError,KeyError,TypeError) as exc:
+                    db.execute("UPDATE jobs SET state='blocked',error=? WHERE id=?",(str(exc),row['id']));db.commit()
+                    continue
             require_metal_device()
             with exclusive_lock(root/'render.lock',blocking=True):
                 spec=json.loads(row['spec']); folder=Path(spec['directory']); folder.mkdir(parents=True,exist_ok=True)
                 job=folder/'job.json'; job.write_text(json.dumps(spec,indent=2))
                 db.execute("UPDATE jobs SET state='running',attempts=attempts+1,updated=? WHERE id=?",(time.time(),row['id'])); db.commit()
                 started=time.monotonic()
+                execution_token = None
                 try:
+                    if spec.get('production_record'):
+                        from .repair_controller import start_execution
+                        bound_record = json.loads(record_path.read_text())
+                        execution_token = start_execution(record_path, 'full-render', bound_record['production_checks']['execution']['full-render'])
                     from PIL import Image
                     sources=render_sources(folder,spec)
                     if hashlib.sha256(Path(spec['manifest']).read_bytes()).hexdigest()!=spec['model_hash']:
@@ -112,11 +151,14 @@ def _consume(root,watch,retries):
                     caption_video(folder,spec); verify(video,spec)
                     temp.with_suffix('.verification.json').unlink(missing_ok=True)
                     (folder/'metrics.json').write_text(json.dumps({'wall_seconds':round(time.monotonic()-started,3),'engine':spec.get('engine','eevee'),'frames':int(spec['seconds']*30)},indent=2))
+                    if execution_token:
+                        from .repair_controller import finish_execution
+                        finish_execution(record_path, execution_token, 0)
                     db.execute("UPDATE jobs SET state='done',error=NULL,updated=? WHERE id=?",(time.time(),row['id']))
                     print('DONE',video,flush=True)
                 except Exception as exc:
                     crashed=isinstance(exc, subprocess.CalledProcessError) and exc.returncode < 0
-                    db.execute("UPDATE jobs SET state=?,error=?,updated=? WHERE id=?",('blocked' if crashed else 'failed',str(exc),time.time(),row['id']))
+                    db.execute("UPDATE jobs SET state=?,error=?,updated=? WHERE id=?",('blocked' if crashed or spec.get('production_record') else 'failed',str(exc),time.time(),row['id']))
                     print('FAILED',row['id'],str(exc),flush=True)
                     if crashed:
                         db.commit()
@@ -155,6 +197,9 @@ def analyze(image, root):
     return build(root,result.get('parameters',{}))
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='production':
+        from .repair_controller import main as controller_main
+        return controller_main(sys.argv[2:])
     if len(sys.argv)>1 and sys.argv[1]=='remake':
         from .remake import main as remake_main
         return remake_main(sys.argv[2:])
@@ -177,7 +222,7 @@ def main():
         from .production_gate import evaluate
         try:
             result = evaluate(json.loads(a.record.read_text()), a.record.resolve().parent, 'full-render',
-                              require_version=4 if (getattr(a, 'production', False) or a.command == 'worker') else 1)
+                              require_version=5 if (getattr(a, 'production', False) or a.command == 'worker') else 1)
         except (OSError, ValueError, TypeError, KeyError, AttributeError):
             p.error('Invalid production record')
         if result['status'] == 'BLOCKED':
@@ -190,12 +235,16 @@ def main():
         else: print(build(a.root,{'module':a.module} if a.module!=2 else {}))
     elif a.command in ['batch','demo','image']:
         manifest=analyze(a.path,a.root) if a.command=='image' else build(a.root,{'module':a.module} if a.module!=2 else {})
-        enqueue(a.root,manifest,a.templates,a.portrait,a.production,a.seconds,a.engine)
+        enqueue(a.root,manifest,a.templates,a.portrait,a.production,a.seconds,a.engine,record=a.record)
         if a.command=='demo': worker(a.root)
     elif a.command=='worker': worker(a.root,a.watch)
     elif a.command=='verify': print(json.dumps(verify(a.path),indent=2))
     elif a.command=='retry':
-        db=connect(a.root); db.execute("UPDATE jobs SET attempts=0,state='pending' WHERE state IN ('failed','blocked')"); db.commit(); db.close()
+        db=connect(a.root)
+        for row in db.execute("SELECT id,spec FROM jobs WHERE state IN ('failed','blocked')").fetchall():
+            if not json.loads(row['spec']).get('production_record'):
+                db.execute("UPDATE jobs SET attempts=0,state='pending' WHERE id=?",(row['id'],))
+        db.commit(); db.close()
     elif a.command=='status':
         db=connect(a.root)
         for row in db.execute('SELECT id,state,attempts,error FROM jobs'): print(dict(row))

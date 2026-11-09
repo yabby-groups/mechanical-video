@@ -24,13 +24,19 @@ def evaluate(record, base, stage, now=None, require_version=1):
     now = time.time() if now is None else now
     errors, gaps = [], []
     p = record.get('production_checks')
-    if not isinstance(p, dict) or type(p.get('schema_version')) is not int or p.get('schema_version') not in (1, 2, 3, 4):
+    if not isinstance(p, dict) or type(p.get('schema_version')) is not int or p.get('schema_version') not in (1, 2, 3, 4, 5):
         return {'status': 'BLOCKED', 'reasons': ['missing production_checks v1'], 'gaps': []}
     if p['schema_version'] < require_version:
         return {'status': 'BLOCKED', 'reasons': [f'production_checks v{require_version} required for new production'], 'gaps': []}
     if p['schema_version'] >= 4:
         from .content_contract import evaluate as evaluate_content
         errors.extend(evaluate_content(p, base, stage))
+    if p['schema_version'] >= 5:
+        from .repair_controller import validate_execution
+        errors.extend(validate_execution(record, base, stage))
+        if stage in ('full-render', 'delivery'):
+            from .event_timeline import gate_errors
+            errors.extend(gate_errors(p, base))
     assets = p.get('assets', {})
     if not isinstance(assets, dict) or not assets:
         errors.append('missing asset fingerprints')
@@ -324,8 +330,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--record', type=Path, required=True)
     parser.add_argument('--stage', choices=STAGES, required=True)
-    parser.add_argument('--require-version', type=int, choices=(1, 2, 3, 4), default=1,
-                        help='Use 4 for new intent-bound production; default preserves historical read-only evaluation')
+    parser.add_argument('--require-version', type=int, choices=(1, 2, 3, 4, 5), default=1,
+                        help='Use 5 for new controller-bound production; default preserves historical read-only evaluation')
     args = parser.parse_args(argv)
     try:
         record = json.loads(args.record.read_text())

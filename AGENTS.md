@@ -80,3 +80,8 @@ For ego-browser use `/Users/lmj/.local/bin/ego-browser`, JavaScript via `nodejs 
 Run applicable unittest discovery for code changes. Production CAD/video changes additionally need actual CAD generation, independently exported valid positive-volume solids, render, ffprobe and full FFmpeg decode. Record native versus encoded resolution/frame rate separately; technical completion is not perceptual acceptance. Documentation/configuration and read-only audit-tool changes need their applicable tests, links/scope/TOML checks and `git diff --check`, not unrelated renders or provider calls. Append current validation to [validation.md](docs/validation.md), preserving historical records.
 
 Read-only usage audit: `.venv/bin/python scripts/audit_token_usage.py <session.jsonl-or-directory> --format json|markdown`. See [audit usage and baseline](docs/token-usage-audit.md). Report cached/noncached inputs, outputs and coordination separately; do not equate cumulative tokens with cost or promise savings before comparable real-task measurement.
+
+
+### 持久化修复调度 v5（2026-11-09）
+
+新制作入口采用 [repair-controller](docs/repair-controller.md)，通过 next → 真实会话派工 → claim → complete → 独立复验推进；resume 不重复未知命令。配音、全片、交付要求 v5 执行记录；历史 v4 的原判定保留。统一事件时间线必须来自实测语音并绑定字幕、motion、foley。当前仅完成简化代理的跨题材技术闭环，原片与连续视听验收仍未完成，不能标记系统整体完成。
