@@ -89,6 +89,43 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(issue['repair_attempts'], 1)
         self.assertNotEqual(issue['resolution']['producer'], issue['resolution']['reviewer'])
 
+    def test_second_repair_closes_all_failed_rounds_and_preserves_history(self):
+        # Synthetic assignments exercise scheduling only, not media acceptance.
+        self.setup(); self.produce(); self.claim('sample:review', 'reviewer')
+        failure = dict(issue_id='gap', owner='Visual', severity='P1',
+                       required_checks=['contact'], evidence=self.proof, repair_outputs=['v2'])
+        rc.complete(self.record, 'sample:review', 'reviewer', 'first-failure',
+                    verdict='fail', failures=[failure])
+        receipts = {a: {'agent_id': a, 'tool_call_id': 'fixture-batch-' + a}
+                    for a in ('producer', 'reviewer')}
+        for round_number in (1, 2):
+            task = f'gap:repair:{round_number}'
+            kind = 'followup' if round_number == 1 else 'reuse'
+            rc.claim(self.record, task, 'producer', receipts['producer'], kind)
+            rc.complete(self.record, task, 'producer', task + '-done',
+                        outputs=self.ref(f'v{round_number + 1}', f'candidate-{round_number}'),
+                        checks=['contact'], improvement=True)
+            rc.claim(self.record, task + ':review', 'reviewer', receipts['reviewer'], kind)
+            if round_number == 1:
+                rc.complete(self.record, task + ':review', 'reviewer', 'second-failure',
+                            verdict='fail', failures=[dict(failure, repair_outputs=['v3'])])
+                self.assertNotEqual(rc.resume(self.record)['workflow_status'], 'COMPLETE')
+            else:
+                rc.complete(self.record, task + ':review', 'reviewer', 'verified',
+                            checks=['contact'], evidence=self.proof)
+        state = json.loads(self.record.read_text())['repair_controller']
+        self.assertEqual(rc.resume(self.record)['workflow_status'], 'COMPLETE')
+        self.assertEqual(state['issues']['gap']['repair_attempts'], 2)
+        self.assertEqual(state['handoffs'], 12)
+        for failed_id in ('sample:review', 'gap:repair:1:review'):
+            failed = state['tasks'][failed_id]
+            self.assertEqual(failed['status'], 'done')
+            self.assertEqual(failed['resolved_by'], 'gap:repair:2:review')
+            self.assertEqual(failed['failed_history'][0]['verdict'], 'fail')
+            self.assertEqual(set(failed['inputs']), {'v3'})
+        self.ref('v3', 'changed after review')
+        self.assertNotEqual(rc.resume(self.record)['workflow_status'], 'COMPLETE')
+
     def test_duplicate_and_resume(self):
         self.setup()
         self.claim('sample', 'producer')

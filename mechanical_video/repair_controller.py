@@ -416,21 +416,32 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
             issue.update(status='closed', resolution=dict(issue_id=issue['issue_id'], verdict='verified',
                 producer=task['producer'], reviewer=agent_id, asset_fingerprints=task['inputs'],
                 checks_covered=payload['checks'], evidence=payload['evidence']))
-            # Unblock failed review only through verified repair, preserving history.
-            failed = state['tasks'][issue['failed_task']]
-            repaired = state['tasks'][task['subject']]
-            superseded_inputs = set(repaired['inputs'])
-            failed.setdefault('failed_history', []).append(deepcopy(failed.get('result', {})))
-            for old_path in superseded_inputs:
-                failed['inputs'].pop(old_path, None)
-            failed['inputs'].update(task['inputs'])
-            all_closed = all(i['status'] == 'closed' for i in state['issues'].values() if i.get('failed_task') == failed['id'])
-            failed.update(status='done' if all_closed else 'blocked', result=deepcopy(payload), resolved_by=task['id'])
-            for downstream in state['tasks'].values():
-                if failed['id'] in downstream['deps']:
-                    for old_path in superseded_inputs:
-                        downstream['inputs'].pop(old_path, None)
-                    downstream['inputs'].update(task['inputs'])
+            # Resolve every failed round of this stable issue, not just its first
+            # review. Keep failed payloads and immutable outputs as history.
+            failed_ids = set(issue.get('failed_tasks', [issue['failed_task']]))
+            for candidate in state['tasks'].values():
+                if any(f.get('issue_id') == issue['issue_id']
+                       for f in candidate.get('result', {}).get('failures', [])):
+                    failed_ids.add(candidate['id'])
+            superseded_inputs = {p for repair in state['tasks'].values()
+                                 if repair.get('kind') == 'repair'
+                                 and repair.get('issue_id') == issue['issue_id']
+                                 for p in repair['inputs']}
+            for failed_id in failed_ids:
+                failed = state['tasks'][failed_id]
+                failed.setdefault('failed_history', []).append(deepcopy(failed.get('result', {})))
+                for old_path in superseded_inputs:
+                    failed['inputs'].pop(old_path, None)
+                failed['inputs'].update(task['inputs'])
+                all_closed = all(i['status'] == 'closed' for i in state['issues'].values()
+                    if failed_id in i.get('failed_tasks', [i.get('failed_task')]))
+                failed.update(status='done' if all_closed else 'blocked',
+                              result=deepcopy(payload), resolved_by=task['id'])
+                for downstream in state['tasks'].values():
+                    if failed_id in downstream['deps']:
+                        for old_path in superseded_inputs:
+                            downstream['inputs'].pop(old_path, None)
+                        downstream['inputs'].update(task['inputs'])
         for failure in payload['failures']:
             key = failure['issue_id']
             issue = state['issues'].get(key)
@@ -445,6 +456,9 @@ def complete(path, task_id, agent_id, completion_id, outputs=None, checks=None,
                 issue.setdefault('failed_task', task_id)
                 issue.setdefault('owner', failure['owner'])
                 issue.setdefault('required_checks', failure['required_checks'])
+            failed_tasks = issue.setdefault('failed_tasks', [issue['failed_task']])
+            if task_id not in failed_tasks:
+                failed_tasks.append(task_id)
             repair_id = key + ':repair:' + str(issue['repair_attempts'] + 1)
             if repair_id not in state['tasks']:
                 subject = state['tasks'].get(task.get('subject'), task)
