@@ -26,7 +26,7 @@ def automated_review_errors(record, base):
         path = Path(ref['path'])
         return sha(path if path.is_absolute() else Path(base)/path) == ref['sha256']
     from .perceptual_review import validate as validate_perceptual
-    from .repair_controller import _is_review
+    from .repair_controller import _is_review, _capability_errors
     try:
         ref = assets['perceptual_review']
         if not linked(ref):
@@ -48,9 +48,20 @@ def automated_review_errors(record, base):
                    and t.get('result', {}).get('evidence', {}).get(ref['path']) == ref['sha256']
                    for t in state['tasks'].values()):
             raise ValueError('continuous review not bound to dispatched independent reviewer')
-        if any(state['capability_benchmarks'][name]['adapter'] != reviewer['tool']
-               for name in ('continuous_av', 'audio')):
-            raise ValueError('continuous review adapter differs from tested capability')
+        capability_errors = _capability_errors(state, ['continuous_av', 'audio'], base)
+        if capability_errors:
+            raise ValueError('; '.join(capability_errors))
+        for name in ('continuous_av', 'audio'):
+            benchmark = state['capability_benchmarks'][name]
+            if benchmark['adapter'] != reviewer['tool']:
+                raise ValueError('continuous review adapter differs from tested capability')
+            benchmark_path = Path(next(iter(benchmark['evidence'])))
+            if not benchmark_path.is_absolute():
+                benchmark_path = Path(base) / benchmark_path
+            exercised = json.loads(benchmark_path.read_text())
+            if any(reviewer.get(field) != exercised[field]
+                   for field in ('model_revision', 'runtime_fingerprint')):
+                raise ValueError('continuous review runtime differs from tested capability')
     except (OSError, ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
         return ['independent automated acceptance: ' + str(exc)]
     return []

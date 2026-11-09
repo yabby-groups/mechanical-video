@@ -41,7 +41,8 @@ class AutomatedDeliveryTests(unittest.TestCase):
         from mechanical_video.perceptual_review import MODALITIES, QUESTIONS
         evidence_path=next(iter(self.evidence))
         review=dict(media_sha256='final-hash',duration=1,
-            reviewer=dict(id='qa',independent=True,method='continuous_av_model',tool='fixture-adapter',completed_at='fixture'),
+            reviewer=dict(id='qa',independent=True,method='continuous_av_model',tool='fixture-adapter',completed_at='fixture',
+                          model_revision='synthetic-revision',runtime_fingerprint='synthetic-runtime'),
             evidence=[dict(path=evidence_path,sha256=self.evidence[evidence_path])],
             coverage={m:dict(observed=True,ranges=[[0,1]],notes='Synthetic coverage',evidence=evidence_path) for m in MODALITIES},
             answers={q:dict(time=.5,observation='Synthetic answer',verdict='clear',evidence=evidence_path) for q in QUESTIONS},issues=[])
@@ -50,12 +51,14 @@ class AutomatedDeliveryTests(unittest.TestCase):
             path.write_text(json.dumps(data))
             ref=dict(path=str(path),sha256=rc._sha(path))
             return dict(production_checks=dict(required_interval=[0,1],assets=dict(perceptual_review=ref,final_media=dict(sha256='final-hash'))),
-                repair_controller=dict(tasks={'render':dict(stage='render',agent_id='producer'),
+                repair_controller=dict(capabilities=['continuous_av','audio'],tasks={'render':dict(stage='render',agent_id='producer'),
                     'qa':dict(stage='independent-post-review',status='done',agent_id='qa',result=dict(evidence={str(path):ref['sha256']}))},
                     capability_benchmarks={name:self.bench for name in ('continuous_av','audio')}))
         self.assertEqual(production_gate.automated_review_errors(record_for(review),self.base),[])
         for mutate in (lambda r:r['reviewer'].update(method='realtime_av_playback'),
                        lambda r:r['reviewer'].update(tool='untested-adapter'),
+                       lambda r:r['reviewer'].update(model_revision='changed-model'),
+                       lambda r:r['reviewer'].update(runtime_fingerprint='changed-runtime'),
                        lambda r:r['reviewer'].update(id='producer'),
                        lambda r:r['coverage']['audio'].update(observed=False),
                        lambda r:r.update(media_sha256='another-version')):
@@ -63,6 +66,14 @@ class AutomatedDeliveryTests(unittest.TestCase):
             self.assertTrue(production_gate.automated_review_errors(record_for(candidate),self.base))
         record=record_for(review);record['repair_controller']['tasks']['qa']['result']['evidence']={}
         self.assertTrue(production_gate.automated_review_errors(record,self.base))
+        record=record_for(review)
+        original_benchmark=self.benchmark.read_text()
+        benchmark=json.loads(original_benchmark);benchmark['model_revision']='newly-qualified-model'
+        self.benchmark.write_text(json.dumps(benchmark))
+        updated=dict(self.bench,evidence={str(self.benchmark):rc._sha(self.benchmark)})
+        record['repair_controller']['capability_benchmarks']={name:updated for name in ('continuous_av','audio')}
+        self.assertTrue(production_gate.automated_review_errors(record,self.base))
+        self.benchmark.write_text(original_benchmark)
         record=record_for(review);record['production_checks']['required_interval']=[]
         self.assertTrue(production_gate.automated_review_errors(record,self.base))
         record=record_for(review);path.write_text('changed')

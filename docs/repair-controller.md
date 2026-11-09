@@ -70,3 +70,5 @@ complete 的 needs-review 与 fail 都必须带 failures：稳定 issue_id、own
 每例 `coverage` 包含 `source_frames` / `frames_consumed` 及 `source_audio_samples` / `audio_samples_consumed`，必须完整且大于零；`media`、`raw_response`、`ground_truth` 分别绑定 `{path, sha256}`。媒体引用应指向带完整同步音轨的视频；若测试使用分离音轨，引用包含两者哈希的不可变清单，并在原始响应记录输入绑定。计数完整不证明理解正确，测试执行者仍须对照已知缺陷核实原始回答；不得把“全部读入”或模型自称 PASS 当成检出。
 
 登记及后续能力检查都会重验各例证据。失败、含糊枚举、缺少隔离语音对照、漏覆盖或过期证据不能被汇总 `detected` 声明覆盖。单元测试中的 fixture 是合约测试，不能登记为实际制作能力。模型、探针、视频和缓存仅保存于被忽略的运行目录或临时目录，不入库。
+
+正式验收报告的 `reviewer.model_revision` 与 `reviewer.runtime_fingerprint` 必须分别等于视听能力基准中的实测值。交付时重新验证基准的逐例文件哈希；同名适配器换模型、换运行实现或改动基准原始证据后，旧评审不能继续用于放行。
