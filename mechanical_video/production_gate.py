@@ -51,7 +51,7 @@ def automated_review_errors(record, base):
         if any(state['capability_benchmarks'][name]['adapter'] != reviewer['tool']
                for name in ('continuous_av', 'audio')):
             raise ValueError('continuous review adapter differs from tested capability')
-    except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
+    except (OSError, ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
         return ['independent automated acceptance: ' + str(exc)]
     return []
 

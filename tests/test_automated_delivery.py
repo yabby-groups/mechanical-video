@@ -63,5 +63,7 @@ class AutomatedDeliveryTests(unittest.TestCase):
             self.assertTrue(production_gate.automated_review_errors(record_for(candidate),self.base))
         record=record_for(review);record['repair_controller']['tasks']['qa']['result']['evidence']={}
         self.assertTrue(production_gate.automated_review_errors(record,self.base))
+        record=record_for(review);record['production_checks']['required_interval']=[]
+        self.assertTrue(production_gate.automated_review_errors(record,self.base))
         record=record_for(review);path.write_text('changed')
         self.assertTrue(production_gate.automated_review_errors(record,self.base))

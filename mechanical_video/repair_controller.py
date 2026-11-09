@@ -158,6 +158,11 @@ def initialize(path, tasks=None, capabilities=None, capability_benchmarks=None):
 def _capability_errors(state, required, base):
     errors = []
     missing = set(required) - set(state['capabilities'])
+    if {'continuous_av', 'audio'} <= set(required):
+        adapters = {state.get('capability_benchmarks', {}).get(name, {}).get('adapter')
+                    for name in ('continuous_av', 'audio')}
+        if len(adapters - {None}) > 1:
+            errors.append('audio and continuous video must use the same benchmarked acceptance adapter')
     for capability in set(required) & {'continuous_av', 'audio'}:
         benchmark = state.get('capability_benchmarks', {}).get(capability, {})
         try:

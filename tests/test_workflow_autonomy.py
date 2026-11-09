@@ -65,6 +65,11 @@ class WorkflowAutonomyTests(unittest.TestCase):
         with self.assertRaises(ValueError):rc.capability(self.path,'audio',dict(adapter='fictional',detected=[]))
         self.enable()
         self.assertIn('minimal-sample',[t['id'] for t in rc.next(self.path)['ready']])
+        other=self.base/'other-adapter.json'
+        other.write_text(json.dumps(dict(adapter='other-adapter',detected=self.bench['detected'])))
+        rc.capability(self.path,'audio',dict(adapter='other-adapter',detected=self.bench['detected'],
+                                           evidence={str(other):rc._sha(other)}))
+        self.assertIn('minimal-sample',rc.next(self.path)['blocked'])
 
     def test_incomplete_review_requires_owned_internal_repair(self):
         rc.initialize(self.path,tasks=[dict(id='qa',stage='independent-check',owner='QA',
