@@ -1,5 +1,13 @@
 # mechanical-video
 
+## 无人工质检的制作目标（2026-11-09 用户纠正，优先于历史待审交付规则）
+
+本次优化的对象是自动制作、主动修复与合格交付，不是继续替卷尺增加版本。用户不承担逐版看样、发现缺陷、批准修补或替团队关闭问题的职责。授权范围内，Director 和独立 QA 必须自行完成检查、局部修复及复验，不得用“请你看看”“等你确认”作为常规制作的出口。
+
+新制作使用 v5 正式独立验收出口；`REVIEW_DELIVERY`、`NEEDS_REVIEW` 和制作命令退出成功均只是内部状态，不能标记工作流完成。完整连续视听能力必须在媒体制作前实测可用；缺能力归 Director 解决依赖，不以人工作为默认替代，也不先制作大量候选再让用户选。未解决的能力缺口意味着工作流尚未实现目标，不能靠阻断、测试数量或文档数量宣布自动化完成。
+
+每集沿用唯一 controller record，真实派工、失败和修复次数持续保存。原题与最小动作小样合并到一次独立检查，实测时间线由独立 preflight 接收，成片由独立后审接收；最终交付只指向已经验收的文件，不在交付步骤重新生成媒体。版本改名、复制台账或换人不得绕过旧问题。待评审项必须带稳定 issue、唯一内部负责人、证据及复验要求，不能留下无人接手的“待用户确认”。既有资产保护、未知生成结果不重复提交、不新增付费生成和不自动发布的边界保留。
+
 ## Core constraints
 
 Use `.venv/bin/python` or `uv run`. Project Skills live only in `.agents/skills/`; never install/update global Skills or modify other projects. Keep secrets in environment variables and out of logs. Preserve assets, providers, keys, source inputs, manifests, scenes, frames, queue records and rollback evidence.
