@@ -19,6 +19,43 @@ def sha(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
+def automated_review_errors(record, base):
+    p = record['production_checks']
+    assets = p.get('assets', {})
+    def linked(ref):
+        path = Path(ref['path'])
+        return sha(path if path.is_absolute() else Path(base)/path) == ref['sha256']
+    from .perceptual_review import validate as validate_perceptual
+    from .repair_controller import _is_review
+    try:
+        ref = assets['perceptual_review']
+        if not linked(ref):
+            raise ValueError('missing/stale continuous review evidence')
+        path = Path(ref['path'])
+        review = json.loads((path if path.is_absolute() else base / path).read_text())
+        state = record['repair_controller']
+        producers = sorted({t['agent_id'] for t in state['tasks'].values()
+            if t.get('agent_id') and not _is_review(t) and t['stage'] != 'delivery'})
+        interval = p['required_interval']
+        if interval[0] != 0:
+            raise ValueError('whole-film review interval must start at zero')
+        result = validate_perceptual(review, assets['final_media']['sha256'], interval[1], producers)
+        if result['status'] != 'COMPLETE' or review['reviewer']['method'] != 'continuous_av_model':
+            raise ValueError('automated full audiovisual review incomplete')
+        reviewer = review['reviewer']
+        if not any(t['stage'] == 'independent-post-review' and t['status'] == 'done'
+                   and t.get('agent_id') == reviewer['id']
+                   and t.get('result', {}).get('evidence', {}).get(ref['path']) == ref['sha256']
+                   for t in state['tasks'].values()):
+            raise ValueError('continuous review not bound to dispatched independent reviewer')
+        if any(state['capability_benchmarks'][name]['adapter'] != reviewer['tool']
+               for name in ('continuous_av', 'audio')):
+            raise ValueError('continuous review adapter differs from tested capability')
+    except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
+        return ['independent automated acceptance: ' + str(exc)]
+    return []
+
+
 def evaluate(record, base, stage, now=None, require_version=1):
     """Validate historical records or intent-bound v4, without writes."""
     now = time.time() if now is None else now
@@ -69,7 +106,7 @@ def evaluate(record, base, stage, now=None, require_version=1):
         # An explicit, version-bound user continuation preserves an exhausted
         # P2 issue instead of falsely closing it or resetting its repair count.
         # It never overrides blocking defects, holds, evidence or acceptance.
-        if p['schema_version'] < 2 or issue.get('severity') != 'P2':
+        if p['schema_version'] < 2 or p['schema_version'] >= 5 or issue.get('severity') != 'P2':
             return False
         entries = p.get('manual_continuations', [])
         if not isinstance(entries, list):
@@ -295,6 +332,8 @@ def evaluate(record, base, stage, now=None, require_version=1):
     gaps = p.get('capability_gaps', [])
     formal = p.get('delivery_mode') == 'formal'
     if stage == 'delivery':
+        if p['schema_version'] >= 5 and not formal:
+            errors.append('automated delivery requires formal independent acceptance; review drafts are internal')
         if p.get('delivery_mode') not in ('review', 'formal'):
             errors.append('delivery_mode must be review or formal')
         if formal:
@@ -318,6 +357,8 @@ def evaluate(record, base, stage, now=None, require_version=1):
                                 errors.append('local profile cannot provide formal acceptance: ' + name)
                     except (OSError, ValueError, TypeError, KeyError):
                         continue
+            if p['schema_version'] >= 5:
+                errors.extend(automated_review_errors(record, base))
             if gaps or p.get('all_established_gates_passed') is not True:
                 errors.append('formal acceptance gates incomplete')
     return {'schema_version': p['schema_version'], 'stage': stage,

@@ -18,14 +18,14 @@ def run(record_path, stage, command):
                 or reviewed_execution.get(stage) != command):
             return {'status': 'BLOCKED', 'reasons': ['command not bound to reviewed stage']}, 1
         report = evaluate(record, record_path.parent, stage, require_version=5)
-        if report['status'] == 'BLOCKED':
-            return report, 1
+        if report['status'] != 'READY':
+            return dict(report, status='BLOCKED', reasons=report.get('reasons', []) + ['execution requires READY, not an internal review draft']), 1
         if before != sha(record_path):
             return {'status': 'BLOCKED', 'reasons': ['record changed during preflight']}, 1
         # Recheck referenced assets immediately before process launch. This is a
         # local guard, not an OS sandbox or a guarantee against concurrent writes.
         report = evaluate(record, record_path.parent, stage, require_version=5)
-        if report['status'] == 'BLOCKED' or before != sha(record_path):
+        if report['status'] != 'READY' or before != sha(record_path):
             return {'status': 'BLOCKED', 'reasons': ['inputs changed during preflight']}, 1
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         return {'status': 'BLOCKED', 'reasons': ['invalid/unreadable execution record']}, 1
