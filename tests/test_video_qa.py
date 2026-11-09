@@ -65,10 +65,11 @@ class QualityGateTest(unittest.TestCase):
         local, _ = self.inspect_fixture('local-av', audio=True)
         self.assertEqual(local['issues'], [])
 
-    def test_profiles_retain_stream_decode_and_formal_duration_failures(self):
+    def test_short_formal_media_still_requires_review_and_stream_decode_checks(self):
         formal, _ = self.inspect_fixture('formal', audio=True)
-        self.assertEqual(formal['status'], 'REWORK')
-        self.assertIn('duration', [i['category'] for i in formal['issues']])
+        self.assertEqual(formal['status'], 'NEEDS_REVIEW')
+        self.assertNotIn('duration', [i['category'] for i in formal['issues']])
+        self.assertFalse(formal['formal_acceptance'])
         missing, _ = self.inspect_fixture('local-av')
         self.assertEqual(missing['status'], 'FAIL')
         broken, _ = self.inspect_fixture('local-silent', decode_error=True)

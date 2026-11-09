@@ -3,6 +3,7 @@ import argparse
 import base64
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -23,7 +24,8 @@ def run(command):
 def gate(scores, issues):
     if any(i['severity'] == 'P0' for i in issues):
         return 'FAIL', None
-    if any(v is None for v in scores.values()):
+    if any(not isinstance(scores.get(k), (int, float)) or isinstance(scores.get(k), bool)
+           or not math.isfinite(scores[k]) or not 0 <= scores[k] <= 100 for k in WEIGHTS):
         return ('REWORK' if any(i['severity'] == 'P1' for i in issues) else 'NEEDS_REVIEW'), None
     total = sum(scores[k] * v for k, v in WEIGHTS.items()) / 100
     if any(i['severity'] == 'P1' for i in issues) or any(scores[k] < v for k, v in MINIMUM.items()) or total < 90:
@@ -77,8 +79,9 @@ def inspect(video, output, visual=False, audio_report=None, technical_evidence=N
         issue('streams', 'P0', 0, duration, 'Missing video stream')
     if not a and profile != 'local-silent':
         issue('streams', 'P0', 0, duration, 'Missing required audio stream')
-    if duration < 90 and profile == 'formal':
-        issue('duration', 'P1', 0, duration, 'Formal delivery requires at least 90 seconds')
+    # Duration is content-led (user instruction 2026-11-09), not a padding target.
+    if not math.isfinite(duration) or duration <= 0:
+        issue('duration', 'P0', 0, 0, 'Missing or invalid media duration')
     if any(actual < required for actual, required in zip(sorted([v.get('width', 0), v.get('height', 0)]), [1080, 1920])):
         issue('resolution', 'P1', 0, duration, 'Resolution below 1080p')
     if v.get('codec_name') != 'h264' or (a and a.get('codec_name') != 'aac'):
@@ -149,6 +152,8 @@ def inspect(video, output, visual=False, audio_report=None, technical_evidence=N
     status, total = gate(scores, issues)
     report = {'video': str(video), 'sha256': digest, 'duration': duration, 'streams': streams,
               'profile': profile, 'formal_acceptance': False,
+              'review_kind': 'technical_scan_and_sampled_stills',
+              'blocking_gaps': ['independent continuous motion review', 'actual listening', 'timecoded comprehension evidence'],
               'scope': 'formal review' if profile == 'formal' else 'local proof only; not episode acceptance',
               'technical_reused_checks': shared.get('_reused_checks', []) if shared else [],
               'technical_cache_mismatches': shared.get('_mismatches', []) if shared else [],
