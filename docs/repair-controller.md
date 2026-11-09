@@ -62,3 +62,11 @@ continuous_av/audio 不能仅用能力字符串启用：需相同 adapter 的 ha
 complete 的 needs-review 与 fail 都必须带 failures：稳定 issue_id、owner、required_checks、severity、evidence 和新版本 repair_outputs。缺能力的修复可指定 repair_capabilities=[] 以便先安装/接入检查工具，随后独立复验仍继承原检查能力；不会通过多次派修把感官要求丢掉。未完成修复也累积原问题次数。新控制器绑定唯一 record_path，带状态的副本不能认领任务或重置台账；这不是对任意外部脚本的操作系统拦截，不允许新建空台账规避。
 
 自动化回归使用明确标识的 fixture Agent、基准与媒体证据，覆盖完整调度链、待审禁止交付、能力前检、内部派修、陈旧证据和同记录恢复。它证明程序控制流程，不证明实际视听工具已经具备能力，也不证明合格内容已经无人干预产出。原片不用来验证调度代码，不为这些回归重新渲染影片。
+
+### 逐例视听基准
+
+能力报告必须使用 `schema_version: 1`，包含 `status: PASS`、`adapter`、`model_revision`、`runtime_fingerprint` 和 `cases`。每种题材必须分别包含 `action_contradiction`、`occlusion`、`speech_desync`、`normal`、`silence`，至少两种题材。每例记录独立 `id`、`topic`、`kind`、实际 `observation`、明确 `verdict`（缺陷为 `defect`，正常及静音控制为 `clear`）、`passed: true` 和 `speech_control_passed: true`。静音控制的 clear 表示正确识别无语音，不表示静音影片满足交付要求。
+
+每例 `coverage` 包含 `source_frames` / `frames_consumed` 及 `source_audio_samples` / `audio_samples_consumed`，必须完整且大于零；`media`、`raw_response`、`ground_truth` 分别绑定 `{path, sha256}`。媒体引用应指向带完整同步音轨的视频；若测试使用分离音轨，引用包含两者哈希的不可变清单，并在原始响应记录输入绑定。计数完整不证明理解正确，测试执行者仍须对照已知缺陷核实原始回答；不得把“全部读入”或模型自称 PASS 当成检出。
+
+登记及后续能力检查都会重验各例证据。失败、含糊枚举、缺少隔离语音对照、漏覆盖或过期证据不能被汇总 `detected` 声明覆盖。单元测试中的 fixture 是合约测试，不能登记为实际制作能力。模型、探针、视频和缓存仅保存于被忽略的运行目录或临时目录，不入库。
