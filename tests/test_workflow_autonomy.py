@@ -71,6 +71,24 @@ class WorkflowAutonomyTests(unittest.TestCase):
                                            evidence={str(other):rc._sha(other)}))
         self.assertIn('minimal-sample',rc.next(self.path)['blocked'])
 
+    def test_failed_cases_and_changed_raw_evidence_block_registration_and_resume(self):
+        rc.initialize(self.path)
+        report=benchmark_fixture(self.base)
+        report['cases'][0]['passed']=False
+        self.benchmark.write_text(json.dumps(report))
+        self.bench['evidence']={str(self.benchmark):rc._sha(self.benchmark)}
+        with self.assertRaisesRegex(ValueError,'failed benchmark case'):
+            rc.capability(self.path,'audio',self.bench)
+        self.assertNotIn('audio',self.state()['capabilities'])
+        report['cases'][0]['passed']=True
+        self.benchmark.write_text(json.dumps(report))
+        self.bench['evidence']={str(self.benchmark):rc._sha(self.benchmark)}
+        self.enable()
+        Path(report['cases'][0]['raw_response']['path']).write_text('changed model answer')
+        status=rc.resume(self.path)
+        self.assertEqual(status['workflow_status'],'DEPENDENCY_BLOCKED')
+        self.assertTrue(any('stale benchmark evidence' in e for e in status['dependency_errors']))
+
     def test_incomplete_review_requires_owned_internal_repair(self):
         rc.initialize(self.path,tasks=[dict(id='qa',stage='independent-check',owner='QA',
             required_checks=['contact'],inputs=self.evidence,outputs=[],capabilities=['audio'])],
