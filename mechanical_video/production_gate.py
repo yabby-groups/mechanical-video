@@ -239,6 +239,37 @@ def evaluate(record, base, stage, now=None, require_version=1):
             break
         if not valid:
             errors.append('missing/stale check: ' + kind + (':' + str(action) if action else ''))
+    if p['schema_version'] >= 4 and stage in ('full-render', 'delivery'):
+        from .scene_preflight import verify as verify_scene_preflight
+        try:
+            scene_ref = assets.get('scene_preflight')
+            contract_ref = assets['content_contract']
+            def load_ref(ref):
+                path = Path(ref['path'])
+                return json.loads((path if path.is_absolute() else base / path).read_text())
+            if (not linked(scene_ref)
+                    or load_ref(scene_ref)['inputs']['renderer'] != assets['renderer']
+                    or load_ref(scene_ref)['inputs']['source'] != assets['scene_source']
+                    or load_ref(scene_ref)['inputs']['policy'] != assets['scene_preflight_policy']
+                    or not verify_scene_preflight(load_ref(scene_ref), assets,
+                        [r['id'] for r in load_ref(contract_ref)['requirements']])):
+                raise ValueError('Scene preflight missing/stale/blocked')
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            errors.append('missing/stale/blocked evaluated pre-render scene proof')
+    if p['schema_version'] >= 4 and stage in ('full-render', 'delivery'):
+        from .action_alignment import verify as verify_action_alignment
+        try:
+            def read_action_asset(name):
+                ref = assets[name]
+                if not linked(ref):
+                    raise ValueError('Missing/stale action input')
+                path = Path(ref['path'])
+                return json.loads((path if path.is_absolute() else base / path).read_text())
+            if not verify_action_alignment(read_action_asset('action_alignment'), assets,
+                    [r['id'] for r in read_action_asset('content_contract')['requirements']]):
+                raise ValueError('Caption/action mismatch')
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            errors.append('missing/stale/blocked caption-action alignment proof')
     gaps = p.get('capability_gaps', [])
     formal = p.get('delivery_mode') == 'formal'
     if stage == 'delivery':
