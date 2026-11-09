@@ -1,0 +1,10 @@
+{
+  "gtest-src": "8d57be2c40d403cf2af665921a8d544a6908c2df3d643f88dfbf4fb7ca12427e",
+  "cereal-src": "4f0f402ec0850ba10ebb885dfb51a543bd026781376e476ab53929a9abd1ea37",
+  "cpp-httplib-src": "5f7495fd93dde52c3e5fd650bad6a5b1b78beea07ec27753ec5bef163108f7aa",
+  "digestpp-src": "cf85ca0b22a97f042feefbebc60f867ac2a2e6b59e479112bcc0dbcd6bbfe428",
+  "eigen-src": "a7e2ee6f63cd6d79700edfc2b3c200886ae8925c222582d560f985a9bb4d39e3",
+  "libyaml-src": "2ad623239fc4105f7ad11f596ef9ba495f4d486cdf2d943531a628bbab900685",
+  "mnist-src": "87ca3836a74c6999890cafd5ce68cb939703567a11858a2e562c169873d902c0",
+  "sqlite3-src": "5c14eb1d692610b67197a8c77fb34a5708f51fbf65ad29e32f8d83d35eee13f0"
+}

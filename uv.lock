@@ -1078,6 +1078,10 @@ alignment = [
     { name = "torch" },
     { name = "transformers" },
 ]
+htm-audio = [
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "numpy", version = "2.5.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -1088,6 +1092,7 @@ dev = [
 requires-dist = [
     { name = "build123d", specifier = "==0.13.0" },
     { name = "numpy", marker = "extra == 'alignment'", specifier = ">=2" },
+    { name = "numpy", marker = "extra == 'htm-audio'", specifier = ">=2" },
     { name = "openai", specifier = ">=1" },
     { name = "pillow", specifier = ">=11" },
     { name = "pypdf", specifier = ">=6" },
@@ -1096,7 +1101,7 @@ requires-dist = [
     { name = "transformers", marker = "extra == 'alignment'", specifier = ">=4.50,<6" },
     { name = "trimesh", specifier = ">=4.12" },
 ]
-provides-extras = ["alignment"]
+provides-extras = ["htm-audio", "alignment"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pyyaml", specifier = ">=6" }]

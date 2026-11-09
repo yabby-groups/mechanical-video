@@ -11,9 +11,11 @@ dependencies = [
     "trimesh>=4.12",
 ]
 [project.optional-dependencies]
+htm-audio = ["numpy>=2"]
 alignment = ["torch>=2.6", "transformers>=4.50,<6", "numpy>=2"]
 
 [project.scripts]
+htm_audio_review = "mechanical_video.htm_audio_review:main"
 mechanical-video = "mechanical_video.cli:main"
 series = "mechanical_video.series:main"
 [build-system]
