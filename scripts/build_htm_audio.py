@@ -53,6 +53,8 @@ def main():
          '-DCMAKE_INSTALL_PREFIX='+str(source/'build/Release'), '-DCMAKE_POLICY_VERSION_MINIMUM=3.5'],
         ['cmake', '--build', str(source/'build/Release'), '--target', 'install', '-j', '4'],
         ['uv', 'pip', 'install', '--python', str(python), str(source)],
+        ['uv', 'pip', 'install', '--python', str(python), '--no-deps', '-e',
+         str(Path(__file__).resolve().parent.parent)],
     ]
     with (work/'build.log').open('w') as log:
         for command in commands:
