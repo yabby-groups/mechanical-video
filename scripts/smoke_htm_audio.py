@@ -66,7 +66,9 @@ def main():
                 save_wav(audio,x,rate)
                 stem_path=root/(name+'-stem.wav'); save_wav(stem_path,stem,rate)
                 cases.append(dict(id=name,split=split,recording_id=name,speaker_id=voices[split],
-                    audio=ref(audio),script=ref(script),labels=[] if kind=='normal' else [dict(kind=kind,start=start,end=end)],
+                    audio=ref(audio),script=ref(script),
+                    negative_kinds=['clipping','noise','pause','splice','pace','masking'] if kind=='normal' else [],
+                    labels=[] if kind=='normal' else [dict(kind=kind,start=start,end=end)],
                     narration_track=ref(stem_path),mix_track=ref(audio),
                     license='CC0 original synthetic test speech; not a human quality corpus',
                     provenance='local eSpeak; procedural known transformation, no production media',

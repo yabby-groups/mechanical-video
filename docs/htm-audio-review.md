@@ -2,8 +2,9 @@
 
 This is an executable, audio-only experimental reviewer, not a qualified
 replacement for independent listening or continuous audiovisual acceptance.
-The current held-out smoke corpus qualifies **no dimension**. See
-[measured validation](htm-audio-review-validation.md).
+No production listening capability is automatically enabled. See the
+[latest measured validation](htm-audio-review-continuation.md) and
+[archived first-delivery validation](htm-audio-review-validation.md).
 
 ## Source and environment
 
@@ -41,7 +42,8 @@ repository root, `python -m mechanical_video.htm_audio_review` or the installed
 ## Frozen corpus contract
 
 All file references are absolute `{path, sha256}` objects. The JSON corpus is
-frozen before training and contains train/calibration/test partitions. Each case:
+frozen before training and contains train/calibration/test partitions. A separate development partition may
+be used for inspected regression examples; it can never qualify a capability. Each case:
 
 ```json
 {
@@ -56,6 +58,7 @@ frozen before training and contains train/calibration/test partitions. Each case
   "producer": "producer identity", "labeler": "independent label source",
   "label_source": "independent_rating",
   "labels": [{"kind": "noise", "start": 1.2, "end": 1.7}],
+  "negative_kinds": ["pause", "pace", "splice"],
   "quality_ratings": {"naturalness": 4.1, "expression": 3.5}
 }
 ```
@@ -73,6 +76,13 @@ false alarm counts against that group. License/provenance and labeler fields
 are source attestations: the software cannot authenticate human ratings or
 detect dishonestly renamed original recordings. Curate and freeze corpus
 provenance independently; do not label a generated fixture as a human rating.
+
+`negative_kinds` explicitly lists dimensions known absent. Unspecified dimensions
+are unknown, including on cases with `labels=[]`; they do not train negative
+classifications or count as normal benchmark groups. Positive kinds supervise
+their labeled intervals and the surrounding negative frames. Avoid declaring
+physically coupled mechanisms absent. Known injected transformations establish
+only those mechanisms, not subjective quality or independent perceptual labels.
 
 Kinds: omission, repetition, mispronunciation, clipping, noise, pause, splice,
 pace, masking, naturalness, expression. Subjective training labels require
@@ -100,7 +110,7 @@ $HTM_PY -m mechanical_video.htm_audio_review evaluate --audio actual-mix.wav \
 Outputs refuse overwrite. Exit codes: 0 successful training/calibration or
 qualified PASS, 2 REWORK, 3 UNQUALIFIED. Invalid inputs/cold start raise an error;
 they are never low-anomaly PASS. Normal training needs at least two independent
-recordings/100 frames; calibration needs two independent normal recordings and
+recordings/100 frames explicitly negative for all six acoustic mechanisms; calibration needs two independent normal recordings and
 two positive recordings per enabled threshold. These are execution floors,
 not production qualification sample sizes.
 
@@ -115,7 +125,10 @@ syllables; syllable/phoneme acceptance is not implemented. Qualification current
 uses frame classifications, not a claimed multiscale quality gain.
 
 SP/TM learn normal recordings only. Supervised classifiers learn labeled
-active-cell patterns with SP/TM frozen. Calibration chooses thresholds using
+patterns from TM cells, encoded acoustic input, SP columns and encoded raw TM
+anomaly, with SP/TM frozen. Train-only positive-class repetitions balance sparse
+labels (capped at 32); unknown dimensions never supply negative updates. These
+changes require a new checkpoint; archived checkpoints are not migrated. Calibration chooses thresholds using
 only calibration cases. Every independent inference reloads the same hashed
 checkpoint and resets TM; all learning is off. Runtime/feature/binary drift
 rejects the checkpoint. Raw TM anomaly is reported separately and never mapped
@@ -123,14 +136,24 @@ to an overall listening score. Probabilities are not calibrated confidence.
 
 ASR disagreement and missing terms are timecoded **candidates**. Homophones
 remain uncertain; expected-text forced alignment does not establish actual
-wrong-word timing. Text dimensions require alignment and remain UNQUALIFIED
+wrong-word timing. Actual greedy CTC token runs now supply separate measured
+recognition emission intervals (not full phoneme durations or ready-to-cut repair
+bounds); omitted tokens use observed neighboring bounds rather
+than invented missing-word durations. User policy is **pronunciation only**:
+ignore ASR spelling errors when the actual sound is correct. String differences,
+including homophones and mechanical-term spelling, are non-actionable candidates
+and never authorize repair or resynthesis. Correct pronunciation cannot be
+established from a spelling match alone. Text dimensions require alignment and remain UNQUALIFIED
 when recognition disagrees. The baseline includes conservative amplitude and
 silence rules plus available recognition/alignment candidates. Without actual
 recognition in a corpus, it cannot validate text-review performance.
 
 Qualification requires, per dimension, at least 50 original test recording
 groups with defects and 50 normal groups, recall >=95%, normal FPR <=5%, and
-positive HTM gain over the baseline. Reports include Wilson 95% intervals and
+positive HTM gain over the baseline. Acoustic dimensions additionally need
+at least 50 original known-negative groups containing other injected defects,
+with cross-defect FPR <=5%; this prevents a generic corruption detector from
+qualifying as several distinct repair categories. Reports include Wilson 95% intervals and
 onset localization error. Subjective dimensions additionally require >=50
 independent rated groups and Spearman >=0.7. Insufficient, equal-to-baseline,
 or worse performance remains UNQUALIFIED. Ground-truth intervals must be
@@ -181,3 +204,28 @@ $HTM_PY scripts/smoke_htm_audio.py --output reports/htm-smoke-new \
 ```
 
 This intentionally small synthetic corpus is not a qualification dataset.
+
+## Licensed Chinese acoustic experiment
+
+```sh
+$HTM_PY scripts/fetch_htm_aishell.py --output reports/aishell-source-new
+$HTM_PY scripts/prepare_htm_aishell.py --source reports/aishell-source-new \
+  --output reports/aishell-corpus-new
+```
+
+The fetcher pins AISHELL-1 revision
+`bbe295d530192a4cd41644b711c9aecd087df653`, verifies LFS SHA-256 (and Git blob
+SHA-1 for the transcript), and preserves existing evidence. License authority:
+[OpenSLR 33](https://www.openslr.org/33/), Apache-2.0. It downloads five speakers,
+approximately 170 MB. The preparer fixes speaker partitions and SHA-based
+recording selection before training: 24 train, 16 calibration, 60 test original
+recordings with unique normalized text, each with nine controlled variants.
+All copies remain in their original group. Controlled short pauses and modest
+pitch-preserving tempo changes are normal controls. Injected clipping, noise,
+long pauses, splices, abnormal pace and interfering tones have known local
+intervals and conservative explicit cross-defect negatives.
+
+These are controlled perturbations of Mandarin read speech, not human-rated
+production mechanical narration or genuine mix intelligibility. Their benchmark
+cannot validate expression/naturalness or complete listening replacement.
+See [continuation validation](htm-audio-review-continuation.md).

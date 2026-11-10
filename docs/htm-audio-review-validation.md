@@ -1,6 +1,10 @@
 # HTM audio review validation — 2026-11-09–10 implementation
 
-Status: **runnable experimental reviewer; all dimensions UNQUALIFIED**.
+Historical first-delivery record. Its models and reports retain their original
+fingerprints and are not compatible with the continuation implementation. See
+[current continuation validation](htm-audio-review-continuation.md).
+
+Status at that checkpoint: **runnable experimental reviewer; all dimensions UNQUALIFIED**.
 No automatic listening acceptance or production capability was enabled. No old
 video was reworked, provider generation submitted, media uploaded or published.
 
