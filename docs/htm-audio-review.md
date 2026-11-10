@@ -3,7 +3,7 @@
 This is an executable, audio-only experimental reviewer, not a qualified
 replacement for independent listening or continuous audiovisual acceptance.
 No production listening capability is automatically enabled. See the
-[latest measured validation](htm-audio-review-continuation.md) and
+[latest measured validation](htm-audio-pace-validation.md) and
 [archived first-delivery validation](htm-audio-review-validation.md).
 
 ## Source and environment
@@ -64,7 +64,9 @@ be used for inspected regression examples; it can never qualify a capability. Ea
 ```
 
 Alignment and paired tracks are optional; an unpaired track is rejected.
-Alignment uses the existing `speech_alignment` measured-character contract and
+Pace qualification also requires measured alignment; an absent timing stream
+can never be treated as a zero-rate passing result. Alignment uses the existing
+`speech_alignment` measured-character contract and
 must bind the actual input and frozen transcript. The mix must be the actual
 evaluated audio, with a stem on the same sample clock and duration. Equality of
 duration is a sanity check, not proof of correct alignment or mix intelligibility.
@@ -229,3 +231,39 @@ These are controlled perturbations of Mandarin read speech, not human-rated
 production mechanical narration or genuine mix intelligibility. Their benchmark
 cannot validate expression/naturalness or complete listening replacement.
 See [continuation validation](htm-audio-review-continuation.md).
+
+## Actual corpus alignment and recovery
+
+The local `CTCAligner` reuses one frozen CPU or MPS model. Every waveform is
+actually decoded and inferred; derived audio never receives timestamps copied
+or scaled from its source. The single-audio `speech_alignment.align` API remains
+compatible with the original CPU result. CTC token boundaries remain emission
+measurements, not independently verified full phoneme boundaries.
+
+```sh
+$HTM_PY -m mechanical_video.htm_audio_alignment \
+  --dataset reports/aishell-corpus-new/dataset.json \
+  --output reports/aishell-aligned-new \
+  --model /absolute/local-asr-snapshot --revision EXACT_REVISION --device mps
+# Same arguments plus --resume verify and reuse completed receipts.
+```
+
+The job fingerprints source audio/scripts, local ASR files, implementation,
+package versions and FFmpeg. Missing, changed or incompatible receipts fail;
+a failed case remains required and cannot silently disappear from evaluation.
+The model is loaded only when an unfinished case requires inference. Existing
+outputs and old corpus/model versions remain intact.
+
+For new blind experiments, `fetch_htm_aishell.py --speakers ...` selects pinned
+archives in a new source directory. `prepare_htm_aishell.py --plan plan.json`
+accepts a predeclared mapping (the measured run uses
+[htm-audio-pace-cohort.json](htm-audio-pace-cohort.json)) such as `{"S0007": ["test", 30]}` alongside train
+and calibration speakers. `--exclude-dataset prior.json` excludes all historical
+normalized transcripts. Optional `--vocabulary /absolute/vocab.json` declares
+supported-script eligibility before selection and training. It narrows the
+validated domain; it does not prove unsupported words or sounds are defective.
+
+The measured aligned experiment and remaining label-source requirements are in
+[pace validation](htm-audio-pace-validation.md). Its result is not a production
+listening authorization, and old qualification JSON cannot be retargeted to a
+new adapter by editing fingerprints.

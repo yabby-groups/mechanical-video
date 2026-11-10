@@ -1,6 +1,10 @@
 # HTM audio continuation validation — 2026-11-10
 
-Status: four dimensions pass configured controlled-injection point thresholds.
+Historical frozen run-v8 snapshot. For the subsequent actual-timing experiment,
+see [pace validation](htm-audio-pace-validation.md). Its hashes and measurements
+remain unchanged.
+
+Status at this checkpoint: four dimensions pass configured controlled-injection point thresholds.
 General production listening remains unqualified; no production capability was enabled.
 This is not complete listening replacement or continuous audiovisual acceptance.
 User clarification: actual pronunciation matters; ASR spelling errors are not
