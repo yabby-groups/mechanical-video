@@ -267,3 +267,10 @@ The measured aligned experiment and remaining label-source requirements are in
 [pace validation](htm-audio-pace-validation.md). Its result is not a production
 listening authorization, and old qualification JSON cannot be retargeted to a
 new adapter by editing fingerprints.
+
+## Dedicated rhythm comparison
+
+The opt-in [rhythm branch](htm-audio-rhythm.md) uses independent SP/TM windows and
+matched rules/no-TM controls. Its [new blind experiment](htm-audio-rhythm-validation.md)
+failed qualification; no production capability is enabled. The acoustic adapter
+and historical checkpoint fingerprints are preserved.
