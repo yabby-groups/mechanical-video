@@ -5,6 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 import wave
+import os
 
 import numpy as np
 
@@ -23,6 +24,13 @@ def wav(path, samples, rate=16000):
 
 
 class FeaturesTest(unittest.TestCase):
+    def test_fingerprint_cache_invalidates_same_size_edit_with_restored_mtime(self):
+        from mechanical_video.htm_audio_features import sha
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'data';path.write_bytes(b'abcd');before=path.stat();first=sha(path)
+            self.assertEqual(first,sha(path))
+            path.write_bytes(b'abce');os.utime(path,ns=(before.st_atime_ns,before.st_mtime_ns))
+            self.assertNotEqual(first,sha(path))
     def test_stereo_cancellation_does_not_hide_clipping(self):
         with tempfile.TemporaryDirectory() as d:
             path = Path(d)/'stereo.wav'
@@ -80,6 +88,50 @@ class FeaturesTest(unittest.TestCase):
                 extract(mix,narration_track=voice,mix_track=voice)
 
 
+class DevelopmentQualificationTest(unittest.TestCase):
+    def test_development_result_can_never_qualify(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'development.json';path.write_text(json.dumps({'split':'development'}))
+            with self.assertRaisesRegex(ValueError,'development results'):
+                qualification(path,Path(d)/'model',Path(d)/'cal.json')
+
+
+class RecognizedTimingTest(unittest.TestCase):
+    def test_ctc_blank_separates_repeated_tokens(self):
+        from mechanical_video.speech_alignment import recognized_units
+        class Tokenizer:
+            all_special_ids=[0,3]
+            def decode(self,ids,group_tokens=False):return {0:'',1:'甲',2:'乙',3:'<unk>'}[ids[0]]
+        ids=np.array([1,1,0,1,2,2,3]);p=np.log(np.full((7,4),.8))
+        units=recognized_units(ids,p,Tokenizer(),.02,.001,.2)
+        self.assertEqual(''.join(u['text'] for u in units),'甲甲乙')
+        self.assertAlmostEqual(units[1]['start'],.061)
+        self.assertAlmostEqual(units[0]['confidence'],.8)
+        with self.assertRaisesRegex(ValueError,'invalid actual CTC'):
+            recognized_units(ids,p,Tokenizer(),0,0,.2)
+
+    def test_asr_difference_uses_recognized_time_and_stays_uncertain(self):
+        from mechanical_video.htm_audio_review import text_candidates
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);script=root/'script.txt';script.write_text('甲乙')
+            evidence=dict(transcript='甲乙',greedy_transcript='甲丙',
+                characters=[dict(text='甲',start=0.,end=.1),dict(text='乙',start=.1,end=.2)],
+                recognition_units=[dict(text='甲',start=.5,end=.6,confidence=.9),dict(text='丙',start=.7,end=.8,confidence=.95)])
+            path=root/'asr.json';path.write_text(json.dumps(evidence))
+            candidates,status=text_candidates(script,path,1.)
+            self.assertEqual(status,'UNQUALIFIED')
+            self.assertEqual(candidates[0]['start'],.7)
+            self.assertEqual(candidates[0]['end'],.8)
+            self.assertIn('actual recognized',candidates[0]['timing'])
+            self.assertIsNone(candidates[0]['confidence'])
+            self.assertFalse(candidates[0]['actionable'])
+            self.assertFalse(candidates[0]['automatic_generation'])
+            self.assertEqual(candidates[0]['recognition_confidence'],.95)
+            evidence['recognition_units'][1]['end']=.4;path.write_text(json.dumps(evidence))
+            with self.assertRaisesRegex(ValueError,'invalid actual recognition'):
+                text_candidates(script,path,1.)
+
+
 class CorpusTest(unittest.TestCase):
     def make_dataset(self, root):
         cases = []
@@ -89,6 +141,7 @@ class CorpusTest(unittest.TestCase):
             cases.append(dict(id=str(n), split=split, recording_id=str(n), speaker_id=str(n),
                               license='CC0-original-fixture', provenance='procedural isolated test',
                               audio=ref(audio), script=ref(script), labels=[],
+                              negative_kinds=['clipping','noise','pause','splice','pace','masking'],
                               label_source='synthetic_fixture', labeler='fixture', producer='fixture'))
         p = root/'corpus.json'; p.write_text(json.dumps({'cases':cases}))
         return p, cases
@@ -103,6 +156,37 @@ class CorpusTest(unittest.TestCase):
                     path.write_text(json.dumps({'cases':bad}))
                     with self.assertRaisesRegex(ValueError, 'leakage'):
                         load_dataset(path)
+
+    def test_unknown_dimensions_not_trained_as_negatives(self):
+        from mechanical_video.htm_audio_model import supervised_dimensions, acoustic_normal
+        case=dict(labels=[dict(kind='clipping',start=0,end=1)],negative_kinds=['pace'])
+        self.assertEqual(supervised_dimensions(case),{'clipping','pace'})
+        self.assertEqual(supervised_dimensions(dict(labels=[])),set())
+        self.assertFalse(acoustic_normal(dict(labels=[])))
+        self.assertFalse(acoustic_normal(dict(labels=[],negative_kinds=['clipping'])))
+        self.assertTrue(acoustic_normal(dict(labels=[],negative_kinds=['clipping','noise','pause','splice','pace','masking'])))
+        from mechanical_video.htm_audio_review import summarize
+        from mechanical_video.htm_audio_model import DIMENSIONS
+        review=dict(dimensions={k:dict(candidate_intervals=[],predicted_quality=.5) for k in DIMENSIONS},
+                    baseline={k:[] for k in DIMENSIONS},tracks={})
+        rows=summarize([dict(case=dict(labels=[],negative_kinds=[],recording_id='r',split='test'),review=review)])
+        self.assertTrue(all(row['normal_count']==0 for row in rows.values()))
+
+    def test_contradictory_negative_labels_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);path,cases=self.make_dataset(root)
+            cases[0].update(labels=[dict(kind='clipping',start=0,end=.08)],negative_kinds=['clipping'])
+            path.write_text(json.dumps({'cases':cases}))
+            with self.assertRaisesRegex(ValueError,'contradictory'):
+                load_dataset(path)
+
+    def test_cross_defect_detector_cannot_qualify(self):
+        row=dict(defect_count=60,normal_count=60,recall=1.,false_positive_rate=0.,
+                 independent_test_groups=True,htm_gain=1.,subjective=False,supported=True,
+                 known_negative_count=60,cross_defect_false_positive_rate=1.)
+        self.assertFalse(eligible(row))
+        row['cross_defect_false_positive_rate']=0.
+        self.assertTrue(eligible(row))
 
     def test_subjective_synthetic_labels_rejected(self):
         with tempfile.TemporaryDirectory() as d:
@@ -125,7 +209,8 @@ class CorpusTest(unittest.TestCase):
 
     def test_sample_floor_gain_subjective_and_confidence_intervals(self):
         row=dict(defect_count=49,normal_count=50,recall=.98,false_positive_rate=.02,
-                 independent_test_groups=True,htm_gain=.1,subjective=False,supported=True)
+                 independent_test_groups=True,htm_gain=.1,subjective=False,supported=True,
+                 known_negative_count=50,cross_defect_false_positive_rate=0.)
         self.assertFalse(eligible(row)); row['defect_count']=50
         self.assertTrue(eligible(row)); row['htm_gain']=0
         self.assertFalse(eligible(row)); row['htm_gain']=.1; row['subjective']=True
@@ -164,12 +249,31 @@ class ActualHTMTest(unittest.TestCase):
                 duplicate.update(audio=ref(audio),script=ref(script)); cases.append(duplicate)
             path.write_text(json.dumps({'cases':cases}))
             build=root/'build.json'; write_new(build,dict(source_revision=SOURCE_REVISION,bindings=runtime()['bindings']))
+            frozen_cases=path.read_text()
+            unknown=copy.deepcopy(cases)
+            for item in unknown:
+                item['negative_kinds']=[]
+            path.write_text(json.dumps({'cases':unknown}))
+            with self.assertRaisesRegex(ValueError,'cold start'):
+                train(path,root/'unknown-model',build,epochs=1)
+            self.assertFalse((root/'unknown-model').exists())
+            path.write_text(frozen_cases)
             model=root/'model'; train(path,model,build,epochs=1)
             cal=root/'cal.json'; calibrate(path,model,cal)
             case=next(c for c in cases if c['split']=='test')
             report=evaluate(case['audio']['path'],case['script']['path'],model,cal)
             report_path=root/'report.json'; write_new(report_path,report)
             self.assertEqual(validate_report(report_path)['status'],'UNQUALIFIED')
+            # The second call takes the cache path and must still bind every
+            # calibration dependency, including an audio file changed in place.
+            from mechanical_video.htm_audio_review import load_calibration
+            load_calibration(cal,model)
+            dependency=Path(next(c for c in cases if c['split']=='calibration')['audio']['path'])
+            original_bytes=dependency.read_bytes()
+            dependency.write_bytes(original_bytes+b'changed')
+            with self.assertRaisesRegex(ValueError,'stale evidence'):
+                load_calibration(cal,model)
+            dependency.write_bytes(original_bytes)
             actual_cal=json.loads(cal.read_text())
             fake_cal=copy.deepcopy(actual_cal); fake_cal['cases']=['test-only-forged-calibration']
             cal.write_text(json.dumps(fake_cal))

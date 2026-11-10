@@ -13,11 +13,12 @@ import numpy as np
 
 from .htm_audio_features import extract, ref, verify, sha
 from .htm_audio_model import (DIMENSIONS, Engine, features_for, frame_labels,
-                              load_dataset, runtime, runtime_identity, train)
+                              load_dataset, runtime, runtime_identity, train, supervised_dimensions, acoustic_normal)
 from .speech_alignment import normalize
 
 _QUALIFICATION_CACHE = {}
 _CALIBRATION_CACHE = set()
+_CALIBRATION_INPUTS = {}
 
 
 def write_new(path, value):
@@ -69,6 +70,16 @@ def text_candidates(script, alignment, duration):
     expected = normalize(Path(script).read_text())
     data = json.loads(Path(alignment).read_text())
     actual = normalize(data['greedy_transcript'])
+    measured=[];cursor=0;previous=0.
+    for unit in data.get('recognition_units', []):
+        token=normalize(unit['text'])
+        if (not token or not all(np.isfinite(unit[k]) for k in ('start','end','confidence'))
+                or not 0<=previous<=unit['start']<unit['end']<=duration
+                or not 0<=unit['confidence']<=1):
+            raise ValueError('invalid actual recognition unit')
+        measured.append((cursor,cursor+len(token),unit))
+        cursor+=len(token);previous=unit['end']
+    recognized_timing = bool(measured) and ''.join(normalize(u[2]['text']) for u in measured)==actual
     if normalize(data['transcript']) != expected:
         raise ValueError('alignment does not use frozen narration')
     candidates = []
@@ -76,15 +87,35 @@ def text_candidates(script, alignment, duration):
         if op == 'equal':
             continue
         selected = data['characters'][a:b]
-        # These are forced expected-text boundaries, not measured wrong-word times.
-        candidates.append({'kind': {'delete': 'omission', 'insert': 'repetition',
-                                     'replace': 'mispronunciation'}[op],
+        start=selected[0]['start'] if selected else 0.
+        end=selected[-1]['end'] if selected else duration
+        timing='expected-text alignment candidate';confidence=None
+        if recognized_timing:
+            actual_units=[u for lo,hi,u in measured if lo<d and hi>c]
+            if actual_units:
+                start,end=actual_units[0]['start'],actual_units[-1]['end']
+                confidence=float(np.mean([u['confidence'] for u in actual_units]))
+                timing='actual recognized token interval'
+            else:
+                before=[u for lo,hi,u in measured if hi<=c]
+                after=[u for lo,hi,u in measured if lo>=c]
+                start=before[-1]['end'] if before else 0.
+                end=after[0]['start'] if after else duration
+                if end<=start:
+                    start=before[-1]['start'] if before else 0.
+                    end=after[0]['end'] if after else duration
+                timing='actual recognized neighbor bracket; missing speech has no observed token span'
+        kind={'delete':'omission','insert':'repetition','replace':'mispronunciation'}[op]
+        if op=='insert' and actual[c:d] not in expected:
+            kind='extra_speech'
+        candidates.append({'kind': kind,
                            'expected': expected[a:b], 'recognized': actual[c:d],
-                           'start': selected[0]['start'] if selected else 0.,
-                           'end': selected[-1]['end'] if selected else duration,
+                           'start': start, 'end': end,
+                           'recognition_confidence': confidence,
                            'confidence': None, 'status': 'UNQUALIFIED',
-                           'reason': 'ASR disagreement; homophones and recognition errors unresolved',
-                           'timing': 'expected-text alignment candidate'})
+                           'actionable': False, 'automatic_generation': False,
+                           'reason': 'Pronunciation-only policy: ASR spelling is not a speech defect; actual sound requires corroboration',
+                           'timing': timing})
     # Technical terms get explicit candidate evidence, never auto-resynthesis.
     terms_path = Path(__file__).resolve().parent.parent/'docs/mechanical-terms.json'
     if terms_path.is_file():
@@ -93,7 +124,8 @@ def text_candidates(script, alignment, duration):
                 candidates.append({'kind': 'terminology', 'expected': term,
                                    'recognized': actual, 'start': 0., 'end': duration,
                                    'confidence': None, 'status': 'UNQUALIFIED',
-                                   'reason': 'mechanical term not recognized; acoustic corroboration required'})
+                                   'actionable': False, 'automatic_generation': False,
+                                   'reason': 'mechanical term not recognized; spelling alone cannot trigger repair; acoustic corroboration required'})
     return candidates, 'UNQUALIFIED' if candidates else 'MATCH_CANDIDATE'
 
 
@@ -105,7 +137,7 @@ def calibrate(dataset_path, model, output):
         f = features_for(c)
         seq = engine.sequence_set(f)['frames']
         observations.append((c, f, seq))
-        if not c.get('labels'):
+        if acoustic_normal(c):
             normals.append(c['recording_id'])
     if len(set(normals)) < 2:
         raise ValueError('insufficient calibration: need two independent normal recordings')
@@ -116,20 +148,27 @@ def calibrate(dataset_path, model, output):
             thresholds[kind] = None
             continue
         best = None
-        for threshold in np.linspace(.05, .95, 19):
-            tp, fn, fp, tn = 0, 0, 0, 0
+        values = np.concatenate([scores(seq, kind) for _, _, seq in observations])
+        thresholds_to_try = sorted(set([.001,.005,.01,.02,.05,.1,.2,.3,.4,.5,.6,.7,.8,.9,.95,.99] +
+                                      [float(v) for v in np.quantile(values, np.linspace(0, 1, 21)) if 0 < v <= 1]))
+        for threshold in thresholds_to_try:
+            positives_by_group, normals_by_group = {}, {}
             for c, f, seq in observations:
-                truth = any(l['kind']==kind for l in c.get('labels', []))
-                prediction = bool(spans(scores(seq, kind), f['intervals'], threshold))
-                tp += truth and prediction
-                fn += truth and not prediction
-                fp += not truth and prediction
-                tn += not truth and not prediction
-            metric = tp/max(1, tp+fn)-fp/max(1, fp+tn)
+                labels = [l for l in c.get('labels', []) if l['kind']==kind]
+                prediction = spans(scores(seq, kind), f['intervals'], threshold)
+                group = c['recording_id']
+                if labels:
+                    localized = all(any(a<l['end'] and b>l['start'] for a,b in prediction) for l in labels)
+                    positives_by_group[group] = positives_by_group.get(group, True) and localized
+                elif kind in supervised_dimensions(c):
+                    normals_by_group[group] = normals_by_group.get(group, True) and not bool(prediction)
+            recall = sum(positives_by_group.values())/max(1,len(positives_by_group))
+            fpr = 1-sum(normals_by_group.values())/max(1,len(normals_by_group))
+            metric = recall-fpr
             if best is None or (metric, threshold) > best:
                 best = (metric, float(threshold))
         thresholds[kind] = best[1]
-    anomaly = [r['anomaly'] for c, _, seq in observations if not c.get('labels') for r in seq]
+    anomaly = [r['anomaly'] for c, _, seq in observations if acoustic_normal(c) for r in seq]
     result = {'schema_version': 1, 'model': identity(model), 'dataset': ref(dataset_path),
               'thresholds': thresholds, 'anomaly_threshold': float(np.quantile(anomaly, .95)),
               'cases': [c['id'] for c in cases], 'learning': False,
@@ -149,15 +188,21 @@ def load_calibration(path, model):
            for v in result['thresholds'].values()):
         raise ValueError('invalid calibration threshold')
     _, frozen = Engine.load(model)
-    partition(result['dataset']['path'], model, 'calibration')
     key = (sha(path), sha(Path(model)/'manifest.json'), tuple(sorted(frozen['files'].items())))
-    if key not in _CALIBRATION_CACHE:
+    if key in _CALIBRATION_CACHE:
+        for dependency in _CALIBRATION_INPUTS[key]:
+            verify(dependency)
+    else:
+        cases=partition(result['dataset']['path'], model, 'calibration')
         actual = calibrate(result['dataset']['path'], model, None)
         if actual != result:
             raise ValueError('calibration differs from frozen calibration-only execution')
         if len(_CALIBRATION_CACHE) >= 8:
             _CALIBRATION_CACHE.clear()
+            _CALIBRATION_INPUTS.clear()
         _CALIBRATION_CACHE.add(key)
+        _CALIBRATION_INPUTS[key]=[result['dataset']] + [c[k] for c in cases
+            for k in ('audio','script','alignment','narration_track','mix_track') if c.get(k)]
     return result
 
 
@@ -165,6 +210,8 @@ def qualification(path, model, calibration):
     if path is None:
         return set()
     value = json.loads(Path(path).read_text())
+    if value.get('split', 'test') != 'test':
+        raise ValueError('development results cannot qualify a capability')
     if (value['model'] != identity(model) or value['calibration'] != ref(calibration)
             or value['adapter'] != ref(Path(__file__))):
         raise ValueError('qualification does not match frozen runtime/model/calibration')
@@ -289,6 +336,7 @@ def evaluate(audio, script, model, calibration, alignment=None, qualified=None,
     return {'schema_version': 1, 'adapter': 'htm_audio_review', 'capability': 'htm_audio_review',
             'status': 'REWORK' if 'REWORK' in statuses else ('UNQUALIFIED' if 'UNQUALIFIED' in statuses else 'PASS'),
             'subject_id': subject_id,
+            'text_policy': 'pronunciation_only; ignore ASR orthographic errors when actual sound is correct; no text-only repair',
             'audio': f['audio'], 'script': ref(script), 'alignment': f['alignment'],
             'model': identity(model), 'calibration': ref(calibration),
             'qualification': ref(qualified) if qualified else None, 'runtime': manifest['runtime'],
@@ -334,6 +382,8 @@ def eligible(row):
     return (row['defect_count'] >= 50 and row['normal_count'] >= 50
             and row['recall'] >= .95 and row['false_positive_rate'] <= .05
             and row['supported'] and row['independent_test_groups'] and row['htm_gain'] > 0
+            and (row['subjective'] or (row.get('known_negative_count',0)>=50
+                 and row.get('cross_defect_false_positive_rate',1.)<=.05))
             and (not row['subjective'] or (row['independent_ratings'] >= 50
                  and row['spearman'] is not None and row['spearman'] >= .7)))
 
@@ -343,6 +393,7 @@ def summarize(observations):
     for kind in DIMENSIONS:
         positives, negatives, tp, fp, baseline_tp, baseline_fp = set(), set(), set(), set(), set(), set()
         positive_results, baseline_results, rating_groups = {}, {}, {}
+        known_negatives, cross_fp = set(), set()
         errors, ratings, quality = [], [], []
         subjective = kind in ('naturalness', 'expression')
         for obs in observations:
@@ -351,6 +402,9 @@ def summarize(observations):
             labels = [l for l in c.get('labels', []) if l['kind']==kind]
             detected = r['dimensions'][kind]['candidate_intervals']
             base = r['baseline'][kind]
+            if kind in c.get('negative_kinds', []) and c.get('labels'):
+                known_negatives.add(group)
+                if detected:cross_fp.add(group)
             hit = lambda predicted: all(any(a < l['end'] and b > l['start'] for a, b in predicted) for l in labels)
             if labels:
                 positives.add(group)
@@ -363,7 +417,7 @@ def summarize(observations):
                                   if any(a<l['end'] and b>l['start'] for a,b in detected))
                 if hit(base):
                     baseline_tp.add(group)
-            elif not c.get('labels'):
+            elif not c.get('labels') and kind in supervised_dimensions(c):
                 negatives.add(group)
                 if detected:
                     fp.add(group)
@@ -382,11 +436,15 @@ def summarize(observations):
         for pairs in rating_groups.values():
             ratings.append(float(np.mean([p[0] for p in pairs])))
             quality.append(float(np.mean([p[1] for p in pairs])))
-        independent = bool(positives and negatives)  # disjoint splits revalidated above
+        independent = bool(positives and negatives) and all(o['case']['split']=='test' for o in observations)
         recall, fpr = len(tp)/max(1,len(positives)), len(fp)/max(1,len(negatives))
         br, bf = len(baseline_tp)/max(1,len(positives)), len(baseline_fp)/max(1,len(negatives))
         row = {'defect_count': len(positives), 'normal_count': len(negatives),
                'true_positive_count': len(tp), 'false_positive_count': len(fp),
+               'known_negative_count': len(known_negatives),
+               'cross_defect_false_positive_count': len(cross_fp),
+               'cross_defect_false_positive_rate': len(cross_fp)/max(1,len(known_negatives)),
+               'cross_defect_false_positive_ci95': wilson(len(cross_fp),len(known_negatives)),
                'recall': recall, 'false_positive_rate': fpr,
                'recall_ci95': wilson(len(tp),len(positives)),
                'false_positive_ci95': wilson(len(fp),len(negatives)),
@@ -401,8 +459,10 @@ def summarize(observations):
     return dimensions
 
 
-def benchmark(dataset_path, model, calibration, output):
-    cases = partition(dataset_path, model, 'test')
+def benchmark(dataset_path, model, calibration, output, split='test'):
+    if split not in ('test','development'):
+        raise ValueError('benchmark split must be test or development')
+    cases = partition(dataset_path, model, split)
     load_calibration(calibration, model)
     observations, evidence = [], [ref(dataset_path)]
     for c in cases:
@@ -410,12 +470,18 @@ def benchmark(dataset_path, model, calibration, output):
                           c.get('alignment', {}).get('path'),
                           narration_track=c.get('narration_track', {}).get('path'),
                           mix_track=c.get('mix_track', {}).get('path'), subject_id=c['id'])
+        if (report['audio']!=c['audio'] or report['script']!=c['script']
+                or report['alignment']!=c.get('alignment')
+                or report['tracks'].get('narration')!=c.get('narration_track')
+                or report['tracks'].get('mix')!=c.get('mix_track')):
+            raise ValueError('benchmark input changed after frozen split validation')
         evidence.extend([c['audio'], c['script']])
         if c.get('alignment'):
             evidence.append(c['alignment'])
         observations.append({'case': c, 'review': report})
     dimensions = summarize(observations)
     result = {'schema_version': 1, 'adapter': ref(Path(__file__)),
+              'split': split,
               'model': identity(model), 'calibration': ref(calibration),
               'status': 'PASS' if all(r['status']=='PASS' for r in dimensions.values()) else 'UNQUALIFIED',
               'dimensions': dimensions, 'evidence': evidence, 'cases': observations,
@@ -439,6 +505,8 @@ def main():
         if name == 'train':
             p.add_argument('--build-manifest', required=True)
             p.add_argument('--epochs', type=int, default=3)
+        if name == 'benchmark':
+            p.add_argument('--split', choices=('test','development'), default='test')
         if name == 'evaluate':
             for arg in ('audio', 'script'):
                 p.add_argument('--'+arg, required=True)
@@ -451,7 +519,7 @@ def main():
     elif command == 'calibrate':
         result = calibrate(args['dataset'], args['model'], output)
     elif command == 'benchmark':
-        result = benchmark(args['dataset'], args['model'], args['calibration'], output)
+        result = benchmark(args['dataset'], args['model'], args['calibration'], output, args['split'])
     else:
         result = evaluate(**args)
         write_new(output, result)

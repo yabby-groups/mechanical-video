@@ -56,6 +56,29 @@ def ctc_path(log_probs, tokens, blank):
     return spans
 
 
+def recognized_units(ids, probabilities, tokenizer, step, offset, duration):
+    """Collapse actual CTC runs; retain repeated tokens separated by a blank."""
+    import numpy as np
+    ids=np.asarray(ids);probabilities=np.asarray(probabilities)
+    if (ids.ndim!=1 or not len(ids) or probabilities.ndim!=2 or len(ids)!=len(probabilities)
+            or not np.isfinite(probabilities).all() or ids.min()<0 or ids.max()>=probabilities.shape[1]
+            or not all(math.isfinite(v) for v in (step,offset,duration)) or step<=0 or duration<=0):
+        raise ValueError('invalid actual CTC token timing input')
+    recognized=[];run_start=0;special=set(tokenizer.all_special_ids)
+    for end in range(1,len(ids)+1):
+        if end<len(ids) and ids[end]==ids[run_start]:continue
+        token=int(ids[run_start])
+        text_unit=normalize(tokenizer.decode([token],group_tokens=False))
+        if token not in special and text_unit:
+            start,stop=run_start*step+offset,min(end*step+offset,duration)
+            if not 0<=start<stop<=duration:raise ValueError('CTC unit outside actual audio')
+            recognized.append(dict(text=text_unit,start=start,end=stop,
+                confidence=float(np.exp(probabilities[run_start:end,token]).mean()),
+                frame_start=run_start,frame_end=end))
+        run_start=end
+    return recognized
+
+
 def align(audio, text, model, revision=None):
     import numpy as np
     import torch
@@ -78,7 +101,8 @@ def align(audio, text, model, revision=None):
     with torch.inference_mode():
         logits = network(**inputs).logits[0]
         probabilities = logits.log_softmax(-1).cpu().numpy()
-    greedy = processor.batch_decode(logits.argmax(-1).unsqueeze(0))[0]
+    greedy_ids = logits.argmax(-1).cpu().numpy()
+    greedy = processor.batch_decode(torch.tensor(greedy_ids).unsqueeze(0))[0]
     frames = ctc_path(probabilities, tokens, network.config.pad_token_id)
     # Use the convolution stride, not proportional paragraph durations.
     step = int(np.prod(network.config.conv_stride)) / 16000
@@ -88,13 +112,16 @@ def align(audio, text, model, revision=None):
         receptive += (kernel - 1) * stride
         stride *= hop
     offset = (receptive - stride) / (2 * 16000)
+    recognized = recognized_units(greedy_ids,probabilities,processor.tokenizer,step,offset,duration)
     if hashlib.sha256(audio.read_bytes()).hexdigest() != source_hash:
         raise ValueError('audio changed during alignment')
     return dict(schema_version=1, method='forced_alignment',
                 audio=dict(path=str(audio), sha256=source_hash), duration=duration,
-                model=model, revision=getattr(network.config, '_commit_hash', revision),
+                model=model, revision=getattr(network.config, '_commit_hash', None) or revision,
                 transcript=text, normalized_transcript=transcript, greedy_transcript=greedy,
                 frame_seconds=step, frame_offset_seconds=offset, boundary_quantization_seconds=step/2,
+                recognition_units=recognized,
+                recognition_scope='greedy CTC token timings measured independently of expected-text path; not listening acceptance',
                 characters=[dict(text=c,start=a*step+offset,end=min(b*step+offset,duration),confidence=q)
                             for c,(a,b,q) in zip(transcript, frames)],
                 scope='CTC timing candidate; independent review required before acceptance')

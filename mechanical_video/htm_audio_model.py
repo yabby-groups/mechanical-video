@@ -12,6 +12,7 @@ SOURCE_REVISION = '0cab77fa638925e0c84a1b2aa6c7cc1258cb66f1'
 KINDS = ('normal', 'omission', 'repetition', 'mispronunciation', 'clipping', 'noise',
          'pause', 'splice', 'pace', 'masking', 'naturalness', 'expression')
 DIMENSIONS = KINDS[1:]
+CLASSIFIER_REPRESENTATION = 'tm_cells+input_sdr+columns+raw_anomaly_v2'
 
 
 def runtime():
@@ -34,6 +35,7 @@ class Engine:
         from htm.bindings.sdr import SDR
         self.input = SDR(len(FEATURES)*64)
         self.columns = SDR(512)
+        self.classification = SDR(4096+len(FEATURES)*64+512+64)
         self.sp = SpatialPooler(inputDimensions=[len(FEATURES)*64], columnDimensions=[512],
                                 potentialRadius=len(FEATURES)*64, potentialPct=.8,
                                 globalInhibition=True, localAreaDensity=.04,
@@ -44,7 +46,7 @@ class Engine:
                                  maxNewSynapseCount=16, seed=42)
         self.classifiers = {k: Classifier(alpha=.01) for k in DIMENSIONS}
 
-    def sequence(self, features, learn=False, labels=None):
+    def sequence(self, features, learn=False, labels=None, class_repeats=None, supervised_kinds=None):
         """Reset each recording; classifier training never changes SP/TM."""
         self.tm.reset()
         results = []
@@ -53,11 +55,22 @@ class Engine:
             self.sp.compute(self.input, learn, self.columns)
             self.tm.compute(self.columns, learn=learn)
             cells = self.tm.getActiveCells()
+            # Preserve acoustic evidence outside the normal SP vocabulary while
+            # retaining learned HTM context. Novelty is a supervised input, never
+            # a direct quality score or an automatically passing anomaly value.
+            anomaly_bucket = min(59, max(0, round(float(self.tm.anomaly)*59)))
+            self.classification.sparse = np.concatenate([
+                cells.sparse, self.input.sparse+4096,
+                self.columns.sparse+4096+len(FEATURES)*64,
+                np.arange(anomaly_bucket, anomaly_bucket+5, dtype=np.uint32)+4096+len(FEATURES)*64+512])
             probabilities = {}
             for kind, classifier in self.classifiers.items():
-                if labels is not None:
-                    classifier.learn(cells, int(kind in labels[index]))
-                distribution = classifier.infer(cells)
+                if labels is not None and (supervised_kinds is None or kind in supervised_kinds):
+                    positive = kind in labels[index]
+                    repeats = (class_repeats or {}).get(kind, 1) if positive else 1
+                    for _ in range(repeats):
+                        classifier.learn(self.classification, int(positive))
+                distribution = classifier.infer(self.classification)
                 probabilities[kind] = float(distribution[1]) if len(distribution)>1 else 0.
             results.append({'anomaly': float(self.tm.anomaly), 'probabilities': probabilities})
         return results
@@ -68,17 +81,20 @@ class Engine:
         for name, obj in [('sp', self.sp), ('tm', self.tm), *self.classifiers.items()]:
             obj.saveToFile(str(directory/(name+'.bin')), 'BINARY')
 
-    def sequence_set(self, features, learn=False, case=None):
+    def sequence_set(self, features, learn=False, case=None, class_repeats=None):
         results = {}
         for name, values in [('frames', features), *features.get('sequences', {}).items()]:
             labels = frame_labels(case, values) if case is not None else None
-            results[name] = self.sequence(values['features'], learn=learn, labels=labels)
+            supervised = supervised_dimensions(case) if case is not None else None
+            results[name] = self.sequence(values['features'], learn=learn, labels=labels, class_repeats=class_repeats, supervised_kinds=supervised)
         return results
 
     @classmethod
     def load(cls, directory):
         directory = Path(directory)
         manifest = json.loads((directory/'manifest.json').read_text())
+        if manifest.get('classifier_representation') != CLASSIFIER_REPRESENTATION:
+            raise ValueError('unsupported classifier representation; retrain a new checkpoint')
         if manifest['feature_version'] != VERSION or manifest['source_revision'] != SOURCE_REVISION:
             raise ValueError('unsupported feature/source version')
         if runtime_identity(manifest['runtime']) != runtime_identity(runtime()):
@@ -108,7 +124,7 @@ def load_dataset(path):
     cases = dataset['cases']
     seen, ids = {}, set()
     for c in cases:
-        if c['id'] in ids or c['split'] not in ('train', 'calibration', 'test'):
+        if c['id'] in ids or c['split'] not in ('train', 'calibration', 'development', 'test'):
             raise ValueError('duplicate id or invalid split')
         ids.add(c['id'])
         for field in ('recording_id', 'speaker_id', 'license', 'provenance'):
@@ -130,6 +146,10 @@ def load_dataset(path):
                 raise ValueError('group leakage across partitions: ' + str(key))
             seen[key] = c['split']
         labels = c.get('labels', [])
+        negatives=c.get('negative_kinds', [])
+        if (not isinstance(negatives,list) or not set(negatives)<=set(DIMENSIONS)
+                or set(negatives)&{l['kind'] for l in labels}):
+            raise ValueError('invalid or contradictory negative dimension labels')
         for label in labels:
             if (label['kind'] not in DIMENSIONS or not np.isfinite([label['start'], label['end']]).all()
                     or not 0 <= label['start'] < label['end']):
@@ -147,9 +167,22 @@ def features_for(case):
     from .htm_audio_features import extract
     result = extract(case['audio']['path'], case.get('alignment', {}).get('path'),
                      case.get('narration_track', {}).get('path'), case.get('mix_track', {}).get('path'))
+    if (result['audio']!=case['audio'] or result['alignment']!=case.get('alignment')
+            or result['tracks'].get('narration')!=case.get('narration_track')
+            or result['tracks'].get('mix')!=case.get('mix_track')):
+        raise ValueError('corpus input changed during feature extraction')
     if any(l['end'] > result['duration'] for l in case.get('labels', [])):
         raise ValueError('label exceeds decoded duration')
     return result
+
+
+def acoustic_normal(case):
+    required = {'clipping','noise','pause','splice','pace','masking'}
+    return not case.get('labels') and required <= set(case.get('negative_kinds', []))
+
+
+def supervised_dimensions(case):
+    return set(case.get('negative_kinds', [])) | {l['kind'] for l in case.get('labels', [])}
 
 
 def frame_labels(case, features):
@@ -169,27 +202,38 @@ def train(dataset_path, output, build_manifest, epochs=3):
     if [b['sha256'] for b in build['bindings']] != [b['sha256'] for b in current['bindings']]:
         raise ValueError('build fingerprint differs from installed bindings')
     cases = [c for c in data['cases'] if c['split'] == 'train']
-    normal = [c for c in cases if not c.get('labels')]
+    normal = [c for c in cases if acoustic_normal(c)]
     if len({c['recording_id'] for c in normal}) < 2:
         raise ValueError('cold start: need at least two independent normal recordings')
     cached = [(c, features_for(c)) for c in cases]
-    normal_frames = sum(len(f['features']) for c, f in cached if not c.get('labels'))
+    normal_frames = sum(len(f['features']) for c, f in cached if acoustic_normal(c))
     if normal_frames < 100:
         raise ValueError('cold start: fewer than 100 normal frames')
     engine = Engine()
+    counts = {kind: [0, 0] for kind in DIMENSIONS}
+    for case, f in cached:
+        for values in [f, *f.get('sequences', {}).values()]:
+            for labels in frame_labels(case, values):
+                for kind in supervised_dimensions(case):
+                    counts[kind][int(kind in labels)] += 1
+    class_repeats = {kind: max(1, min(32, round(negative/max(1, positive))))
+                     for kind, (negative, positive) in counts.items()}
     for _ in range(epochs):
         for case, f in cached:
-            if not case.get('labels'):
+            if acoustic_normal(case):
                 engine.sequence_set(f, learn=True)
     for _ in range(epochs):
         for case, f in cached:
-            engine.sequence_set(f, case=case)
+            engine.sequence_set(f, case=case, class_repeats=class_repeats)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     engine.save(output)
-    manifest = {'schema_version': 1, 'source_revision': SOURCE_REVISION,
+    manifest = {'schema_version': 2, 'source_revision': SOURCE_REVISION,
+                'classifier_representation': CLASSIFIER_REPRESENTATION,
+                'class_repeats': class_repeats,
                 'feature_version': VERSION, 'runtime': current, 'build': ref(build_manifest),
-                'normal_frames': normal_frames, 'normal_recordings': len(normal),
+                'normal_frames': normal_frames, 'normal_recordings': len({c['recording_id'] for c in normal}),
+                'normal_examples': len(normal),
                 'dataset': ref(dataset_path), 'training_cases': [c['id'] for c in cases],
                 'training_groups': {key: sorted({c[key] for c in cases}) for key in ('recording_id', 'speaker_id')},
                 'training_texts': sorted({sha(c['script']['path']) for c in cases}),

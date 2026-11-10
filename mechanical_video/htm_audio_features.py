@@ -4,6 +4,7 @@ The first stream is decoded at its native sample rate, retaining every channel
 for amplitude checks. Pitch is a simple autocorrelation estimate, not phonetics.
 """
 import hashlib
+from functools import lru_cache
 import json
 import re
 from pathlib import Path
@@ -22,9 +23,25 @@ BOUNDS = ((-100, 0), (0, 1.5), (0, .2), (0, 1), (0, 1), (0, 1),
 BOUNDS += ((0, 1), (-1, 1), (-40, 40))
 
 
-def sha(path):
+def _version(path):
+    stat = Path(path).stat()
+    return stat.st_dev,stat.st_ino,stat.st_size,stat.st_mtime_ns,stat.st_ctime_ns
+
+
+@lru_cache(maxsize=16384)
+def _version_sha(path, version):
     with Path(path).open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+        result = hashlib.file_digest(stream, 'sha256').hexdigest()
+    if _version(path) != version:
+        raise ValueError('file changed during fingerprinting: '+path)
+    return result
+
+
+def sha(path):
+    path = str(Path(path).resolve())
+    # ctime catches same-size edits even if a caller restores mtime. Every
+    # immutable file version is fully hashed once per process; no disk cache.
+    return _version_sha(path, _version(path))
 
 
 def ref(path):
