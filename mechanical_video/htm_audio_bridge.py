@@ -80,8 +80,8 @@ def validate_report(path, audio=None, script=None):
                                           for k in ('omission', 'repetition', 'mispronunciation')):
         raise ValueError('unresolved recognition differences cannot be accepted')
     if not result.get('alignment') and any(result['dimensions'][k]['status'] != 'UNQUALIFIED'
-                                          for k in ('omission', 'repetition', 'mispronunciation')):
-        raise ValueError('text dimensions require measured alignment')
+                                          for k in ('omission', 'repetition', 'mispronunciation', 'pace')):
+        raise ValueError('text and pace dimensions require measured alignment')
     states = {v['status'] for v in result['dimensions'].values()}
     expected = 'REWORK' if 'REWORK' in states else ('UNQUALIFIED' if 'UNQUALIFIED' in states else 'PASS')
     if result['status'] != expected:

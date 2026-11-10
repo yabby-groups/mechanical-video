@@ -7,6 +7,7 @@ import argparse
 import concurrent.futures
 import hashlib
 import json
+import re
 from pathlib import Path
 import urllib.request
 
@@ -20,7 +21,10 @@ def request(url):
         'User-Agent': 'mechanical-video-audio-validation'}), timeout=90)
 
 
-def fetch(root):
+def fetch(root, speakers=None):
+    speakers = sorted(set(speakers or ['S%04d'%n for n in range(2,7)]))
+    if not all(re.fullmatch(r'S[0-9]{4}', speaker) for speaker in speakers):
+        raise ValueError('invalid AISHELL speaker identifier')
     root = Path(root).resolve()
     root.mkdir(parents=True, exist_ok=True)
     metadata_path = root/'upstream-metadata.json'
@@ -37,7 +41,7 @@ def fetch(root):
     if b'Apache License v.2.0' not in license_path.read_bytes():
         raise ValueError('official license evidence unavailable')
     paths = ['data_aishell/transcript/aishell_transcript_v0.8.txt'] + [
-        'data_aishell/wav/S%04d.tar.gz'%n for n in range(2, 7)]
+        'data_aishell/wav/'+speaker+'.tar.gz' for speaker in speakers]
     base = 'https://huggingface.co/datasets/'+REPOSITORY+'/resolve/'+REVISION+'/'
 
     def one(path):
@@ -84,4 +88,6 @@ def fetch(root):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True)
-    fetch(parser.parse_args().output)
+    parser.add_argument('--speakers', nargs='+', help='Pinned archive IDs, e.g. S0002 S0007; use a new output for a new subset')
+    args = parser.parse_args()
+    fetch(args.output, args.speakers)

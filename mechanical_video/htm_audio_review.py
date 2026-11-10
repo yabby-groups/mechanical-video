@@ -298,7 +298,7 @@ def evaluate(audio, script, model, calibration, alignment=None, qualified=None,
         detected = spans(scores(sequence, kind), f['intervals'], cal['thresholds'][kind])
         enabled = kind in qualified_dimensions
         # Raw acoustics do not establish which words were spoken.
-        if kind in ('omission', 'repetition', 'mispronunciation') and not alignment:
+        if kind in ('omission', 'repetition', 'mispronunciation', 'pace') and not alignment:
             enabled = False
         state = ('REWORK' if detected else 'PASS') if enabled else 'UNQUALIFIED'
         dimensions[kind] = {'status': state, 'threshold': cal['thresholds'][kind],
@@ -452,7 +452,8 @@ def summarize(observations):
                'htm_gain': recall-fpr-(br-bf),
                'localization_mae_seconds': float(np.mean(errors)) if errors else None,
                'independent_test_groups': independent, 'subjective': subjective,
-               'supported': (kind != 'masking' or all(o['review']['tracks'] for o in observations)),
+               'supported': ((kind != 'masking' or all(o['review']['tracks'] for o in observations))
+                             and (kind != 'pace' or all(o['review'].get('alignment') for o in observations))),
                'independent_ratings': len(ratings), 'spearman': spearman(ratings, quality)}
         row['status'] = 'PASS' if eligible(row) else 'UNQUALIFIED'
         dimensions[kind] = row

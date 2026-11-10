@@ -262,6 +262,9 @@ class ActualHTMTest(unittest.TestCase):
             cal=root/'cal.json'; calibrate(path,model,cal)
             case=next(c for c in cases if c['split']=='test')
             report=evaluate(case['audio']['path'],case['script']['path'],model,cal)
+            with patch('mechanical_video.htm_audio_review.qualification',return_value={'pace'}):
+                missing=evaluate(case['audio']['path'],case['script']['path'],model,cal)
+                self.assertEqual(missing['dimensions']['pace']['status'],'UNQUALIFIED')
             report_path=root/'report.json'; write_new(report_path,report)
             self.assertEqual(validate_report(report_path)['status'],'UNQUALIFIED')
             # The second call takes the cache path and must still bind every

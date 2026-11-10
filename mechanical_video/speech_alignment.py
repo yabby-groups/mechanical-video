@@ -79,52 +79,67 @@ def recognized_units(ids, probabilities, tokenizer, step, offset, duration):
     return recognized
 
 
+class CTCAligner:
+    """Reuse one frozen ASR network; every call decodes the actual audio anew."""
+
+    def __init__(self, model, revision=None, device='cpu'):
+        import torch
+        from transformers import AutoProcessor, AutoModelForCTC
+        if device not in ('cpu', 'mps'):
+            raise ValueError('unsupported alignment device')
+        if device == 'mps' and not torch.backends.mps.is_available():
+            raise ValueError('requested MPS alignment is unavailable')
+        self.model, self.revision, self.device = str(model), revision, device
+        self.processor = AutoProcessor.from_pretrained(model, revision=revision)
+        self.network = AutoModelForCTC.from_pretrained(model, revision=revision).eval().to(device)
+
+    def align(self, audio, text):
+        import numpy as np
+        import torch
+        audio = Path(audio).resolve()
+        source_hash = hashlib.sha256(audio.read_bytes()).hexdigest()
+        pcm = subprocess.run(['ffmpeg','-v','error','-i',str(audio),'-f','f32le',
+                              '-ar','16000','-ac','1','-'], check=True, capture_output=True).stdout
+        samples = np.frombuffer(pcm, dtype='<f4').copy()
+        if not len(samples) or not np.isfinite(samples).all():
+            raise ValueError('empty or invalid audio')
+        processor, network = self.processor, self.network
+        transcript = normalize(text)
+        vocab = processor.tokenizer.get_vocab()
+        if not transcript or any(c not in vocab for c in transcript):
+            raise ValueError('transcript contains unsupported characters')
+        tokens = [vocab[c] for c in transcript]
+        inputs = processor(samples, sampling_rate=16000, return_tensors='pt').to(self.device)
+        with torch.inference_mode():
+            logits = network(**inputs).logits[0]
+            probabilities = logits.log_softmax(-1).cpu().numpy()
+        greedy_ids = logits.argmax(-1).cpu().numpy()
+        greedy = processor.batch_decode(torch.tensor(greedy_ids).unsqueeze(0))[0]
+        frames = ctc_path(probabilities, tokens, network.config.pad_token_id)
+        # Use the convolution stride, not proportional paragraph durations.
+        step = int(np.prod(network.config.conv_stride)) / 16000
+        duration = len(samples) / 16000
+        receptive, stride = 1, 1
+        for kernel, hop in zip(network.config.conv_kernel, network.config.conv_stride):
+            receptive += (kernel - 1) * stride
+            stride *= hop
+        offset = (receptive - stride) / (2 * 16000)
+        recognized = recognized_units(greedy_ids,probabilities,processor.tokenizer,step,offset,duration)
+        if hashlib.sha256(audio.read_bytes()).hexdigest() != source_hash:
+            raise ValueError('audio changed during alignment')
+        return dict(schema_version=1, method='forced_alignment',
+                    audio=dict(path=str(audio), sha256=source_hash), duration=duration,
+                    model=self.model, revision=getattr(network.config, '_commit_hash', None) or self.revision,
+                    transcript=text, normalized_transcript=transcript, greedy_transcript=greedy,
+                    frame_seconds=step, frame_offset_seconds=offset, boundary_quantization_seconds=step/2,
+                    recognition_units=recognized,
+                    recognition_scope='greedy CTC token timings measured independently of expected-text path; not listening acceptance',
+                    characters=[dict(text=c,start=a*step+offset,end=min(b*step+offset,duration),confidence=q)
+                                for c,(a,b,q) in zip(transcript, frames)],
+                    scope='CTC timing candidate; independent review required before acceptance')
+
 def align(audio, text, model, revision=None):
-    import numpy as np
-    import torch
-    from transformers import AutoProcessor, AutoModelForCTC
-    audio = Path(audio).resolve()
-    source_hash = hashlib.sha256(audio.read_bytes()).hexdigest()
-    pcm = subprocess.run(['ffmpeg','-v','error','-i',str(audio),'-f','f32le',
-                          '-ar','16000','-ac','1','-'], check=True, capture_output=True).stdout
-    samples = np.frombuffer(pcm, dtype='<f4').copy()
-    if not len(samples) or not np.isfinite(samples).all():
-        raise ValueError('empty or invalid audio')
-    processor = AutoProcessor.from_pretrained(model, revision=revision)
-    network = AutoModelForCTC.from_pretrained(model, revision=revision).eval()
-    transcript = normalize(text)
-    vocab = processor.tokenizer.get_vocab()
-    if not transcript or any(c not in vocab for c in transcript):
-        raise ValueError('transcript contains unsupported characters')
-    tokens = [vocab[c] for c in transcript]
-    inputs = processor(samples, sampling_rate=16000, return_tensors='pt')
-    with torch.inference_mode():
-        logits = network(**inputs).logits[0]
-        probabilities = logits.log_softmax(-1).cpu().numpy()
-    greedy_ids = logits.argmax(-1).cpu().numpy()
-    greedy = processor.batch_decode(torch.tensor(greedy_ids).unsqueeze(0))[0]
-    frames = ctc_path(probabilities, tokens, network.config.pad_token_id)
-    # Use the convolution stride, not proportional paragraph durations.
-    step = int(np.prod(network.config.conv_stride)) / 16000
-    duration = len(samples) / 16000
-    receptive, stride = 1, 1
-    for kernel, hop in zip(network.config.conv_kernel, network.config.conv_stride):
-        receptive += (kernel - 1) * stride
-        stride *= hop
-    offset = (receptive - stride) / (2 * 16000)
-    recognized = recognized_units(greedy_ids,probabilities,processor.tokenizer,step,offset,duration)
-    if hashlib.sha256(audio.read_bytes()).hexdigest() != source_hash:
-        raise ValueError('audio changed during alignment')
-    return dict(schema_version=1, method='forced_alignment',
-                audio=dict(path=str(audio), sha256=source_hash), duration=duration,
-                model=model, revision=getattr(network.config, '_commit_hash', None) or revision,
-                transcript=text, normalized_transcript=transcript, greedy_transcript=greedy,
-                frame_seconds=step, frame_offset_seconds=offset, boundary_quantization_seconds=step/2,
-                recognition_units=recognized,
-                recognition_scope='greedy CTC token timings measured independently of expected-text path; not listening acceptance',
-                characters=[dict(text=c,start=a*step+offset,end=min(b*step+offset,duration),confidence=q)
-                            for c,(a,b,q) in zip(transcript, frames)],
-                scope='CTC timing candidate; independent review required before acceptance')
+    return CTCAligner(model, revision).align(audio, text)
 
 
 def measurement_from_alignment(events, alignment_path, minimum_similarity=0.7):

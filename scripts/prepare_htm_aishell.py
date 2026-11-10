@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import io
 import json
+import re
 from pathlib import Path
 import subprocess
 import tarfile
@@ -61,8 +62,18 @@ def save(path,x,rate):
         stream.writeframes((np.clip(x,-1,1)*32767).astype('<i2').tobytes())
 
 
-def prepare(source,output):
+def prepare(source,output,plan=None,exclude_datasets=(),vocabulary=None):
     source,output=Path(source).resolve(),Path(output).resolve()
+    plan = PLAN if plan is None else plan
+    if (not plan or any(not re.fullmatch(r'S[0-9]{4}', speaker) or len(item)!=2
+        or item[0] not in ('train','calibration','development','test')
+        or type(item[1]) is not int or item[1]<1 for speaker,item in plan.items())):
+        raise ValueError('invalid predeclared speaker plan')
+    supported = set(json.loads(Path(vocabulary).read_text())) if vocabulary else None
+    excluded_texts=set()
+    for path in exclude_datasets:
+        old=load_dataset(path)
+        excluded_texts.update(normalize(Path(c['script']['path']).read_text()) for c in old['cases'])
     manifest=json.loads((source/'source-manifest.json').read_text())
     if manifest['revision']!=REVISION or manifest['license']!='Apache-2.0':
         raise ValueError('unexpected source revision or license')
@@ -78,9 +89,9 @@ def prepare(source,output):
     output.mkdir(parents=True,exist_ok=False)
     originals=output/'originals';originals.mkdir()
     derived=output/'derived';derived.mkdir()
-    cases=[];selection=[];seen_text=set()
+    cases=[];selection=[];seen_text=set(excluded_texts)
     kinds=('normal','normal_short_pause','normal_tempo','clipping','noise','pause','splice','pace','masking')
-    for speaker,(split,count) in PLAN.items():
+    for speaker,(split,count) in plan.items():
         selected=0
         with tarfile.open(source/(speaker+'.tar.gz')) as archive:
             members=[m for m in archive.getmembers() if m.isfile() and m.name.endswith('.wav')]
@@ -89,6 +100,7 @@ def prepare(source,output):
                 utterance=Path(member.name).stem
                 text=transcript.get(utterance,'')
                 if not text or normalize(text) in seen_text:continue
+                if supported is not None and any(c not in supported for c in normalize(text)):continue
                 raw=archive.extractfile(member).read();x,rate=read(raw);duration=len(x)/rate
                 if not 2.5<=duration<=8:continue
                 seen_text.add(normalize(text));selected+=1
@@ -146,7 +158,7 @@ def prepare(source,output):
     dataset=output/'dataset.json'
     write_new(dataset,annotate(dict(schema_version=2,source=ref(source/'source-manifest.json'),cases=cases,
         scope='Acoustic perturbations of licensed real speech; no subjective quality labels or lexical qualification.',
-        selection=selection,selection_policy='Predeclared speakers; SHA256 order; unique normalized text; duration 2.5..8 s')))
+        selection=selection,selection_plan=plan,alignment_vocabulary=ref(vocabulary) if vocabulary else None,excluded_datasets=[ref(p) for p in exclude_datasets],selection_policy='Predeclared speakers; SHA256 order; unique normalized text; duration 2.5..8 s')))
     load_dataset(dataset)
     print(dataset)
     return dataset
@@ -154,4 +166,8 @@ def prepare(source,output):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--source',required=True);parser.add_argument('--output',required=True)
-    args=parser.parse_args();prepare(args.source,args.output)
+    parser.add_argument('--plan',help='JSON speaker -> [split, count], frozen before preparation')
+    parser.add_argument('--exclude-dataset',action='append',default=[],help='Exclude every previously observed normalized transcript')
+    parser.add_argument('--vocabulary',help='Optional fixed CTC vocabulary JSON; predeclared transcript eligibility only')
+    args=parser.parse_args()
+    prepare(args.source,args.output,json.loads(Path(args.plan).read_text()) if args.plan else None,args.exclude_dataset,args.vocabulary)
