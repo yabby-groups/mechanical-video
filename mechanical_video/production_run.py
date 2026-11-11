@@ -37,9 +37,21 @@ def run(record_path, stage, command):
     # An exception/interruption intentionally leaves an uncertain receipt.
     result = subprocess.run(command, check=False)
     finish_execution(record_path, token, result.returncode)
+    automatic = None
+    if result.returncode == 0 and stage in ('full-render', 'delivery'):
+        from .av_auto_review import review_execution
+        try:
+            automatic = review_execution(record_path, token)
+        except Exception as exc:
+            automatic = {'status': 'failed', 'error': str(exc), 'owner': 'Director',
+                         'formal_acceptance': False}
+            from .repair_controller import _transaction
+            with _transaction(record_path) as (current, _):
+                current['repair_controller']['executions'][token]['automatic_technical_review'] = automatic
     return {'status': 'COMMAND_COMPLETED', 'returncode': result.returncode,
+            'automatic_technical_review': automatic,
             'record_sha256': before, 'stage': stage,
-            'formal_acceptance': False}, result.returncode
+            'formal_acceptance': False}, (2 if automatic and automatic['status'] == 'failed' else result.returncode)
 
 
 def main(argv=None):

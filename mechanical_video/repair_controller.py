@@ -356,6 +356,8 @@ def _review(state, task, outputs):
         if review['status'] != 'pending' or not _is_review(review):
             raise ValueError('explicit independent reviewer is not pending')
         review['inputs'].update(deepcopy(outputs))
+        if task.get('automatic_technical_review'):
+            review.setdefault('automatic_technical_reviews', []).append(deepcopy(task['automatic_technical_review']))
         review['required_checks'] = sorted(set(review['required_checks']) | set(task['required_checks']))
         review['excluded_agents'] = sorted(set(review.get('excluded_agents', []))
                                            | set(_producer_lineage(state, task)))
@@ -367,6 +369,8 @@ def _review(state, task, outputs):
         required_checks=list(task['required_checks']), capabilities=list(task.get('review_capabilities', task['capabilities'])),
         status='pending', excluded_agents=_producer_lineage(state, task), producer=task['agent_id'],
         issue_id=task.get('issue_id'), subject=task['id'])
+    if task.get('automatic_technical_review'):
+        state['tasks'][review_id]['automatic_technical_reviews'] = [deepcopy(task['automatic_technical_review'])]
     # Existing dependents must wait for this actual independent review.
     for other in list(state['tasks'].values()):
         if other['id'] != review_id and task['id'] in other['deps']:
