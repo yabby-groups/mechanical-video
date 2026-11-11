@@ -2242,3 +2242,21 @@ Scope: future production scheduling only. No published video, narration, render,
 Three failures were reproduced before fixes: a successful second repair left the first failed recheck blocked; repair requests accepted duplicate/nested output paths and existing destinations; changing the repair producer let the original producer review the repaired asset. The controller now resolves every failed round through the independent resolution while preserving failure history and attempt counts, rejects unsafe output ownership atomically, and propagates producer exclusions through repair lineage.
 
 Validation: 22 repair-controller, 9 workflow-autonomy, 3 controller-integration, 3 automated-delivery, 20 production-gate, and 8 repair-closure tests passed (65 total); git diff --check passed. The two-round test also verifies unchanged handoff accounting and invalidation after the final output changes. These are scheduler contract tests with explicitly synthetic assignments, not actual independent audiovisual acceptance. Unattended formal delivery remains unqualified until a real eligible reviewer and a new-task production run pass the existing gates.
+
+
+### 2026-11-09 用户认可动作后的上移微调
+
+动作认可范围限定attempt-3局部小样。按‘有点下面’从相同原生255帧进行固定上移80px（高度4.17%），底部仅延展背景边缘，时序/动作/尺度/音频不变，原片保留。输出SHA-256 d240984c1693efa3f0d79bb13e784377471415e26c1624765f8a48d0a8257b4b；1080×1920@30、8.5秒、完整AV解码、255个PTS、源帧hash及音频包hash一致通过。生产者查看0/.9/5.6秒前后静帧联系图，主体位置上移、样本尺头完整；无新增连续视听/独立评审/整片认可。helper AST/JSON和diff检查通过，无CAD或渲染代码改动，未重渲染或发布。
+
+
+### 2026-11-09 已认可动作后继续优化与真实底部修复
+
+用户OK上移小样并授权继续优化。保留动作/8.5秒/取景/原AAC音频；CONTROL第三候选正式255-pose预检PASS但实际预览仍以卷簧为主，停止扩渲，累计3次并保持REWORK。高对比单行文字及真实压脚表面指认已生成；检查编码画面时发现旧80px边缘延展复制了特写机构，引入底部条纹，保留旧版并新建问题。
+
+同一冻结机构、材料、灯光及pose在GPU主机入口补渲真实1080×80底部：三帧先检，再255条补渲。第一次局部运行因预检报告已存在在出图前安全停止；旧日志保留，同字节renderer隔离输出后完成。正式全255姿态预检PASS，完整源hash与全部原生补渲尺寸/hash通过。生产者实际查看补渲合成静帧及前一文字措辞候选4.8/6.4秒编码帧，未见旧拉伸条纹。
+
+最后把4.8..5.6秒‘压住尺带’修为过程‘压脚压下’，5.6..6秒才显示‘尺带锁住’；全部255帧字幕/锁量/伸出量/方向核对、文字边界及实际编码明暗文字像素检查通过。最新局部MP4 SHA-256 b6546f330e0011d18f197edca7abd9fbde501b8b2999a3b5dc9bbff5101431b0，1080×1920@30、8.5秒、255帧，逐帧PTS/完整AV解码/原AAC包hash一致通过；旧原生/归档源80项hash不变。11份helper AST、JSON/hash及git diff --check通过，无产品源码/新CAD改动，不重复运行无关单测。
+
+源事实、实际静帧、数值/像素检查、实时连续视听与独立QA保持区分；无分数、无增长实测、没有独立P1关闭。CONTROL三轮、连续视听能力与v5实测旁白事件/控制器前提仍阻断整片，未扩渲整片或调用供应商/平台。当前所有进程完成，无后台自动闭环声称。详见reports/tape-continuation-optimization-20261109/summary.json及README.md。
+
+本轮结束前读取到其他线程更新的AGENTS/正式自动交付约束，相关源码与测试改动未触碰。当前工具及仅环境变量名称检查无真实连续AV适配器，VISION_ENDPOINT未配置；已有文本API凭据不等于AV能力。稳定依赖问题EP03-CONTINUOUS-AV-CAPABILITY-001由Director负责，并记录实际接入/三类缺陷基准/同版独立复验要求。所有新增候选保持内部，不以局部修复或用户认可宣布整片/工作流完成。
