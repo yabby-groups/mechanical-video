@@ -2260,3 +2260,243 @@ Validation: 22 repair-controller, 9 workflow-autonomy, 3 controller-integration,
 源事实、实际静帧、数值/像素检查、实时连续视听与独立QA保持区分；无分数、无增长实测、没有独立P1关闭。CONTROL三轮、连续视听能力与v5实测旁白事件/控制器前提仍阻断整片，未扩渲整片或调用供应商/平台。当前所有进程完成，无后台自动闭环声称。详见reports/tape-continuation-optimization-20261109/summary.json及README.md。
 
 本轮结束前读取到其他线程更新的AGENTS/正式自动交付约束，相关源码与测试改动未触碰。当前工具及仅环境变量名称检查无真实连续AV适配器，VISION_ENDPOINT未配置；已有文本API凭据不等于AV能力。稳定依赖问题EP03-CONTINUOUS-AV-CAPABILITY-001由Director负责，并记录实际接入/三类缺陷基准/同版独立复验要求。所有新增候选保持内部，不以局部修复或用户认可宣布整片/工作流完成。
+
+### 2026-11-09 原会话续做：第三轮本地连续声画能力实测失败
+
+接续 session 01a1be6d-adf5-7143-b803-63768b041208，未重置 EP03-CONTINUOUS-AV-CAPABILITY-001 前两轮失败。原下载进程已退出、临时推理环境已不存在；保留907018240字节模型断点，六连接逐段校验HTTP Content-Range后合并，固定权重3550670554字节的SHA-256为038e39a37a7667373d2c3991375446b10c96ae1d717a68674870343db376b76e。原下载入口补全元数据并验证全部模型文件。隔离环境按原environment-lock.txt恢复，73项版本一致，未修改项目venv或全局配置。
+
+通过原定host-GPU入口、持有render.lock，真实运行mlx-community/gemma-4-e2b-it-4bit固定revision 238767527555cb75a05732a84dff5d6ba0dd6809的六个既有盲测对照。命令退出0，六例处理器均实际编码90帧并包含音频特征及mask，共540帧；这不证明感官理解或完整音频样本覆盖。A把向左说成向右；C漏检已知0.7秒延迟，且C/F给出错误起点、重复并截断JSON。B/E能区分可见蓝块与灰色遮挡，D方向正确但布尔类型错误。能力基准失败，不登记能力、不填正式分数、不进入整片制作。
+
+设置的MLX内存限制8000000000字节未构成硬上限，实测peak_memory_bytes为10884038999；不再声称8GB硬限制。保留原始回答、模型/媒体/执行hash及第三轮判定reports/av-capability-integration-20261109/benchmark-v3-verdict.json。唯一原record与summary/latest-status已更新为第三轮失败、修复上限到达；全部已启动进程结束，render.lock可重新获取并已释放，认可局部视频hash未变。CONTROL原三轮REWORK、实测完整旁白事件及v5制作前提仍未解决；未新增Agent、模型第四轮、TTS、渲染、付费或平台操作。两份新恢复/结案helper AST、关联JSON/hash及git diff --check通过；仅运行证据与文档变化，未跑无关产品单测或重渲影片。
+
+### 2026-11-09 明确授权后的完整卷尺工作版
+
+用户明确答复“授权先完成完整工作版”，授权范围为连续视听能力尚不可用时先生成明确未正式验收的整片，保留问题并完成可执行检查。例外及原话写回唯一原director-record的authorized_workprint，不更改历史v4/v5门禁、问题编号、修复次数或正式结论，不要求用户承担质检。输出在series/everyday-mechanisms/episodes/EVERYDAY_EP03/workprint-authorized-20261109/。
+
+保留已认可8.5秒动作、80px上移及其声音，接原旁白U3–U7对应的连续源656–2399帧，删去重复前言及重复结尾；完整工作版66.633333秒、1999帧，原生与编码均1080×1920@30。后段1744帧由同一新冻结渲染器和正式pose回调完成；1744帧同版场景预检PASS，原CAD预检23项输入hash不变，复用已验证CAD、不重建几何。固定相机朝向/取景沿用认可动作，连接处extension/lock及spring/tape路径完全相同；机构区域静帧RGB平均差约4.1–4.3/255，不将静帧比较称为实时体验验收。相同机构状态仅复用本次同渲染器的无文字原生帧，不混用其他渲染版本帧、不改变语速或动作速度。
+
+六关键帧发现原3D文字偏灰，保留第一版证据，独占新版本清除原3D文字，改用同字体白字黑描边。生产者检查清晰文字关键帧后完成整片；全部1744后段帧字幕单行≤20字符及文字边界通过。48kHz单声道音轨3198400样本，后段与原旁白/合成拟音选定PCM区间逐字节相同，未生成TTS、未变速。FFprobe规格、完整FFmpeg音视频解码、全部1999帧PTS通过，最大时间误差0.000000334秒；编码音轨与源PCM相关性0.9999665、峰值0.66326，无采样峰值削波。相关性只证明来源关联，不替代听审。
+
+实际工作版Tape-measure-complete-workprint.mp4 SHA-256 defae4f965fc3f91cda7947df58dfa9a62bee56e2c5fded572169ce23b51d91e。生产者查看实际编码8.533秒连接处与65.9秒结尾关键帧；无连续观看/独立听审、无正式分数。原CONTROL接触因果、连续AV能力及逐字对齐缺口保留，不能标正式通过、增长达成或自动工作流合格。所有本轮进程结束，render.lock释放；新脚本AST、证据关联及git diff --check通过。未改产品代码，未跑无关产品单测，未使用新Agent、付费生成或平台操作。
+
+
+## HTM audio review — 2026-11-10
+
+See [HTM measured validation](htm-audio-review-validation.md): actual source-built SP/TM/classifier execution, 60 isolated speech controls, 264 project tests (2 native-environment skips), 11 native tests passed, two actual independent waveform repair closures, and all HTM dimensions still UNQUALIFIED. Existing staged and unstaged validation entries are preserved.
+
+### 2026-11-10 卷尺后半段节奏优化工作版
+
+用户反馈后半段节奏不行，新增 EP03-WORKPRINT-PACING-001 第1次修改，原CONTROL/AV问题和修复次数保留。沿用明确授权的未正式验收工作版范围；唯一原director-record追加pacing_revision。保留8.5秒认可开头、上移构图、装配剖视、正常语速及完整锁止—解除—回卷，删除重复说明和长锁止停留；66.633秒压缩至44.3秒，1329帧，1080×1920@30 H.264/AAC。仅复用同版干净原生源帧并重新剪辑，没有新CAD、Blender渲染、TTS或付费调用；合成拟音按新动作重排。
+
+完整FFmpeg音视频解码PASS，1329帧PTS最大误差0.000000334秒；保留旁白选段及开头PCM逐字节一致，旁白不变速，AAC/源PCM相关性0.9999603、峰值0.663026。源状态单调、完整回卷及锁住时无回缩检查通过；剪接口状态差见encoded-checks.json。生产者查看10.8/28.6/42.0秒实际编码静帧；投影指认不证明接触可读性，静帧/波形/解码不证明连续视听节奏通过。没有独立听审或正式分数，Director保留验收责任。
+
+输出series/everyday-mechanisms/episodes/EVERYDAY_EP03/pace-revision-20261110/Tape-measure-pace-optimized-workprint.mp4，SHA-256 44375282c06f04ed439c3d5cebe906b0ce7502bc79b2fc0bfb8dddbde0029f87。证据及EDL保存在同目录。新增脚本仅作AST与证据/hash检查，不运行无关产品单测、不重复生成媒体。
+
+### 2026-11-10 HTM Chinese acoustic continuation
+
+See [the continuation validation](htm-audio-review-continuation.md) for the frozen
+900-case licensed Mandarin experiment, 60 held-out original groups, explicit
+negative-label/cold-start fixes, cross-defect false-positive gates and measured
+qualification results. Actual CTC spelling disagreements are nonactionable under
+the pronunciation-only policy. Dedicated native HTM tests: 18 passed; default
+project discovery: 271 passed, 2 native skips covered separately. This does not
+establish full listening or continuous audiovisual acceptance. Historical source,
+models, media and controller evidence are preserved; no paid generation or
+publication was initiated.
+
+### 2026-11-10 卷尺 Neil 音色替换工作版
+
+用户试听Neil/Ryan后明确“用 Neil 音色”。锁定本集 qwen3-tts-flash / Neil，按已有20条字幕157字仅加标点连续合成一次，保留原工作版、认可8.5秒无旁白开头与原声音、上移构图及装配剖视。旁白原速完整使用；仅重排已有同版原生源帧、字幕、投影指认及合成拟音，无新CAD/Blender渲染或模型下载，无平台操作。唯一原director-record追加neil_voice_revision，保留旧问题和次数，不称正式v5交付。
+
+输出series/everyday-mechanisms/episodes/EVERYDAY_EP03/neil-voice-20261110/Tape-measure-Neil-workprint.mp4：46.066667秒、1382帧、原生源与编码1080×1920@30 H.264/AAC，SHA-256 64070fbe432b8f4a2efdc966e63400db7013f7f68089cfeb91e690264c7be32d。完整音视频解码PASS，全部帧PTS最大误差0.000000334秒；原开头PCM一致、新旁白混音前样本逐字节一致且不变速，混音求和一致，AAC/源PCM相关性0.9999663、峰值0.87549。20条字幕互不重叠、单行最多15字；源状态单调、拉出/锁止/解除/回卷方向、锁住不回缩和完整终点归零数值检查通过。
+
+计时诊断保留：默认缓存无权重，现有临时缓存字表不含“弧”；未重复TTS或新增模型下载。改用实际greedy CTC时点，原始识别文本保留，113/157字精确匹配；同长替换块关联仅为显式ASR差异计时候选，特殊标记排除有单独诊断，不修改原始识别。不是完整强制对齐、独立读音验收或实测完整事件时间线通过。生产者查看实际编码10.54/27.84/45.47秒联系图，静帧观察不替代连续观看、听审或接触因果验收。正式分数为空，Director保留原CONTROL/连续AV问题和未完成验收责任。
+
+新增本轮制作helper作AST检查，媒体/证据hash与git diff --check通过；锁释放。本轮没有修改产品源码或运行无关产品单测；并行线程的HTM/语音对齐代码及既有暂存文档变更均保留。
+
+### 2026-11-10 Measured pace-input experiment
+
+See [measured pace validation](htm-audio-pace-validation.md). Reusable local CTC
+measured 900 fresh corpus waveforms; completed-job recovery reused all receipts
+and the CPU API reproduced the prior result exactly. New held-out pace detection
+was 1/60; pause normal alarms were 9/60, so both remain UNQUALIFIED. Four acoustic
+injection dimensions again passed 60/60 with zero known-negative alarms and full
+frozen inference/report replay. Project tests: 274, OK with 2 native skips covered
+by the 21-test dedicated run. This is not production listening acceptance.
+
+### 2026-11-10 — Isolated rhythm branch and matched controls
+
+- Code `3e342b5`; [measured results](htm-audio-rhythm-validation.md), [usage](htm-audio-rhythm.md).
+- 1,488 actual alignments; 60 new independent test groups. Pace 0/60; HTM pause 32/60 versus rules 38/60 and no-TM 37/60. Rhythm remains UNQUALIFIED; no production dispatch.
+- Full project 287 tests OK (4 native skips); final native suite 35 tests OK, including the added positive qualification regression. Frozen calibration/test replay, actual recovery and acoustic compatibility passed.
+- Prior staged validation bytes preserved; datasets, models and media remain ignored.
+
+### 2026-11-10 波形 SDR 独立入口
+
+实现 `mechanical_video.htm_waveform`，官方 SP/TM，10ms/64 档原生规格波形点阵；旧 HTM 保留。
+机制与实测记录见 [htm-waveform.md](htm-waveform.md)，证据 `reports/htm-waveform-v1/`。
+正常、停顿、BGM 代理、断音、削波、重复、拼接、增益突变的 16 用例及实际 95.03 秒跨内容配音已运行。
+分阶段时序训练修正降低正常异常比例，但断音/重复/拼接漏检与实际配音泛化仍未解决，检测有效性 UNQUALIFIED；不是完整听审验收。
+新增 5 项波形 unittest 与已有 35 项 HTM 音频 unittest 均通过；真实 CLI review 与 `git diff --check` 通过。
+最终冻结模型另测 2ms 脉冲爆音，anomaly=0.05，仍漏检，见 `reports/htm-waveform-v1/pop/`。
+
+### 2026-11-10 HTM 波形实时网页
+
+新增 `mechanical_video.htm_waveform_live` 与本地 HTML 实验台，真实逐帧 SDR/SP/TM，支持单步、暂停、历史回看、学习开关、保留权重重播及原始 ID 导出。用前序细胞预测当前帧并重算 anomaly；不加载预训练模型。
+7 项 waveform unittest 通过；Neil 工作片全 4,607 帧 / 2,211,200 样本逐帧核对通过，与既有在线报告 anomaly 最大差值 0，末帧 320 样本。证据 `reports/htm-waveform-live-v1/verification.json`。
+ego-browser 实测播放/暂停/单步、历史帧不推进、重播第 2 轮、关闭学习、从零重置及 JSON 导出；页面保留给用户。截图 `reports/htm-waveform-live-v1/browser-cells.png`。`git diff --check` 通过。
+原音播放器独立播放，不宣称音画同步或听审验收。网页只绑定 127.0.0.1:8766，使用方法见 [实时实验台](htm-waveform-live.md)。
+
+### 2026-11-10 Neil工作版同题/相邻题材只读对比
+
+实查抖音卷尺/按动笔与小红书同题/按动笔检索、账号粉丝与可见普通作品、帖子日期/指标/评论及暂停片段。Thing说明书按动笔5690赞/795藏/50评，当前4.9万粉，其余10条可见作品中位11117.5赞（年龄未匹配）；机械视界卷尺462赞/303藏/10评，当前18.5万粉。没有核实符合低粉且明显超常态的样本，不标已验证低粉爆款；播放、发布时粉丝与留存均未知。曲线求索2.0万赞参考只读到章节/评论，实际播放器无有效画面，不冒称观看。
+
+当前Neil视频SHA-256 64070fbe432b8f4a2efdc966e63400db7013f7f68089cfeb91e690264c7be32d保持不变。实际查看基线1/8.8/28/45.5秒与两参考2/20秒、2/18/37秒静态证据，1张1280×1192、180673字节联系图加1张570×761关键帧；不称连续视听或听审。仅提出问题标题、合并早段说明、锁止接触可读性和结尾回扣建议，Neil锁定；原CONTROL三次REWORK不重置、不关闭、不启动第四次渲染。唯一原director-record追加研究及用户定性听感反馈，无配音/媒体/模型/付费/发布操作。全部JSON与证据hash通过，git diff --check通过，浏览器任务空间16已finish；文档/研究未运行无关产品单测或渲染。报告见series/everyday-mechanisms/episodes/EVERYDAY_EP03/viral-comparison-20261110/review.md。
+
+
+## 2026-11-10 EVERYDAY_EP03 Neil editorial revision, effects preserved
+
+- User authorized improvements then required preserving video effects. New isolated editorial-improvement-20261110 workprint: 40.40 s / 1212 frames, native and encoded 1080×1920@30 H.264/AAC; old media preserved. Only question/title wording, shortened stationary connection explanation, causal ending and associated captions/Neil replacements changed. No CAD/Blender, camera, lighting, materials, crop, zoom or motion-rate changes.
+- Removed only 170 verified stationary frames; every original frame 456–1382 retained at original speed, 762 composited JPEGs reused byte-for-byte. Original middle 25.7 s narration PCM and 8.5 s opening PCM identical. Two bounded TTS calls succeeded once each; timing candidates from existing cached CTC model retain raw ASR disagreements, not listening acceptance. Synthetic foley samples conformed to same cut.
+- Full FFmpeg AV decode PASS; ffprobe 1212 frames; all-frame PTS max error 0.000000334 s; AAC/source correlation 0.9999599462, peak 0.875519; single-line captions nonoverlapping, max 12 chars; complete return and no retraction while locked checked from inherited source states. Actual encoded six-frame contact sheet inspected; same lock source-frame comparison pixel MAE 0.645/255.
+- Evidence: series/everyday-mechanisms/episodes/EVERYDAY_EP03/editorial-improvement-20261110/{verification.json,encoded-checks.json,mapping.json,audio-source.json,README.md}. Canonical reports/tape-v8-continuation-20261109/director-record.json appended. Existing contact P1/3-round limit and independent AV/listening gates preserved; authorized unaccepted workprint, scores null, no publication.
+
+
+## 2026-11-10 EVERYDAY_EP03 earlier Neil opening
+
+- Request: earlier narration while preserving effects. Added one Neil rendition of the existing on-screen question; cached CTC timing candidates place first word at 0.1425 s and last at 2.9425 s, inside the existing 0–3.15 s question title. No speech acceleration, no later narration regeneration, no changes to action or body-caption timing.
+- Complete video track copied byte-for-byte; source/output SHA-256 track hashes equal and all 1212 video PTS identical. 40.4 s, native/encoded 1080×1920@30 H.264/AAC. Existing synthetic/mechanical audio retained; after 3.096 s the pre-encode mix PCM is exactly unchanged.
+- Full AV decode PASS; AAC/source correlation 0.9999580715402504, AAC peak 0.875518798828125. Python AST and git diff checks applicable; no new CAD/render/code-module changes. Evidence: series/everyday-mechanisms/episodes/EVERYDAY_EP03/early-narration-20261110/{verification.json,timeline.json,question-timing.json,README.md}.
+- Canonical director record appended. User-authorized unaccepted workprint only; prior contact/action/independent AV and listening gates/counts unchanged, scores null. No publication.
+
+## 2026-11-10 — HTM A/V live inspector and independent A/B comparison
+
+Implemented independent `mechanical_video.htm_av_live` on loopback port 8767; preserved the pre-existing waveform modules, reports and staged changes. See [operation and evidence](htm-av-live.md). RGB SDR uses valid 64×64 pixels and fixed per-channel bins; official SP/TM defaults are explicit in the guide (including visual potentialRadius=16). Native audio uses the existing 10 ms encoder. Histories are compressed per-frame SQLite records, with per-pass source/configuration/offset provenance. Playback is compute-gated; review is read-only. Exports include selected-pass HTML/JSON, curves PNG, frame JSON and all-pass SQLite.
+
+Validation:
+- `PYTHONDONTWRITEBYTECODE=1 reports/htm-audio-runtime/venv/bin/python -m unittest discover -s tests -p 'test_htm_*live.py' -v`: 10 tests PASS, 24.871 s. Includes prior waveform live regressions; encoder addresses/mask/colors, official anomaly equality, A/B identity, reset/replay, VFR/rotation/silent/delayed audio, HDR rejection, audio mismatch and historical offsets.
+- Full Neil input SHA-256 `64070fbe432b8f4a2efdc966e63400db7013f7f68089cfeb91e690264c7be32d`: A and identical-test B each cover 1382 visual frames, 4607 audio windows, 2211200 samples. All full frame records compare exactly. Controlled copied-frame/local-color/transition inputs record changes at frame 10, without assigning quality scores.
+- Final compression configuration: initialization 14.210 s; double-video/double-audio compute plus disk writes 20.017 s for 46.067 s media, 2.301× real time (combined 138.081 video frames/s). First higher-compression run was 55.412 s; improved storage compression, never skipped model inputs.
+- ego-browser task space 20: actual single page, local file import, dual full playback to 1382/4607 on both lanes, original/RGB display, hover RGB/bin/bit strip, video/audio step, pause, history at 1 s, prior pass, 0.25×, B-only listening, paused learning toggle, retained-learning replay, initial-weight reset, +0.1 s B offset, HTML/PNG downloads and selected-pass export checked. Fixed history input overwrite and selected-pass export mistakes found during this run. Standalone HTML opened in browser; long raw-data areas bounded after inspection.
+- Evidence: `reports/htm-av-validation-20261110/`; full browser run preserved separately in `reports/htm-av-browser-20261110/`. `git diff --check` and Python AST checks passed. No commit or staging performed.
+
+This is technical dataflow/coverage/UI validation, not perceptual quality acceptance or audience evidence. B is an explicitly labeled same-source test copy, not a selected reference hit. Learned model-process recovery from saved histories is not implemented; restarting the command creates a new session while old raw histories remain exportable/readable.
+
+## 2026-11-10 — HTM interface visual refresh
+
+Reworked only `htm_av_live.html`: light neutral/teal workspace, grouped playback controls, larger original A/B views, separate current-frame metrics, collapsed SDR/SP/TM and raw records, readable chart axes, duration-weighted summary cards, grouped exports, keyboard focus and narrow-screen layout. Same-source B provenance remains visible above the filename. Existing computation and model configuration are untouched.
+
+Verified with ego-browser task space 24: actual single source and isolated paired session; play/pause, audio/video step, history, channel selection, inspect/settings expansion, speed/listen settings, comparison cards. Desktop and 390px viewport have no horizontal overflow; runtime error panel empty, IDs unique. Chart backing width matches rendered width. JavaScript syntax (`node --check`) and `git diff --check` pass. Screenshots: `reports/htm-ui-refresh-20261110/`.
+
+To preserve the active user's current weights and history, the refreshed live UI is served at `http://127.0.0.1:8768` via the local `/private/tmp/htm_ui_preview.py` adapter to the existing 8767 session. The checked-in module page is updated too and is used normally on subsequent service starts. No model reset was needed for deployment. The 8769 paired session was isolated UI verification, not a new production/reference analysis.
+
+## 2026-11-10 — Critical correction: zero-connected visual SP and inactive end-of-stream play
+
+Issue `HTM-VISUAL-ZERO-CONNECTIONS-001`: official SP with inputDimensions=786432, potentialPct=0.01 and default potentialRadius=16 had **zero connected synapses across all 2048 columns**. Earlier equality/anomaly/coverage checks were insufficient: both independent lanes could identically execute a degenerate model. All prior visual response and 2.30× performance claims are invalidated by `reports/htm-av-validation-20261110/invalidation.json`; archival data are retained as failure evidence.
+
+Corrected visual potentialRadius to full input size 786432. Initialization rejects any disconnected column. A subprocess constructs the unlearned visual template so official initialization cannot hold the HTTP server's GIL; only locally generated unlearned templates are copied. Added an independent black/white input-response regression and all-column connection assertion. `test_htm_*live.py`: **11 tests PASS**, 183.149 seconds, including existing audio regressions. No perceptual quality qualification is implied.
+
+Corrected live model: `reports/htm-av-connected-20261110/`. Full paired pass 2 covers 1382 video frames, 4607 audio windows and 2211200 samples per lane, exact A/B detail equality, official/recomputed anomalies agree. 93 distinct visual SP outputs occur across this source. Initialization 138.930 s; compute and writes 37.757 s (46.067 s media, compute ratio 1.220×; this is not a wall-clock playback benchmark). Source and parameters are in `coverage.json`. Port 8768 now routes to the corrected 8769 session; old 8767 records remain archival and invalid for visual conclusions.
+
+UI corrections: completed runs show “重新播放”; clicking retains weights and starts a new pass, rather than silently playing an exhausted iterator. End-of-stream step buttons are disabled. Quantized image strips no longer masquerade as SDR: the actual input IDs are drawn at one pixel per bit, with address y*1024+x and scrolling. SP/TM cells retain square proportions and expose active counts plus hover IDs. Pixel encoding starts at a valid central pixel rather than an unexplained blank strip. First timeline load updates the scrubber range before making history available.
+
+Browser evidence includes successful end-of-stream replay from pass 4 to pass 5, actual positive event advancement, true SDR bitmap pixel equality to raw input IDs, and corrected grid dimensions. See `browser-checks.json` and `inspector.png` in the corrected session directory. JavaScript syntax and `git diff --check` passed. Backend computation was revalidated through the 11 tests and full paired run, rather than assuming UI changes proved model correctness.
+
+## 2026-11-10 — Bounded audiovisual technical review, policy v3
+
+Added av_technical_review, av_review_benchmark, av_review_live and UI technical-review panel. See [scope, startup and measurements](av-technical-review.md). HTM is read-only novelty context, not a defect vote. No model reset, acceptance decision, staging or publication.
+
+10 tests PASS (0.143s). Preserved v1 loud-sine clipping failure and v2 freeze-interval bridging failure; repaired flat-rail detection and strict consecutive equal-frame runs. Final v3 benchmark freezes implementation hash before 66 source-disjoint synthetic clips (new test seeds701–704). Held-out per class: black/freeze/dropout TP4 FP4 FN0, normal-clip flag rate4/24; flash/clipping TP4 FP0 FN0. Four positives only, recall Wilson95% lower bound0.5101. All production qualifications false. Evidence: reports/av-review-benchmark-20261110-v3.
+
+Current Neil browser job c3dc9413297c4f73995dc730f919cc2b: 4.839s, full1382 frames/2211200 native48k mono samples, 39 context-needed observations (freeze17, silence22), matching HTM pass4. Earlier31-observation reports predate strict freeze segmentation and are superseded. Browser task31 verified real start button, report, timecode pre-roll/playback readyState4,39 rows, no horizontal overflow, JSON download equality and screenshots. Persistent reports include original media with verified hash. Evidence: reports/av-review-browser-20261110. Scope remains technical observation, not semantic/perceptual or publication acceptance.
+
+## 2026-11-10 — Automatic technical review attached to production and background discovery
+
+Implemented av_auto_review, synchronous post-command inspection in production_run, and report handoff to independent controller tasks. Added launchd service local.mechanical-video.av-auto-review, running automatically for new/changed videos in series/output/artifacts. Initial159 existing files are baseline only. Every5s discovery,15s settle; immutable snapshot/hash binding, persistent per-version reports, shared hook/daemon lock, no browser dependency, no automatic command rerun. Existing acceptance/capability gates unchanged. Technical observations remain unqualified for production; no complete semantic review or automatic repair claimed.
+
+54 relevant tests PASS: automatic7, controller25, content-contract10, automated-delivery3, workflow-autonomy9. Automatic tests include actual FFmpeg fixture discovery, same-path revision, restart/dedup, source mutation, decode failure, successful-command/failed-review exit distinction, and downstream independent-review context. No provider or production render executed.
+
+Actual launchd verification: state running, initial159 baselines, automatically detected a new2s test clip (60 video frames /96000 audio samples) in0.807s with0 observations. Replaced only that self-created fixture with a2s black/silent version: auto-detected new hash,60/96000 coverage,3 observations in0.309s; old report preserved. Service restart retained exactly2 jobs, no repeated scan. Browser task34 only checked the optional read-only report index and was closed; scanner continued with fresh heartbeat. Evidence stored in reports/av-auto-review/ and reports/av-auto-review-acceptance-20261110/. No manual review click/import involved.
+
+Browser-independent follow-up: after closing task34, a new headless-test-v2.mp4 was placed in the watched output folder with no browser action. The daemon automatically completed60 video frames/96000 audio samples and3 observations; reports/av-auto-review-acceptance-20261110/headless-complete.json records all3 retained jobs. AST and git diff --check PASS.
+
+
+## 2026-11-10 — EVERYDAY_EP04 zipper preproduction, media dependency blocked
+
+User requested the next video; current everyday plan selects EP04 zipper. Created one canonical v5 director-record and default repair controller; original-intent completed by actual Director receipt, minimal-sample remains DEPENDENCY_BLOCKED for unbenchmarked audio/continuous_av. Real source and creative agents prepared bounded US1219881A research and three opening comparisons; selected candidate A has no tested motion or acceptance. Saved original PDF/text and source manifest; all 6 source hashes and 4 episode JSON documents parsed/verified. Static EP03 contact-sheet inspection and label/projection source inspection recorded separately from playback/listening. Existing HTM audio and AV benchmark statuses remain UNQUALIFIED / MEASURED_NOT_PRODUCTION_QUALIFIED. Geometry/contact and material rights remain unresolved; no media generation, TTS, render, provider synthesis or platform write performed. No independent perceptual PASS or scores claimed.
+
+Scope validation: episode JSON parse/source SHA checks and git diff --check PASS. No code changes in this task, so no unrelated unittest or render regression run. Existing unrelated working-tree edits preserved.
+
+
+## 2026-11-10 — EVERYDAY_EP04 active continuation and source-constrained CAD repair
+
+Explicit user request to keep executing until completion recorded in the canonical episode record and a user-authorized memory update note; continuous goal remains active, not complete. Host-Metal native_capture of the existing template succeeded, 1442 objects, source unchanged; native scene settings are 1080x1920@30 Eevee/AgX. No media rendered. Source/native reuse plan and original-brief content contract bound to hashes. Script draft has 23 untimed captions, maximum14 characters, not synthesis-ready.
+
+CAD-v1 generated source-first with existing build123d after preserving the CAD launcher's OCP TDF_LabelSequence compatibility failure. Actual STEP reimport valid: 19 positive-volume assembly solids and one positive-volume tooth solid. Three local rounds retained REWORK. Independent source reviewer precisely reproduced 0.106723182 and0.135918618 mm3 tooth penetration and0.046211992 mm3 shell penetration; also found tangent-angle sign mismatch and9.5007% same-side clamp-distance increase. Frozen manifest hashes rechecked, source AST and git diff --check PASS. These are actual numeric/source checks, not continuous mechanical/audiovisual acceptance.
+
+A different material-arc-length/tangent strategy is running in cad-v2 with cumulative attempts retained. Producer reports10 key poses without tooth intersection; full-cycle collision, continuous carrier/slider geometry and independent recheck are not yet passed. Existing audio/continuous_av capability gaps persist. Coordination audit found3 spawns/3 followups/5 sends plus15 incoming agent messages; message budget reached, no further dispatch. Main thread must consolidate existing results and cannot invent independent acceptance. No TTS/provider/media generation or platform write.
+
+
+## 2026-11-10 — EP04 cad-v2 discrete diagnostic-cycle coverage
+
+Producer froze cad-v2 cumulative rounds4–6 and34-file manifest; original cad-v1 manifest remains unchanged. New material-arc-length/tangent path plus continuous cord/tape and inferred Y guide exported15 valid positive-volume STEP solids. Six producer assembly poses retain a maximum positive tooth/shell intersection2.629994270e-7 mm3; guide-driven contact remains unverified. Round5 intermediate STEP slots were overwritten by producer round6 outputs; separately reconstructed round5 STEP is explicitly not original bytes, and source/log evidence retained.
+
+Director then ran validation/full-cycle-cad-v2/check.py against the frozen manifest:121 unique BREP poses cover241 discrete forward/reverse diagnostic frames,726 tooth-pair intersections all0,484 tooth/shell intersections maximum6.270742624e-7 mm3 atprogress0.48333333333333334/R1. Raw positive intersections retained;1e-6 mm3 comparison is a diagnostic bound, not independent tolerance acceptance. Runtime271.082s, frozen sources unchanged. Does not cover continuous between-frame sweep, all carrier poses, contact forces, actual narrated timeline, independent mechanical acceptance or continuous audiovisual understanding. Initial diagnostic launcher had an off-by-one project-root path and failed before obtaining lease/doing checks; fixed root identity assertion, then completed once. No candidate geometry modified by Director.
+
+12 CAD preflight unittest cases PASS in48.916s; these test the validation infrastructure, not this mechanism's formal acceptance. No TTS/render/ffprobe/provider calls. Presence-only checks found none of the named VISION/AUDIO_REVIEW/CONTINUOUS_AV endpoint settings in current environment or project env; no secrets logged. Canonical v5 next remains DEPENDENCY_BLOCKED, ownerDirector. Goal active; no final video or formal PASS.
+
+
+## 2026-11-10 — EP04 three-turn external dependency audit
+
+Canonical v5 readiness revalidated for a third consecutive goal turn: audio/continuous_av unbenchmarked and unavailable; named endpoint settings absent, no actual reviewer tool exposed, all existing child agents terminal, no final media. Cad-v1/v2 immutable manifests and Director diagnostic-source identity revalidated. No further dispatch or production performed. This is an external capability/independent-review impasse, not completed production; goal is to be marked blocked, with exact resumption requirements in the canonical record. Existing prepared artifacts and issue counts preserved.
+
+## 2026-11-11 — EP04 resumed carrier/cavity diagnostics and discovered contact-sequence gap
+
+User explicitly continued. Completed the existing live full-carrier-cad-v2 attempt-2 once (609.815s, exit0):121 unique poses/241 discrete reversed diagnostic frames,484 carrier bodies valid positive volume,484 carrier/shell intersections0; tooth/cord gap maximum2.220446049e-16mm, tooth/tape intersections0. Fourteen right cord/tape Boolean intersections returned0; these remain raw, not converted to PASS. Validator attempt-1 had reparented guide children via Compound(children=); archived failure/source, corrected the query to Compound(obj=), asserted guide child identity at each pose. Frozen CAD was not changed.
+
+New cavity-engagement-cad-v2 diagnostic completed121 poses in39.037s (exit0), binding exact frozen outer/interior loft parameters. Three adjacent teeth enter the removed cavity from0 to0.400843006mm3 while tooth-solid intersections remain0. First positive diagnostic frames56/61/65; no between-sample sweep or actual media claim. Initial checker confused ShapeList with Shape before any pose loop; archived failure/source, used Compound(obj=) and completed once. This was a diagnostic fix, not a new CAD repair round.
+
+Cross-checking the same pose samples found a substantive unresolved mechanical issue: on reversal, cavity occupancy goes to0 while both adjacent teeth remain0.61–1.82mm from the separator. Current candidate does not demonstrate the original contract's separator-contact-caused release. ZCAD-002/ZSRC-002 remain open, draft10–11 cannot freeze; no seventh geometry repair started or counts reset. Force simulation is not required, but visible claimed contact and state causality must be supported.
+
+carrier-zero-common-diagnostic examined all14 anomalous poses.196 shared interior witnesses all lie inside their own cord and tape;28 independently serialized/reimported STEP bodies valid positive volume, but all14 right Boolean intersections still0, including reversed operands. This is conflicting kernel/geometry evidence, not proof of disconnection or a closed connection issue. Complete result artifact and14 progress events observed; subsequent process poll had unknown ID, so no exit-code assertion is made. Source-action-feasibility-20261111.md records exact scope and source-action gaps.
+
+Both frozen CAD manifests unchanged; all three checker ASTs and JSON output/record parse checked. Existing12 CAD preflight tests from the preceding diagnostic pass remain applicable; no production module changes or repeated unchanged regression. git diff --check run for this update. No media, paid generation, extra review model, new agent dispatch or platform action. Independent review and qualified audio/continuous_av gates remain open, all formal scores null; prior blocked audit retained, fresh resumed audit count1 with genuine new diagnostic progress.
+
+
+## 2026-11-11 — EP04 actual49-second video produced under explicit user correction
+
+User explicitly required self-repair until an actual video exists; Director continued the same canonical record instead of stopping at capability/repair-count gates. This scopes a real playable artifact, not fabricated formal v5 acceptance. Existing controller, issues, attempts and qualified-review gaps preserved; no extra agents/models/platform writes.
+
+Cad-v3 preserves exact cad-v2 tooth and arc/tangent source. Mirroring the left carrier fixes asymmetric Boolean behavior:121 poses per side valid positive solids and cord/tape intersections, minimum0.782912400mm3. Source-first STEP outputs independently reimported:16 positive assembly solids. Attached-child STEP export initially failed; source/failure preserved, standalone Compound export corrected. Narration now describes reverse cavity exit followed by separator guidance without claiming the unsupported initial-contact sequence. Original formal contact-causality issue remains open.
+
+Actual native-studio previews revealed upper cap/rails blocking right teeth and low subtitle contrast; versioned renderer corrections move the cover aside, smooth tooth shading, correct exposure/contrast and add a restrained subtitle backing. Blender5.2 removed AO properties; preserved original failure (Blender returned0 despite Python traceback), then used --python-exit-code1. Provisional selector accidentally rendered initial frames; terminated scoped process, retained frames separately, no final-frame mixing. First full run stopped when source review found gaps selecting the final pose; renderer-v5 holds prior unit across all7 gaps and starts in unit0.
+
+Eight guarded qwen3-tts-flash/Ethan submissions completed once using project audiogen, measured utterance durations48.986s including controlled gaps/tail.27 subtitles maximum15 characters; subphrase times are character allocations within measured utterances, not claimed forced alignment. Audio and unknown-request receipts retained.
+
+Renderer-v5 actual-pose callback checked every1470 integer frames before rendering: all four tracked teeth and separator within size/bounds, visible clamp-surface rays after reveal, maximum attachment error8.844430364e-7mm; closing/reverse directions monotone. Maximum progress delta0.007831982/frame and camera-scale delta0.005499195/frame; all7 utterance gaps retain prior unit. Original baseline and cad-v1/v2/v3 manifests verified unchanged. Disk budget read-only observation26.25GiB free versus2GiB estimate.
+
+Completed1470 native1080x1920@30 JPEG frames and scene.blend. Mixed seeded, explicitly labeled synthetic foley from the same motion clock. First encoded candidate lost one tail frame due -shortest; preserved candidate/probe/hash, removed that option and encoded again without rerendering or resynthesis. Final MP4:49.000s,H264/AAC,1080x1920@30,1470 encoded frames,32,165,033bytes,SHA2567c789fe91d6c49ecadaa4d8b1820bc33f39b8d796d7a0a94d0dbf4fcfec157d8. FFmpeg fully decoded video+audio with -xerror; frame count, codec,resolution,fps and full frame manifest checked. Sources AST/JSON/fingerprints checked; no unrelated production-module edits or repeat regression. git diff --check run.
+
+Final: series/everyday-mechanisms/episodes/EVERYDAY_EP04/video-build-v1/拉链头走过去，两排牙怎么就连上了.mp4; verification and delivery manifest alongside. Actual requested video production achieved. Independent listening/continuous AV/audience acceptance not performed, all scores null, formal_acceptance=false. No claim of physical force/retention validation or full automatic-workflow acceptance.
+
+
+## 2026-11-11 — EP04 recognizable metal-zipper correction and actual new video
+
+User rejected v1 resemblance (我要做拉链，你做了什么东西). EP04-RESEMBLANCE-001 preserved; old 49s film, source, failures, issue counts and former README retained. YKK actual anatomy/photographs inspected as research only; no third-party images/logos enter final. Original inferred flat metal teeth, wide stitched tapes, slider/crown/15mm pull tab and stops replace the cup-shaped model. Canonical director record retained; no new agents, review models or platform actions.
+
+Final cad-v7-zipper retains0.11mm recess sidewall beyond radius0.94mm, correcting v6 free-edge opening discovered during diagnostics. Source manifest SHA2569f5137cf1331b8af114d1ac422834853da776969d828b63c7ad1a81418fc6757. Independent STEP reimport reported18 valid positive assembly solids.121 tooth-pair poses and121 tooth/guide poses have maximum intersection0. Five final carrier key poses have valid positive bodies, zero shell intersection and positive tape/cord connections approximately2.23644mm3. Final cavity occupancy0.493548mm3 for each of3 neighbor pairs; measured first entries at progress0.408333/0.491667/0.575. Transverse separation diagnostic first intersects at dx0.3mm (0.00448385mm3), demonstrating a geometric barrier only, not strength/force or between-sample validation. Raw outputs in video-build-v2/mechanism_check.json and engagement-events.json. Earlier v6 full-carrier check intentionally stopped and retained; no full121-pose carrier claim for final v7.
+
+Only identity utterance resynthesized once using authorized qwen3-tts-flash/Ethan,5.664s; seven other utterances reused byte-for-byte with matching text. Measured timeline47.714s,27 nonoverlapping single-line captions, maximum13 characters. Character-weighted subphrase timing is not acoustic forced alignment.
+
+Actual final-v7 preview10 frames viewed as opening plus bounded contact sheet; Director static review only. Full same-pose preflight1432 frames PASS before rendering: tracked teeth/separator bounds/size, exposed clamp-surface rays, attachment anchors and continuity; maximum attachment error8.844430364e-7mm. Native host-GPU Blender5.2.3 Eevee render completed1432 native1080x1920@30 frames, saved scene.blend, exact renderer/timeline hashes bound. No frame mixing. Final synthetic foley uses the same pose clock and measured engagement thresholds, explicitly labeled synthetic.
+
+Final video-build-v2/拉链头走过去，两排牙怎么就连上了.mp4:47.733333s,1432 frames,H264/AAC,1080x1920@30,34,229,775bytes,SHA25676c73d433845651624649f1cf6f609e5e1d5f2e9e8af7c5054f34a9184c2b216. Full FFmpeg -xerror video/audio decode passed; ffprobe frame/codec/size/fps checks passed. Actual encoded frame25.3s viewed. Full frame manifest, source/input/delivery hashes, Python AST and JSON parse checked. Applicable change is production assets/scripts, no production-module edit or repeat unrelated unittest. git diff --check run.
+
+Actual corrected playable video delivered; formal_acceptance=false, independent scores null. Independent continuous audiovisual/listening/audience gates remain unavailable; original issues are not falsely closed. Existing blocked formal-acceptance goal is not marked achieved merely for this artifact. No upload, platform draft or publication.
+
+
+## 2026-11-11 — Scoped source review and split commits
+
+Reviewed waveform SDR, live waveform inspection, persistent audiovisual HTM comparison, bounded technical observations and production/controller integration before committing by dependency. Fixed native-only test selection to follow the existing isolated-runtime convention; deterministic encoding tests still run in the default environment. The initial default discovery reproduced missing-HTM failures (7 errors and 2 failures); after the skip fix, `.venv/bin/python -m unittest discover -s tests` completed 321 tests in 100.318 seconds, OK with 14 native-only skips.
+
+The existing isolated HTM runtime separately passed all 7 waveform/live-waveform tests and all 9 audiovisual live tests (214.843 seconds for the audiovisual suite), including connected visual columns and controlled input dependence. Both inspector HTML scripts passed Node syntax checking; reviewed Python sources parsed successfully. `git diff --check` and each staged whitespace check passed. No production rendering, provider call, browser interaction, LaunchAgent installation/restart or platform write was performed in this commit task. Historical media/benchmark/browser claims above were preserved as prior records, not rerun acceptance; these checks do not establish semantic, listening or audience qualification.
